@@ -103,35 +103,80 @@ export function GalleryTour() {
             <p className="gallery-copy reveal" style={stagger(2)}>
               {section.description}
             </p>
-            <div className={`gallery-layout gallery-layout-${section.images.length}`}>
-              {section.images.map((image, imageIndex) => {
-                const index = frames.findIndex((frame) => frame.src === image.src);
-                return (
-                  <figure key={image.src} className="gallery-item reveal reveal--scale" style={stagger(imageIndex)}>
-                    <button
-                      type="button"
-                      className="gallery-item-btn"
-                      onClick={(event) => show(index, event.currentTarget)}
-                      aria-label={`Open larger view: ${image.alt}`}
+            {section.layout === "named" ? (
+              <ul className="gallery-named">
+                {section.images.map((image, imageIndex) => {
+                  const index = frames.findIndex((frame) => frame.src === image.src);
+                  return (
+                    <li
+                      key={image.src}
+                      className="reveal"
+                      style={{
+                        ...stagger(imageIndex % 3),
+                        ["--ratio" as string]: (image.width ?? 4) / (image.height ?? 3),
+                      }}
                     >
-                      <Image
-                        src={image.src}
-                        alt={image.alt}
-                        fill
-                        sizes={imageSizes(section.images.length, imageIndex)}
-                        className="gallery-item-img"
-                      />
-                      <span className="gallery-item-zoom" aria-hidden="true">
-                        <svg viewBox="0 0 24 24">
-                          <path d="M12 5v14M5 12h14" />
-                        </svg>
-                      </span>
-                    </button>
-                    {image.caption ? <figcaption>{image.caption}</figcaption> : null}
-                  </figure>
-                );
-              })}
-            </div>
+                      <figure className="gallery-named-item">
+                        <button
+                          type="button"
+                          className="gallery-named-btn"
+                          onClick={(event) => show(index, event.currentTarget)}
+                          aria-label={`Open larger view: ${image.caption ?? image.alt}`}
+                        >
+                          <Image
+                            src={image.src}
+                            alt={image.alt}
+                            width={image.width ?? 1200}
+                            height={image.height ?? 900}
+                            sizes="(max-width: 640px) 100vw, (max-width: 980px) 50vw, 380px"
+                            className="gallery-named-img"
+                          />
+                          <span className="gallery-item-zoom" aria-hidden="true">
+                            <svg viewBox="0 0 24 24">
+                              <path d="M12 5v14M5 12h14" />
+                            </svg>
+                          </span>
+                        </button>
+                        <figcaption>
+                          <span className="gallery-named-title">{image.caption ?? image.alt}</span>
+                          {image.detail ? <span className="gallery-named-detail">{image.detail}</span> : null}
+                        </figcaption>
+                      </figure>
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : (
+              <div className={`gallery-layout gallery-layout-${section.images.length}`}>
+                {section.images.map((image, imageIndex) => {
+                  const index = frames.findIndex((frame) => frame.src === image.src);
+                  return (
+                    <figure key={image.src} className="gallery-item reveal reveal--scale" style={stagger(imageIndex)}>
+                      <button
+                        type="button"
+                        className="gallery-item-btn"
+                        onClick={(event) => show(index, event.currentTarget)}
+                        aria-label={`Open larger view: ${image.alt}`}
+                      >
+                        <Image
+                          src={image.src}
+                          alt={image.alt}
+                          fill
+                          sizes={imageSizes(section.images.length, imageIndex)}
+                          className="gallery-item-img"
+                        />
+                        <span className="gallery-item-zoom" aria-hidden="true">
+                          <svg viewBox="0 0 24 24">
+                            <path d="M12 5v14M5 12h14" />
+                          </svg>
+                        </span>
+                      </button>
+                      {image.caption ? <figcaption>{image.caption}</figcaption> : null}
+                    </figure>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </section>
       ))}
@@ -143,7 +188,7 @@ export function GalleryTour() {
             See where you&apos;ll be cared for
           </h2>
           <p className="gallery-copy reveal" style={stagger(2)}>
-            From the entrance to consultation and treatment, the visit stays in the same clinic.
+            From the entrance to consultation, treatment and the equipment behind it, the visit stays in the same clinic.
           </p>
           <ol>
             {gallerySections.map((section, index) => (
@@ -254,6 +299,7 @@ function Lightbox({
         <img key={image.src} src={image.src} alt={image.alt} />
         <figcaption>
           {image.caption ?? image.alt}
+          {image.detail ? <span>{image.detail}</span> : null}
           <span>
             {index + 1} / {total}
           </span>

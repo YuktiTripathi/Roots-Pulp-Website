@@ -9,7 +9,7 @@ import "./gallery.css";
 export const metadata: Metadata = {
   title: "Inside Roots & Pulp · Dental Clinic Gallery in Aliganj, Lucknow",
   description:
-    "Photographs of Roots & Pulp Dental Clinic in Aliganj, Lucknow: the entrance, consultation desk and treatment space.",
+    "Photographs of Roots & Pulp Dental Clinic in Aliganj, Lucknow: the entrance, consultation desk, treatment space and dental equipment.",
   robots: { index: false, follow: true },
   alternates: siteUrl ? { canonical: "/gallery/" } : undefined,
 };
@@ -36,8 +36,8 @@ export default function GalleryPage() {
                 where your care begins.
               </h1>
               <p className="lede enter" style={stagger(2)}>
-                Step inside Roots &amp; Pulp Dental Clinic and see the entrance, the consultation desk and the
-                treatment space that shape a visit.
+                Step inside Roots &amp; Pulp Dental Clinic and see the entrance, the consultation desk, the
+                treatment space and the equipment that shape a visit.
               </p>
               <div className="hero-actions enter" style={stagger(3)}>
                 <a className="btn btn-primary" href={bookingUrl} target="_blank" rel="noopener noreferrer">
