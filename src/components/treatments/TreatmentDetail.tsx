@@ -319,6 +319,11 @@ export function TreatmentDetail({ treatment, content }: { treatment: Treatment; 
             <ul className={`tp-options tp-options-${options.items.length}`}>
               {options.items.map((option, index) => (
                 <li key={option.title} className="tp-option reveal" style={stagger(index)}>
+                  {option.image ? (
+                    <span className="tp-option-art">
+                      <Image src={option.image} alt="" width={400} height={400} sizes="(max-width: 680px) 90vw, 360px" />
+                    </span>
+                  ) : null}
                   <h3>{option.title}</h3>
                   <dl>
                     <div>

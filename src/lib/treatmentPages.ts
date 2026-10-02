@@ -85,7 +85,7 @@ export type TreatmentPageContent = {
     heading: string;
     /** Label for the second line of each card. Defaults to "May suit". */
     suitsLabel?: string;
-    items: { title: string; what: string; suits: string; note?: string; links?: TreatmentLink[] }[];
+    items: { title: string; what: string; suits: string; note?: string; image?: string; links?: TreatmentLink[] }[];
     note?: string;
   };
   /** Two columns render as side-by-side cards unless layout is "table"; three or more as a scrollable table. */
@@ -550,7 +550,12 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
           title: "A missing tooth",
           text: "From an extraction, an injury or a tooth that was never there.",
         },
-        { icon: "gaps", title: "Several missing teeth", text: "Gaps that make chewing or speaking harder." },
+        {
+          icon: "gaps",
+          image: "/images/treatments/dental-implants/several-missing-teeth.webp",
+          title: "Several missing teeth",
+          text: "Gaps that make chewing or speaking harder.",
+        },
         {
           icon: "lost",
           image: "/images/treatments/dental-implants/tooth-cannot-be-saved.webp",
@@ -587,6 +592,12 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
         "A connector and a crown are then attached on top. The result is a tooth that is fixed in place, not removed at night like a denture.",
       ],
       illustration: "implant",
+      image: {
+        src: "/images/treatments/dental-implants/implant-procedure.webp",
+        alt: "Four-stage illustration of a dental implant: the implant is placed in the bone, the bone heals around it, the connector is attached, and a crown is fitted.",
+        width: 1838,
+        height: 743,
+      },
       caption:
         "From a missing tooth to a restored one: post, connector and crown. Your dentist will explain what your plan involves.",
     },
@@ -635,18 +646,21 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
       items: [
         {
           title: "Single tooth implant",
+          image: "/images/treatments/dental-implants/single-tooth-implant.webp",
           what: "One implant and crown to replace one tooth.",
           suits: "Someone missing a single tooth, with healthy neighbouring teeth.",
           note: "Leaves the neighbouring teeth untouched.",
         },
         {
           title: "Multiple tooth implants",
+          image: "/images/treatments/dental-implants/multiple-tooth-implants.webp",
           what: "Implants that support a bridge or several crowns across a gap.",
           suits: "Someone missing several teeth in a row.",
           note: "One implant can often support more than one tooth, depending on the case.",
         },
         {
           title: "Implant-supported dentures",
+          image: "/images/treatments/dental-implants/implant-supported-denture.webp",
           what: "A denture that clips or attaches to implants.",
           suits: "Someone with many or all teeth missing, or who struggles with loose dentures.",
           note: "More stable than a standard denture, but a different treatment.",
