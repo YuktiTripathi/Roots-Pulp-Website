@@ -124,3 +124,30 @@ export function contactPageJsonLd() {
     },
   ];
 }
+
+export function treatmentPageJsonLd(treatment: { slug: string; name: string }, seo: { title: string; description: string }, image?: string) {
+  if (!siteUrl) return null;
+  const url = `${siteUrl}/treatments/${treatment.slug}/`;
+  return [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "@id": `${url}#webpage`,
+      name: seo.title,
+      description: seo.description,
+      url,
+      isPartOf: { "@id": `${siteUrl}/#website` },
+      about: { "@id": `${siteUrl}/#clinic` },
+      ...(image ? { primaryImageOfPage: absolute(image) } : {}),
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: `${siteUrl}/` },
+        { "@type": "ListItem", position: 2, name: "Treatments", item: `${siteUrl}/treatments/` },
+        { "@type": "ListItem", position: 3, name: treatment.name, item: url },
+      ],
+    },
+  ];
+}

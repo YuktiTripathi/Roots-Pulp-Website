@@ -2,9 +2,12 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { TreatmentDetail } from "@/components/treatments/TreatmentDetail";
 import { TreatmentListItem, treatmentImage } from "@/components/treatments/TreatmentsLanding";
-import { bookingUrl, clinic, telHref, treatments, whatsappHref } from "@/lib/clinic";
+import { bookingUrl, clinic, siteUrl, telHref, treatments, whatsappHref } from "@/lib/clinic";
 import { stagger } from "@/lib/motion";
+import { treatmentPageJsonLd } from "@/lib/schema";
+import { treatmentPages } from "@/lib/treatmentPages";
 import "../treatments.css";
 
 type Params = { slug: string };
@@ -17,6 +20,31 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const { slug } = await params;
   const treatment = treatments.find((item) => item.slug === slug);
   if (!treatment) return { title: "Page Not Found · Roots & Pulp Dental Clinic" };
+  const content = treatmentPages[slug];
+  if (content) {
+    const path = `/treatments/${slug}/`;
+    const image = treatmentImage(slug)?.src ?? "/images/og-home.jpg";
+    return {
+      title: { absolute: content.seo.title },
+      description: content.seo.description,
+      // Stays out of search results until the page has been clinically reviewed.
+      robots: content.clinicallyReviewedOn ? undefined : { index: false, follow: true },
+      alternates: siteUrl ? { canonical: path } : undefined,
+      openGraph: {
+        title: content.seo.title,
+        description: content.seo.description,
+        url: path,
+        type: "website",
+        images: [{ url: image }],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: content.seo.title,
+        description: content.seo.description,
+        images: [image],
+      },
+    };
+  }
   return {
     title: `${treatment.name} · Roots & Pulp Dental Clinic, Aliganj`,
     description: treatment.overview,
@@ -28,6 +56,19 @@ export default async function TreatmentPage({ params }: { params: Promise<Params
   const { slug } = await params;
   const treatment = treatments.find((item) => item.slug === slug);
   if (!treatment) notFound();
+
+  const content = treatmentPages[treatment.slug];
+  if (content) {
+    const schema = treatmentPageJsonLd(treatment, content.seo, treatmentImage(treatment.slug)?.src);
+    return (
+      <>
+        <TreatmentDetail treatment={treatment} content={content} />
+        {schema ? (
+          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+        ) : null}
+      </>
+    );
+  }
 
   const related = treatments.filter((item) => item.slug !== treatment.slug).slice(0, 4);
   const image = treatmentImage(treatment.slug);

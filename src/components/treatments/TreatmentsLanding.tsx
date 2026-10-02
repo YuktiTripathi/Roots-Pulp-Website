@@ -103,7 +103,16 @@ export function FeaturedTreatmentCard({ treatment, index = 0 }: { treatment: Tre
 }
 
 /** Compact image card used for everyday treatments and related treatments. */
-export function TreatmentListItem({ treatment, index = 0 }: { treatment: Treatment; index?: number }) {
+export function TreatmentListItem({
+  treatment,
+  index = 0,
+  summary,
+}: {
+  treatment: Treatment;
+  index?: number;
+  /** Replaces the overview line, e.g. to say why a treatment is related. */
+  summary?: string;
+}) {
   const image = treatmentImage(treatment.slug);
   return (
     <li className="reveal" style={stagger(index % 3)}>
@@ -115,7 +124,7 @@ export function TreatmentListItem({ treatment, index = 0 }: { treatment: Treatme
         ) : null}
         <span className="tx-list-copy">
           <strong>{treatment.name}</strong>
-          <span>{treatment.overview}</span>
+          <span>{summary ?? treatment.overview}</span>
         </span>
         <span className="tx-go" aria-hidden="true">
           →
