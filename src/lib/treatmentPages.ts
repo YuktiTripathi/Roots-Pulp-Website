@@ -544,21 +544,34 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
       heading: "Could dental implants be relevant to you?",
       intro: "These are common situations in which people ask a dentist about implants.",
       items: [
-        { icon: "gap", title: "A missing tooth", text: "From an extraction, an injury or a tooth that was never there." },
+        {
+          icon: "gap",
+          image: "/images/treatments/dental-implants/missing-tooth.webp",
+          title: "A missing tooth",
+          text: "From an extraction, an injury or a tooth that was never there.",
+        },
         { icon: "gaps", title: "Several missing teeth", text: "Gaps that make chewing or speaking harder." },
         {
           icon: "lost",
+          image: "/images/treatments/dental-implants/tooth-cannot-be-saved.webp",
           title: "A tooth that cannot be saved",
           text: "Your dentist may discuss what could replace it.",
         },
         {
           icon: "denture",
+          image: "/images/treatments/dental-implants/loose-denture.webp",
           title: "Difficulty with dentures",
           text: "Removable dentures that feel loose or uncomfortable.",
         },
-        { icon: "drift", title: "Gaps affecting your bite", text: "Teeth drifting or tilting into an empty space." },
+        {
+          icon: "drift",
+          image: "/images/treatments/dental-implants/teeth-drifting-into-gap.webp",
+          title: "Gaps affecting your bite",
+          text: "Teeth drifting or tilting into an empty space.",
+        },
         {
           icon: "neighbours",
+          image: "/images/treatments/dental-implants/implant-beside-healthy-teeth.webp",
           title: "Wanting to avoid shaping healthy neighbouring teeth",
           text: "One reason people compare implants with bridges.",
         },
