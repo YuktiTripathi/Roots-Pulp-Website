@@ -85,11 +85,9 @@
 .gallery-block-consultation,
 .gallery-block-equipment { background: white; }
 .gallery-block h2,
-.gallery-journey h2,
-.gallery-cta h2 {
+.gallery-journey h2 {
   font-size: clamp(2rem, 4vw, 3.1rem);
   color: var(--navy);
-  max-width: 16ch;
 }
 .gallery-copy { margin-top: 12px; max-width: 42rem; color: var(--muted); }
 
@@ -273,11 +271,6 @@
 .gallery-journey-label { display: flex; align-items: baseline; gap: 10px; }
 .gallery-journey-label span { color: var(--teal); font-family: var(--serif); font-size: 1.15rem; font-weight: 400; }
 .gallery-journey a:hover .gallery-journey-label { color: var(--teal); }
-
-.gallery-cta { background: var(--navy); color: white; padding: 72px 0; }
-.gallery-cta h2,
-.gallery-cta p { color: white; }
-.gallery-cta p { margin-top: 12px; }
 
 .gallery-lightbox {
   position: fixed;
