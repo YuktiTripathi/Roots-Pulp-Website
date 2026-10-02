@@ -29,6 +29,14 @@ const symptomPaths: Record<SymptomIcon, string> = {
   filling: `${TOOTH}M9.5 7.5h5v4h-5Z`,
   treated: `${TOOTH}M10.5 9l-1 7M13.5 9l1 7`,
   chew: `${SMALL_TOOTH_RIGHT}M3 12h9M6 9l-3 3 3 3`,
+  sparkle: `${TOOTH}M19.5 1.5l.6 1.4 1.4.6-1.4.6-.6 1.4-.6-1.4-1.4-.6 1.4-.6Z`,
+  spots: `${TOOTH}M9.6 8.6h.8M13.4 9.6h.8M11.2 12.2h.8`,
+  thumb: "M8 21v-8.5a1.5 1.5 0 0 1 3 0V13M11 12.5V5.5a1.5 1.5 0 0 1 3 0V12M14 11.5a1.5 1.5 0 0 1 3 0V15c0 3.3-2.2 6-5.5 6H8",
+  crowded:
+    "M2.5 9c0-1.4 1-2.3 2.3-2.3S7.1 7.6 7.1 9v6.5l-.9 3.8H3.4l-.9-3.8ZM8.6 6.5c0-1.5 1.1-2.6 2.6-2.6s2.6 1.1 2.6 2.6v7.8l-1 4.2h-3.2l-1-4.2ZM16.4 8.2c0-1.4 1-2.3 2.3-2.3s2.3.9 2.3 2.3v6.8l-.9 3.8h-2.8l-.9-3.8Z",
+  brush: "M3 21l9-9M12 12l1.5-1.5M13 5h7v4h-7ZM14.5 5V3M16.5 5V3M18.5 5V3",
+  uneven: `${SMALL_TOOTH_LEFT}M15 9.5c0-1.2.9-2 2.2-2s2.3.8 2.3 2v5.5l-.8 3.5h-2.6l-.9-3.5Z`,
+  adult: "M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM4 21c0-4 3.6-7 8-7s8 3 8 7M10 7.5c.6.6 1.3.9 2 .9s1.4-.3 2-.9",
 };
 
 function LinkRow({ links, className = "tp-links" }: { links: TreatmentLink[]; className?: string }) {
@@ -85,9 +93,19 @@ export function TreatmentDetail({ treatment, content }: { treatment: Treatment; 
   const related = content.related
     .map((item) => ({ ...item, treatment: treatments.find((entry) => entry.slug === item.slug) }))
     .filter((item): item is typeof item & { treatment: Treatment } => Boolean(item.treatment));
+  const { explainer, comparison, options } = content;
   // Section backgrounds alternate ivory and white. The soft "Why" band splits the page in two:
   // the first half starts on ivory after the white glance strip, the second ends on ivory before the CTA.
-  const firstHalf = ["symptoms", "what", "process", ...(content.options ? ["options"] : []), "compare", "decides", "comfort"];
+  const firstHalf = [
+    "symptoms",
+    ...(content.myths ? ["myths"] : []),
+    ...(content.explainer ? ["what"] : []),
+    "process",
+    ...(options ? ["options"] : []),
+    ...(content.comparison ? ["compare"] : []),
+    "decides",
+    "comfort",
+  ];
   const secondHalf = ["doctor", "aftercare", "warning", "cost", "faq", "related"];
   const tone = (key: string) => {
     const first = firstHalf.indexOf(key);
@@ -193,7 +211,7 @@ export function TreatmentDetail({ treatment, content }: { treatment: Treatment; 
           {symptomGroups.map((group) => (
             <div key={group.label ?? "all"} className="tp-symptom-group">
               {group.label ? <p className="tp-group-label reveal">{group.label}</p> : null}
-              <ul className="tp-cards">
+              <ul className={`tp-cards tp-cards-${group.items.length}`}>
                 {group.items.map((item, index) => (
                   <li key={item.title} className="tp-card tp-symptom reveal" style={stagger(index % 3)}>
                     {item.image ? (
@@ -217,35 +235,61 @@ export function TreatmentDetail({ treatment, content }: { treatment: Treatment; 
         </div>
       </section>
 
-      {/* What it is */}
-      <section className={`tp-section ${tone("what")}`} aria-labelledby="what-heading">
-        <div className="tx-wrap">
-          <div className="tp-explain">
-            <SectionHead id="what-heading" heading={content.explainer.heading} />
-            <div className="tp-prose">
-              {content.explainer.paragraphs.map((paragraph, index) => (
-                <p key={paragraph} className="reveal" style={stagger(index)}>
-                  {paragraph}
-                </p>
-              ))}
+      {/* Myths */}
+      {content.myths ? (
+        <section className={`tp-section ${tone("myths")}`} aria-labelledby="myths-heading">
+          <div className="tx-wrap">
+            <SectionHead id="myths-heading" heading={content.myths.heading} intro={content.myths.intro} />
+            <div className={content.myths.illustration ? "tp-myths has-art" : "tp-myths"}>
+              <ul>
+                {content.myths.items.map((item, index) => (
+                  <li key={item.myth} className="tp-myth reveal" style={stagger(index)}>
+                    <p className="tp-myth-label">Myth</p>
+                    <h3>&ldquo;{item.myth}&rdquo;</h3>
+                    <p className="tp-myth-label is-fact">Fact</p>
+                    <p>{item.fact}</p>
+                  </li>
+                ))}
+              </ul>
+              {content.myths.illustration ? (
+                <StageFigure kind={content.myths.illustration} caption={content.myths.caption ?? ""} className="tp-myths-art" />
+              ) : null}
             </div>
           </div>
-          {content.explainer.image ? (
-            <figure className="tp-stages tp-stages-photo reveal">
-              <Image
-                src={content.explainer.image.src}
-                alt={content.explainer.image.alt}
-                width={content.explainer.image.width}
-                height={content.explainer.image.height}
-                sizes="(max-width: 1180px) 100vw, 1140px"
-              />
-              <figcaption>{content.explainer.caption}</figcaption>
-            </figure>
-          ) : (
-            <StageFigure kind={content.explainer.illustration} caption={content.explainer.caption} />
-          )}
-        </div>
-      </section>
+        </section>
+      ) : null}
+
+      {/* What it is */}
+      {explainer ? (
+        <section className={`tp-section ${tone("what")}`} aria-labelledby="what-heading">
+          <div className="tx-wrap">
+            <div className="tp-explain">
+              <SectionHead id="what-heading" heading={explainer.heading} />
+              <div className="tp-prose">
+                {explainer.paragraphs.map((paragraph, index) => (
+                  <p key={paragraph} className="reveal" style={stagger(index)}>
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+            </div>
+            {explainer.image ? (
+              <figure className="tp-stages tp-stages-photo reveal">
+                <Image
+                  src={explainer.image.src}
+                  alt={explainer.image.alt}
+                  width={explainer.image.width}
+                  height={explainer.image.height}
+                  sizes="(max-width: 1180px) 100vw, 1140px"
+                />
+                <figcaption>{explainer.caption}</figcaption>
+              </figure>
+            ) : (
+              <StageFigure kind={explainer.illustration} caption={explainer.caption} />
+            )}
+          </div>
+        </section>
+      ) : null}
 
       {/* Process */}
       <section className={`tp-section ${tone("process")}`} aria-labelledby="process-heading">
@@ -268,12 +312,12 @@ export function TreatmentDetail({ treatment, content }: { treatment: Treatment; 
       </section>
 
       {/* Options */}
-      {content.options ? (
+      {options ? (
         <section className={`tp-section ${tone("options")}`} aria-labelledby="options-heading">
           <div className="tx-wrap">
-            <SectionHead id="options-heading" heading={content.options.heading} />
-            <ul className="tp-options">
-              {content.options.items.map((option, index) => (
+            <SectionHead id="options-heading" heading={options.heading} />
+            <ul className={`tp-options tp-options-${options.items.length}`}>
+              {options.items.map((option, index) => (
                 <li key={option.title} className="tp-option reveal" style={stagger(index)}>
                   <h3>{option.title}</h3>
                   <dl>
@@ -282,82 +326,84 @@ export function TreatmentDetail({ treatment, content }: { treatment: Treatment; 
                       <dd>{option.what}</dd>
                     </div>
                     <div>
-                      <dt>May suit</dt>
+                      <dt>{options.suitsLabel ?? "May suit"}</dt>
                       <dd>{option.suits}</dd>
                     </div>
                   </dl>
-                  <p className="tp-option-note">{option.note}</p>
-                  {option.link ? <LinkRow links={[option.link]} className="tp-card-link" /> : null}
+                  {option.note ? <p className="tp-option-note">{option.note}</p> : null}
+                  {option.links ? <LinkRow links={option.links} className="tp-card-link" /> : null}
                 </li>
               ))}
             </ul>
-            {content.options.note ? <p className="tp-strip reveal">{content.options.note}</p> : null}
+            {options.note ? <p className="tp-strip reveal">{options.note}</p> : null}
           </div>
         </section>
       ) : null}
 
       {/* Comparison */}
-      <section className={`tp-section ${tone("compare")}`} aria-labelledby="compare-heading">
-        <div className="tx-wrap">
-          <SectionHead id="compare-heading" heading={content.comparison.heading} />
-          {content.comparison.columns.length === 2 ? (
-            <div className="tp-compare">
-              {content.comparison.columns.map((column, columnIndex) => (
-                <div
-                  key={column}
-                  className={`tp-compare-col reveal${columnIndex === 0 ? " is-keep" : ""}`}
-                  style={stagger(columnIndex)}
-                >
-                  <h3>{column}</h3>
-                  <dl>
-                    {content.comparison.rows.map((row) => (
-                      <div key={row.label}>
-                        <dt>{row.label}</dt>
-                        <dd>{row.values[columnIndex]}</dd>
-                      </div>
-                    ))}
-                  </dl>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="tp-table-wrap reveal" role="region" aria-labelledby="compare-heading" tabIndex={0}>
-              <table className="tp-table">
-                <thead>
-                  <tr>
-                    <td />
-                    {content.comparison.columns.map((column) => (
-                      <th key={column} scope="col">
-                        {column}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {content.comparison.rows.map((row) => (
-                    <tr key={row.label}>
-                      <th scope="row">{row.label}</th>
-                      {row.values.map((value, index) => (
-                        <td key={`${row.label}-${index}`}>{value}</td>
+      {comparison ? (
+        <section className={`tp-section ${tone("compare")}`} aria-labelledby="compare-heading">
+          <div className="tx-wrap">
+            <SectionHead id="compare-heading" heading={comparison.heading} />
+            {comparison.layout !== "table" && comparison.columns.length === 2 ? (
+              <div className="tp-compare">
+                {comparison.columns.map((column, columnIndex) => (
+                  <div
+                    key={column}
+                    className={`tp-compare-col reveal${comparison.highlightFirst && columnIndex === 0 ? " is-keep" : ""}`}
+                    style={stagger(columnIndex)}
+                  >
+                    <h3>{column}</h3>
+                    <dl>
+                      {comparison.rows.map((row) => (
+                        <div key={row.label}>
+                          <dt>{row.label}</dt>
+                          <dd>{row.values[columnIndex]}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="tp-table-wrap reveal" role="region" aria-labelledby="compare-heading" tabIndex={0}>
+                <table className={comparison.rowHeader ? "tp-table has-row-text" : "tp-table"}>
+                  <thead>
+                    <tr>
+                      {comparison.rowHeader ? <th scope="col">{comparison.rowHeader}</th> : <td />}
+                      {comparison.columns.map((column) => (
+                        <th key={column} scope="col">
+                          {column}
+                        </th>
                       ))}
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-          <p className="tp-closing reveal">{content.comparison.closing}</p>
-          {content.comparison.links ? <LinkRow links={content.comparison.links} /> : null}
-          {content.comparison.aside ? (
-            <p className="tp-aside reveal">
-              {content.comparison.aside.text}{" "}
-              <Link className="text-link" href={content.comparison.aside.link.href}>
-                {content.comparison.aside.link.label} <span className="arrow" aria-hidden="true">→</span>
-              </Link>
-            </p>
-          ) : null}
-        </div>
-      </section>
+                  </thead>
+                  <tbody>
+                    {comparison.rows.map((row) => (
+                      <tr key={row.label}>
+                        <th scope="row">{row.label}</th>
+                        {row.values.map((value, index) => (
+                          <td key={`${row.label}-${index}`}>{value}</td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+            <p className="tp-closing reveal">{comparison.closing}</p>
+            {comparison.links ? <LinkRow links={comparison.links} /> : null}
+            {comparison.aside ? (
+              <p className="tp-aside reveal">
+                {comparison.aside.text}{" "}
+                <Link className="text-link" href={comparison.aside.link.href}>
+                  {comparison.aside.link.label} <span className="arrow" aria-hidden="true">→</span>
+                </Link>
+              </p>
+            ) : null}
+          </div>
+        </section>
+      ) : null}
 
       {/* How your dentist decides */}
       <section className={`tp-section ${tone("decides")}`} aria-labelledby="decides-heading">
@@ -387,6 +433,16 @@ export function TreatmentDetail({ treatment, content }: { treatment: Treatment; 
                 {paragraph}
               </p>
             ))}
+            {content.comfort.tips ? (
+              <div className="tp-tips reveal">
+                <h3>{content.comfort.tips.heading}</h3>
+                <ul>
+                  {content.comfort.tips.items.map((tip) => (
+                    <li key={tip}>{tip}</li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
           </div>
         </div>
       </section>
@@ -396,7 +452,7 @@ export function TreatmentDetail({ treatment, content }: { treatment: Treatment; 
         <div className="tx-wrap">
           <SectionHead id="why-heading" heading={content.why.heading} />
           <Cards items={content.why.items} />
-          <ul className="tp-equipment">
+          <ul className={`tp-equipment tp-equipment-${content.why.equipment.length}`}>
             {content.why.equipment.map((item, index) => (
               <li key={item.src} className="reveal" style={stagger(index)}>
                 <figure>
@@ -411,7 +467,7 @@ export function TreatmentDetail({ treatment, content }: { treatment: Treatment; 
                   </div>
                   <figcaption>
                     <strong>{item.caption}</strong>
-                    <span>{item.detail}</span>
+                    {item.detail ? <span>{item.detail}</span> : null}
                   </figcaption>
                 </figure>
               </li>
@@ -419,8 +475,8 @@ export function TreatmentDetail({ treatment, content }: { treatment: Treatment; 
           </ul>
           <p className="tp-footnote reveal">
             {content.why.equipmentNote}{" "}
-            <Link className="text-link" href="/gallery/#equipment">
-              See more in the gallery <span className="arrow" aria-hidden="true">→</span>
+            <Link className="text-link" href={content.why.galleryLink?.href ?? "/gallery/#equipment"}>
+              {content.why.galleryLink?.label ?? "See more in the gallery"} <span className="arrow" aria-hidden="true">→</span>
             </Link>
           </p>
         </div>
@@ -452,9 +508,12 @@ export function TreatmentDetail({ treatment, content }: { treatment: Treatment; 
                 <li>Life Member, Indian Dental Association.</li>
                 <li>{doctor.registration}.</li>
               </ul>
-              <blockquote>
-                <p>&ldquo;{content.doctorQuote}&rdquo;</p>
-              </blockquote>
+              {content.doctorQuote ? (
+                <blockquote>
+                  <p>&ldquo;{content.doctorQuote}&rdquo;</p>
+                </blockquote>
+              ) : null}
+              {content.doctorNote ? <p className="tp-doctor-note">{content.doctorNote}</p> : null}
               <Link className="text-link" href="/doctor/dr-shubham-tripathi/">
                 Read Dr. Tripathi&apos;s profile <span className="arrow" aria-hidden="true">→</span>
               </Link>

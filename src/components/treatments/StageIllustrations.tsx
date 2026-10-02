@@ -193,8 +193,176 @@ function BridgeRow({ stage }: { stage: "gap" | "shaped" | "bridged" }) {
   );
 }
 
+/* Braces: top-down view of an arch. Crowded, moving under gentle pressure, aligned, held by a retainer. */
+function Arch({ stage }: { stage: "crowded" | "moving" | "aligned" | "retainer" }) {
+  const count = 10;
+  // Offsets push a few front teeth out of line; they shrink as the teeth move.
+  const crowding = [0, 0, 0, 7, -6, 6, -5, 0, 0, 0];
+  const twist = [0, 0, 0, 24, -20, 18, -16, 0, 0, 0];
+  const factor = stage === "crowded" ? 1 : stage === "moving" ? 0.45 : 0;
+  const teeth = Array.from({ length: count }, (_, i) => {
+    const t = (i / (count - 1)) * 2 - 1;
+    const x = 80 + 62 * t;
+    const y = 24 + 78 * t * t;
+    const angle = (Math.atan2(156 * t, 62) * 180) / Math.PI;
+    const normal = (angle * Math.PI) / 180;
+    const front = Math.abs(t) < 0.5;
+    return {
+      x: x - Math.sin(normal) * crowding[i] * factor,
+      y: y + Math.cos(normal) * crowding[i] * factor,
+      angle: angle + twist[i] * factor,
+      rx: front ? 6 : 8,
+      ry: front ? 4.5 : 6.5,
+    };
+  });
+  const wire = teeth.map((tooth, i) => `${i ? "L" : "M"}${tooth.x.toFixed(1)} ${tooth.y.toFixed(1)}`).join(" ");
+  return (
+    <svg viewBox="0 0 160 120" aria-hidden="true" focusable="false">
+      <path d="M10 112 C10 30 40 6 80 6 C120 6 150 30 150 112" fill="none" stroke={C.gum} strokeWidth="22" strokeLinecap="round" />
+      {stage === "retainer" ? (
+        <path d="M14 106 C14 34 42 12 80 12 C118 12 146 34 146 106" fill="none" stroke={C.teal} strokeWidth="1.6" strokeDasharray="4 3" />
+      ) : null}
+      {teeth.map((tooth, i) => (
+        <ellipse
+          key={i}
+          cx={tooth.x}
+          cy={tooth.y}
+          rx={tooth.rx}
+          ry={tooth.ry}
+          transform={`rotate(${tooth.angle.toFixed(1)} ${tooth.x.toFixed(1)} ${tooth.y.toFixed(1)})`}
+          fill="#fff"
+          stroke={C.navy}
+          strokeWidth="1.6"
+        />
+      ))}
+      {stage === "moving" ? (
+        <>
+          <path d={wire} fill="none" stroke={C.muted} strokeWidth="1.2" />
+          {teeth.map((tooth, i) => (
+            <rect key={i} x={tooth.x - 2} y={tooth.y - 2} width="4" height="4" rx="1" fill={C.metal} stroke={C.navy} strokeWidth="0.8" />
+          ))}
+        </>
+      ) : null}
+    </svg>
+  );
+}
+
+/* Milk teeth with the permanent teeth developing beneath them. */
+function MilkTeeth() {
+  const milk = [44, 82, 120, 158, 196];
+  const buds = [63, 120, 177];
+  return (
+    <svg viewBox="0 0 330 170" aria-hidden="true" focusable="false">
+      <rect x="6" y="60" width="228" height="104" rx="16" fill={C.bone} />
+      {[30, 70, 100, 150, 200, 214, 46, 180].map((cx, i) => (
+        <circle key={i} cx={cx} cy={i % 2 ? 150 : 136} r="2.6" fill={C.boneDot} />
+      ))}
+      <path d="M6 58 C40 52 80 62 120 62 C160 62 200 52 234 58 L234 78 L6 78 Z" fill={C.gum} stroke={C.gumLine} strokeWidth="1.4" />
+      {buds.map((x) => (
+        <path
+          key={x}
+          d={`M${x - 20} 120 C${x - 22} 98 ${x - 12} 92 ${x - 4} 96 C${x} 98 ${x} 98 ${x + 4} 96 C${x + 12} 92 ${x + 22} 98 ${x + 20} 120 C${x + 14} 128 ${x - 14} 128 ${x - 20} 120 Z`}
+          fill={C.ivory}
+          stroke={C.teal}
+          strokeWidth="1.8"
+          strokeDasharray="4 3"
+        />
+      ))}
+      {milk.map((x) => (
+        <path
+          key={x}
+          d={`M${x - 15} 30 C${x - 16} 16 ${x - 8} 12 ${x - 3} 15 C${x} 17 ${x} 17 ${x + 3} 15 C${x + 8} 12 ${x + 16} 16 ${x + 15} 30 C${x + 14} 44 ${x + 10} 56 ${x + 8} 66 L${x - 8} 66 C${x - 10} 56 ${x - 14} 44 ${x - 15} 30 Z`}
+          fill="#fff"
+          stroke={C.navy}
+          strokeWidth="1.8"
+          strokeLinejoin="round"
+        />
+      ))}
+      <g className="tp-stage-label">
+        <path d="M206 30 L246 30" stroke={C.muted} strokeWidth="1" />
+        <text x="250" y="34">
+          Milk teeth
+        </text>
+        <path d="M200 110 L246 110" stroke={C.muted} strokeWidth="1" />
+        <text x="250" y="106">
+          Permanent teeth
+        </text>
+        <text x="250" y="120">
+          growing beneath
+        </text>
+      </g>
+    </svg>
+  );
+}
+
+/* Cosmetic: a concern on the left, the treated tooth on the right. Front view of upper incisors. */
+const INCISOR = "M0 8 C0 1 34 1 34 8 L32 50 C31 62 3 62 2 50 Z";
+function Incisor({ x, fill = "#fff", d = INCISOR, scaleY = 1 }: { x: number; fill?: string; d?: string; scaleY?: number }) {
+  return (
+    <path
+      d={d}
+      transform={`translate(${x} 14) scale(1 ${scaleY})`}
+      fill={fill}
+      stroke={C.navy}
+      strokeWidth="1.8"
+      strokeLinejoin="round"
+    />
+  );
+}
+
+function CosmeticPair({ concern }: { concern: "stain" | "chip" | "gap" | "worn" }) {
+  const arrow = <path d="M92 44 L108 44 M103 39 L108 44 L103 49" stroke={C.teal} strokeWidth="1.8" fill="none" strokeLinecap="round" />;
+  const repair = (d: string, x: number) => (
+    <path d={d} transform={`translate(${x} 14)`} fill="rgba(14, 74, 71, 0.16)" stroke={C.teal} strokeWidth="1.2" strokeDasharray="3 2" />
+  );
+  return (
+    <svg viewBox="0 0 200 90" aria-hidden="true" focusable="false">
+      {concern === "stain" ? (
+        <>
+          <Incisor x={30} fill="#e6d2a6" />
+          {arrow}
+          <Incisor x={136} />
+        </>
+      ) : null}
+      {concern === "chip" ? (
+        <>
+          <Incisor x={30} d="M0 8 C0 1 34 1 34 8 L33 40 L24 46 L20 59 C12 62 4 59 2 50 Z" />
+          {arrow}
+          <Incisor x={136} />
+          {repair("M33 40 L24 46 L20 59 C26 60 31 57 32 50 Z", 136)}
+        </>
+      ) : null}
+      {concern === "gap" ? (
+        <>
+          <g transform="translate(0 0) scale(0.8)">
+            <Incisor x={14} />
+            <Incisor x={68} />
+          </g>
+          {arrow}
+          <g transform="translate(0 0) scale(0.8)">
+            <Incisor x={140} />
+            <Incisor x={178} />
+          </g>
+        </>
+      ) : null}
+      {concern === "worn" ? (
+        <>
+          <Incisor x={30} d="M0 8 C0 1 34 1 34 8 L32.5 40 L1.5 40 Z" />
+          {arrow}
+          <Incisor x={136} />
+          {repair("M1.5 40 L32.5 40 L32 50 C31 62 3 62 2 50 Z", 136)}
+        </>
+      ) : null}
+    </svg>
+  );
+}
+
 type Panel = { title: string; art: ReactNode };
-type Figure = { label: string; rows: { heading?: string; wide?: boolean; panels: Panel[] }[] };
+type Figure = {
+  label: string;
+  /** "pairs" panels already contain their own before-and-after arrow. */
+  rows: { heading?: string; wide?: boolean; pairs?: boolean; panels: Panel[] }[];
+};
 
 const figures: Record<StageIllustration, Figure> = {
   "root-canal": {
@@ -248,17 +416,60 @@ const figures: Record<StageIllustration, Figure> = {
       },
     ],
   },
+  braces: {
+    label:
+      "Four-stage illustration of a dental arch: crowded teeth, teeth moving under gentle pressure, aligned teeth, and a retainer holding them in place.",
+    rows: [
+      {
+        wide: true,
+        panels: [
+          { title: "Crowded teeth", art: <Arch stage="crowded" /> },
+          { title: "Gentle, steady pressure", art: <Arch stage="moving" /> },
+          { title: "Teeth aligned", art: <Arch stage="aligned" /> },
+          { title: "Retainer holds them", art: <Arch stage="retainer" /> },
+        ],
+      },
+    ],
+  },
+  cosmetic: {
+    label:
+      "Four-panel illustration: a stained tooth next to a lighter one, a chipped tooth with its edge rebuilt, a gap between two teeth narrowed, and a worn tooth restored.",
+    rows: [
+      {
+        wide: true,
+        pairs: true,
+        panels: [
+          { title: "Stained to lighter", art: <CosmeticPair concern="stain" /> },
+          { title: "Chipped edge rebuilt", art: <CosmeticPair concern="chip" /> },
+          { title: "Gap narrowed", art: <CosmeticPair concern="gap" /> },
+          { title: "Worn tooth restored", art: <CosmeticPair concern="worn" /> },
+        ],
+      },
+    ],
+  },
+  "milk-teeth": {
+    label: "Illustration of a child's jaw showing milk teeth with the permanent teeth developing beneath them.",
+    rows: [{ wide: true, panels: [{ title: "Milk teeth and the teeth to come", art: <MilkTeeth /> }] }],
+  },
 };
 
-export function StageFigure({ kind, caption }: { kind: StageIllustration; caption: string }) {
+export function StageFigure({
+  kind,
+  caption,
+  className,
+}: {
+  kind: StageIllustration;
+  caption: string;
+  className?: string;
+}) {
   const figure = figures[kind];
   return (
-    <figure className="tp-stages">
+    <figure className={className ? `tp-stages ${className}` : "tp-stages"}>
       <div className="tp-stages-board" role="img" aria-label={figure.label}>
         {figure.rows.map((row, rowIndex) => (
           <div key={row.heading ?? rowIndex} className="tp-stages-row">
             {row.heading ? <p className="tp-stages-heading">{row.heading}</p> : null}
-            <ol className={`tp-stages-${row.panels.length}${row.wide ? " is-wide" : ""}`}>
+            <ol className={`tp-stages-${row.panels.length}${row.wide ? " is-wide" : ""}${row.pairs ? " is-pairs" : ""}`}>
               {row.panels.map((panel, index) => (
                 <li key={panel.title} className="reveal" style={stagger(index)}>
                   {panel.art}

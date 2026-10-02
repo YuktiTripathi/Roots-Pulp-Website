@@ -26,9 +26,16 @@ export type SymptomIcon =
   | "neighbours"
   | "filling"
   | "treated"
-  | "chew";
+  | "chew"
+  | "sparkle"
+  | "spots"
+  | "thumb"
+  | "crowded"
+  | "brush"
+  | "uneven"
+  | "adult";
 
-export type StageIllustration = "root-canal" | "implant" | "crown-bridge";
+export type StageIllustration = "root-canal" | "implant" | "crown-bridge" | "braces" | "cosmetic" | "milk-teeth";
 
 export type TreatmentFaq = { question: string; answer: string; link?: TreatmentLink };
 
@@ -51,7 +58,15 @@ export type TreatmentPageContent = {
     items: (TreatmentCardItem & { icon: SymptomIcon; image?: string; group?: string; link?: TreatmentLink })[];
     note: string;
   };
-  explainer: {
+  /** Myth and fact cards, shown after the symptom cards. */
+  myths?: {
+    heading: string;
+    intro: string;
+    items: { myth: string; fact: string }[];
+    illustration?: StageIllustration;
+    caption?: string;
+  };
+  explainer?: {
     heading: string;
     paragraphs: string[];
     illustration: StageIllustration;
@@ -68,12 +83,19 @@ export type TreatmentPageContent = {
   /** Option cards. [CONFIRM SERVICE AVAILABILITY] before the page is reviewed and indexed. */
   options?: {
     heading: string;
-    items: { title: string; what: string; suits: string; note: string; link?: TreatmentLink }[];
+    /** Label for the second line of each card. Defaults to "May suit". */
+    suitsLabel?: string;
+    items: { title: string; what: string; suits: string; note?: string; links?: TreatmentLink[] }[];
     note?: string;
   };
-  /** Two columns render as side-by-side cards; three or more as a scrollable table. */
-  comparison: {
+  /** Two columns render as side-by-side cards unless layout is "table"; three or more as a scrollable table. */
+  comparison?: {
     heading: string;
+    layout?: "cards" | "table";
+    /** Highlights the first card. Only for a genuine "keep the tooth" style preference. */
+    highlightFirst?: boolean;
+    /** Header for the row-label column of the table. */
+    rowHeader?: string;
     columns: string[];
     rows: { label: string; values: string[] }[];
     closing: string;
@@ -89,17 +111,23 @@ export type TreatmentPageContent = {
   comfort: {
     heading: string;
     paragraphs: string[];
+    tips?: { heading: string; items: string[] };
     image: { src: string; alt: string; width: number; height: number };
   };
   why: {
     heading: string;
     items: TreatmentCardItem[];
-    equipment: { src: string; alt: string; caption: string; detail: string; position?: string }[];
+    equipment: { src: string; alt: string; caption: string; detail?: string; position?: string }[];
     equipmentNote: string;
+    /** Defaults to "See more in the gallery", linking to the gallery's equipment section. */
+    galleryLink?: TreatmentLink;
   };
   /** Credential lines shown on the doctor card in addition to the standard ones. */
   doctorExtra?: string[];
-  doctorQuote: string;
+  /** A quote shown on the doctor card. */
+  doctorQuote?: string;
+  /** A plain line shown on the doctor card instead of a quote. */
+  doctorNote?: string;
   aftercare: {
     heading: string;
     intro: string;
@@ -251,6 +279,7 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
     },
     comparison: {
       heading: "Saving a tooth or removing it",
+      highlightFirst: true,
       columns: ["Root canal treatment", "Tooth extraction"],
       rows: [
         {
@@ -608,7 +637,7 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
           what: "A denture that clips or attaches to implants.",
           suits: "Someone with many or all teeth missing, or who struggles with loose dentures.",
           note: "More stable than a standard denture, but a different treatment.",
-          link: { label: "About dentures", href: "/treatments/dentures/" },
+          links: [{ label: "About dentures", href: "/treatments/dentures/" }],
         },
       ],
     },
@@ -978,7 +1007,7 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
           what: "A replacement tooth supported by crowns on the teeth either side of a gap.",
           suits: "Someone with a missing tooth and healthy teeth beside the gap.",
           note: "The neighbouring teeth are shaped to hold it.",
-          link: { label: "Or compare dentures", href: "/treatments/dentures/" },
+          links: [{ label: "Or compare dentures", href: "/treatments/dentures/" }],
         },
         {
           title: "Inlay or onlay",
@@ -1219,6 +1248,1052 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
     cta: {
       heading: "Not sure whether you need a crown?",
       text: "A bigger treatment is not always the right one. Come in for an examination, and Dr. Tripathi will explain what your tooth needs and what the options are.",
+    },
+  },
+  "braces-and-aligners": {
+    seo: {
+      title: "Braces & Clear Aligners in Aliganj, Lucknow · Roots & Pulp",
+      description:
+        "Compare fixed braces and clear aligners, learn what to expect and what affects cost. Roots & Pulp Dental Clinic, Aliganj, Lucknow. Open 7 days.",
+    },
+    // [CLINICAL REVIEW REQUIRED BEFORE PUBLICATION]
+    // [CLINIC DETAIL REQUIRED] Who provides orthodontic care at Roots & Pulp, and any orthodontic training.
+    // Until answered, the page never says "orthodontist" or implies a specialty.
+    clinicallyReviewedOn: "",
+    hero: {
+      eyebrow: "Straightening teeth",
+      heading: "Braces and Clear Aligners in Lucknow",
+      lede: "Straighten your teeth with fixed braces or removable clear aligners, planned around you.",
+      text: "Crooked or crowded teeth can be harder to clean and can affect how you bite. Braces and aligners are two ways to move teeth gently into a better position. At Roots & Pulp in Aliganj, Dr. Shubham Tripathi will examine your teeth first and explain which options may suit you.",
+    },
+    glance: [
+      { title: "What it addresses", text: "Crowding, gaps and bite differences, for teens and adults." },
+      {
+        title: "Two main routes",
+        text: "Fixed braces, which stay on your teeth, and clear aligners, which you can take out.",
+      },
+      {
+        title: "Planning",
+        text: "Starts with an examination and X-rays, so your dentist can explain what is possible.",
+      },
+      {
+        title: "Time",
+        text: "Treatment commonly takes many months, and some cases take longer. Your dentist will give an estimate for you.",
+      },
+      { title: "After treatment", text: "Retainers are usually needed to keep teeth in their new position." },
+    ],
+    symptoms: {
+      heading: "Could braces or aligners be relevant to you?",
+      intro: "These are common reasons people ask a dentist about straightening their teeth.",
+      items: [
+        {
+          icon: "crowded",
+          title: "Crowded teeth",
+          text: "Teeth that overlap or twist because there is not enough space.",
+        },
+        { icon: "gap", title: "Gaps between teeth", text: "Spaces that bother you or catch food." },
+        {
+          icon: "bite",
+          title: "Teeth that stick out, or an uneven bite",
+          text: "The upper and lower teeth do not meet as they should.",
+        },
+        { icon: "brush", title: "Teeth that are hard to clean", text: "Crowding can make plaque harder to remove." },
+        {
+          icon: "sparkle",
+          title: "A child or teenager whose teeth are coming through crooked",
+          text: "Early advice can help parents plan.",
+          link: { label: "About children's dentistry", href: "/treatments/childrens-dentistry/" },
+        },
+        {
+          icon: "adult",
+          title: "Wanting to straighten teeth as an adult",
+          text: "Many adults ask about this, and it is not only for teens.",
+        },
+      ],
+      note: "Everyone's teeth and jaws are different. An examination and X-rays are needed to find out what is going on and what treatment, if any, is appropriate.",
+    },
+    explainer: {
+      heading: "How do braces and aligners work?",
+      paragraphs: [
+        "Teeth are held in the jaw by bone and a thin layer of tissue around each root. When gentle, steady pressure is applied, the bone slowly remodels, and the tooth moves.",
+        "Braces use small brackets and a wire to apply that pressure. Clear aligners use a series of removable trays, each one moving the teeth a little.",
+        "Teeth move gradually. That is why treatment takes months, and why check-ups along the way matter.",
+      ],
+      illustration: "braces",
+      caption:
+        "Teeth move gradually, and a retainer helps keep them in place afterwards. Your dentist will explain your plan.",
+    },
+    process: {
+      heading: "What the journey can look like",
+      intro: "Every case is different, and your own plan may vary. This is the general journey.",
+      steps: [
+        {
+          title: "Consultation and examination",
+          text: "Dr. Tripathi listens to what you want to change, examines your teeth and gums and usually takes X-rays.",
+        },
+        // [CLINIC DETAIL REQUIRED] Records taken, and impression or scan method. Do not name digital scanning.
+        {
+          title: "Records and planning",
+          text: "Photographs, X-rays and impressions or scans may be taken so your treatment can be planned.",
+        },
+        {
+          title: "Your plan",
+          text: "You hear your options, the expected timeline and an estimate of cost. There is no pressure to decide on the day.",
+        },
+        // [CONFIRM SERVICE AVAILABILITY] Fixed braces and aligners, and who fits them.
+        {
+          title: "Starting treatment",
+          text: "Braces are fitted to the teeth, or your first aligners are given, with instructions on how to wear and clean them.",
+        },
+        {
+          title: "Regular check-ups",
+          text: "You return for adjustments or aligner checks, so your dentist can follow progress and make changes.",
+        },
+        {
+          title: "Finishing and retention",
+          text: "Braces are removed or aligners finished, and a retainer is given to help hold your teeth in place.",
+        },
+      ],
+      footnote:
+        "Treatment times and visit patterns depend on your case and are explained at your consultation.",
+    },
+    // [CONFIRM SERVICE AVAILABILITY] Braces types and aligner system. The repository only confirms
+    // "fixed braces or removable clear aligners". Do not name an aligner brand.
+    options: {
+      heading: "Your options",
+      items: [
+        {
+          title: "Fixed metal braces",
+          what: "Brackets bonded to the teeth with a wire that is adjusted over time.",
+          suits: "A wide range of cases, including more complex ones.",
+          note: "Stay in place throughout treatment.",
+        },
+        // [CONFIRM SERVICE AVAILABILITY] Delete this card if tooth-coloured braces are not offered.
+        {
+          title: "Fixed tooth-coloured braces",
+          what: "Similar to metal braces, with brackets that blend in with the teeth.",
+          suits: "People who want braces that are less noticeable.",
+        },
+        {
+          title: "Clear aligners",
+          what: "A series of clear, removable trays that move the teeth step by step.",
+          suits: "Many mild to moderate cases, when the person can wear them as instructed.",
+          note: "Removable for eating and cleaning, but they only work when worn.",
+        },
+        {
+          title: "Retainers",
+          what: "A removable or fixed device that holds teeth in position after treatment.",
+          suits: "Everyone finishing treatment.",
+          note: "Part of treatment, not an extra.",
+        },
+      ],
+    },
+    comparison: {
+      heading: "Braces or clear aligners?",
+      columns: ["Fixed braces", "Clear aligners"],
+      rows: [
+        {
+          label: "How they work",
+          values: ["Brackets and a wire, adjusted by your dentist", "Removable trays, changed step by step"],
+        },
+        { label: "Removable", values: ["No", "Yes, for eating and cleaning"] },
+        { label: "Appearance", values: ["Visible, though some types are less noticeable", "Clear and discreet"] },
+        { label: "Eating", values: ["Some foods need avoiding", "Remove them to eat"] },
+        {
+          label: "Your part",
+          values: ["Careful cleaning around brackets", "Wearing them for most of the day, as instructed"],
+        },
+        {
+          label: "Suits",
+          values: ["A wide range of cases, including complex ones", "Many mild to moderate cases"],
+        },
+      ],
+      closing:
+        "The right option depends on your teeth, your bite, your priorities and clinical assessment. Neither is better for everyone.",
+    },
+    decides: {
+      heading: "Is it right for me?",
+      intro: "Your plan is made for you. Your dentist will look at:",
+      items: [
+        {
+          title: "Your teeth and gums",
+          text: "Decay and gum disease are treated first, because moving teeth needs a healthy base.",
+        },
+        { title: "Your bite", text: "How the upper and lower teeth meet." },
+        { title: "The X-rays", text: "Roots, bone and teeth that have not yet come through." },
+        {
+          title: "Your age and growth",
+          text: "Teens and adults are treated differently, and a growing jaw is considered.",
+        },
+        { title: "Your goals", text: "What you want to change, and what is realistic." },
+        { title: "Your habits", text: "For example, whether you can wear aligners as instructed." },
+      ],
+      closing: "If treatment is not needed, or if it can wait, Dr. Tripathi will tell you. You can take time to decide.",
+    },
+    comfort: {
+      heading: "Feeling comfortable",
+      // [CLINIC DETAIL REQUIRED] Any comfort measures the clinic offers.
+      paragraphs: [
+        "It is normal to feel some soreness or pressure for a few days after braces are fitted, after an adjustment, or when you switch to a new aligner. This usually settles.",
+        "Braces and aligners can also feel odd against your lips and tongue at first. Your dentist will explain what is normal and how to cope. Questions are always welcome.",
+      ],
+      image: {
+        src: "/images/doctor/explain-consult.png",
+        alt: "Dr. Shubham Tripathi speaking with a patient beside the consultation desk",
+        width: 981,
+        height: 637,
+      },
+    },
+    why: {
+      heading: "Why patients in Aliganj choose Roots & Pulp",
+      // [CLINIC DETAIL REQUIRED] Who provides orthodontic care, aligner system or braces type, check-up frequency.
+      items: [
+        { title: "Listen first", text: "Dr. Tripathi starts by understanding what you want, then examines." },
+        {
+          title: "Diagnosis before treatment",
+          text: "Every recommendation follows an examination, and you are told when something can wait.",
+        },
+        {
+          title: "Plain explanation",
+          text: "Options, timelines and the reasons behind them are explained before you decide.",
+        },
+        {
+          title: "Prevention matters",
+          text: "Dr. Tripathi's public health training shapes a focus on keeping teeth and gums healthy during treatment, and after it.",
+        },
+        {
+          title: "Open seven days",
+          text: "Monday to Saturday until 8 PM, Sunday until 5 PM, which helps when treatment fits around school or work.",
+        },
+      ],
+      equipment: [
+        {
+          src: "/images/doctor/listen-consult.jpg",
+          alt: "Dr. Shubham Tripathi in consultation with a patient at the clinic desk",
+          caption: "Listening first",
+        },
+        {
+          src: "/images/doctor/explain-consult.png",
+          alt: "Dr. Shubham Tripathi speaking with a patient beside the consultation desk",
+          caption: "Explaining your options",
+        },
+        {
+          src: "/images/consultation-banner.jpg",
+          alt: "A patient and Dr. Shubham Tripathi seated across the consultation desk",
+          caption: "Time to talk it through",
+        },
+      ],
+      equipmentNote: "Your first visit is a conversation.",
+      galleryLink: { label: "See the clinic in the gallery", href: "/gallery/" },
+    },
+    doctorQuote:
+      "Dental treatment can feel confusing. Findings, options and the reasoning behind a treatment plan are explained in simple, understandable terms.",
+    aftercare: {
+      heading: "During treatment and afterwards",
+      intro: "Your dentist's instructions always come first. This is general guidance.",
+      items: [
+        {
+          title: "The first days",
+          text: "Teeth can feel tender, and this tends to ease. It can return after adjustments.",
+        },
+        {
+          title: "Cleaning",
+          text: "Brush carefully, and clean around brackets or wear aligners only on clean teeth. Plaque builds up more easily around braces. Your dentist will show you how.",
+        },
+        {
+          title: "Eating",
+          text: "With braces, your dentist will list foods to avoid, usually very hard or sticky ones. With aligners, take them out to eat and drink anything other than water, as advised.",
+        },
+        {
+          title: "Retainers",
+          text: "After treatment, wear your retainer as instructed. Teeth can drift back if it is left out.",
+        },
+      ],
+      followUp: "Keep your appointments. Missed visits can slow treatment.",
+    },
+    warning: {
+      heading: "When should I contact my dentist?",
+      intro: "Please call the clinic if you notice:",
+      signs: [
+        "a bracket or wire that has come loose, or a wire that is sticking into your cheek",
+        "an aligner that has cracked, is lost or no longer fits",
+        "pain that is severe or getting worse",
+        "swelling of the gums or face",
+        "a sore in the mouth that does not heal",
+      ],
+      emergency:
+        "For difficulty breathing or swallowing, or swelling spreading toward the eye or neck, seek emergency medical care straight away.",
+    },
+    cost: {
+      heading: "What affects the cost of braces and aligners?",
+      intro: "We do not publish a fixed price, because every case is different. The main factors are:",
+      items: [
+        {
+          title: "How complex the case is",
+          text: "Mild alignment changes differ from complex bite problems.",
+        },
+        { title: "The treatment type", text: "Fixed braces or clear aligners." },
+        { title: "How long treatment takes", text: "Longer treatment means more check-ups." },
+        { title: "Records", text: "X-rays, photographs and impressions or scans." },
+        { title: "Other treatment needed first", text: "For example, fillings or gum care." },
+        { title: "Retainers", text: "Needed afterwards." },
+      ],
+      // [CLINIC DETAIL REQUIRED] Whether the consultation or records are charged separately, and any payment plan.
+      closing:
+        "After an examination, Dr. Tripathi gives you a clear plan and estimate before treatment begins.",
+    },
+    faqIntro: "Straight answers about braces and aligners. For anything else, call or send a WhatsApp message.",
+    faqs: [
+      {
+        question: "Do braces hurt?",
+        answer:
+          "Braces are not usually painful, but teeth can feel sore and tender for a few days after fitting and after adjustments. This generally settles. Your dentist will explain what to expect and how to cope with it.",
+      },
+      {
+        question: "How long does treatment take?",
+        answer:
+          "It depends on how far the teeth need to move and on how well the plan is followed. Treatment commonly takes many months, and some cases take longer. Dr. Tripathi will give an estimate once he has examined you.",
+      },
+      {
+        question: "Can adults get braces or aligners?",
+        answer:
+          "Yes. Many adults have treatment, and it is not only for teenagers. Healthy gums and teeth are needed, and your dentist will check these first.",
+      },
+      {
+        question: "What is the difference between braces and clear aligners?",
+        answer:
+          "Braces are fixed to the teeth and adjusted by your dentist. Aligners are removable trays, sometimes searched for as “invisible braces”, though they are visible up close. Each suits different cases, and your dentist will advise which fits you.",
+      },
+      {
+        question: "How much do braces or aligners cost in Lucknow?",
+        answer:
+          "Cost depends on how complex your case is, the treatment type, how long it takes, the records needed and retainers. After an examination at our Aliganj clinic, you will receive a clear plan and estimate before treatment begins.",
+      },
+      {
+        question: "Are clear aligners suitable for everyone?",
+        answer:
+          "No. They suit many mild to moderate cases, and need to be worn for most of the day. Some bites need braces. Your dentist will tell you honestly what he thinks will work best.",
+      },
+      {
+        question: "Do I need to wear a retainer afterwards?",
+        answer:
+          "Usually, yes. Teeth can slowly drift back after treatment, and a retainer helps hold them in place. Your dentist will explain what type you need and how long to wear it.",
+      },
+      {
+        question: "What can I eat with braces?",
+        answer:
+          "Your dentist will give you a list. In general, very hard, sticky or chewy foods are avoided, because they can damage brackets or wires. Cut harder food into small pieces, and clean carefully after eating.",
+      },
+      {
+        question: "At what age can a child have braces?",
+        answer:
+          "It depends on the child's teeth and jaw growth, and there is no single age. A dental check can show whether treatment is needed now or can wait.",
+        link: { label: "About children's dentistry", href: "/treatments/childrens-dentistry/" },
+      },
+      {
+        question: "Do I need an appointment, and are you open on Sundays?",
+        answer:
+          "Booking ahead means shorter waits, so we recommend calling, WhatsApp or booking online. We are open Monday to Saturday 10:00 AM to 8:00 PM and Sunday 10:00 AM to 5:00 PM.",
+      },
+    ],
+    related: [
+      { slug: "teeth-cleaning", text: "Keeps teeth and gums healthy during treatment." },
+      { slug: "gum-and-oral-health", text: "Healthy gums are needed before and during braces." },
+      { slug: "childrens-dentistry", text: "Early checks help parents plan for growing teeth." },
+    ],
+    cta: {
+      heading: "Curious what straighter teeth would involve?",
+      text: "An examination is the simplest way to find out what is possible for you. Dr. Tripathi will explain your options, the timeline and the cost, with no pressure.",
+    },
+  },
+  "childrens-dentistry": {
+    seo: {
+      title: "Children's Dentistry in Aliganj, Lucknow · Roots & Pulp",
+      description:
+        "Gentle checkups and early care for milk teeth and growing smiles. What to expect at your child's first visit. Roots & Pulp, Aliganj, Lucknow. Open 7 days.",
+    },
+    // [CLINICAL REVIEW REQUIRED BEFORE PUBLICATION] Paediatric advice (first-visit age, toothpaste, injuries) needs particular care.
+    // [VERIFY BEFORE PUBLISHING] Provenance and parental consent for the hero image childrens-dentistry.jpg.
+    clinicallyReviewedOn: "",
+    hero: {
+      eyebrow: "For children",
+      heading: "Children's Dentistry in Lucknow",
+      lede: "Gentle checkups and early care for milk teeth and growing smiles.",
+      text: "A good first dental visit is calm, short and mostly about getting to know us. At Roots & Pulp in Aliganj, Dr. Shubham Tripathi sees children of all ages, from their first checkup onwards, and explains everything to you and your child as he goes.",
+    },
+    glance: [
+      { title: "Who it is for", text: "Children of all ages, from their first checkup onwards." },
+      { title: "What it covers", text: "Checkups, cavity prevention and early care for growing teeth." },
+      {
+        title: "A first visit",
+        text: "Mostly looking and talking. There is no pressure to start treatment on the same day.",
+      },
+      { title: "X-rays", text: "Only if your dentist thinks one is needed." },
+      {
+        title: "At home",
+        text: "Simple daily habits do most of the work. We will show you what suits your child.",
+      },
+    ],
+    symptoms: {
+      heading: "When might your child need a dental visit?",
+      intro:
+        "Many children first come in for a routine checkup. Others come because something has caught a parent's eye.",
+      items: [
+        {
+          icon: "sparkle",
+          title: "A first checkup",
+          text: "It is commonly advised once the first tooth appears, and by around the first birthday.",
+        },
+        { icon: "spots", title: "Dark spots or small holes", text: "These can be early signs of decay." },
+        {
+          icon: "temperature",
+          title: "Toothache or sensitivity",
+          text: "Pain with hot, cold or sweet food, or when chewing.",
+        },
+        {
+          icon: "swelling",
+          title: "Bleeding or red gums",
+          text: "Especially when brushing.",
+          link: { label: "About gum health", href: "/treatments/gum-and-oral-health/" },
+        },
+        {
+          icon: "thumb",
+          title: "Thumb sucking or a dummy",
+          text: "Habits that continue as teeth come through.",
+        },
+        {
+          icon: "crowded",
+          title: "Crowded or crooked teeth",
+          text: "An early look can help you plan ahead.",
+          link: { label: "About braces & aligners", href: "/treatments/braces-and-aligners/" },
+        },
+        {
+          icon: "crack",
+          title: "A knock to the mouth",
+          text: "A chipped, loosened or knocked tooth needs prompt attention.",
+        },
+      ],
+      note: "These signs can have different causes. An examination helps find out what is happening and what, if anything, is needed.",
+    },
+    myths: {
+      heading: "Do milk teeth really matter?",
+      intro: "Yes. Even though they fall out, milk teeth do real work.",
+      items: [
+        {
+          myth: "They will fall out anyway.",
+          fact: "Milk teeth help your child eat, speak and smile. They also hold space for the permanent teeth coming behind them.",
+        },
+        {
+          myth: "A cavity in a milk tooth is not serious.",
+          fact: "Decay can cause pain and infection, and it can affect the teeth coming through. It is easier to deal with early.",
+        },
+        {
+          myth: "Only sweets cause cavities.",
+          fact: "How often your child has sugary food and drink matters as much as how much. Cleaning habits matter too.",
+        },
+      ],
+      illustration: "milk-teeth",
+      caption: "Milk teeth hold the space for the permanent teeth developing beneath them.",
+    },
+    process: {
+      heading: "What happens at your child's first visit",
+      intro: "Every child is different, so the pace is set by your child. This is the general journey.",
+      steps: [
+        {
+          title: "Arrive and settle in",
+          text: "There is no rush. Your child can look around, and you can tell us what worries you both.",
+        },
+        {
+          title: "A friendly chat",
+          text: "Dr. Tripathi starts by listening, to you and to your child. He asks about brushing, food and any concerns.",
+        },
+        {
+          title: "A gentle look",
+          text: "He looks at the teeth, gums and bite, and may use a small mirror. An X-ray is only taken if it is needed.",
+        },
+        {
+          title: "Explaining what he sees",
+          text: "He explains what he finds in plain words, to you and, in simple terms, to your child.",
+        },
+        {
+          title: "Next steps",
+          text: "You hear what care is needed, if any, and when. There is no pressure to start treatment on the same day.",
+        },
+      ],
+      footnote: "If treatment is needed, Dr. Tripathi will explain what it involves before anything begins.",
+    },
+    // [CONFIRM SERVICE AVAILABILITY] Fluoride application, fissure sealants, milk-tooth root treatment,
+    // space maintainers and milk-tooth extraction. Add a card only for services confirmed.
+    options: {
+      heading: "How we can help",
+      suitsLabel: "Why it helps",
+      items: [
+        {
+          title: "Checkups",
+          what: "A regular look at teeth, gums and bite as your child grows.",
+          suits: "Problems are easier to deal with when found early.",
+        },
+        {
+          title: "Cleaning and prevention",
+          what: "Professional cleaning, plus advice on brushing, diet and fluoride toothpaste.",
+          suits: "Prevention is the focus of the clinic.",
+          links: [{ label: "About teeth cleaning", href: "/treatments/teeth-cleaning/" }],
+        },
+        {
+          title: "Fillings for cavities",
+          what: "Tooth-coloured repair of decayed teeth.",
+          suits: "Stops decay spreading.",
+          links: [{ label: "About tooth-coloured fillings", href: "/treatments/tooth-coloured-fillings/" }],
+        },
+        {
+          title: "Early care and advice",
+          what: "Guidance on habits such as thumb sucking, and when to review growing teeth.",
+          suits: "Helps you plan, so you are not caught by surprise.",
+        },
+      ],
+    },
+    decides: {
+      heading: "How care is planned for your child",
+      intro: "Care is not one size fits all. Your dentist will look at:",
+      items: [
+        { title: "Your child's age and stage", text: "Milk teeth, mixed teeth or permanent teeth." },
+        { title: "The teeth and gums", text: "Any decay, gum problems or early signs worth watching." },
+        { title: "Diet and cleaning habits", text: "What your child eats and drinks, and how often." },
+        { title: "Growth and bite", text: "How the jaws and teeth are developing." },
+        { title: "Your child's comfort", text: "How they cope, so the pace suits them." },
+      ],
+      closing: "If something can wait, Dr. Tripathi will say so. We do not treat what does not need treating.",
+    },
+    comfort: {
+      heading: "Helping your child feel at ease",
+      // [CLINIC DETAIL REQUIRED] How anxious children are helped, whether a parent can stay, child-friendly
+      // measures. Do not mention sedation or "painless".
+      paragraphs: [
+        "Many children feel nervous, and many parents do too. That is normal.",
+        "Dr. Tripathi takes his time, explains each step and checks that your child is comfortable. You can ask him to pause at any point.",
+      ],
+      tips: {
+        heading: "A few things that help at home",
+        items: [
+          "Talk about the visit in a calm, positive way.",
+          "Avoid words like “needle”, “pain” or “hurt”. Say the dentist will “count and check your teeth”.",
+          "Book a time when your child is rested and not hungry.",
+          "Tell us about any worries beforehand, so we can plan.",
+        ],
+      },
+      image: {
+        src: "/images/doctor/explain-consult.png",
+        alt: "Dr. Shubham Tripathi speaking with a patient beside the consultation desk",
+        width: 981,
+        height: 637,
+      },
+    },
+    why: {
+      heading: "Why families in Aliganj choose Roots & Pulp",
+      // [CLINIC DETAIL REQUIRED] Child-specific training (never "paediatric specialist" unless he is one), child-friendly features.
+      items: [
+        { title: "Children of all ages", text: "We see children from their first checkup onwards." },
+        { title: "Listen first", text: "Dr. Tripathi starts by understanding your child and your concerns." },
+        {
+          title: "Plain explanation",
+          text: "You are told what he finds, and your options, before anything begins.",
+        },
+        {
+          title: "Prevention first",
+          text: "Dr. Tripathi's public health training shapes a focus on stopping problems before they start.",
+        },
+        {
+          title: "Open seven days",
+          text: "Monday to Saturday until 8 PM, Sunday until 5 PM, so visits fit around school and work.",
+        },
+      ],
+      // [NEW PHOTO REQUIRED] Treatment room with no patient, as a third image.
+      equipment: [
+        {
+          src: "/images/clinic-entrance.jpg",
+          alt: "Street entrance and signboard of Roots & Pulp Dental Clinic in Aliganj",
+          caption: "Our entrance in Sector Q, Aliganj",
+          position: "center 40%",
+        },
+        {
+          src: "/images/doctor/listen-consult.jpg",
+          alt: "Dr. Shubham Tripathi in consultation with a patient at the clinic desk",
+          caption: "Dr. Tripathi listens first",
+        },
+      ],
+      equipmentNote: "Knowing what to expect helps.",
+      galleryLink: { label: "See more in the gallery", href: "/gallery/" },
+    },
+    doctorNote: "Treats patients across different stages of life, from a child's first dental check-up onwards.",
+    aftercare: {
+      heading: "Looking after your child's teeth",
+      intro: "Your dentist's instructions for your own child always come first. This is general guidance.",
+      items: [
+        {
+          title: "Brushing",
+          text: "Twice a day, with an adult helping or checking until your child can brush well alone. Ask your dentist which toothpaste and how much suits your child's age.",
+        },
+        {
+          title: "Food and drink",
+          text: "Fewer sugary snacks and drinks between meals. Avoid sweet drinks in a bottle at bedtime.",
+        },
+        {
+          title: "After treatment",
+          text: "If the mouth was numbed, watch that your child does not bite their lip or cheek until feeling returns. Your dentist will tell you when to eat.",
+        },
+        // [CLINIC DETAIL REQUIRED] Recommended recall interval.
+        {
+          title: "Regular checkups",
+          text: "Your dentist will say how often your child should return. Many children are seen about every six months, but it varies.",
+        },
+      ],
+      followUp: "Early, regular visits help keep children comfortable at the dentist.",
+    },
+    warning: {
+      heading: "When should I contact the dentist?",
+      intro: "Please call the clinic if your child has:",
+      signs: [
+        "a toothache that lasts, or that stops them eating or sleeping",
+        "swelling of the gum or face, or a pimple-like spot on the gum",
+        "a tooth that is broken, chipped, loosened or knocked out",
+        "a fever with a toothache",
+        "bleeding from the mouth that does not settle",
+      ],
+      emergency:
+        "For difficulty breathing or swallowing, swelling spreading toward the eye or neck, or a serious injury to the head or face, seek emergency medical care straight away.",
+    },
+    cost: {
+      heading: "What affects the cost of children's dental care?",
+      intro: "We do not publish fixed prices, because needs vary. The main factors are:",
+      items: [
+        { title: "The type of care", text: "A checkup, a cleaning or a treatment." },
+        { title: "How many teeth", text: "One tooth or several." },
+        { title: "X-rays", text: "Taken only if needed." },
+        { title: "Time", text: "Some children need a slower pace." },
+        { title: "Follow-up", text: "Whether further visits are needed." },
+      ],
+      // [CLINIC DETAIL REQUIRED] Whether a first checkup or consultation is charged separately.
+      closing:
+        "After an examination, Dr. Tripathi will explain what your child needs and give you an estimate before any treatment begins.",
+    },
+    faqIntro: "Straight answers for parents. For anything else, call or send a WhatsApp message.",
+    faqs: [
+      {
+        question: "When should my child first see a dentist?",
+        answer:
+          "It is commonly advised once the first tooth appears, and by around the first birthday. Early visits are mostly about getting comfortable and giving you advice. If your child is older and has not been yet, it is never too late to start.",
+      },
+      {
+        question: "Do baby teeth need treatment if they will fall out?",
+        answer:
+          "Often, yes. Milk teeth help your child eat, speak and keep space for the permanent teeth. Decay in a milk tooth can cause pain and infection. Your dentist will advise what a particular tooth needs.",
+      },
+      {
+        question: "How can I prepare my child for the dentist?",
+        answer:
+          "Talk about the visit calmly and positively, and avoid scary words. Choose a time when your child is rested, and tell us about any worries beforehand. Your calm helps your child feel safe.",
+      },
+      {
+        question: "Will my child be in pain?",
+        answer:
+          "A routine checkup is gentle and should not hurt. If treatment is needed, the area is numbed first, and Dr. Tripathi will explain what to expect and check your child is comfortable. Tell us if your child is worried.",
+      },
+      {
+        question: "How often should my child have a checkup?",
+        answer:
+          "Many children are seen about every six months, but it depends on your child's teeth, diet and risk of decay. Your dentist will tell you what suits your child at the end of each visit.",
+      },
+      {
+        question: "What toothpaste should my child use?",
+        answer:
+          "Your dentist can advise on the right toothpaste and amount for your child's age. Use only a small amount, and supervise brushing so your child does not swallow it. Please ask us rather than guess.",
+      },
+      {
+        question: "My child sucks their thumb or uses a dummy. Is that a problem?",
+        answer:
+          "It is very common in young children, and many stop on their own. If it continues as permanent teeth come through, it can affect how they grow. Your dentist can check and suggest gentle ways to help.",
+      },
+      {
+        question: "How much does children's dental treatment cost in Lucknow?",
+        answer:
+          "It depends on the type of care, how many teeth are involved, any X-rays and how long the visit takes. After an examination at our Aliganj clinic, you will receive a clear explanation and estimate before treatment begins.",
+      },
+      {
+        question: "What should I do if my child breaks or knocks out a tooth?",
+        answer:
+          "Call us straight away. If a permanent tooth is knocked out, handle it by the crown and do not scrub it. Do not put a baby tooth back in. For serious injuries to the head or face, seek emergency medical care first.",
+        link: { label: "Emergency dental care", href: "/treatments/emergency-dental-care/" },
+      },
+      {
+        question: "Do I need an appointment, and are you open on Sundays?",
+        answer:
+          "Booking ahead means shorter waits, so we recommend calling, WhatsApp or booking online. We are open Monday to Saturday 10:00 AM to 8:00 PM and Sunday 10:00 AM to 5:00 PM.",
+        link: { label: "Contact us", href: "/contact/" },
+      },
+    ],
+    related: [
+      { slug: "teeth-cleaning", text: "Professional cleaning and prevention." },
+      { slug: "tooth-coloured-fillings", text: "Repairing cavities in milk and permanent teeth." },
+      { slug: "emergency-dental-care", text: "For a knocked tooth, swelling or severe pain." },
+    ],
+    cta: {
+      heading: "A calm first visit starts here.",
+      text: "There is no need to wait for a problem. Bring your child in for a gentle checkup, and Dr. Tripathi will explain what he sees, in words you both understand.",
+    },
+  },
+  "cosmetic-dentistry": {
+    seo: {
+      title: "Cosmetic Dentistry in Aliganj, Lucknow · Roots & Pulp",
+      description:
+        "Whitening, reshaping, bonding and restorations planned around your smile. What to expect and what affects cost. Roots & Pulp, Aliganj, Lucknow.",
+    },
+    // [CLINICAL REVIEW REQUIRED BEFORE PUBLICATION]
+    // [VERIFY BEFORE PUBLISHING] Provenance and consent for cosmetic-dentistry.jpg and teeth-whitening.webp.
+    clinicallyReviewedOn: "",
+    hero: {
+      eyebrow: "Cosmetic dentistry",
+      heading: "Cosmetic Dentistry in Lucknow",
+      lede: "Changes to your smile, planned around your goals and the health of your teeth.",
+      text: "Cosmetic dentistry covers a range of ways to improve how your teeth look, from whitening and reshaping to bonding and restorations. At Roots & Pulp in Aliganj, Dr. Shubham Tripathi will listen to what you want, examine your teeth first and explain what is realistic.",
+    },
+    glance: [
+      { title: "What it covers", text: "Whitening, reshaping, bonding and restorations." },
+      { title: "Main goal", text: "Improve how your teeth look, while keeping them healthy." },
+      {
+        title: "Planning",
+        text: "Starts with your goals and an examination, so your dentist can explain what is realistic.",
+      },
+      { title: "Health first", text: "Decay and gum disease are dealt with before cosmetic work." },
+      {
+        title: "Visits",
+        text: "Some changes are quick, others take several visits. Your dentist will explain what to expect.",
+      },
+    ],
+    symptoms: {
+      heading: "Could cosmetic dentistry be relevant to you?",
+      intro: "These are common reasons people ask a dentist about changing how their teeth look.",
+      items: [
+        { icon: "shade", title: "Stained or dull teeth", text: "Colour that has darkened or faded over time." },
+        { icon: "crack", title: "A chipped or worn front tooth", text: "An edge that has broken or worn down." },
+        { icon: "gap", title: "A gap between teeth", text: "Spaces you would like to close or reduce." },
+        {
+          icon: "uneven",
+          title: "Uneven, short or oddly shaped teeth",
+          text: "Teeth that look different from their neighbours.",
+        },
+        { icon: "filling", title: "Old fillings that stand out", text: "Fillings that no longer match your teeth." },
+        {
+          icon: "sparkle",
+          title: "A smile for a special occasion",
+          text: "Many people ask before a wedding or event. Planning ahead helps.",
+        },
+      ],
+      note: "Looks and health are linked. An examination helps find out what is causing the change you notice, and whether it needs treatment first.",
+    },
+    explainer: {
+      heading: "What is cosmetic dentistry?",
+      paragraphs: [
+        "Cosmetic dentistry is not one treatment. It is a group of treatments that change the colour, shape, size or position of your teeth.",
+        "Many do more than improve appearance. For example, repairing a chipped tooth can also protect it, and a well-fitted restoration can help you bite comfortably.",
+        "The best results start with healthy teeth and gums, and with realistic expectations. That is why your dentist will talk through your goals first.",
+      ],
+      illustration: "cosmetic",
+      caption: "Different concerns call for different treatments. Your dentist will explain what suits your teeth.",
+    },
+    process: {
+      heading: "What the journey can look like",
+      intro: "Every smile is different, so your own plan may vary. This is the general journey.",
+      steps: [
+        {
+          title: "Listening to your goals",
+          text: "Dr. Tripathi starts by asking what you would like to change, and what bothers you about your smile.",
+        },
+        {
+          title: "Examination",
+          text: "He examines your teeth and gums and usually takes X-rays, because healthy teeth are the base for any cosmetic change.",
+        },
+        // [CLINIC DETAIL REQUIRED] Mock-ups, previews or shade matching. Do not mention digital smile design.
+        {
+          title: "Options and expectations",
+          text: "You hear what is possible, what each option involves, the likely look and an estimate of cost. There is no pressure to decide on the day.",
+        },
+        {
+          title: "Treating any health needs first",
+          text: "Cavities, gum disease or other problems are treated before cosmetic work begins.",
+          links: [{ label: "Gum health", href: "/treatments/gum-and-oral-health/" }],
+        },
+        // [CONFIRM SERVICE AVAILABILITY] Bonding, reshaping, restorations, veneers.
+        {
+          title: "Cosmetic treatment",
+          text: "Treatment is carried out in stages that suit the option chosen.",
+        },
+        {
+          title: "Review and care",
+          text: "Your result is checked, and you receive advice on keeping it. A follow-up date is given.",
+        },
+      ],
+      footnote: "The number of visits depends on your treatment and is explained at your consultation.",
+    },
+    options: {
+      heading: "Types of cosmetic treatment",
+      items: [
+        {
+          title: "Teeth whitening",
+          what: "Lightens the natural colour of teeth.",
+          suits: "Stained or dull teeth with healthy gums.",
+          note: "Results vary, and it does not change fillings or crowns.",
+          links: [{ label: "About teeth whitening", href: "/treatments/teeth-whitening/" }],
+        },
+        {
+          title: "Dental bonding",
+          what: "Tooth-coloured material shaped onto a tooth to repair or reshape it.",
+          suits: "Small chips, small gaps or worn edges.",
+          note: "Usually a quick, conservative option.",
+        },
+        {
+          title: "Reshaping",
+          what: "Gentle adjustments to the shape of a tooth.",
+          suits: "Slightly uneven or pointed edges.",
+          note: "Only suitable where there is enough healthy tooth.",
+        },
+        {
+          title: "Restorations",
+          what: "Tooth-coloured fillings, inlays, onlays and crowns.",
+          suits: "Teeth with more damage that need protection as well as a better look.",
+          links: [
+            { label: "Tooth-coloured fillings", href: "/treatments/tooth-coloured-fillings/" },
+            { label: "Crowns & bridges", href: "/treatments/crowns-and-bridges/" },
+          ],
+        },
+        // [CONFIRM SERVICE AVAILABILITY] Veneers are not mentioned anywhere else on the site. Delete if not offered.
+        {
+          title: "Veneers",
+          what: "Thin shells that cover the front of a tooth.",
+          suits: "More visible changes in colour or shape.",
+        },
+      ],
+    },
+    comparison: {
+      heading: "Which treatment for which concern?",
+      layout: "table",
+      rowHeader: "Your concern",
+      columns: ["Treatments your dentist may discuss", "Worth knowing"],
+      rows: [
+        {
+          label: "Stained or dull teeth",
+          values: ["Teeth whitening", "Works on natural tooth colour, not on fillings or crowns"],
+        },
+        { label: "Chipped or small gaps", values: ["Bonding", "Tooth-coloured material shaped onto the tooth"] },
+        {
+          label: "Uneven or short teeth",
+          values: ["Reshaping", "Small adjustments to the tooth's shape, where there is enough tooth"],
+        },
+        {
+          label: "Large damage or weak tooth",
+          values: ["Crowns, inlays or onlays", "Protect as well as improve appearance"],
+        },
+        { label: "Old, dark fillings", values: ["Tooth-coloured fillings", "Replaced only if needed"] },
+        // [CONFIRM SERVICE AVAILABILITY] Veneers.
+        { label: "Wide changes in shape or colour", values: ["Veneers", "Thin shells over the front of teeth"] },
+        { label: "Crooked teeth", values: ["Braces or aligners", "Move the teeth rather than covering them"] },
+      ],
+      closing:
+        "The right option depends on your teeth, your goals and clinical assessment. Sometimes a smaller change is enough.",
+      links: [
+        { label: "Teeth whitening", href: "/treatments/teeth-whitening/" },
+        { label: "Tooth-coloured fillings", href: "/treatments/tooth-coloured-fillings/" },
+        { label: "Crowns & bridges", href: "/treatments/crowns-and-bridges/" },
+        { label: "Braces & aligners", href: "/treatments/braces-and-aligners/" },
+      ],
+    },
+    decides: {
+      heading: "Is it right for me?",
+      intro: "Cosmetic work is planned around your teeth, not a template. Your dentist will look at:",
+      items: [
+        { title: "Your goals", text: "What you want to change, and what is realistic." },
+        { title: "Your teeth", text: "How much healthy tooth there is, and what is already in it." },
+        { title: "Your gums", text: "Healthy gums are the frame for any change." },
+        { title: "Your bite", text: "A change should not interfere with how you chew." },
+        { title: "Your habits", text: "For example, grinding or biting hard objects." },
+        { title: "Your priorities", text: "Time, cost and how long you want the result to last." },
+      ],
+      closing:
+        "If a simple treatment will do, or if nothing is needed, Dr. Tripathi will say so. You can take time to decide.",
+    },
+    comfort: {
+      heading: "Feeling comfortable",
+      // [CLINIC DETAIL REQUIRED] Comfort measures the clinic offers.
+      paragraphs: [
+        "Many cosmetic treatments are gentle, and some need no anaesthetic at all. Where the area is numbed, you can tell Dr. Tripathi if you feel anything.",
+        "Some treatments, such as whitening, can leave teeth sensitive for a short time. Your dentist will explain what to expect, and what to do if it happens.",
+        "Questions are always welcome, including awkward ones about how you will look.",
+      ],
+      image: {
+        src: "/images/doctor/explain-consult.png",
+        alt: "Dr. Shubham Tripathi speaking with a patient beside the consultation desk",
+        width: 981,
+        height: 637,
+      },
+    },
+    why: {
+      heading: "Why patients in Aliganj choose Roots & Pulp",
+      // [CLINIC DETAIL REQUIRED] Cosmetic training, materials or systems, previews or shade matching.
+      items: [
+        { title: "Goals first", text: "Dr. Tripathi listens to what you want before suggesting anything." },
+        {
+          title: "Realistic expectations",
+          text: "What is possible, and what is not, is explained upfront.",
+        },
+        {
+          title: "Honest advice",
+          text: "You are told when something can wait, or does not need treatment at all.",
+        },
+        {
+          title: "Health before looks",
+          text: "Prevention shapes the approach, so cosmetic work sits on healthy teeth and gums.",
+        },
+        { title: "Open seven days", text: "Monday to Saturday until 8 PM, Sunday until 5 PM." },
+      ],
+      equipment: [
+        {
+          src: "/images/doctor/listen-consult.jpg",
+          alt: "Dr. Shubham Tripathi in consultation with a patient at the clinic desk",
+          caption: "Listening to your goals",
+        },
+        {
+          src: "/images/doctor/explain-consult.png",
+          alt: "Dr. Shubham Tripathi speaking with a patient beside the consultation desk",
+          caption: "Explaining what is realistic",
+        },
+        {
+          src: "/images/equipment/teeth-whitening-light.jpg",
+          alt: "LED teeth whitening light glowing blue",
+          caption: "Teeth Whitening Light",
+          detail: "In-clinic LED whitening",
+          position: "center 45%",
+        },
+      ],
+      equipmentNote: "Your first visit is a conversation.",
+      galleryLink: { label: "See the clinic in the gallery", href: "/gallery/" },
+    },
+    doctorNote: "Treats restorative and aesthetic concerns, including smile makeovers.",
+    aftercare: {
+      heading: "Afterwards, and keeping your result",
+      intro: "Your dentist's instructions always come first. This is general guidance.",
+      items: [
+        {
+          title: "Straight after",
+          text: "If your mouth was numbed, take care not to bite your lip or cheek until feeling returns.",
+        },
+        {
+          title: "The first days",
+          text: "Teeth may feel a little sensitive. Your dentist may also suggest limiting strongly staining food and drink for a while.",
+        },
+        {
+          title: "Everyday care",
+          text: "Brush and clean between teeth as usual. Avoid biting hard objects, such as pens, ice or nails, which can chip bonded or restored teeth.",
+        },
+        {
+          title: "Maintenance",
+          text: "Cosmetic results are not permanent. Teeth can stain and wear, and restorations may need repair or replacement over time. Regular check-ups and cleaning help.",
+        },
+      ],
+      followUp: "Attend your review. Small adjustments are easier to make early.",
+    },
+    warning: {
+      heading: "When should I contact my dentist?",
+      intro: "Please call the clinic if you notice:",
+      signs: [
+        "a bonded or restored area that has chipped, cracked or come off",
+        "a rough or sharp edge",
+        "sensitivity that is strong or that does not settle",
+        "bleeding, swelling or soreness in the gums",
+        "pain that is getting worse",
+      ],
+      emergency:
+        "For difficulty breathing or swallowing, or swelling spreading toward the eye or neck, seek emergency medical care straight away.",
+    },
+    cost: {
+      heading: "What affects the cost of cosmetic dentistry?",
+      intro: "We do not publish fixed prices, because every smile is different. The main factors are:",
+      items: [
+        { title: "The treatment", text: "Whitening, bonding, restorations or another option." },
+        { title: "How many teeth", text: "One tooth or several." },
+        { title: "The material", text: "Materials differ in look, strength and cost." },
+        { title: "How complex it is", text: "Simple changes differ from larger ones." },
+        {
+          title: "Health work first",
+          text: "Fillings, cleaning or gum care that may be needed beforehand.",
+        },
+        { title: "Maintenance", text: "Check-ups, and repair or replacement over time." },
+      ],
+      // [CLINIC DETAIL REQUIRED] Whether the consultation is charged separately.
+      closing:
+        "After an examination, Dr. Tripathi will explain your options and give you an estimate before treatment begins.",
+    },
+    faqIntro: "Straight answers about cosmetic dentistry. For anything else, call or send a WhatsApp message.",
+    faqs: [
+      {
+        question: "What does cosmetic dentistry include?",
+        answer:
+          "It is a group of treatments that change the colour, shape, size or position of teeth, such as whitening, bonding, reshaping and restorations. Which one suits you depends on your teeth and your goals. Dr. Tripathi will explain the options after an examination.",
+      },
+      {
+        question: "Will cosmetic treatment look natural?",
+        answer:
+          "The aim is for it to blend with your own teeth, and materials are chosen to match the colour and shape of your teeth as closely as possible. No one can promise exactly how a result will look, so we explain what is realistic before you begin.",
+      },
+      {
+        question: "Does cosmetic dentistry damage teeth?",
+        answer:
+          "It depends on the treatment. Whitening and bonding are generally conservative. Some treatments, such as crowns, need part of the tooth to be shaped. Your dentist will tell you what each involves, and whether a smaller option would do.",
+      },
+      {
+        question: "How long do cosmetic results last?",
+        answer:
+          "There is no fixed time. Results depend on the treatment, your habits, how well you look after your teeth and regular check-ups. Teeth can stain and wear, and restorations may need repair or replacement over time.",
+      },
+      {
+        question: "Can I have cosmetic treatment if I have cavities or gum problems?",
+        answer:
+          "Usually these are treated first, because healthy teeth and gums are the base for cosmetic work. Your dentist will examine you and explain the order of treatment.",
+      },
+      // [CONFIRM SERVICE AVAILABILITY] Delete the veneers part if not offered.
+      {
+        question: "Which is better, bonding or veneers?",
+        answer:
+          "Neither is better for everyone. Bonding is generally a quicker and more conservative way to repair small changes. Veneers cover more of the tooth and suit larger changes.",
+      },
+      {
+        question: "Does teeth whitening hurt?",
+        answer:
+          "Some people feel temporary sensitivity. Your dentist will check your teeth and gums first and explain what to expect.",
+        link: { label: "About teeth whitening", href: "/treatments/teeth-whitening/" },
+      },
+      {
+        question: "How much does cosmetic dentistry cost in Lucknow?",
+        answer:
+          "The cost depends on the treatment, how many teeth are involved, the material, the complexity and any health work needed first. After an examination at our Aliganj clinic, you will receive a clear explanation and estimate before treatment begins.",
+      },
+      {
+        question: "How many visits will I need?",
+        answer:
+          "Some changes are quick, and others take several visits. It depends on the treatment you choose. Dr. Tripathi will explain what to expect for your plan at your consultation.",
+      },
+      {
+        question: "Do I need an appointment, and are you open on Sundays?",
+        answer:
+          "Booking ahead means shorter waits, so we recommend calling, WhatsApp or booking online. We are open Monday to Saturday 10:00 AM to 8:00 PM and Sunday 10:00 AM to 5:00 PM.",
+      },
+    ],
+    related: [
+      { slug: "teeth-whitening", text: "Lightens stained or dull teeth." },
+      { slug: "crowns-and-bridges", text: "Protect and restore damaged teeth." },
+      { slug: "braces-and-aligners", text: "Move crooked teeth rather than covering them." },
+    ],
+    cta: {
+      heading: "Thinking about changing your smile?",
+      text: "Start with a conversation. Dr. Tripathi will listen to what you would like, examine your teeth and explain what is possible, with no pressure.",
     },
   },
 };
