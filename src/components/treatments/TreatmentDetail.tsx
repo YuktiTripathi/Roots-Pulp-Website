@@ -196,9 +196,15 @@ export function TreatmentDetail({ treatment, content }: { treatment: Treatment; 
               <ul className="tp-cards">
                 {group.items.map((item, index) => (
                   <li key={item.title} className="tp-card tp-symptom reveal" style={stagger(index % 3)}>
-                    <span className="tp-icon">
-                      <SymptomGlyph icon={item.icon} />
-                    </span>
+                    {item.image ? (
+                      <span className="tp-symptom-art">
+                        <Image src={item.image} alt="" width={160} height={160} sizes="112px" />
+                      </span>
+                    ) : (
+                      <span className="tp-icon">
+                        <SymptomGlyph icon={item.icon} />
+                      </span>
+                    )}
                     <h3>{item.title}</h3>
                     <p>{item.text}</p>
                     {item.link ? <LinkRow links={[item.link]} className="tp-card-link" /> : null}

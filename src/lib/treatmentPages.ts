@@ -47,7 +47,8 @@ export type TreatmentPageContent = {
     heading: string;
     intro: string;
     /** Items with a group are shown under that group's label, in order of first appearance. */
-    items: (TreatmentCardItem & { icon: SymptomIcon; group?: string; link?: TreatmentLink })[];
+    /** An image, when given, is shown instead of the line icon. */
+    items: (TreatmentCardItem & { icon: SymptomIcon; image?: string; group?: string; link?: TreatmentLink })[];
     note: string;
   };
   explainer: {
@@ -162,17 +163,25 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
       items: [
         {
           icon: "temperature",
+          image: "/images/treatments/root-canal/lingering-sensitivity.webp",
           title: "Lingering sensitivity",
           text: "Hot or cold that stays long after the drink or food is gone.",
         },
-        { icon: "bite", title: "Pain when biting", text: "A tooth that hurts when you chew or press on it." },
+        {
+          icon: "bite",
+          image: "/images/treatments/root-canal/pain-when-biting.webp",
+          title: "Pain when biting",
+          text: "A tooth that hurts when you chew or press on it.",
+        },
         {
           icon: "night",
+          image: "/images/treatments/root-canal/toothache-at-night.webp",
           title: "A toothache that wakes you",
           text: "Pain that is throbbing, or that disturbs your sleep.",
         },
         {
           icon: "swelling",
+          image: "/images/treatments/root-canal/gum-swelling.webp",
           title: "Swelling or a bump on the gum",
           text: "Puffiness near a tooth, sometimes with a pimple-like spot.",
         },
@@ -183,6 +192,7 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
         },
         {
           icon: "shade",
+          image: "/images/treatments/root-canal/darkening-tooth.webp",
           title: "A tooth that is darkening",
           text: "A tooth that has changed colour compared with its neighbours.",
         },
