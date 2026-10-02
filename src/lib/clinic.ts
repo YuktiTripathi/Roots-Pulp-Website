@@ -1,0 +1,455 @@
+/**
+ * Verified clinic facts from the September 2026 production copy deck.
+ * Values marked unverified stay empty or unpublished until the clinic confirms them.
+ */
+
+export const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://rootsandpulp.com").replace(/\/$/, "");
+
+/** Google Business Profile share link supplied by the clinic. */
+export const googleBusinessProfileUrl =
+  process.env.NEXT_PUBLIC_GOOGLE_BUSINESS_URL || "https://share.google/uS1ZDQ6N1XaZiPDCz";
+
+/** [VERIFY] Google Maps URL of the Business Profile. */
+export const googleMapsUrl = process.env.NEXT_PUBLIC_GOOGLE_MAPS_URL ?? "";
+
+/** [VERIFY] Official Instagram. Hidden until set. */
+export const instagramUrl = process.env.NEXT_PUBLIC_INSTAGRAM_URL ?? "";
+
+/** [VERIFY] Latitude / longitude from the Business Profile pin. */
+export const clinicLatitude = process.env.NEXT_PUBLIC_CLINIC_LAT ?? "";
+export const clinicLongitude = process.env.NEXT_PUBLIC_CLINIC_LNG ?? "";
+
+export const clinic = {
+  name: "Roots & Pulp Dental Clinic",
+  streetAddress: "ED-362, Sector-Q, Aliganj",
+  locality: "Lucknow",
+  region: "Uttar Pradesh",
+  postalCode: "226024",
+  country: "India",
+  countryCode: "IN",
+  landmark: "Near Saraswati Vidya Mandir School",
+  phoneDisplay: "+91 6386080239",
+  phoneTel: "+916386080239",
+  phoneSchema: "+91 63860 80239",
+  whatsappDisplay: "+91 7746989097",
+  whatsappE164: "917746989097",
+  whatsappPrefill: "Hello Roots & Pulp Dental Clinic, I would like to book a dental appointment.",
+  tagline: "Your smile is our reward.",
+  disclaimer:
+    "Information on this website is general and isn't a substitute for a professional dental examination.",
+} as const;
+
+export const doctor = {
+  name: "Dr. Shubham Tripathi",
+  honorificPrefix: "Dr.",
+  givenName: "Shubham Tripathi",
+  credentials: "BDS, MPH",
+  role: "Founder & Director",
+  registration: "Reg. No. 20606, U.P. State Dental Council",
+  portrait: "/images/dr-shubham-tripathi.webp",
+  portraitWidth: 674,
+  portraitHeight: 1100,
+  heroAlt: "Dr. Shubham Tripathi in navy scrubs with dental loupes, smiling with arms folded",
+  profileAlt: "Dr. Shubham Tripathi, dental surgeon and founder of Roots & Pulp Dental Clinic",
+  quote: "A smile is the simplest way to spread happiness and creating it is my passion.",
+} as const;
+
+/**
+ * Drop the clinic film at this path, then it autoplays in the homepage hero.
+ * Leave empty until a real, licensed clinic video is supplied.
+ */
+export const heroVideoPath = "/assets/clinic-hero.mp4";
+export const heroVideoSrc = process.env.NEXT_PUBLIC_HERO_VIDEO || "";
+export const heroPoster = "/images/hero-poster.jpg";
+
+export type ShowcaseSlide = {
+  src: string | null;
+  alt: string;
+  caption: string;
+};
+
+export const showcaseSlides: ShowcaseSlide[] = [
+  {
+    src: doctor.portrait,
+    alt: doctor.profileAlt,
+    caption: "Dr. Shubham Tripathi",
+  },
+  {
+    src: null,
+    alt: "Entrance and signage of Roots & Pulp Dental Clinic in Sector Q, Aliganj",
+    caption: "Clinic exterior",
+  },
+  {
+    src: null,
+    alt: "Reception area at Roots & Pulp Dental Clinic",
+    caption: "Reception",
+  },
+  {
+    src: null,
+    alt: "Treatment room with dental chair at Roots & Pulp",
+    caption: "Treatment room",
+  },
+  {
+    src: null,
+    alt: "Dental equipment at Roots & Pulp Dental Clinic",
+    caption: "Treatment equipment",
+  },
+  {
+    src: null,
+    alt: "Care environment at Roots & Pulp Dental Clinic",
+    caption: "Patient care",
+  },
+];
+
+export function telHref() {
+  return `tel:${clinic.phoneTel}`;
+}
+
+export function whatsappHref(message: string = clinic.whatsappPrefill) {
+  return `https://wa.me/${clinic.whatsappE164}?text=${encodeURIComponent(message)}`;
+}
+
+/** Online booking page on Kivi Health. */
+export const bookingUrl = "https://kivihealth.com/iam/dr.shubham.tripathi.d4cuynx3jxpn/bookslot";
+
+export const directionsUrl =
+  googleMapsUrl ||
+  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+    `${clinic.name}, ${clinic.streetAddress}, ${clinic.locality}, ${clinic.region} ${clinic.postalCode}`,
+  )}`;
+
+export const fullAddress = `${clinic.streetAddress}, ${clinic.locality}, ${clinic.region} ${clinic.postalCode}`;
+
+export type NavItem = {
+  label: string;
+  href: string;
+  launched: boolean;
+};
+
+export const navigation: NavItem[] = [
+  { label: "Home", href: "/", launched: true },
+  { label: "About", href: "/about/", launched: true },
+  { label: "Treatments", href: "/treatments/", launched: true },
+  { label: "Doctor", href: "/doctor/dr-shubham-tripathi/", launched: true },
+  { label: "Gallery", href: "/gallery/", launched: true },
+  { label: "Smile Gallery", href: "/smile-gallery/", launched: false },
+  { label: "Reviews", href: "/reviews/", launched: true },
+  { label: "Dental Guides", href: "/guides/", launched: false },
+  { label: "Contact", href: "/contact/", launched: true },
+];
+
+export const launchedNavigation = navigation.filter((item) => item.launched);
+
+export type Treatment = {
+  slug: string;
+  name: string;
+  /** Homepage featured card. Only the six approved home descriptions. */
+  homeSummary?: string;
+  /** One line from the treatments overview. */
+  overview: string;
+  group: string;
+  featured?: boolean;
+};
+
+export const treatments: Treatment[] = [
+  {
+    slug: "teeth-cleaning",
+    name: "Teeth Cleaning",
+    overview: "Removes plaque and tartar that brushing misses, to keep gums healthy.",
+    group: "Everyday & preventive care",
+  },
+  {
+    slug: "tooth-coloured-fillings",
+    name: "Tooth-Coloured Fillings",
+    overview: "Repair cavities with fillings matched to your natural teeth.",
+    group: "Everyday & preventive care",
+  },
+  {
+    slug: "tooth-extraction",
+    name: "Tooth Extraction",
+    overview: "Gentle removal of a tooth that can't be saved, with clear aftercare.",
+    group: "Everyday & preventive care",
+  },
+  {
+    slug: "gum-and-oral-health",
+    name: "Gum & Oral Health",
+    overview: "Treatment for bleeding or receding gums, plus oral cancer screening.",
+    group: "Everyday & preventive care",
+  },
+  {
+    slug: "root-canal-treatment",
+    name: "Root Canal Treatment",
+    homeSummary: "Save an infected or badly decayed tooth and relieve the pain it causes.",
+    overview: "Removes infection from inside a tooth so you can keep it. Performed with rotary endodontics.",
+    group: "Saving and restoring teeth",
+    featured: true,
+  },
+  {
+    slug: "crowns-and-bridges",
+    name: "Crowns & Bridges",
+    homeSummary: "Protect a weakened tooth, or fill the gap left by a missing one.",
+    overview: "Protect a weakened tooth, or replace a missing one with a fixed bridge. Includes inlays and onlays.",
+    group: "Saving and restoring teeth",
+    featured: true,
+  },
+  {
+    slug: "dental-implants",
+    name: "Dental Implants",
+    homeSummary: "A fixed replacement for a missing tooth, anchored in the jawbone.",
+    overview: "A fixed, natural-looking replacement anchored in the jawbone.",
+    group: "Replacing missing teeth",
+    featured: true,
+  },
+  {
+    slug: "dentures",
+    name: "Dentures",
+    overview: "Removable partial or complete dentures, made to fit comfortably.",
+    group: "Replacing missing teeth",
+  },
+  {
+    slug: "teeth-whitening",
+    name: "Teeth Whitening",
+    overview: "Brighten stained or dull teeth, with realistic expectations set upfront.",
+    group: "Cosmetic dentistry",
+  },
+  {
+    slug: "cosmetic-dentistry",
+    name: "Cosmetic Dentistry",
+    homeSummary: "Whitening, reshaping and restorations planned around your smile.",
+    overview: "Reshaping, bonding and restorations planned around your smile.",
+    group: "Cosmetic dentistry",
+    featured: true,
+  },
+  {
+    slug: "braces-and-aligners",
+    name: "Braces & Aligners",
+    homeSummary: "Straighten teeth with fixed braces or removable clear aligners.",
+    overview: "Fixed braces or removable clear aligners, for teens and adults.",
+    group: "Straightening teeth",
+    featured: true,
+  },
+  {
+    slug: "childrens-dentistry",
+    name: "Children's Dentistry",
+    homeSummary: "Gentle checkups and early care for milk teeth and growing smiles.",
+    overview: "Gentle checkups, cavity prevention and early care for growing smiles.",
+    group: "For children",
+    featured: true,
+  },
+  {
+    slug: "emergency-dental-care",
+    name: "Emergency Dental Care",
+    overview: "Severe pain, swelling, or a broken or knocked-out tooth? Call us first.",
+    group: "Urgent care",
+  },
+];
+
+export const featuredTreatments = [
+  "root-canal-treatment",
+  "dental-implants",
+  "crowns-and-bridges",
+  "braces-and-aligners",
+  "childrens-dentistry",
+  "cosmetic-dentistry",
+]
+  .map((slug) => treatments.find((item) => item.slug === slug))
+  .filter((item): item is Treatment => Boolean(item));
+
+export const treatmentGroups = [
+  "Everyday & preventive care",
+  "Saving and restoring teeth",
+  "Replacing missing teeth",
+  "Cosmetic dentistry",
+  "Straightening teeth",
+  "For children",
+  "Urgent care",
+] as const;
+
+export function treatmentHref(slug: string) {
+  return `/treatments/${slug}/`;
+}
+
+export const concerns = [
+  {
+    title: "I have tooth pain",
+    detail: "Root canal treatment, fillings",
+    href: treatmentHref("root-canal-treatment"),
+    treatmentSlugs: ["root-canal-treatment", "tooth-coloured-fillings"],
+  },
+  {
+    title: "I'm missing a tooth",
+    detail: "Implants, bridges, dentures",
+    href: treatmentHref("dental-implants"),
+    treatmentSlugs: ["dental-implants", "crowns-and-bridges", "dentures"],
+  },
+  {
+    title: "My teeth are stained or chipped",
+    detail: "Whitening, cosmetic dentistry",
+    href: treatmentHref("cosmetic-dentistry"),
+    treatmentSlugs: ["teeth-whitening", "cosmetic-dentistry"],
+  },
+  {
+    title: "My teeth are crooked",
+    detail: "Braces & aligners",
+    href: treatmentHref("braces-and-aligners"),
+    treatmentSlugs: ["braces-and-aligners"],
+  },
+  {
+    title: "My child needs a checkup",
+    detail: "Children's dentistry",
+    href: treatmentHref("childrens-dentistry"),
+    treatmentSlugs: ["childrens-dentistry"],
+  },
+  {
+    title: "I'm due for a cleaning",
+    detail: "Teeth cleaning, gum care",
+    href: treatmentHref("teeth-cleaning"),
+    treatmentSlugs: ["teeth-cleaning", "gum-and-oral-health"],
+  },
+] as const;
+
+export const treatmentExplorerTabs = treatmentGroups.map((group) => ({
+  group,
+  label: group,
+}));
+
+export const carePrinciples = [
+  {
+    num: "01",
+    title: "You'll understand your treatment.",
+    body: "We explain what we find and walk you through your options before anything begins.",
+  },
+  {
+    num: "02",
+    title: "Prevention comes first.",
+    body: "Public health training means we focus on keeping problems from coming back.",
+  },
+  {
+    num: "03",
+    title: "Open seven days.",
+    body: "Monday to Saturday until 8 PM, and Sundays until 5 PM, so care fits around work and school.",
+  },
+] as const;
+
+export const trustItems = [
+  "BDS, MPH",
+  "Rotary Endodontics Certified",
+  "Life Member, Indian Dental Association",
+  "Reg. No. 20606, U.P. State Dental Council",
+  "Open 7 days",
+] as const;
+
+export const expectations = [
+  {
+    title: "The same dentist, every visit.",
+    body: "Dr. Tripathi plans and oversees your care from first consultation to follow-up.",
+    /** [VERIFY: confirm he sees every patient] */
+    published: false,
+  },
+  {
+    title: "You'll understand your treatment.",
+    body: "We explain what we find and walk you through your options before anything begins.",
+    published: true,
+  },
+  {
+    title: "Prevention comes first.",
+    body: "Public health training means we focus on keeping problems from coming back.",
+    published: true,
+  },
+  {
+    title: "Open seven days.",
+    body: "Monday to Saturday until 8 PM, and Sundays until 5 PM, so care fits around work and school.",
+    published: true,
+  },
+] as const;
+
+export const clinicPhotos: { src: string | null; caption: string; alt: string }[] = [
+  {
+    src: null,
+    caption: "Entrance and signage",
+    alt: "Entrance and signage of Roots & Pulp Dental Clinic in Sector Q, Aliganj",
+  },
+  {
+    src: null,
+    caption: "Reception",
+    alt: "Reception area at Roots & Pulp Dental Clinic",
+  },
+  {
+    src: null,
+    caption: "Treatment room",
+    alt: "Treatment room with dental chair at Roots & Pulp",
+  },
+  {
+    src: null,
+    caption: "Sterilisation area",
+    alt: "Instrument sterilisation area at Roots & Pulp",
+  },
+];
+
+export type GoogleReview = {
+  name: string;
+  date: string;
+  text: string;
+};
+
+/** Only genuine Google reviews, quoted with permission. Leave empty until supplied. */
+export const googleReviews: GoogleReview[] = [];
+
+export const homeFaqs = [
+  {
+    question: "Do I need an appointment?",
+    answer:
+      "Booking ahead means shorter waiting times, so we recommend calling, sending a WhatsApp message or booking online.",
+  },
+  {
+    question: "What happens at my first visit?",
+    answer:
+      "Dr. Tripathi will ask about your concerns and medical history, examine your teeth and gums, and may recommend an X-ray. He'll explain what he finds and discuss your options. There's no pressure to start treatment the same day.",
+  },
+  {
+    question: "Do you treat children?",
+    answer: "Yes. We see children of all ages, from their first checkup onwards.",
+  },
+  {
+    question: "Are you open on Sundays?",
+    answer: "Yes, from 10:00 AM to 5:00 PM. Monday to Saturday, we're open from 10:00 AM to 8:00 PM.",
+  },
+  {
+    question: "How do I know if I need a root canal?",
+    answer:
+      "Lingering sensitivity to hot or cold, pain when biting, swelling near a tooth or a darkening tooth can all be signs. Only an examination can confirm it.",
+    link: {
+      href: "/treatments/root-canal-treatment/",
+      label: "Read about root canal treatment",
+    },
+  },
+] as const;
+
+export const doctorCredentials = [
+  "Bachelor of Dental Surgery (BDS)",
+  "Master of Public Health (MPH)",
+  "Specialised Certification in Rotary Endodontics",
+  "Over 7 years of clinical experience",
+  "Life Member, Indian Dental Association",
+  "Chief Dental Consultant, Re-Life Hospital, Bahraich",
+  "U.P. State Dental Council Reg. No. 20606",
+] as const;
+
+export const homeSeo = {
+  title: "Dental Clinic in Aliganj, Lucknow · Roots & Pulp",
+  description:
+    "Doctor-led dental care in Sector Q, Aliganj, open 7 days. Root canals, implants, crowns, braces, aligners and children's dentistry. Book, call or WhatsApp.",
+} as const;
+
+export const visitReasons = [
+  "Checkup",
+  "Tooth pain",
+  "Cleaning",
+  "Filling",
+  "Root canal",
+  "Replacing missing teeth",
+  "Braces or aligners",
+  "Whitening or cosmetic",
+  "Child's visit",
+  "Other",
+] as const;

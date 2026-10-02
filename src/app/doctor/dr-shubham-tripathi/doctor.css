@@ -1,0 +1,342 @@
+.doctor-page { overflow-x: clip; background: var(--ivory); }
+
+.doctor-profile { padding: 20px 0 72px; }
+
+.doctor-profile-inner {
+  width: min(var(--max), calc(100% - 40px));
+  margin: 0 auto;
+}
+
+.doctor-crumbs ol {
+  display: flex;
+  gap: 8px;
+  list-style: none;
+  margin: 0 0 28px;
+  padding: 10px 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.doctor-crumbs li:not(:last-child)::after {
+  content: "·";
+  margin-left: 8px;
+}
+
+.doctor-crumbs a { color: var(--teal); text-decoration: none; }
+
+.doctor-profile-grid {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.82fr) minmax(0, 1fr);
+  gap: 56px;
+  align-items: start;
+}
+
+.doctor-profile-figure { margin: 0; }
+
+.doctor-portrait-wrap { position: relative; }
+
+/* Arched stage for the cutout portrait. */
+.doctor-portrait-stage {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  border-radius: 50% 50% 26px 26px / 30% 30% 26px 26px;
+  background:
+    radial-gradient(circle at 50% 30%, rgba(255, 255, 255, 0.9), transparent 55%),
+    linear-gradient(180deg, var(--teal-soft) 0%, #d9e8ec 100%);
+  overflow: hidden;
+}
+
+.doctor-portrait-stage::before {
+  content: "";
+  position: absolute;
+  inset: 7% 12% auto;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px solid rgba(14, 74, 71, 0.22);
+  pointer-events: none;
+}
+
+.doctor-profile-photo {
+  position: relative;
+  width: 72%;
+  height: auto;
+  display: block;
+}
+
+.doctor-reg {
+  position: absolute;
+  left: -10px;
+  bottom: 22px;
+  max-width: min(78%, 260px);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  padding: 12px 16px 12px 12px;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: 0 14px 30px rgba(16, 32, 72, 0.12);
+  color: var(--navy);
+  font-size: 0.82rem;
+  font-weight: 650;
+  line-height: 1.35;
+}
+
+.doctor-reg-icon {
+  width: 34px;
+  height: 34px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--teal-soft);
+  color: var(--teal);
+}
+
+.doctor-reg-icon svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.doctor-profile-figure figcaption {
+  margin-top: 16px;
+  padding-left: 2px;
+}
+
+.doctor-caption-name {
+  font-family: var(--serif);
+  font-size: 1.45rem;
+  color: var(--navy);
+  line-height: 1.2;
+}
+
+.doctor-caption-cred {
+  margin-top: 2px;
+  color: var(--teal);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.doctor-caption-role {
+  margin-top: 8px;
+  color: var(--navy);
+  font-weight: 650;
+}
+
+.doctor-caption-role span {
+  display: block;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.doctor-profile-copy h1 {
+  font-size: clamp(2.4rem, 4vw, 3.6rem);
+  color: var(--navy);
+  margin-bottom: 16px;
+}
+
+.doctor-chips {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 8px;
+  padding: 0;
+}
+
+.doctor-chips li {
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: white;
+  border: 1px solid var(--line);
+  color: var(--navy);
+  font-size: 0.86rem;
+  font-weight: 650;
+}
+
+.doctor-profile-copy p {
+  margin-top: 14px;
+  color: var(--muted);
+}
+
+.doctor-profile-copy .hero-actions { margin-top: 26px; }
+
+.doctor-approach { background: white; }
+.doctor-approach h2,
+.doctor-training h2 {
+  font-size: clamp(2rem, 3.4vw, 2.8rem);
+  color: var(--navy);
+  max-width: 22ch;
+  text-wrap: balance;
+}
+
+.doctor-training h2 { color: white; }
+
+.doctor-approach-lede {
+  margin-top: 16px;
+  max-width: 68rem;
+  color: var(--muted);
+}
+
+.doctor-approach-list {
+  list-style: none;
+  margin: 32px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  align-items: stretch;
+}
+
+.doctor-approach-list li {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 0 0 22px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--ivory);
+  overflow: hidden;
+  --reveal-extra: box-shadow 0.35s var(--ease-out), border-color 0.25s ease;
+  transition: box-shadow 0.35s var(--ease-out), border-color 0.25s ease;
+}
+
+.doctor-approach-list li:hover {
+  border-color: rgba(14, 74, 71, 0.4);
+  box-shadow: 0 18px 38px rgba(16, 32, 72, 0.1);
+}
+
+.doctor-approach-media {
+  position: relative;
+  height: 240px;
+  flex: none;
+  overflow: hidden;
+}
+
+.doctor-approach-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+  transition: transform 0.9s var(--ease-out);
+}
+
+.doctor-approach-list li:hover .doctor-approach-photo { transform: scale(1.05); }
+
+.doctor-approach-num {
+  position: absolute;
+  left: 16px;
+  bottom: 14px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--teal);
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  line-height: 1.4;
+}
+
+.doctor-approach-list h3,
+.doctor-approach-list p {
+  padding-left: 18px;
+  padding-right: 18px;
+}
+
+.doctor-approach-list h3 {
+  font-size: 1.55rem;
+  color: var(--navy);
+  margin: 16px 0 10px;
+}
+
+.doctor-approach-list p { color: var(--muted); flex: 1; }
+
+.doctor-training { background: var(--navy); }
+.doctor-training .eyebrow { color: rgba(255, 255, 255, 0.72); }
+
+.doctor-credential-grid {
+  list-style: none;
+  margin: 36px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+}
+
+.doctor-credential-grid li {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+}
+
+.doctor-credential-icon {
+  width: 72px;
+  height: 72px;
+  flex: none;
+  border-radius: 50%;
+  background: white;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.16);
+  transition: transform 0.4s var(--ease-out);
+}
+
+.doctor-credential-grid li:hover .doctor-credential-icon { transform: scale(1.08) rotate(-4deg); }
+
+.doctor-credential-icon svg {
+  width: 30px;
+  height: 30px;
+  fill: none;
+  stroke: var(--navy);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.doctor-credential-grid strong {
+  display: block;
+  color: white;
+  font-size: 1.35rem;
+  line-height: 1.2;
+}
+
+.doctor-credential-grid li > span span {
+  display: block;
+  margin-top: 4px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.95rem;
+}
+
+@media (max-width: 980px) {
+  .doctor-profile-grid { grid-template-columns: 1fr; gap: 28px; }
+  .doctor-portrait-wrap { max-width: 440px; }
+  .doctor-approach-list { grid-template-columns: 1fr; }
+  .doctor-credential-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 720px) {
+  .doctor-profile-inner { width: min(100% - 32px, var(--max)); }
+  .doctor-profile { padding-bottom: 48px; }
+  .doctor-portrait-wrap { max-width: none; }
+  .doctor-reg { left: 8px; bottom: 14px; }
+  .doctor-credential-grid { grid-template-columns: 1fr; }
+  .doctor-credential-grid { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .doctor-approach-list li:hover .doctor-approach-photo,
+  .doctor-credential-grid li:hover .doctor-credential-icon { transform: none; }
+}
