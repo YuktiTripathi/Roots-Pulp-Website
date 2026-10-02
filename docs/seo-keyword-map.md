@@ -20,7 +20,6 @@ is used anywhere unless it can be independently verified.
 | Extraction | `/treatments/tooth-extraction/` | tooth extraction in Aliganj Lucknow | tooth removal Lucknow, wisdom tooth (only if service confirmed) |
 | Dentures | `/treatments/dentures/` | dentures in Aliganj Lucknow | partial dentures Lucknow, complete dentures |
 | Gum health | `/treatments/gum-and-oral-health/` | gum treatment in Aliganj Lucknow | bleeding gums dentist Lucknow, oral cancer screening Lucknow |
-| Emergency | `/treatments/emergency-dental-care/` | emergency dentist in Aliganj | tooth pain dentist Aliganj, dentist open Sunday Lucknow, knocked-out tooth. **Not** "24 hour" (not offered) |
 | Cleaning | `/treatments/teeth-cleaning/` | teeth cleaning in Aliganj | scaling and polishing Aliganj, dental check-up Lucknow |
 | Doctor | `/doctor/dr-shubham-tripathi/` | Dr. Shubham Tripathi dentist | dentist in Aliganj, BDS MPH dentist Lucknow |
 | Contact | `/contact/` | Roots & Pulp Dental Clinic Aliganj | dental clinic Sector Q Aliganj, directions |

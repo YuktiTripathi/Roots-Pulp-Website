@@ -794,6 +794,11 @@ button { cursor: pointer; }
   .location-card { display: none; }
 }
 
+@media (max-width: 560px) {
+  /* Keep the menu button on screen; booking stays in the hero and the mobile action bar. */
+  .header-booking { display: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .reveal {

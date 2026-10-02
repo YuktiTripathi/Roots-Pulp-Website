@@ -8,6 +8,15 @@ const nextConfig: NextConfig = {
     formats: ["image/avif", "image/webp"],
     qualities: [75, 85],
   },
+  async redirects() {
+    return [
+      {
+        source: "/treatments/emergency-dental-care/",
+        destination: "/contact/",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
