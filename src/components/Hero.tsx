@@ -24,7 +24,7 @@ export function Hero() {
             WhatsApp Us
           </a>
         </div>
-        <OpeningStatus suffix="ED-362, Sector-Q, Aliganj" />
+        <OpeningStatus suffix={clinic.streetAddress} />
       </div>
       <div className="hero-visual">
         <div className="hero-rings" aria-hidden="true">
@@ -53,8 +53,10 @@ export function Hero() {
           <p>Roots & Pulp Dental Clinic</p>
         </aside>
         <aside className="location-card">
-          <p>Aliganj, Lucknow</p>
-          <p>ED-362, Sector-Q</p>
+          <p>
+            {clinic.neighbourhood}, {clinic.locality}
+          </p>
+          <p>{clinic.addressLine1}</p>
         </aside>
       </div>
     </section>

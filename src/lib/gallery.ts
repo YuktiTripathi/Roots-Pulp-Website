@@ -58,7 +58,7 @@ export const gallerySections: GallerySection[] = [
         category: "consultation",
       },
       {
-        src: "/images/doctor/explain-consult.png",
+        src: "/images/doctor/explain-consult.jpg",
         alt: "Dr. Shubham Tripathi speaking with a patient beside the consultation desk",
         category: "consultation",
       },
@@ -98,7 +98,7 @@ export const gallerySections: GallerySection[] = [
     images: [
       {
         src: "/images/equipment/digital-xray-rvg.jpg",
-        alt: "Digital dental X-ray of a root canal treated molar shown on the clinic laptop",
+        alt: "RVG digital X-ray system showing a root canal treated molar on the clinic laptop",
         caption: "Digital X-ray (RVG)",
         detail: "Instant X-rays on screen",
         width: 1086,
@@ -107,7 +107,7 @@ export const gallerySections: GallerySection[] = [
       },
       {
         src: "/images/equipment/apex-locator.jpg",
-        alt: "Apex locator showing a root canal length reading",
+        alt: "Electronic apex locator showing a root canal length reading",
         caption: "Apex Locator",
         detail: "Measures root canal length",
         width: 1086,
@@ -116,7 +116,7 @@ export const gallerySections: GallerySection[] = [
       },
       {
         src: "/images/equipment/teeth-whitening-light.jpg",
-        alt: "LED teeth whitening light glowing blue",
+        alt: "LED teeth whitening lamp used for in-clinic whitening",
         caption: "Teeth Whitening Light",
         detail: "In-clinic LED whitening",
         width: 1024,
@@ -125,7 +125,7 @@ export const gallerySections: GallerySection[] = [
       },
       {
         src: "/images/equipment/uv-sterilisation-chamber.jpg",
-        alt: "UV chamber holding sterilised dental instruments",
+        alt: "UV cabinet storing sterilised dental instruments",
         caption: "UV Sterilisation Chamber",
         detail: "Storage for sterilised instruments",
         width: 1086,

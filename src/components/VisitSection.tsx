@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { clinic, directionsUrl, fullAddress, telHref, whatsappHref } from "@/lib/clinic";
+import { openingHoursDisplay } from "@/lib/openingHours";
 
 export function VisitSection() {
   const [mapReady, setMapReady] = useState(false);
@@ -22,14 +23,12 @@ export function VisitSection() {
           </address>
           <p className="landmark">{clinic.landmark}</p>
           <dl className="hours">
-            <div>
-              <dt>Monday to Saturday</dt>
-              <dd>10:00 AM to 8:00 PM</dd>
-            </div>
-            <div>
-              <dt>Sunday</dt>
-              <dd>10:00 AM to 5:00 PM</dd>
-            </div>
+            {openingHoursDisplay.map((row) => (
+              <div key={row.days}>
+                <dt>{row.days}</dt>
+                <dd>{row.hours.replace(" – ", " to ")}</dd>
+              </div>
+            ))}
           </dl>
           <p className="visit-contacts">
             <a href={telHref()}>Call: {clinic.phoneDisplay}</a>
@@ -42,13 +41,13 @@ export function VisitSection() {
         </div>
         <div className="map-panel">
           {mapReady ? (
-            <iframe title="Map showing Roots & Pulp Dental Clinic at ED-362, Sector-Q, Aliganj, Lucknow" src={mapSrc} loading="lazy" />
+            <iframe title={`Map showing ${clinic.name} at ${clinic.streetAddress}, ${clinic.locality}`} src={mapSrc} loading="lazy" />
           ) : (
             <button type="button" className="map-static" onClick={() => setMapReady(true)}>
               <span className="map-pin" aria-hidden="true" />
               <span className="map-copy">
                 <strong>Roots & Pulp Dental Clinic</strong>
-                ED-362, Sector-Q, Aliganj, Lucknow
+                {clinic.streetAddress}, {clinic.locality}
               </span>
               <span className="map-action">Show map</span>
             </button>

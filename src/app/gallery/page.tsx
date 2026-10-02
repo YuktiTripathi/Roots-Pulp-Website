@@ -2,17 +2,20 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { GalleryTour } from "@/components/gallery/GalleryTour";
-import { bookingUrl, siteUrl } from "@/lib/clinic";
+import { bookingUrl } from "@/lib/clinic";
 import { stagger } from "@/lib/motion";
 import "./gallery.css";
+import { pageMetadata, jsonLd } from "@/lib/seo";
+import { webPageJsonLd } from "@/lib/schema";
 
-export const metadata: Metadata = {
+const seo = {
   title: "Inside Roots & Pulp · Dental Clinic Gallery in Aliganj, Lucknow",
   description:
     "Photographs of Roots & Pulp Dental Clinic in Aliganj, Lucknow: the entrance, consultation desk, treatment space and dental equipment.",
-  robots: { index: false, follow: true },
-  alternates: siteUrl ? { canonical: "/gallery/" } : undefined,
+  path: "/gallery/",
 };
+
+export const metadata: Metadata = pageMetadata({ ...seo });
 
 export default function GalleryPage() {
   return (
@@ -61,6 +64,12 @@ export default function GalleryPage() {
         </div>
       </section>
       <GalleryTour />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={jsonLd(
+          webPageJsonLd({ name: seo.title, description: seo.description, path: seo.path, type: "CollectionPage", breadcrumb: [{ name: "Gallery", path: "/gallery/" }], image: '/images/clinic-entrance.jpg' }),
+        )}
+      />
     </main>
   );
 }

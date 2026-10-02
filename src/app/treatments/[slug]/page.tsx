@@ -2,12 +2,18 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { TreatmentDetail } from "@/components/treatments/TreatmentDetail";
 import { TreatmentListItem, treatmentImage } from "@/components/treatments/TreatmentsLanding";
 import { bookingUrl, clinic, telHref, treatments, whatsappHref } from "@/lib/clinic";
 import { stagger } from "@/lib/motion";
+import { treatmentPageJsonLd } from "@/lib/schema";
+import { jsonLd, pageMetadata } from "@/lib/seo";
+import { treatmentPages } from "@/lib/treatmentPages";
 import "../treatments.css";
 
 type Params = { slug: string };
+
+export const dynamicParams = false;
 
 export function generateStaticParams() {
   return treatments.map((item) => ({ slug: item.slug }));
@@ -17,17 +23,41 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const { slug } = await params;
   const treatment = treatments.find((item) => item.slug === slug);
   if (!treatment) return { title: "Page Not Found · Roots & Pulp Dental Clinic" };
-  return {
+  const content = treatmentPages[slug];
+  const path = `/treatments/${slug}/`;
+  const image = treatmentImage(slug);
+  const ogImage = image ? { url: image.src, alt: image.alt } : undefined;
+  if (content) {
+    return pageMetadata({ title: content.seo.title, description: content.seo.description, path, image: ogImage });
+  }
+  // A treatment without written content shows a short placeholder, which stays out of search results.
+  return pageMetadata({
     title: `${treatment.name} · Roots & Pulp Dental Clinic, Aliganj`,
     description: treatment.overview,
-    robots: { index: false, follow: true },
-  };
+    path,
+    image: ogImage,
+    noindex: true,
+  });
 }
 
 export default async function TreatmentPage({ params }: { params: Promise<Params> }) {
   const { slug } = await params;
   const treatment = treatments.find((item) => item.slug === slug);
   if (!treatment) notFound();
+
+  const content = treatmentPages[treatment.slug];
+  if (content) {
+    const schema = treatmentPageJsonLd(treatment, content.seo, {
+      image: treatmentImage(treatment.slug)?.src,
+      reviewedOn: content.clinicallyReviewedOn || undefined,
+    });
+    return (
+      <>
+        <TreatmentDetail treatment={treatment} content={content} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(schema)} />
+      </>
+    );
+  }
 
   const related = treatments.filter((item) => item.slug !== treatment.slug).slice(0, 4);
   const image = treatmentImage(treatment.slug);

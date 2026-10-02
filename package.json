@@ -7,7 +7,8 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "test": "node --experimental-strip-types --test src/lib/openingHours.test.ts"
+    "test": "node --experimental-strip-types --test src/lib/openingHours.test.ts src/lib/seo.test.ts",
+    "check:seo": "node scripts/check-seo.mjs"
   },
   "dependencies": {
     "next": "^15.5.4",

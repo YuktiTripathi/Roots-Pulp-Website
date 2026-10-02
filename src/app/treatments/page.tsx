@@ -2,17 +2,20 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { additionalTreatments, FeaturedTreatmentCard, TreatmentListItem } from "@/components/treatments/TreatmentsLanding";
-import { bookingUrl, featuredTreatments, siteUrl, whatsappHref } from "@/lib/clinic";
+import { bookingUrl, featuredTreatments, whatsappHref } from "@/lib/clinic";
 import { stagger } from "@/lib/motion";
 import "./treatments.css";
+import { pageMetadata, jsonLd } from "@/lib/seo";
+import { webPageJsonLd } from "@/lib/schema";
 
-export const metadata: Metadata = {
+const seo = {
   title: "Dental Treatments in Aliganj, Lucknow · Roots & Pulp",
   description:
-    "Explore dental treatments at Roots & Pulp Dental Clinic in Aliganj, Lucknow, from preventive and restorative care to cosmetic and specialised dental treatments.",
-  robots: { index: false, follow: true },
-  alternates: siteUrl ? { canonical: "/treatments/" } : undefined,
+    "Dental treatments at Roots & Pulp in Aliganj, Lucknow: cleaning, fillings, root canals, crowns, implants, dentures, braces, whitening and children's dentistry.",
+  path: "/treatments/",
 };
+
+export const metadata: Metadata = pageMetadata({ ...seo });
 
 const approach = [
   {
@@ -170,6 +173,12 @@ export default function TreatmentsPage() {
           </div>
         </div>
       </section>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={jsonLd(
+          webPageJsonLd({ name: seo.title, description: seo.description, path: seo.path, type: "CollectionPage", breadcrumb: [{ name: "Treatments", path: "/treatments/" }] }),
+        )}
+      />
     </main>
   );
 }

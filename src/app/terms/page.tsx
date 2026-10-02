@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { clinic } from "@/lib/clinic";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+const seo = {
   title: "Terms & Conditions · Roots & Pulp Dental Clinic",
-  robots: { index: false, follow: false },
+  description:
+    "Terms for using the Roots & Pulp Dental Clinic website.",
+  path: "/terms/",
 };
+
+export const metadata: Metadata = pageMetadata({ ...seo, noindex: true });
 
 export default function TermsPage() {
   return (

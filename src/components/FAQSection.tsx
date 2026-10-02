@@ -4,23 +4,35 @@ import Link from "next/link";
 import { useId, useState } from "react";
 import { homeFaqs } from "@/lib/clinic";
 
-export function FAQSection({ showHeading = true }: { showHeading?: boolean }) {
+type FaqItem = { question: string; answer: string; link?: { label: string; href: string } };
+
+export function FAQSection({
+  showHeading = true,
+  items = homeFaqs,
+  heading = "Common questions",
+  intro = "A few practical answers before you visit. For anything else, call or send a WhatsApp message.",
+  className,
+}: {
+  showHeading?: boolean;
+  items?: readonly FaqItem[];
+  heading?: string;
+  intro?: string;
+  className?: string;
+}) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const baseId = useId();
 
   return (
-    <section className="section faq" aria-labelledby={showHeading ? "faq-heading" : undefined}>
+    <section className={className ? `section faq ${className}` : "section faq"} aria-labelledby={showHeading ? "faq-heading" : undefined}>
       <div className={showHeading ? "section-inner faq-layout" : "section-inner"}>
         {showHeading ? (
           <div>
-            <h2 id="faq-heading">Common questions</h2>
-            <p className="faq-intro">
-              A few practical answers before you visit. For anything else, call or send a WhatsApp message.
-            </p>
+            <h2 id="faq-heading">{heading}</h2>
+            <p className="faq-intro">{intro}</p>
           </div>
         ) : null}
         <div className="accordion">
-          {homeFaqs.map((item, index) => {
+          {items.map((item, index) => {
             const open = openIndex === index;
             const panelId = `${baseId}-panel-${index}`;
             const buttonId = `${baseId}-button-${index}`;
@@ -40,7 +52,7 @@ export function FAQSection({ showHeading = true }: { showHeading?: boolean }) {
                 </h3>
                 <div id={panelId} role="region" aria-labelledby={buttonId} hidden={!open}>
                   <p>{item.answer}</p>
-                  {"link" in item && item.link ? (
+                  {item.link ? (
                     <p>
                       <Link className="text-link" href={item.link.href}>
                         {item.link.label} <span aria-hidden="true">→</span>

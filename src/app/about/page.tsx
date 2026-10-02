@@ -1,13 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { bookingUrl } from "@/lib/clinic";
+import { pageMetadata, jsonLd } from "@/lib/seo";
+import { webPageJsonLd } from "@/lib/schema";
 
-export const metadata: Metadata = {
+const seo = {
   title: "About Roots & Pulp Dental Clinic · Aliganj, Lucknow",
   description:
-    "The story behind Roots & Pulp, how we care for patients, and what to expect when you visit our dental clinic in Sector Q, Aliganj.",
-  robots: { index: false, follow: true },
+    "The story behind Roots & Pulp, how we care for patients, and what to expect when you visit our dental clinic in Sector Q, Aliganj, Lucknow.",
+  path: "/about/",
 };
+
+export const metadata: Metadata = pageMetadata({ ...seo });
 
 export default function AboutPage() {
   return (
@@ -63,6 +67,12 @@ export default function AboutPage() {
           Book an appointment
         </Link>
       </div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={jsonLd(
+          webPageJsonLd({ name: seo.title, description: seo.description, path: seo.path, type: "AboutPage", breadcrumb: [{ name: "About", path: "/about/" }] }),
+        )}
+      />
     </main>
   );
 }

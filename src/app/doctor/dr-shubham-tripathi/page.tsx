@@ -2,17 +2,20 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { FinalCTA } from "@/components/FinalCTA";
-import { bookingUrl, doctor, siteUrl, whatsappHref } from "@/lib/clinic";
+import { bookingUrl, doctor, whatsappHref } from "@/lib/clinic";
 import { stagger } from "@/lib/motion";
 import "./doctor.css";
+import { pageMetadata, jsonLd } from "@/lib/seo";
+import { webPageJsonLd } from "@/lib/schema";
 
-export const metadata: Metadata = {
-  title: "Dr. Shubham Tripathi, BDS, MPH · Roots & Pulp, Aliganj",
+const seo = {
+  title: "Dr. Shubham Tripathi, BDS, MPH · Dentist in Aliganj, Lucknow",
   description:
-    "Meet Dr. Shubham Tripathi, BDS, MPH, Founder & Director of Roots & Pulp Dental Clinic in Aliganj, Lucknow.",
-  robots: { index: false, follow: true },
-  alternates: siteUrl ? { canonical: "/doctor/dr-shubham-tripathi/" } : undefined,
+    "Meet Dr. Shubham Tripathi, BDS, MPH, founder of Roots & Pulp Dental Clinic in Aliganj, Lucknow, with certification in rotary endodontics and a focus on prevention.",
+  path: "/doctor/dr-shubham-tripathi/",
 };
+
+export const metadata: Metadata = pageMetadata({ ...seo });
 
 const approach = [
   {
@@ -24,7 +27,7 @@ const approach = [
   {
     title: "Explain clearly",
     text: "Dental treatment can feel confusing. Findings, options and the reasoning behind a treatment plan are explained in simple, understandable terms.",
-    image: "/images/doctor/explain-consult.png",
+    image: "/images/doctor/explain-consult.jpg",
     alt: "Dr. Shubham Tripathi explaining a treatment plan",
   },
   {
@@ -116,8 +119,11 @@ export default function DoctorPage() {
                 Dr. Shubham Tripathi founded Roots &amp; Pulp Dental Clinic in Aliganj with a simple aim: to offer
                 careful, unhurried dental care where patients feel heard, informed and comfortable. With over seven
                 years of clinical experience, he treats patients across different stages of life, from a child&apos;s
-                first dental check-up to restorative and aesthetic treatments such as root canal treatment, crowns,
-                implants and smile makeovers.
+                first <Link href="/treatments/childrens-dentistry/">dental check-up</Link> to restorative and aesthetic
+                treatments such as <Link href="/treatments/root-canal-treatment/">root canal treatment</Link>,{" "}
+                <Link href="/treatments/crowns-and-bridges/">crowns</Link>,{" "}
+                <Link href="/treatments/dental-implants/">implants</Link> and{" "}
+                <Link href="/treatments/cosmetic-dentistry/">smile makeovers</Link>.
               </p>
               <p className="enter" style={stagger(4)}>
                 He holds a Bachelor of Dental Surgery and a Master of Public Health, along with a specialised
@@ -219,6 +225,12 @@ export default function DoctorPage() {
       </section>
 
       <FinalCTA heading="Ready to meet Dr. Tripathi?" />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={jsonLd(
+          webPageJsonLd({ name: seo.title, description: seo.description, path: seo.path, type: "ProfilePage", breadcrumb: [{ name: "Dr. Shubham Tripathi", path: "/doctor/dr-shubham-tripathi/" }], image: doctor.portrait }),
+        )}
+      />
     </main>
   );
 }

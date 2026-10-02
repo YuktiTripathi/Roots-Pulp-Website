@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { bookingUrl, directionsUrl, telHref, whatsappHref } from "@/lib/clinic";
+import { bookingUrl, clinic, directionsUrl, telHref, whatsappHref } from "@/lib/clinic";
 import { ArrowIcon } from "@/components/Icons";
 import { OpeningStatus } from "@/components/OpeningStatus";
 
@@ -38,7 +38,7 @@ export function ContactHero() {
               </div>
             </div>
             <div className="contact-hero-location">
-              <p>Sector-Q, Aliganj, Lucknow</p>
+              <p>Sector-Q, {clinic.neighbourhood}, {clinic.locality}</p>
               <a className="text-link" href={directionsUrl} target="_blank" rel="noopener noreferrer">
                 Get directions <ArrowIcon className="arrow" />
                 <span className="sr-only"> (opens in a new tab)</span>

@@ -31,37 +31,64 @@ function kolkataClock(now: Date): KolkataClock {
   };
 }
 
-/** Display labels used by visit/contact pages. Keep in sync with getOpeningStatus. */
-export const openingHoursDisplay = [
-  { days: "Monday to Saturday", hours: "10:00 AM – 8:00 PM" },
-  { days: "Sunday", hours: "10:00 AM – 5:00 PM" },
+/**
+ * The clinic's weekly hours. This is the single source of truth: the live status, every
+ * displayed timing and the structured data are all derived from it.
+ * Times are minutes after midnight in Asia/Kolkata.
+ */
+export const weeklyHours = [
+  { days: "Monday to Saturday", dayNames: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], open: 600, close: 1200 },
+  { days: "Sunday", dayNames: ["Sunday"], open: 600, close: 1020 },
 ] as const;
 
+function hoursFor(weekday: string) {
+  return weekday === "Sun" ? weeklyHours[1] : weeklyHours[0];
+}
+
+/** "10:00" style 24-hour time, as used in schema.org openingHoursSpecification. */
+export function time24(minutes: number) {
+  return `${String(Math.floor(minutes / 60)).padStart(2, "0")}:${String(minutes % 60).padStart(2, "0")}`;
+}
+
+/** "10:00 AM" when long, "10 AM" when short. */
+export function time12(minutes: number, long = false) {
+  const hour = Math.floor(minutes / 60);
+  const minute = minutes % 60;
+  const suffix = hour >= 12 ? "PM" : "AM";
+  const display = hour % 12 === 0 ? 12 : hour % 12;
+  if (!long && minute === 0) return `${display} ${suffix}`;
+  return `${display}:${String(minute).padStart(2, "0")} ${suffix}`;
+}
+
+/** Display labels used by visit/contact pages, e.g. "10:00 AM – 8:00 PM". */
+export const openingHoursDisplay = weeklyHours.map((row) => ({
+  days: row.days,
+  hours: `${time12(row.open, true)} – ${time12(row.close, true)}`,
+}));
+
+/** Short labels, e.g. "Monday to Saturday, 10 AM to 8 PM". */
+export const openingHoursShort = weeklyHours.map((row) => `${row.days}, ${time12(row.open)} to ${time12(row.close)}`);
+
 /**
- * Live clinic status for Asia/Kolkata.
- * Monday–Saturday 10:00–20:00, Sunday 10:00–17:00.
+ * Live clinic status for Asia/Kolkata, from weeklyHours.
  * Opening is inclusive; closing is exclusive.
  */
 export function getOpeningStatus(now: Date): OpeningStatus {
   const { weekday, minutes } = kolkataClock(now);
-  const isSunday = weekday === "Sun";
-  const openAt = 10 * 60;
-  const closeAt = isSunday ? 17 * 60 : 20 * 60;
+  const today = hoursFor(weekday);
 
-  if (minutes >= openAt && minutes < closeAt) {
-    return {
-      isOpen: true,
-      label: isSunday ? "Open now · until 5 PM" : "Open now · until 8 PM",
-    };
+  if (minutes >= today.open && minutes < today.close) {
+    return { isOpen: true, label: `Open now · until ${time12(today.close)}` };
   }
 
-  if (minutes < openAt) {
-    return { isOpen: false, label: "Opens today at 10 AM" };
+  if (minutes < today.open) {
+    return { isOpen: false, label: `Opens today at ${time12(today.open)}` };
   }
 
-  if (weekday === "Sat") {
-    return { isOpen: false, label: "Closed now · opens Sunday at 10 AM" };
-  }
-
-  return { isOpen: false, label: "Closed now · opens tomorrow at 10 AM" };
+  const tomorrowIsSunday = weekday === "Sat";
+  const tomorrow = tomorrowIsSunday ? weeklyHours[1] : weeklyHours[0];
+  return {
+    isOpen: false,
+    label: `Closed now · opens ${tomorrowIsSunday ? "Sunday" : "tomorrow"} at ${time12(tomorrow.open)}`,
+  };
 }

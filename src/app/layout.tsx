@@ -7,7 +7,8 @@ import { MobileActionBar } from "@/components/MobileActionBar";
 import { RevealOnScroll } from "@/components/RevealOnScroll";
 import { SiteCursor } from "@/components/SiteCursor";
 import { clinic, homeSeo, siteUrl } from "@/lib/clinic";
-import { clinicJsonLd, websiteJsonLd } from "@/lib/schema";
+import { clinicJsonLd, doctorJsonLd, websiteJsonLd } from "@/lib/schema";
+import { defaultOgImage, jsonLd } from "@/lib/seo";
 import "./globals.css";
 
 const sans = DM_Sans({
@@ -39,38 +40,49 @@ const lato = Lato({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl || "http://localhost:3000"),
+  metadataBase: new URL(siteUrl),
   title: {
     default: homeSeo.title,
     template: "%s",
   },
   description: homeSeo.description,
   applicationName: clinic.name,
-  robots: { index: true, follow: true },
+  robots: { index: true, follow: true, "max-image-preview": "large" },
+  formatDetection: { telephone: false },
   openGraph: {
     title: homeSeo.title,
     description: homeSeo.description,
     siteName: clinic.name,
     locale: "en_IN",
     type: "website",
-    images: [
-      {
-        url: "/images/og-home.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Roots & Pulp Dental Clinic, Aliganj, Lucknow",
-      },
-    ],
+    images: [defaultOgImage],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: homeSeo.title,
+    description: homeSeo.description,
+    images: [defaultOgImage.url],
   },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
-  const graph = [clinicJsonLd(), websiteJsonLd()].filter(Boolean);
+  const graph = [clinicJsonLd(), websiteJsonLd(), doctorJsonLd()];
 
   return (
     <html lang="en" className={`${sans.variable} ${serif.variable} ${montserrat.variable} ${lato.variable}`}>
       <head>
-        <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/playlist-script" />
+        {/*
+          Decorative script face for the 12px logo tagline. Loaded as a non-blocking stylesheet
+          (media="print", switched to "all" once loaded) so a third-party host never delays first paint.
+        */}
+        <link rel="preconnect" href="https://fonts.cdnfonts.com" crossOrigin="" />
+        <link id="script-font" rel="stylesheet" href="https://fonts.cdnfonts.com/css/playlist-script" media="print" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){var l=document.getElementById('script-font');if(!l)return;var on=function(){l.media='all'};if(l.sheet)on();else l.addEventListener('load',on);})();",
+          }}
+        />
       </head>
       <body>
         <a className="skip" href="#content">
@@ -82,7 +94,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         {children}
         <Footer />
         <MobileActionBar />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(graph) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(graph)} />
       </body>
     </html>
   );
