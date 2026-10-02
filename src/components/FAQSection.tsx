@@ -11,17 +11,19 @@ export function FAQSection({
   items = homeFaqs,
   heading = "Common questions",
   intro = "A few practical answers before you visit. For anything else, call or send a WhatsApp message.",
+  className,
 }: {
   showHeading?: boolean;
   items?: readonly FaqItem[];
   heading?: string;
   intro?: string;
+  className?: string;
 }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const baseId = useId();
 
   return (
-    <section className="section faq" aria-labelledby={showHeading ? "faq-heading" : undefined}>
+    <section className={className ? `section faq ${className}` : "section faq"} aria-labelledby={showHeading ? "faq-heading" : undefined}>
       <div className={showHeading ? "section-inner faq-layout" : "section-inner"}>
         {showHeading ? (
           <div>
