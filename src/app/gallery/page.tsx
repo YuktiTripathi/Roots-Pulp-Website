@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { GalleryTour } from "@/components/gallery/GalleryTour";
-import { bookingUrl, directionsUrl, siteUrl } from "@/lib/clinic";
+import { bookingUrl, siteUrl } from "@/lib/clinic";
 import { stagger } from "@/lib/motion";
 import "./gallery.css";
 
@@ -61,21 +61,6 @@ export default function GalleryPage() {
         </div>
       </section>
       <GalleryTour />
-      <section className="gallery-cta" aria-labelledby="gallery-cta-heading">
-        <div className="section-inner reveal">
-          <h2 id="gallery-cta-heading">Come see it for yourself.</h2>
-          <p>Ready to visit Roots &amp; Pulp?</p>
-          <div className="hero-actions">
-            <a className="btn btn-light" href={bookingUrl} target="_blank" rel="noopener noreferrer">
-              Book an Appointment
-            </a>
-            <a className="btn btn-line" href={directionsUrl} target="_blank" rel="noopener noreferrer">
-              Get directions
-              <span className="sr-only"> (opens in a new tab)</span>
-            </a>
-          </div>
-        </div>
-      </section>
     </main>
   );
 }
