@@ -55,6 +55,8 @@ export type TreatmentPageContent = {
     heading: string;
     paragraphs: string[];
     illustration: StageIllustration;
+    /** A supplied image, when given, replaces the drawn illustration. */
+    image?: { src: string; alt: string; width: number; height: number };
     caption: string;
   };
   process: {
@@ -187,6 +189,7 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
         },
         {
           icon: "crack",
+          image: "/images/treatments/root-canal/cracked-tooth.webp",
           title: "Deep decay or a cracked tooth",
           text: "Damage that may have reached the inside of the tooth.",
         },
@@ -207,6 +210,12 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
         "Root canal treatment removes the affected pulp, cleans and shapes the canals, and seals them. The tooth is then restored so you can keep using it.",
       ],
       illustration: "root-canal",
+      image: {
+        src: "/images/treatments/root-canal/root-canal-stages.webp",
+        alt: "Four-stage illustration of root canal treatment: infected pulp, canal cleaning and shaping, filling and sealing, and the final restoration.",
+        width: 1405,
+        height: 739,
+      },
       caption:
         "From inflamed pulp to a cleaned, sealed and restored tooth. Your dentist will explain what applies to your tooth.",
     },

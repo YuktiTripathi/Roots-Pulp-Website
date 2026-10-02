@@ -338,6 +338,15 @@
 .tp-stages .is-wide svg { width: min(100%, 240px); }
 .tp-stages li > span { display: block; margin-top: 12px; color: var(--navy); font-weight: 650; }
 .tp-stages li b { display: block; color: var(--teal); font-family: var(--serif); font-weight: 400; font-size: 1.2rem; }
+.tp-stages-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  padding: 20px;
+  border-radius: 20px;
+  border: 1px solid var(--line);
+  background: white;
+}
 .tp-stage-label text { fill: var(--muted); font-size: 11px; font-family: var(--sans); }
 .tp-stages figcaption { margin-top: 14px; color: var(--muted); font-size: 0.95rem; text-align: center; }
 
@@ -538,6 +547,7 @@
   .tp-glance-list div:nth-child(odd) { padding-right: 0; }
   .tp-cards, .tp-cards-4, .tp-cards-5, .tp-compare, .tp-equipment, .tp-warning ul { grid-template-columns: 1fr; }
   .tp-stages-board { padding: 20px 12px; }
+  .tp-stages-photo img { padding: 6px; border-radius: 14px; }
   .tp-stages ol.is-wide { grid-template-columns: 1fr; row-gap: 24px; }
   .tp-table tbody th { width: 120px; }
   .tp-stages li::after { display: none; }

@@ -230,7 +230,20 @@ export function TreatmentDetail({ treatment, content }: { treatment: Treatment; 
               ))}
             </div>
           </div>
-          <StageFigure kind={content.explainer.illustration} caption={content.explainer.caption} />
+          {content.explainer.image ? (
+            <figure className="tp-stages tp-stages-photo reveal">
+              <Image
+                src={content.explainer.image.src}
+                alt={content.explainer.image.alt}
+                width={content.explainer.image.width}
+                height={content.explainer.image.height}
+                sizes="(max-width: 1180px) 100vw, 1140px"
+              />
+              <figcaption>{content.explainer.caption}</figcaption>
+            </figure>
+          ) : (
+            <StageFigure kind={content.explainer.illustration} caption={content.explainer.caption} />
+          )}
         </div>
       </section>
 
