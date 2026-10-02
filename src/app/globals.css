@@ -659,33 +659,154 @@ button { cursor: pointer; }
 .footer-bottom nav { display: flex; flex-wrap: wrap; gap: 14px; }
 .footer-disclaimer { font-size: 0.88rem; font-style: italic; color: rgba(255, 255, 255, 0.68); }
 
-.action-bar {
-  display: none;
+/* Floating contact actions: bottom bar by default, right-edge rail on wide screens.
+   z-index 45 sits above content but below the header (50), mobile menu (60) and skip link (80). */
+.contact-actions {
+  --wa-green: #1f9e57;
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
   z-index: 45;
-  background: white;
+  background: rgba(255, 255, 255, 0.96);
   border-top: 1px solid var(--line);
+  box-shadow: 0 -8px 24px rgba(16, 32, 72, 0.06);
   padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
-  grid-template-columns: 1fr 1fr 1fr;
+}
+.contact-actions ul {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 560px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.25fr;
   gap: 8px;
 }
-.action-bar a {
+.contact-action {
   min-height: 48px;
-  display: inline-flex;
+  display: flex;
+  flex-direction: row-reverse;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  text-decoration: none;
+  gap: 7px;
+  padding: 0 10px;
   border-radius: 12px;
+  border: 1px solid var(--line);
   background: var(--ivory);
   color: var(--navy);
   font-weight: 700;
+  font-size: 0.92rem;
+  text-decoration: none;
+  white-space: nowrap;
 }
-.action-bar a:last-child { background: var(--navy); color: white; }
-.action-bar svg { width: 22px; height: 22px; }
+.contact-action-icon { display: inline-flex; color: var(--teal); }
+.contact-action svg { width: 22px; height: 22px; }
+.contact-action.is-whatsapp .contact-action-icon { color: var(--wa-green); }
+.contact-action.is-book-appointment { background: var(--navy); border-color: var(--navy); color: white; }
+.contact-action.is-book-appointment .contact-action-icon { color: white; }
+.contact-action-long { display: none; }
+.contact-action:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+@media (max-width: 1359px) {
+  body { padding-bottom: calc(72px + env(safe-area-inset-bottom)); }
+  /* Step aside while typing so the bar never sits over a form field or the on-screen keyboard. */
+  body:has(input:focus, textarea:focus, select:focus) .contact-actions { display: none; }
+}
+
+@media (min-width: 721px) and (max-width: 1359px) {
+  .contact-actions {
+    left: 50%;
+    right: auto;
+    bottom: calc(14px + env(safe-area-inset-bottom));
+    width: min(560px, calc(100% - 32px));
+    transform: translateX(-50%);
+    padding: 8px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    box-shadow: 0 12px 32px rgba(16, 32, 72, 0.14);
+  }
+  .contact-action-short { display: none; }
+  .contact-action-long { display: inline; }
+}
+
+@media (min-width: 1360px) {
+  .contact-actions {
+    left: auto;
+    right: 20px;
+    bottom: auto;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0;
+    background: none;
+    border: 0;
+    box-shadow: none;
+  }
+  .contact-actions ul { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
+  .contact-action {
+    position: relative;
+    width: 52px;
+    height: 52px;
+    min-height: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: none;
+  }
+  .contact-action-icon {
+    position: relative;
+    z-index: 1;
+    width: 52px;
+    height: 52px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: white;
+    border: 1px solid var(--line);
+    box-shadow: 0 10px 26px rgba(16, 32, 72, 0.14);
+    color: var(--teal);
+    transition: background-color 0.3s var(--ease-soft), color 0.3s var(--ease-soft), box-shadow 0.3s var(--ease-soft);
+  }
+  .contact-action.is-whatsapp .contact-action-icon { background: var(--wa-green); border-color: var(--wa-green); color: white; }
+  /* A light ring keeps the navy button distinct over the navy footer and CTA bands. */
+  .contact-action.is-book-appointment .contact-action-icon { background: var(--navy); border: 2px solid rgba(255, 255, 255, 0.85); }
+  /* The label is a pill tucked behind the icon; it slides out to the left. */
+  .contact-action-label {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    padding: 0 66px 0 20px;
+    border-radius: 999px;
+    background: white;
+    border: 1px solid var(--line);
+    box-shadow: 0 10px 26px rgba(16, 32, 72, 0.12);
+    color: var(--navy);
+    font-size: 0.9rem;
+    letter-spacing: 0.01em;
+    opacity: 0;
+    transform: translate(16px, -50%);
+    pointer-events: none;
+    transition: opacity 0.3s var(--ease-soft), transform 0.32s var(--ease-out);
+  }
+  .contact-action.is-whatsapp .contact-action-label { color: #17603a; }
+  .contact-action-short { display: none; }
+  .contact-action-long { display: inline; }
+  .contact-action svg { width: 24px; height: 24px; }
+  .contact-action:hover .contact-action-label,
+  .contact-action:focus-visible .contact-action-label {
+    opacity: 1;
+    transform: translate(0, -50%);
+  }
+  .contact-action:hover .contact-action-icon,
+  .contact-action:focus-visible .contact-action-icon { box-shadow: 0 12px 30px rgba(16, 32, 72, 0.22); }
+  .contact-action:focus-visible { outline-offset: 4px; }
+}
+
+@media (min-width: 1360px) and (prefers-reduced-motion: reduce) {
+  .contact-action-label { transition: opacity 0.15s linear; transform: translate(0, -50%); }
+}
 
 .page {
   width: min(860px, calc(100% - 40px));
@@ -788,8 +909,6 @@ button { cursor: pointer; }
   .lede { font-size: 0.98rem; margin-top: 12px; }
   .hero-actions { margin: 14px 0 10px; }
   .hours div { flex-direction: column; gap: 0; }
-  .action-bar.is-visible { display: grid; }
-  body { padding-bottom: 76px; }
   .footer-bottom { flex-direction: column; }
   .location-card { display: none; }
 }
