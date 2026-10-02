@@ -902,3 +902,65 @@ button { cursor: pointer; }
   .reveal--mask .mask-img { clip-path: none; transform: none; }
   .motion-page .btn:hover { transform: none; box-shadow: none; }
 }
+.page + .faq { padding-top: 24px; }
+.footer-address { font-style: normal; margin: 14px 0 0; line-height: 1.6; }
+
+/* Clinic showcase carousel (homepage). One slide visible at a time; the track is moved by ClinicShowcase. */
+.showcase { padding: 88px 0 72px; background: var(--ivory); }
+.showcase-head { margin-bottom: 28px; }
+.showcase-head h2 { font-size: clamp(2.1rem, 4vw, 3.4rem); color: var(--navy); }
+.showcase-frame {
+  position: relative;
+  width: min(var(--max), calc(100% - 40px));
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 22px;
+  background: var(--soft);
+}
+.showcase-track { display: flex; transition: transform 0.7s var(--ease-out, ease); }
+.showcase-slide { position: relative; flex: 0 0 100%; margin: 0; aspect-ratio: 16 / 9; }
+.showcase-slide img,
+.showcase-placeholder { width: 100%; height: 100%; display: block; object-fit: cover; object-position: center 35%; }
+.showcase-placeholder { display: grid; place-items: center; color: var(--muted); }
+.showcase-slide figcaption {
+  position: absolute;
+  left: 20px;
+  bottom: 18px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(11, 23, 48, 0.62);
+  color: white;
+  font-size: 0.9rem;
+}
+.showcase-nav {
+  position: absolute;
+  top: 50%;
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--navy);
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+.showcase-nav svg { width: 22px; height: 22px; }
+.showcase-nav.is-prev { left: 14px; }
+.showcase-nav.is-next { right: 14px; }
+.showcase-dots { display: flex; justify-content: center; gap: 8px; margin-top: 18px; }
+.showcase-dots button { width: 10px; height: 10px; padding: 0; border: 0; border-radius: 50%; background: rgba(16, 32, 72, 0.22); cursor: pointer; }
+.showcase-dots button.is-active { background: var(--navy); }
+@media (max-width: 680px) {
+  .showcase { padding: 56px 0 48px; }
+  .showcase-slide { aspect-ratio: 4 / 3; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .showcase-track { transition: none; }
+}
+
+/* FAQ page: keep the two question groups close together. */
+main > .faq:has(+ .page) { padding-bottom: 24px; }
+.showcase-slide:first-child img { object-position: center 8%; }

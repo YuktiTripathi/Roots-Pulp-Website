@@ -16,7 +16,7 @@ export function PlanVisit() {
             <p className="contact-kicker">Address</p>
             <p className="visit-name">{clinic.name}</p>
             <address>
-              ED-362, Sector-Q
+              {clinic.addressLine1}
               <br />
               Aliganj
               <br />

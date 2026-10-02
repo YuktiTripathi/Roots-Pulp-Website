@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { clinic, telHref } from "@/lib/clinic";
+import { openingHoursShort } from "@/lib/openingHours";
 
 export const metadata: Metadata = {
   title: "Page Not Found · Roots & Pulp Dental Clinic",
@@ -25,7 +26,7 @@ export default function NotFound() {
       </ul>
       <h3>In pain?</h3>
       <p>
-        Call us on {clinic.phoneDisplay}. We&apos;re open Monday to Saturday, 10 AM to 8 PM, and Sunday, 10 AM to 5 PM.
+        Call us on {clinic.phoneDisplay}. We&apos;re open {openingHoursShort.join(" and ")}.
       </p>
       <div className="hero-actions">
         <Link className="btn btn-primary" href="/">

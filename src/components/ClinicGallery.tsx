@@ -1,4 +1,5 @@
-import { clinicPhotos } from "@/lib/clinic";
+import Link from "next/link";
+import { clinic, clinicPhotos } from "@/lib/clinic";
 
 export function ClinicGallery() {
   return (
@@ -14,7 +15,7 @@ export function ClinicGallery() {
                 {photo.src ? (
                   // Real clinic photographs are inserted through clinicPhotos when supplied.
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={photo.src} alt={photo.alt} loading="lazy" />
+                  <img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" />
                 ) : (
                   <div className="photo-placeholder" role="img" aria-label={`${photo.alt}. Photograph to be added.`}>
                     <span>{photo.caption}</span>
@@ -25,7 +26,12 @@ export function ClinicGallery() {
             </li>
           ))}
         </ul>
-        <p className="gallery-note">ED-362, Sector-Q, Aliganj, near Saraswati Vidya Mandir School.</p>
+        <p className="gallery-note">
+          {clinic.addressLine1}, {clinic.neighbourhood}, {clinic.landmark.toLowerCase()}.{" "}
+          <Link className="text-link" href="/gallery/">
+            See more of the clinic <span aria-hidden="true">→</span>
+          </Link>
+        </p>
       </div>
     </section>
   );

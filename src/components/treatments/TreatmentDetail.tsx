@@ -282,11 +282,11 @@ export function TreatmentDetail({ treatment, content }: { treatment: Treatment; 
                   height={explainer.image.height}
                   sizes="(max-width: 1180px) 100vw, 1140px"
                 />
-                <figcaption>{explainer.caption}</figcaption>
+                {explainer.caption ? <figcaption>{explainer.caption}</figcaption> : null}
               </figure>
-            ) : (
-              <StageFigure kind={explainer.illustration} caption={explainer.caption} />
-            )}
+            ) : explainer.illustration ? (
+              <StageFigure kind={explainer.illustration} caption={explainer.caption ?? ""} />
+            ) : null}
           </div>
         </section>
       ) : null}

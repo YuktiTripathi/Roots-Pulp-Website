@@ -2,13 +2,16 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AppointmentWizard } from "@/components/AppointmentWizard";
 import { clinic, telHref, whatsappHref } from "@/lib/clinic";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+const seo = {
   title: "Book a Dental Appointment · Roots & Pulp, Aliganj",
   description:
     "Request an appointment with Dr. Shubham Tripathi at Roots & Pulp Dental Clinic, Aliganj. Book online, call or WhatsApp. Open 7 days.",
-  robots: { index: false, follow: true },
+  path: "/book-appointment/",
 };
+
+export const metadata: Metadata = pageMetadata({ ...seo, noindex: true });
 
 export default function BookPage() {
   return (

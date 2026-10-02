@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { clinic } from "@/lib/clinic";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+const seo = {
   title: "Privacy Policy · Roots & Pulp Dental Clinic",
-  robots: { index: false, follow: false },
+  description:
+    "How Roots & Pulp Dental Clinic handles the personal information you share with us.",
+  path: "/privacy-policy/",
 };
+
+export const metadata: Metadata = pageMetadata({ ...seo, noindex: true });
 
 export default function PrivacyPage() {
   return (

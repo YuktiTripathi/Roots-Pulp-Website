@@ -21,7 +21,7 @@ const cards = [
   },
   {
     title: "Visit the clinic",
-    detail: "ED-362, Sector-Q",
+    detail: clinic.addressLine1,
     href: directionsUrl,
     cta: "Get directions",
     icon: PinMark,

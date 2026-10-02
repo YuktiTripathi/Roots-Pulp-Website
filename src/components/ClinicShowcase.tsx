@@ -50,7 +50,7 @@ export function ClinicShowcase() {
             >
               {slide.src ? (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={slide.src} alt={slide.alt} />
+                <img src={slide.src} alt={slide.alt} loading={slideIndex === 0 ? undefined : "lazy"} decoding="async" />
               ) : (
                 <div className="showcase-placeholder" role="img" aria-label={`${slide.alt}. Photograph to be added.`}>
                   <span>{slide.caption}</span>

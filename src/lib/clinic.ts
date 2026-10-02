@@ -22,6 +22,9 @@ export const clinicLongitude = process.env.NEXT_PUBLIC_CLINIC_LNG ?? "";
 export const clinic = {
   name: "Roots & Pulp Dental Clinic",
   streetAddress: "ED-362, Sector-Q, Aliganj",
+  /** First line of the address, used where the locality is shown separately. */
+  addressLine1: "ED-362, Sector-Q",
+  neighbourhood: "Aliganj",
   locality: "Lucknow",
   region: "Uttar Pradesh",
   postalCode: "226024",
@@ -37,6 +40,9 @@ export const clinic = {
   tagline: "Your smile is our reward.",
   disclaimer:
     "Information on this website is general and isn't a substitute for a professional dental examination.",
+  /** One-line description used in structured data. */
+  description:
+    "Dental clinic in Sector Q, Aliganj, Lucknow, led by Dr. Shubham Tripathi (BDS, MPH). Checkups, root canal treatment, implants, crowns, braces and aligners, and children's dentistry. Open 7 days.",
 } as const;
 
 export const doctor = {
@@ -75,31 +81,27 @@ export const showcaseSlides: ShowcaseSlide[] = [
     caption: "Dr. Shubham Tripathi",
   },
   {
-    src: null,
+    src: "/images/clinic-entrance.jpg",
     alt: "Entrance and signage of Roots & Pulp Dental Clinic in Sector Q, Aliganj",
-    caption: "Clinic exterior",
+    caption: "Clinic entrance",
   },
   {
-    src: null,
-    alt: "Reception area at Roots & Pulp Dental Clinic",
-    caption: "Reception",
+    src: "/images/doctor/listen-consult.jpg",
+    alt: "Dr. Shubham Tripathi in consultation with a patient at the clinic desk",
+    caption: "Consultation",
   },
   {
-    src: null,
-    alt: "Treatment room with dental chair at Roots & Pulp",
+    src: "/images/doctor/treat.jpg",
+    alt: "Dental treatment underway in the chair at Roots & Pulp",
     caption: "Treatment room",
   },
   {
-    src: null,
-    alt: "Dental equipment at Roots & Pulp Dental Clinic",
+    src: "/images/equipment/apex-locator.jpg",
+    alt: "Electronic apex locator used to measure root canal length",
     caption: "Treatment equipment",
   },
-  {
-    src: null,
-    alt: "Care environment at Roots & Pulp Dental Clinic",
-    caption: "Patient care",
-  },
-];
+  // [NEW PHOTO REQUIRED] Reception area.
+]
 
 export function telHref() {
   return `tel:${clinic.phoneTel}`;
@@ -365,26 +367,27 @@ export const expectations = [
 
 export const clinicPhotos: { src: string | null; caption: string; alt: string }[] = [
   {
-    src: null,
+    src: "/images/clinic-entrance.jpg",
     caption: "Entrance and signage",
     alt: "Entrance and signage of Roots & Pulp Dental Clinic in Sector Q, Aliganj",
   },
   {
-    src: null,
-    caption: "Reception",
-    alt: "Reception area at Roots & Pulp Dental Clinic",
+    src: "/images/doctor/listen-consult.jpg",
+    caption: "Consultation desk",
+    alt: "Dr. Shubham Tripathi in consultation with a patient at the clinic desk",
   },
   {
-    src: null,
+    src: "/images/doctor/treat.jpg",
     caption: "Treatment room",
-    alt: "Treatment room with dental chair at Roots & Pulp",
+    alt: "Dental treatment underway in the chair at Roots & Pulp",
   },
   {
-    src: null,
-    caption: "Sterilisation area",
-    alt: "Instrument sterilisation area at Roots & Pulp",
+    src: "/images/equipment/uv-sterilisation-chamber.jpg",
+    caption: "Sterilised instrument storage",
+    alt: "UV chamber holding sterilised dental instruments at Roots & Pulp",
   },
-];
+  // [NEW PHOTO REQUIRED] Reception area.
+]
 
 export type GoogleReview = {
   name: string;

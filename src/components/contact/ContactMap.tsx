@@ -14,7 +14,7 @@ export function ContactMap() {
       <div className={`contact-map-panel${mapReady ? " is-live" : ""}`}>
         {mapReady ? (
           <iframe
-            title="Map showing Roots & Pulp Dental Clinic at ED-362, Sector-Q, Aliganj, Lucknow"
+            title={`Map showing ${clinic.name} at ${clinic.streetAddress}, ${clinic.locality}`}
             src={mapSrc}
             loading="lazy"
           />
@@ -23,7 +23,7 @@ export function ContactMap() {
             <span className="map-pin" aria-hidden="true" />
             <span className="map-copy">
               <strong>Roots &amp; Pulp Dental Clinic</strong>
-              ED-362, Sector-Q, Aliganj, Lucknow
+              {clinic.streetAddress}, {clinic.locality}
             </span>
             <span className="map-action">Show map</span>
           </button>

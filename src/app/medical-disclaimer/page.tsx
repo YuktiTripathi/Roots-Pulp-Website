@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { clinic } from "@/lib/clinic";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+const seo = {
   title: "Medical Disclaimer · Roots & Pulp Dental Clinic",
-  robots: { index: false, follow: false },
+  description:
+    "Information on this website is general and isn't a substitute for a professional dental examination.",
+  path: "/medical-disclaimer/",
 };
+
+export const metadata: Metadata = pageMetadata({ ...seo, noindex: true });
 
 export default function DisclaimerPage() {
   return (

@@ -16,14 +16,11 @@ import { ReviewsSection } from "@/components/ReviewsSection";
 import { RootsAndPulpStory } from "@/components/RootsAndPulpStory";
 import { TrustStrip } from "@/components/TrustStrip";
 import { VisitSection } from "@/components/VisitSection";
-import { homeSeo, siteUrl } from "@/lib/clinic";
+import { homeSeo } from "@/lib/clinic";
 import { homeWebPageJsonLd } from "@/lib/schema";
+import { jsonLd, pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: homeSeo.title,
-  description: homeSeo.description,
-  alternates: siteUrl ? { canonical: "/" } : undefined,
-};
+export const metadata: Metadata = pageMetadata({ title: homeSeo.title, description: homeSeo.description, path: "/" });
 
 export default function HomePage() {
   const webpage = homeWebPageJsonLd();
@@ -47,9 +44,7 @@ export default function HomePage() {
       <FAQSection />
       <VisitSection />
       <FinalCTA />
-      {webpage ? (
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webpage) }} />
-      ) : null}
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(webpage)} />
     </main>
   );
 }
