@@ -1,9 +1,14 @@
-export type GalleryCategory = "entrance" | "consultation" | "treatment";
+export type GalleryCategory = "entrance" | "consultation" | "treatment" | "equipment";
 
 export type GalleryImage = {
   src: string;
   alt: string;
   caption?: string;
+  /** Short line shown under the caption in "named" sections, e.g. what a piece of equipment does. */
+  detail?: string;
+  /** Intrinsic size, required for "named" sections where photos keep their own shape. */
+  width?: number;
+  height?: number;
   category: GalleryCategory;
 };
 
@@ -14,6 +19,8 @@ export type GallerySection = {
   eyebrow: string;
   heading: string;
   description: string;
+  /** "named" shows every photo whole, with its name written underneath. */
+  layout?: "feature" | "named";
   images: GalleryImage[];
 };
 
@@ -76,6 +83,63 @@ export const gallerySections: GallerySection[] = [
         alt: "Dental treatment underway in the chair at Roots & Pulp",
         caption: "Treatment space",
         category: "treatment",
+      },
+    ],
+  },
+  {
+    id: "equipment",
+    category: "equipment",
+    label: "Equipment",
+    eyebrow: "Equipment & sterilisation",
+    heading: "The equipment behind your treatment",
+    description:
+      "Digital X-rays, precise root canal measurement and a step-by-step sterilisation routine for every instrument.",
+    layout: "named",
+    images: [
+      {
+        src: "/images/equipment/xpect-vision-rvg.jpg",
+        alt: "Digital dental X-ray of a root canal treated molar on the Xpect Vision RVG software",
+        caption: "Xpect Vision RVG",
+        detail: "Digital X-ray imaging",
+        width: 1086,
+        height: 1448,
+        category: "equipment",
+      },
+      {
+        src: "/images/equipment/woodpecker-woodpex-v-apex-locator.jpg",
+        alt: "Woodpecker Woodpex V apex locator showing a root canal length reading",
+        caption: "Woodpecker Woodpex V",
+        detail: "Apex locator for root canal length",
+        width: 1086,
+        height: 1448,
+        category: "equipment",
+      },
+      {
+        src: "/images/equipment/waldent-wal-cab-uv-chamber.jpg",
+        alt: "Waldent Wal-Cab UV chamber holding sterilised dental instruments",
+        caption: "Waldent Wal-Cab UV Chamber",
+        detail: "UV storage for sterilised instruments",
+        width: 1086,
+        height: 1448,
+        category: "equipment",
+      },
+      {
+        src: "/images/equipment/runyes-portable-xray.jpg",
+        alt: "Runyes handheld portable dental X-ray unit on its stand",
+        caption: "Runyes Portable X-ray",
+        detail: "Handheld intraoral X-ray",
+        width: 1536,
+        height: 1024,
+        category: "equipment",
+      },
+      {
+        src: "/images/equipment/codyson-ultrasonic-cleaner.jpg",
+        alt: "Codyson ultrasonic cleaner used to clean dental instruments before sterilisation",
+        caption: "Codyson Ultrasonic Cleaner",
+        detail: "Instrument cleaning before sterilisation",
+        width: 1536,
+        height: 1024,
+        category: "equipment",
       },
     ],
   },
