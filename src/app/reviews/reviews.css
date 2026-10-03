@@ -200,8 +200,12 @@
   cursor: pointer;
 }
 
-.patient-video-poster { transition: transform 0.8s var(--ease-out); }
-.patient-video-play:hover .patient-video-poster { transform: scale(1.035); }
+.patient-video-poster {
+  object-position: center 30%;
+  transform-origin: center 30%;
+  transition: transform 0.8s var(--ease-out);
+}
+.patient-video-play:hover .patient-video-poster { transform: scale(1.02); }
 .patient-video-frame { overflow: hidden; }
 
 .patient-video-icon {

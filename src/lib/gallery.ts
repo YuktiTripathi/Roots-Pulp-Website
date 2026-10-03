@@ -1,4 +1,4 @@
-export type GalleryCategory = "entrance" | "inside" | "consultation" | "treatment" | "equipment";
+export type GalleryCategory = "entrance" | "inside" | "consultation" | "treatment" | "people" | "equipment";
 
 export type GalleryImage = {
   src: string;
@@ -85,21 +85,30 @@ export const gallerySections: GallerySection[] = [
     heading: "A space to talk things through",
     description:
       "Before treatment begins, there is time to discuss your concerns, understand what has been found, and talk through the options.",
+    layout: "named",
     images: [
       {
         src: "/images/doctor/listen-consult.jpg",
         alt: "Dr. Shubham Tripathi in consultation with a patient at the clinic desk",
-        caption: "Consultation",
+        caption: "Listening to a patient's concerns",
+        width: 1024,
+        height: 768,
         category: "consultation",
       },
       {
         src: "/images/doctor/explain-consult.jpg",
-        alt: "Dr. Shubham Tripathi speaking with a patient beside the consultation desk",
+        alt: "Dr. Shubham Tripathi explaining a dental X-ray to a patient",
+        caption: "Explaining findings clearly",
+        width: 981,
+        height: 637,
         category: "consultation",
       },
       {
-        src: "/images/consultation-banner.jpg",
-        alt: "A patient and Dr. Shubham Tripathi seated across the consultation desk",
+        src: "/images/clinic/roots-pulp-about-consultation-lucknow.webp",
+        alt: "Dr. Shubham Tripathi completing a treatment plan with a patient",
+        caption: "Planning the next steps",
+        width: 819,
+        height: 1024,
         category: "consultation",
       },
     ],
@@ -112,12 +121,75 @@ export const gallerySections: GallerySection[] = [
     heading: "Where your treatment happens",
     description:
       "Treatment takes place in a clinical setting, with the chair, instruments and lighting arranged for the procedure.",
+    layout: "named",
     images: [
       {
         src: "/images/doctor/treat.jpg",
-        alt: "Dental treatment underway in the chair at Roots & Pulp",
-        caption: "Treatment space",
+        alt: "Dr. Shubham Tripathi examining a patient's teeth at Roots & Pulp",
+        caption: "A careful dental examination",
+        width: 819,
+        height: 1024,
         category: "treatment",
+      },
+      {
+        src: "/images/clinic/care/examining-patient-with-mirror.webp",
+        alt: "Dr. Shubham Tripathi treating a patient who is holding a dental mirror",
+        caption: "Patient involved in their care",
+        width: 819,
+        height: 1024,
+        category: "treatment",
+      },
+      {
+        src: "/images/clinic/care/treating-patient-in-chair.webp",
+        alt: "Dr. Shubham Tripathi providing dental treatment in the clinic chair",
+        caption: "Treatment in the dental chair",
+        width: 819,
+        height: 1024,
+        category: "treatment",
+      },
+      {
+        src: "/images/clinic/care/patient-dental-examination.webp",
+        alt: "Dr. Shubham Tripathi examining a patient's teeth at the clinic",
+        caption: "Checking teeth and gums",
+        width: 819,
+        height: 1024,
+        category: "treatment",
+      },
+      {
+        src: "/images/clinic/care/dental-checkup-in-progress.webp",
+        alt: "A dental checkup in progress at Roots & Pulp Dental Clinic",
+        caption: "A checkup in progress",
+        width: 819,
+        height: 1024,
+        category: "treatment",
+      },
+    ],
+  },
+  {
+    id: "people",
+    category: "people",
+    label: "Patient moments",
+    eyebrow: "Patient moments",
+    heading: "Real moments from a visit",
+    description:
+      "Appointments include time to see, understand and talk about your smile, along with the treatment itself.",
+    layout: "named",
+    images: [
+      {
+        src: "/images/clinic/care/patient-reviewing-smile.webp",
+        alt: "A patient looking at her smile in a mirror after a dental appointment",
+        caption: "Reviewing her smile",
+        width: 819,
+        height: 1024,
+        category: "people",
+      },
+      {
+        src: "/images/clinic/care/doctor-with-patient.webp",
+        alt: "Dr. Shubham Tripathi with a patient at Roots & Pulp Dental Clinic",
+        caption: "Dr. Shubham with a patient",
+        width: 819,
+        height: 1024,
+        category: "people",
       },
     ],
   },

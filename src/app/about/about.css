@@ -1,165 +1,443 @@
-.about-page { overflow-x: clip; background: var(--ivory); color: var(--ink); }
-.about-page p { max-width: 36rem; color: var(--muted); }
+.about-page {
+  overflow-x: clip;
+  background: var(--ivory);
+  color: var(--ink);
+}
+
+.about-page p {
+  max-width: 38rem;
+  color: var(--muted);
+}
+
 .about-page h1,
 .about-page h2 {
-  font-family: var(--serif);
+  margin: 0 0 18px;
   color: var(--navy);
+  font-family: var(--serif);
   font-weight: 400;
   letter-spacing: -0.02em;
 }
-.about-page h1 { font-size: clamp(2.4rem, 5vw, 4.2rem); line-height: 1.05; margin: 0 0 18px; max-width: 12ch; }
-.about-page h2 { font-size: clamp(2.1rem, 4vw, 3.2rem); line-height: 1.08; margin: 0 0 18px; max-width: 16ch; }
-.about-page h3 { color: var(--navy); font-size: 1.15rem; margin: 0 0 8px; }
 
-.about-hero { background: var(--ivory); padding-top: 20px; }
+.about-page h1 {
+  max-width: 14ch;
+  font-size: clamp(2.45rem, 5vw, 4.35rem);
+  line-height: 1.04;
+}
+
+.about-page h2 {
+  max-width: 17ch;
+  font-size: clamp(2.05rem, 4vw, 3.25rem);
+  line-height: 1.08;
+}
+
+.about-page h3 {
+  margin: 0 0 8px;
+  color: var(--navy);
+  font-size: 1.08rem;
+}
+
+.about-hero,
+.about-walk-out,
+.about-small-things,
+.about-clinic {
+  background: var(--ivory);
+}
+
 .about-why,
-.about-visit { background: var(--ivory-deep); }
-.about-care,
-.about-clinic { background: var(--ivory); }
+.about-doctor {
+  background: white;
+}
+
+.about-vision {
+  background: var(--ivory-deep);
+}
+
+.about-hero {
+  padding-top: 20px;
+}
 
 .about-crumbs ol {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  list-style: none;
-  margin: 0 0 28px;
+  margin: 0 0 38px;
   padding: 10px 0;
+  list-style: none;
+  border-bottom: 1px solid var(--line);
   color: var(--muted);
   font-size: 0.9rem;
-  border-bottom: 1px solid var(--line);
 }
+
 .about-crumbs li:not(:last-child)::after {
   content: "·";
   margin-left: 8px;
 }
-.about-crumbs a { color: var(--teal); text-decoration: none; }
+
+.about-crumbs a {
+  color: var(--teal);
+  text-decoration: none;
+}
 
 .about-hero-grid,
 .about-split {
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.9fr);
-  gap: 48px 64px;
+  grid-template-columns: minmax(0, 1.02fr) minmax(300px, 0.98fr);
+  gap: 56px 72px;
   align-items: center;
 }
-.about-why .about-split { grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1.05fr); }
 
-.about-figure { margin: 0; }
+.about-why .about-split {
+  grid-template-columns: minmax(300px, 0.9fr) minmax(0, 1.1fr);
+}
+
+.about-copy > p:not(.eyebrow):not(.about-follow) {
+  line-height: 1.75;
+}
+
+.about-figure {
+  margin: 0;
+}
+
 .about-figure img {
+  display: block;
   width: 100%;
   height: auto;
   border-radius: var(--radius);
   object-fit: cover;
-  display: block;
 }
-.about-figure figcaption {
-  margin-top: 10px;
-  color: var(--muted);
-  font-size: 0.9rem;
+
+.about-hero-media,
+.about-editorial-pair,
+.about-clinic-media {
+  position: relative;
 }
-.about-hero-photo {
+
+.about-hero-media {
+  width: min(100%, 560px);
   justify-self: end;
-  width: min(100%, 480px);
+  padding: 0 0 46px 34px;
+  background: transparent;
+}
+
+.about-hero-photo {
   overflow: hidden;
   border-radius: var(--radius);
 }
+
 .about-hero-photo img {
-  aspect-ratio: 5 / 6;
-  max-height: 600px;
-  object-fit: cover;
-  object-position: center bottom;
+  aspect-ratio: 1.55 / 1;
+  border-radius: 0;
+  object-position: center;
+}
+
+.about-hero-inset {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: min(38%, 190px);
+  padding: 7px;
+  border-radius: calc(var(--radius) + 4px);
+  background: var(--ivory);
+}
+
+.about-hero-inset img {
+  aspect-ratio: 4 / 5;
+  object-position: center 18%;
+}
+
+.about-editorial-pair {
+  padding: 0 34px 72px 0;
+}
+
+.about-editorial-photo {
+  overflow: hidden;
+  border-radius: var(--radius);
+}
+
+.about-editorial-photo img {
+  aspect-ratio: 1.54 / 1;
   border-radius: 0;
 }
-.about-editorial-photo img { aspect-ratio: 8 / 7; object-fit: cover; }
 
-.about-pull {
+.about-supporting-photo {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: min(58%, 300px);
+  padding: 7px;
+  border-radius: calc(var(--radius) + 4px);
+  background: white;
+}
+
+.about-supporting-photo img {
+  aspect-ratio: 8 / 7;
+}
+
+.about-lead {
+  margin-top: 28px;
+  color: var(--navy) !important;
   font-family: var(--serif);
-  font-size: 1.35rem;
-  line-height: 1.35;
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  line-height: 1.45 !important;
+}
+
+.about-narrow {
+  width: min(760px, calc(100% - 40px));
+}
+
+.about-centred {
+  margin-inline: auto;
+  text-align: center;
+}
+
+.about-centred h2,
+.about-centred p {
+  margin-inline: auto;
+}
+
+.about-checklist {
+  display: grid;
+  gap: 0;
+  margin: 30px 0 0;
+  padding: 14px 32px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: white;
+  box-shadow: var(--shadow);
+  list-style: none;
+}
+
+.about-checklist li {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr);
+  gap: 14px;
+  align-items: center;
+  padding: 19px 0;
+  border-bottom: 1px solid var(--line);
   color: var(--navy);
 }
 
-.about-cards {
-  list-style: none;
+.about-checklist li:last-child {
+  border-bottom: 0;
+}
+
+.about-checklist svg {
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: var(--teal);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+.about-vision-inner {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+}
+
+.about-vision-inner h2 {
+  max-width: 20ch;
+}
+
+.about-vision-inner > p:not(.eyebrow) {
+  max-width: 40rem;
+  line-height: 1.75;
+}
+
+.about-vision-quote {
+  max-width: 48rem;
+  margin: 42px 0 0;
+  padding: 34px 0 0;
+  border-top: 2px solid var(--teal);
+  color: var(--navy);
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+  line-height: 1.38;
+}
+
+.about-small-things-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+  gap: 48px 64px;
+  align-items: center;
+}
+
+.about-small-things-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 36px 30px;
   margin: 0;
   padding: 0;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 18px;
+  list-style: none;
 }
-.about-card {
-  background: white;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 22px 20px 24px;
+
+.about-small-thing {
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
 }
-.about-card p,
-.about-step p { margin: 0; }
+
+.about-small-thing p {
+  margin: 0;
+  line-height: 1.65;
+}
+
 .about-num {
   display: block;
-  margin-bottom: 16px;
+  margin-bottom: 13px;
   color: var(--teal);
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.12em;
 }
-.about-follow { margin: 28px 0 0; }
 
-.about-steps {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 28px;
-  position: relative;
+.about-waiting-photo img {
+  aspect-ratio: 5 / 6;
+  max-height: 540px;
+  object-position: center;
 }
-.about-steps::before {
-  content: "";
-  position: absolute;
-  top: 11px;
-  left: 0;
-  right: 8%;
-  height: 1px;
-  background: var(--line);
+
+.about-doctor-grid {
+  grid-template-columns: minmax(280px, 0.78fr) minmax(0, 1.22fr);
 }
-.about-step { position: relative; padding-right: 12px; }
-.about-step .about-num { background: var(--ivory-deep); display: inline-block; padding-right: 12px; }
-.about-visit .section-heading,
-.about-visit h2 { max-width: none; }
-.about-waiting-photo {
-  width: min(100%, 760px);
-  margin: 42px auto 0;
+
+.about-doctor-photo {
+  width: min(100%, 420px);
 }
-.about-waiting-photo img { aspect-ratio: 6 / 5; object-fit: cover; }
+
+.about-doctor-photo img {
+  aspect-ratio: 4 / 5;
+  max-height: 560px;
+  object-position: center top;
+}
+
+.about-follow {
+  margin: 28px 0 0;
+}
 
 .about-address {
   display: grid;
-  gap: 4px;
-  margin: 22px 0 0;
-  font-style: normal;
-  color: var(--navy);
+  gap: 5px;
   max-width: 36rem;
+  margin: 24px 0 0;
+  color: var(--navy);
+  font-style: normal;
+  line-height: 1.6;
 }
+
+.about-clinic-grid {
+  grid-template-columns: minmax(0, 0.9fr) minmax(320px, 0.82fr);
+}
+
+.about-clinic-media {
+  width: min(100%, 480px);
+  justify-self: end;
+  padding: 0 0 48px 62px;
+}
+
+.about-clinic-photo {
+  overflow: hidden;
+  border-radius: var(--radius);
+}
+
 .about-clinic-photo img {
+  aspect-ratio: 4 / 5;
+  max-height: 570px;
+  border-radius: 0;
+  object-position: center;
+}
+
+.about-clinic-support {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: min(58%, 280px);
+  padding: 7px;
+  border-radius: calc(var(--radius) + 4px);
+  background: var(--ivory);
+}
+
+.about-clinic-support img {
   aspect-ratio: 4 / 3;
-  max-height: 440px;
-  object-fit: cover;
 }
 
 @media (max-width: 980px) {
   .about-hero-grid,
   .about-split,
   .about-why .about-split,
-  .about-cards,
-  .about-steps {
+  .about-small-things-layout,
+  .about-doctor-grid,
+  .about-clinic-grid {
     grid-template-columns: 1fr;
   }
-  .about-steps::before { display: none; }
-  .about-page h1 { max-width: none; }
-  .about-hero-photo { justify-self: start; width: min(100%, 540px); }
+
+  .about-page h1,
+  .about-page h2 {
+    max-width: none;
+  }
+
+  .about-hero-media,
+  .about-clinic-media {
+    justify-self: start;
+  }
+
+  .about-hero-media {
+    width: min(100%, 620px);
+  }
+
+  .about-editorial-pair {
+    width: min(100%, 620px);
+  }
+
+  .about-why .about-copy {
+    grid-row: 1;
+  }
+
+  .about-clinic-media {
+    width: min(100%, 520px);
+  }
+
+  .about-waiting-photo {
+    width: min(100%, 620px);
+  }
+
+  .about-waiting-photo img {
+    aspect-ratio: 6 / 5;
+    max-height: none;
+  }
 }
 
-@media (min-width: 700px) and (max-width: 980px) {
-  .about-cards { grid-template-columns: 1fr 1fr; }
+@media (max-width: 640px) {
+  .about-hero-grid,
+  .about-split,
+  .about-small-things-layout {
+    gap: 38px;
+  }
+
+  .about-small-things-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .about-checklist {
+    padding: 8px 20px;
+  }
+
+  .about-hero-media {
+    padding: 0 0 34px 20px;
+  }
+
+  .about-editorial-pair {
+    padding: 0 22px 56px 0;
+  }
+
+  .about-clinic-media {
+    padding: 0 0 38px 36px;
+  }
+
+  .about-vision-quote {
+    margin-top: 34px;
+    padding-top: 28px;
+  }
 }

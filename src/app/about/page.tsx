@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { FinalCTA } from "@/components/FinalCTA";
-import { bookingUrl, clinic, directionsUrl } from "@/lib/clinic";
+import { bookingUrl, clinic, directionsUrl, doctor } from "@/lib/clinic";
 import { stagger } from "@/lib/motion";
 import { openingHoursShort } from "@/lib/openingHours";
 import { pageMetadata, jsonLd } from "@/lib/seo";
@@ -12,43 +12,36 @@ import "./about.css";
 const seo = {
   title: "About Roots & Pulp Dental Clinic · Aliganj, Lucknow",
   description:
-    "Roots & Pulp is an Aliganj, Lucknow dental clinic built on listening, clear explanations and thoughtful treatment planning with Dr. Shubham Tripathi.",
+    "Roots & Pulp is an Aliganj, Lucknow dental clinic where you leave knowing what's wrong, your options and what happens next. Led by Dr. Shubham Tripathi.",
   path: "/about/",
 };
 
 export const metadata: Metadata = pageMetadata({ ...seo });
 
-const care = [
-  {
-    title: "Questions are part of the appointment",
-    text: "Ask what you need to. Nobody here is keeping count.",
-  },
-  {
-    title: "You see what we see",
-    text: "Findings are shown and explained, not just announced.",
-  },
-  {
-    title: "Not every problem needs a big procedure",
-    text: "We will tell you when something can wait, or needs no treatment at all.",
-  },
-  {
-    title: "Prevention is part of the plan",
-    text: "The aim is a mouth that stays well, not just one that gets fixed.",
-  },
+const walkOutItems = [
+  "What we found, shown to you and put into plain words.",
+  "Your options, including waiting, when waiting is safe.",
+  "How many visits each option will take.",
+  "A clear cost estimate, before anything begins.",
+  "No pressure to decide on the day.",
 ] as const;
 
-const visitSteps = [
+const smallThings = [
   {
-    title: "Be heard",
-    text: "Tell us what is bothering you, in your own words.",
+    title: "Open seven days.",
+    text: "Monday to Saturday until 8 PM, and Sunday until 5 PM, so a visit can fit around work and school.",
   },
   {
-    title: "Understand",
-    text: "We examine, explain what we find, and talk through the options.",
+    title: "Children are welcome.",
+    text: "We see children of all ages, from their first checkup onwards.",
   },
   {
-    title: "Decide together",
-    text: "Options, visits and costs are laid out first. There is no pressure to decide on the day.",
+    title: "Ask before you come.",
+    text: "Send us a WhatsApp message with your question, call the clinic, or book online.",
+  },
+  {
+    title: "Some things can wait.",
+    text: "Not every problem needs treatment today. If yours can wait, or needs none, we will say so.",
   },
 ] as const;
 
@@ -80,15 +73,14 @@ export default function AboutPage() {
             </ol>
           </nav>
           <div className="about-hero-grid">
-            <div>
+            <div className="about-copy">
               <p className="eyebrow reveal">About Roots &amp; Pulp</p>
               <h1 id="about-heading" className="reveal" style={stagger(1)}>
-                Dentistry feels different when someone explains it
+                Know what&apos;s wrong, what your options are, and what happens next.
               </h1>
-              <p className="reveal" style={stagger(2)}>
-                Most people arrive at a dental clinic with a question they haven&apos;t said out loud. At Roots
-                &amp; Pulp, in Aliganj, we start by listening. Then we show you what we see, so every next step
-                makes sense.
+              <p className="lede reveal" style={stagger(2)}>
+                That is the standard every visit at Roots &amp; Pulp is held to. We are a dental clinic in Sector
+                Q, Aliganj, Lucknow.
               </p>
               <div className="hero-actions reveal" style={stagger(3)}>
                 <Link className="btn btn-primary" href={bookingUrl} target="_blank" rel="noopener noreferrer">
@@ -99,136 +91,191 @@ export default function AboutPage() {
                 </Link>
               </div>
             </div>
-            <figure
-              className="about-figure about-hero-photo parallax-image reveal reveal--mask"
-              data-parallax="10"
-              style={stagger(2)}
-            >
-              <div className="parallax-layer">
+            <div className="about-hero-media reveal reveal--mask" style={stagger(2)}>
+              <figure className="about-figure about-hero-photo">
+                <Image
+                  src="/images/doctor/listen-consult.jpg"
+                  alt="Dr. Shubham Tripathi in conversation with a patient during a consultation at Roots & Pulp"
+                  width={1024}
+                  height={653}
+                  sizes="(max-width: 980px) 100vw, 560px"
+                  priority
+                  className="mask-img"
+                />
+              </figure>
+              <figure className="about-figure about-hero-inset">
                 <Image
                   src="/images/clinic/roots-pulp-about-consultation-lucknow.webp"
                   alt="Dr. Shubham Tripathi speaking with a patient during a consultation at Roots & Pulp"
                   width={819}
                   height={1024}
-                  sizes="(max-width: 900px) 100vw, 560px"
-                  priority
-                  className="mask-img"
+                  sizes="(max-width: 640px) 42vw, 190px"
                 />
-              </div>
-            </figure>
+              </figure>
+            </div>
           </div>
         </div>
       </section>
 
       <section className="section about-why" aria-labelledby="why-heading">
         <div className="section-inner about-split">
-          <figure
-            className="about-figure about-editorial-photo parallax-image reveal reveal--mask"
-            data-parallax="12"
-          >
-            <div className="parallax-layer">
+          <div className="about-editorial-pair">
+            <figure className="about-figure about-editorial-photo reveal reveal--mask">
+              <Image
+                src="/images/doctor/explain-consult.jpg"
+                alt="Dr. Shubham Tripathi going through findings with a patient using a laptop"
+                width={981}
+                height={637}
+                sizes="(max-width: 980px) 100vw, 520px"
+                className="mask-img"
+              />
+            </figure>
+            <figure className="about-figure about-supporting-photo reveal" style={stagger(1)}>
               <Image
                 src="/images/clinic/roots-pulp-treatment-room-lucknow.webp"
                 alt="Dental treatment room at Roots & Pulp Dental Clinic in Aliganj, Lucknow"
                 width={1024}
                 height={895}
-                sizes="(max-width: 980px) 100vw, 520px"
-                className="mask-img"
+                sizes="(max-width: 640px) 72vw, 300px"
               />
-            </div>
-            <figcaption>Thoughtful care, in a space designed around clarity and comfort.</figcaption>
-          </figure>
-          <div>
-            <p className="eyebrow reveal">Why we do it this way</p>
+            </figure>
+          </div>
+          <div className="about-copy">
+            <p className="eyebrow reveal">Why Roots &amp; Pulp exists</p>
             <h2 id="why-heading" className="reveal" style={stagger(1)}>
-              A visit should leave you with answers
+              People should never feel like just another case in a dental chair.
             </h2>
-            <p className="about-pull reveal" style={stagger(2)}>
-              Dental visits often begin with one question: what exactly is wrong?
+            <p className="reveal" style={stagger(2)}>
+              A dental visit can come with fear, uncertainty, pain, or even embarrassment, and often what people
+              need first is not a procedure, but someone who will listen without rushing them. We wanted to create
+              a place where every patient feels heard, where questions are welcomed, and where treatment begins
+              only after there is clarity and trust.
             </p>
-            <p className="reveal" style={stagger(3)}>
-              Too often they end with more. Why this treatment? Is there another option? What happens next?
-            </p>
-            <p className="reveal" style={stagger(4)}>
-              Roots &amp; Pulp was built so those questions are welcome. We look first, explain what we find in
-              plain language, and talk through your options before anything begins. Where a problem can be
-              prevented, we would rather help you prevent it than repair it later.
+            <p className="about-lead reveal" style={stagger(3)}>
+              For us, good dentistry is not only about fixing a tooth. It is about helping someone feel comfortable
+              enough to smile, speak, eat, and live without constantly thinking about their dental health.
             </p>
           </div>
         </div>
       </section>
 
-      <section className="section about-care" aria-labelledby="care-heading">
-        <div className="section-inner">
-          <div className="section-heading">
-            <h2 id="care-heading" className="reveal">
-              The way we care
+      <section className="section about-walk-out" aria-labelledby="walk-out-heading">
+        <div className="section-inner about-narrow">
+          <div className="section-heading about-centred">
+            <h2 id="walk-out-heading" className="reveal">
+              What you walk out with
             </h2>
+            <p className="reveal" style={stagger(1)}>
+              After an examination, and an X-ray if one is needed, you should have:
+            </p>
           </div>
-          <ul className="about-cards">
-            {care.map((item, index) => (
-              <li key={item.title} className="about-card reveal" style={stagger(index)}>
-                <span className="about-num" aria-hidden="true">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <h3>{item.title}</h3>
-                <p>{item.text}</p>
+          <ul className="about-checklist reveal" style={stagger(2)}>
+            {walkOutItems.map((item) => (
+              <li key={item}>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="m5 12 4 4L19 6" />
+                </svg>
+                <span>{item}</span>
               </li>
             ))}
           </ul>
-          <p className="about-follow reveal">
-            <Link className="text-link" href="/treatments/">
-              See the treatments we offer <span aria-hidden="true">→</span>
-            </Link>
-          </p>
         </div>
       </section>
 
-      <section className="section about-visit" aria-labelledby="visit-heading">
+      <section className="section about-vision" aria-labelledby="vision-heading">
+        <div className="section-inner about-vision-inner">
+          <p className="eyebrow reveal">Our vision</p>
+          <h2 id="vision-heading" className="reveal" style={stagger(1)}>
+            A clinic you return to through different stages of life.
+          </h2>
+          <p className="reveal" style={stagger(2)}>
+            We want Roots &amp; Pulp to be a place people come back to, not because they are afraid something might
+            go wrong, but because they feel genuinely cared for here. We want to move away from hurried,
+            procedure-first dentistry and build a culture of prevention, honest conversations, thoughtful
+            treatment, and long-term relationships.
+          </p>
+          <blockquote className="about-vision-quote reveal" style={stagger(3)}>
+            If someone leaves Roots &amp; Pulp feeling a little less anxious, a little more informed, and confident
+            that their health is being looked after with sincerity, then we have built the kind of clinic we set
+            out to create.
+          </blockquote>
+        </div>
+      </section>
+
+      <section className="section about-small-things" aria-labelledby="small-things-heading">
         <div className="section-inner">
           <div className="section-heading">
-            <h2 id="visit-heading" className="reveal">
-              What a visit should feel like
+            <h2 id="small-things-heading" className="reveal">
+              Small things that matter
             </h2>
           </div>
-          <ol className="about-steps">
-            {visitSteps.map((step, index) => (
-              <li key={step.title} className="about-step reveal" style={stagger(index)}>
-                <span className="about-num" aria-hidden="true">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <h3>{step.title}</h3>
-                <p>{step.text}</p>
-              </li>
-            ))}
-          </ol>
-          <figure className="about-figure about-waiting-photo reveal">
+          <div className="about-small-things-layout">
+            <ol className="about-small-things-grid">
+              {smallThings.map((item, index) => (
+                <li key={item.title} className="about-small-thing reveal" style={stagger(index)}>
+                  <span className="about-num" aria-hidden="true">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <h3>{item.title}</h3>
+                  <p>{item.text}</p>
+                </li>
+              ))}
+            </ol>
+            <figure className="about-figure about-waiting-photo reveal">
+              <Image
+                src="/images/clinic/roots-pulp-waiting-area-lucknow.webp"
+                alt="Patient waiting area at Roots & Pulp Dental Clinic in Aliganj, Lucknow"
+                width={1024}
+                height={858}
+                sizes="(max-width: 980px) 100vw, 420px"
+              />
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section className="section about-doctor" aria-labelledby="doctor-heading">
+        <div className="section-inner about-split about-doctor-grid">
+          <figure className="about-figure about-doctor-photo reveal">
+            {/* TODO: replace with a relaxed, natural-light portrait without folded arms once photographed. */}
             <Image
-              src="/images/clinic/roots-pulp-waiting-area-lucknow.webp"
-              alt="Patient waiting area at Roots & Pulp Dental Clinic in Aliganj, Lucknow"
-              width={1024}
-              height={858}
-              sizes="(max-width: 980px) 100vw, 760px"
+              src={doctor.portrait}
+              alt={doctor.profileAlt}
+              width={doctor.portraitWidth}
+              height={doctor.portraitHeight}
+              sizes="(max-width: 980px) 78vw, 420px"
             />
-            <figcaption>A calm space to arrive, settle in and feel at ease.</figcaption>
           </figure>
-          <p className="about-follow reveal">
-            <Link className="text-link" href="/faq/">
-              Common questions about a first visit <span aria-hidden="true">→</span>
-            </Link>
-          </p>
+          <div className="about-copy">
+            <p className="eyebrow reveal">Your dentist</p>
+            <h2 id="doctor-heading" className="reveal" style={stagger(1)}>
+              A dentist who also thinks in public health.
+            </h2>
+            <p className="reveal" style={stagger(2)}>
+              Dr. Shubham Tripathi, Founder and Director, trained in both dentistry (BDS) and public health (MPH).
+              Public health is about stopping problems before they start, which is why prevention sits at the
+              centre of how the clinic works.
+            </p>
+            <p className="reveal" style={stagger(3)}>
+              He also holds specialised certification in Rotary Endodontics, used in root canal treatment.
+            </p>
+            <p className="about-follow reveal" style={stagger(4)}>
+              <Link className="text-link" href="/doctor/dr-shubham-tripathi/">
+                Meet Dr. Shubham <span aria-hidden="true">→</span>
+              </Link>
+            </p>
+          </div>
         </div>
       </section>
 
       <section className="section about-clinic" aria-labelledby="clinic-heading">
         <div className="section-inner about-split about-clinic-grid">
-          <div>
+          <div className="about-copy">
             <h2 id="clinic-heading" className="reveal">
-              A calm place in Aliganj, Lucknow
+              A calm place in Aliganj
             </h2>
             <p className="reveal" style={stagger(1)}>
-              Roots &amp; Pulp is in Sector Q, Aliganj, near Saraswati Vidya Mandir School. It is a clinic for
-              conversations as much as procedures, open seven days so a visit can fit around work and school.
+              Roots &amp; Pulp is in Sector Q, Aliganj, near Saraswati Vidya Mandir School.
             </p>
             <address className="about-address reveal" style={stagger(2)}>
               <span>{clinic.name}</span>
@@ -246,21 +293,34 @@ export default function AboutPage() {
               </a>
             </p>
           </div>
-          <figure className="about-figure about-clinic-photo reveal reveal--mask reveal--mask-left">
-            <Image
-              src="/images/clinic/roots-pulp-clinic-interior-lucknow.webp"
-              alt="Reception and interior of Roots & Pulp Dental Clinic in Aliganj, Lucknow"
-              width={1024}
-              height={768}
-              sizes="(max-width: 980px) 100vw, 420px"
-              className="mask-img"
-            />
-          </figure>
+          <div className="about-clinic-media">
+            <figure className="about-figure about-clinic-photo reveal reveal--mask">
+              <Image
+                src="/images/consultation-banner.jpg"
+                alt="A consultation underway at the desk at Roots & Pulp Dental Clinic, Aliganj"
+                width={768}
+                height={1024}
+                sizes="(max-width: 980px) 100vw, 390px"
+                className="mask-img"
+              />
+            </figure>
+            {/* TODO [NEW PHOTO REQUIRED]: add a daylight photo of reception or the waiting area as a second image (about-reception.jpg). */}
+            <figure className="about-figure about-clinic-support reveal reveal--mask reveal--mask-left">
+              <Image
+                src="/images/clinic/roots-pulp-clinic-interior-lucknow.webp"
+                alt="Reception and interior of Roots & Pulp Dental Clinic in Aliganj, Lucknow"
+                width={1024}
+                height={768}
+                sizes="(max-width: 640px) 68vw, 280px"
+                className="mask-img"
+              />
+            </figure>
+          </div>
         </div>
       </section>
 
       <FinalCTA
-        heading="Start with a conversation"
+        heading="Start with a conversation."
         supporting="You don't need to know what treatment you need before you visit. If something has been bothering you, such as pain, sensitivity, a change in your smile or just a question, let us take a look and explain what we see."
         showCall
       />

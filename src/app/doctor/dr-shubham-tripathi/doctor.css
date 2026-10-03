@@ -227,12 +227,13 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center center;
+  object-position: center 35%;
+  transform-origin: center 35%;
   display: block;
   transition: transform 0.9s var(--ease-out);
 }
 
-.doctor-approach-list li:hover .doctor-approach-photo { transform: scale(1.035); }
+.doctor-approach-list li:hover .doctor-approach-photo { transform: scale(1.02); }
 
 .doctor-approach-num {
   position: absolute;
