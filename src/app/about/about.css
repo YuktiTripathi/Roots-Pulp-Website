@@ -302,29 +302,31 @@
   grid-template-columns: minmax(0, 0.9fr) minmax(320px, 0.82fr);
 }
 
+/* Two photos, lightly overlapped: reception top right, waiting area in front at bottom left. */
 .about-clinic-media {
-  width: min(100%, 480px);
+  width: min(100%, 560px);
   justify-self: end;
-  padding: 0 0 48px 62px;
+  padding: 0;
 }
 
 .about-clinic-photo {
+  width: 74%;
+  margin-left: auto;
   overflow: hidden;
   border-radius: var(--radius);
 }
 
 .about-clinic-photo img {
-  aspect-ratio: 1 / 1;
-  max-height: 570px;
+  aspect-ratio: 4 / 3;
   border-radius: 0;
   object-position: center;
 }
 
 .about-clinic-support {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: min(70%, 340px);
+  position: relative;
+  z-index: 1;
+  width: 64%;
+  margin-top: -16%;
   padding: 7px;
   border-radius: calc(var(--radius) + 4px);
   background: var(--ivory);
@@ -404,9 +406,7 @@
     padding: 8px 20px;
   }
 
-  .about-clinic-media {
-    padding: 0 0 38px 36px;
-  }
+
 
   .about-vision-quote {
     margin-top: 34px;
@@ -429,8 +429,4 @@
   }
 }
 
-@media (max-width: 640px) {
-  .about-clinic-support {
-    width: min(78%, 300px);
-  }
-}
+
