@@ -9,7 +9,7 @@
 
 export type TreatmentLink = { label: string; href: string };
 
-export type TreatmentCardItem = { title: string; text: string };
+export type TreatmentCardItem = { title: string; text?: string };
 
 export type SymptomIcon =
   | "temperature"
@@ -35,7 +35,18 @@ export type SymptomIcon =
   | "uneven"
   | "adult";
 
-export type StageIllustration = "root-canal" | "implant" | "crown-bridge" | "braces" | "cosmetic" | "milk-teeth";
+export type StageIllustration =
+  | "root-canal"
+  | "implant"
+  | "crown-bridge"
+  | "braces"
+  | "cosmetic"
+  | "milk-teeth"
+  | "cleaning"
+  | "filling"
+  | "gum-stages"
+  | "dentures"
+  | "whitening";
 
 export type TreatmentFaq = { question: string; answer: string; link?: TreatmentLink };
 
@@ -51,6 +62,8 @@ export type TreatmentPageContent = {
     heading: string;
     lede: string;
     text: string;
+    /** Overrides the treatment's listing image in the hero only. */
+    image?: { src: string; alt: string };
   };
   glance: TreatmentCardItem[];
   symptoms: {
@@ -60,6 +73,8 @@ export type TreatmentPageContent = {
     /** An image, when given, is shown instead of the line icon. */
     items: (TreatmentCardItem & { icon: SymptomIcon; image?: string; group?: string; link?: TreatmentLink })[];
     note: string;
+    illustration?: StageIllustration;
+    caption?: string;
   };
   /** Myth and fact cards, shown after the symptom cards. */
   myths?: {
@@ -81,7 +96,9 @@ export type TreatmentPageContent = {
     heading: string;
     intro: string;
     steps: (TreatmentCardItem & { links?: TreatmentLink[] })[];
-    footnote: string;
+    footnote?: string;
+    illustration?: StageIllustration;
+    caption?: string;
   };
   /** Option cards. [CONFIRM SERVICE AVAILABILITY] before the page is reviewed and indexed. */
   options?: {
@@ -105,13 +122,36 @@ export type TreatmentPageContent = {
     links?: TreatmentLink[];
     aside?: { text: string; link: TreatmentLink };
   };
-  decides: {
+  /** A short set of cards with links, e.g. "When a filling may not be enough". */
+  infoCards?: {
+    heading: string;
+    intro?: string;
+    items: (TreatmentCardItem & { link?: TreatmentLink })[];
+    closing?: string;
+  };
+  /** Two side-by-side lists, e.g. "What whitening can and cannot do". */
+  twoLists?: {
+    heading: string;
+    columns: { title: string; items: string[] }[];
+    closing?: string;
+    links?: TreatmentLink[];
+  };
+  /** A standalone explanatory section, e.g. oral cancer screening. */
+  extra?: {
+    id: string;
+    heading: string;
+    paragraphs: string[];
+    listHeading?: string;
+    list?: string[];
+    closing?: string;
+  };
+  decides?: {
     heading: string;
     intro: string;
     items: TreatmentCardItem[];
     closing: string;
   };
-  comfort: {
+  comfort?: {
     heading: string;
     paragraphs: string[];
     tips?: { heading: string; items: string[] };
@@ -120,11 +160,16 @@ export type TreatmentPageContent = {
   why: {
     heading: string;
     items: TreatmentCardItem[];
-    equipment: { src: string; alt: string; caption: string; detail?: string; position?: string }[];
+    equipment?: { src: string; alt: string; caption: string; detail?: string; position?: string }[];
     equipmentNote: string;
     /** Defaults to "See more in the gallery", linking to the gallery's equipment section. */
     galleryLink?: TreatmentLink;
   };
+  /**
+   * Compact pages leave out the doctor card and instead show a short link to the
+   * doctor's profile (and the review line, once reviewed) in the "Why" section.
+   */
+  compact?: boolean;
   /** Credential lines shown on the doctor card in addition to the standard ones. */
   doctorExtra?: string[];
   /** A quote shown on the doctor card. */
@@ -135,9 +180,11 @@ export type TreatmentPageContent = {
     heading: string;
     intro: string;
     items: TreatmentCardItem[];
-    followUp: string;
+    followUp?: string;
+    /** Short "when should I call?" line, used on compact pages instead of the warning section. */
+    callLine?: string;
   };
-  warning: {
+  warning?: {
     heading: string;
     intro: string;
     signs: string[];
@@ -165,37 +212,6 @@ const consultImage = {
 
 const standardDoctorQuote =
   "Dental treatment can feel confusing. Findings, options and the reasoning behind a treatment plan are explained in simple, understandable terms.";
-
-const consultationStrip = [
-  {
-    src: "/images/doctor/listen-consult.jpg",
-    alt: "Dr. Shubham Tripathi in consultation with a patient at the clinic desk",
-    caption: "Listening first",
-  },
-  {
-    src: "/images/doctor/explain-consult.jpg",
-    alt: "Dr. Shubham Tripathi speaking with a patient beside the consultation desk",
-    caption: "Explaining your options",
-  },
-  {
-    src: "/images/consultation-banner.jpg",
-    alt: "A patient and Dr. Shubham Tripathi seated across the consultation desk",
-    caption: "Time to talk it through",
-  },
-];
-
-const whyCore = [
-  { title: "Listen first", text: "Dr. Tripathi starts by understanding your concerns, then examines." },
-  {
-    title: "Diagnosis before treatment",
-    text: "Every recommendation follows an examination, and you are told when something can wait.",
-  },
-  {
-    title: "Prevention matters",
-    text: "Dr. Tripathi's public health training shapes a focus on keeping problems from coming back.",
-  },
-  { title: "Open seven days", text: "Monday to Saturday until 8 PM, Sunday until 5 PM." },
-];
 
 const appointmentFaq: TreatmentFaq = {
   question: "Do I need an appointment, and are you open on Sundays?",
@@ -549,7 +565,7 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
         slug: "tooth-coloured-fillings",
         text: "Sometimes a filling alone restores the tooth, or catches decay earlier.",
       },
-      { slug: "emergency-dental-care", text: "For severe pain or swelling, call first." },
+      { slug: "tooth-extraction", text: "When a tooth cannot be saved." },
     ],
     cta: {
       heading: "Not sure what your tooth needs?",
@@ -2003,7 +2019,7 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
         question: "What should I do if my child breaks or knocks out a tooth?",
         answer:
           "Call us straight away. If a permanent tooth is knocked out, handle it by the crown and do not scrub it. Do not put a baby tooth back in. For serious injuries to the head or face, seek emergency medical care first.",
-        link: { label: "Emergency dental care", href: "/treatments/emergency-dental-care/" },
+        link: { label: "Contact the clinic", href: "/contact/" },
       },
       {
         question: "Do I need an appointment, and are you open on Sundays?",
@@ -2015,7 +2031,7 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
     related: [
       { slug: "teeth-cleaning", text: "Professional cleaning and prevention." },
       { slug: "tooth-coloured-fillings", text: "Repairing cavities in milk and permanent teeth." },
-      { slug: "emergency-dental-care", text: "For a knocked tooth, swelling or severe pain." },
+      { slug: "braces-and-aligners", text: "When to check how teeth and jaws are growing." },
     ],
     cta: {
       heading: "A calm first visit starts here.",
@@ -2377,350 +2393,6 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
       text: "Start with a conversation. Dr. Tripathi will listen to what you would like, examine your teeth and explain what is possible, with no pressure.",
     },
   },
-  "teeth-cleaning": {
-    seo: {
-      title: "Teeth Cleaning in Aliganj, Lucknow · Roots & Pulp",
-      description:
-        "Professional teeth cleaning to remove plaque and tartar that brushing misses, and help keep gums healthy. Roots & Pulp Dental Clinic, Aliganj, Lucknow.",
-    },
-    // [CLINICAL REVIEW REQUIRED BEFORE PUBLICATION]
-    clinicallyReviewedOn: "",
-    hero: {
-      eyebrow: "Everyday & preventive care",
-      heading: "Teeth Cleaning in Aliganj, Lucknow",
-      lede: "Removes the plaque and tartar that brushing misses, to help keep your gums healthy.",
-      text: "Even with careful brushing, hard deposits called tartar can build up where a toothbrush cannot reach. A professional cleaning removes them and gives your dentist a chance to check your teeth and gums. At Roots & Pulp in Aliganj, Dr. Shubham Tripathi examines first and explains what he finds.",
-    },
-    glance: [
-      { title: "What it is", text: "Professional removal of plaque and tartar from the teeth, above and around the gum line." },
-      { title: "Main goal", text: "Help keep gums healthy and make daily cleaning more effective." },
-      { title: "Planning", text: "Starts with a look at your teeth and gums, so your dentist can advise what you need." },
-      { title: "Comfort", text: "Most people feel vibration and pressure. Tell your dentist if any area is sensitive." },
-      { title: "Afterwards", text: "Advice on brushing and cleaning between teeth, and when to return." },
-    ],
-    symptoms: {
-      heading: "When might a cleaning help?",
-      intro: "These are common reasons people book a professional cleaning.",
-      items: [
-        { icon: "swelling", title: "Gums that bleed when brushing", text: "Bleeding can be an early sign of gum inflammation." },
-        { icon: "spots", title: "Hard deposits on the teeth", text: "Yellow or brown build-up near the gum line that brushing does not remove." },
-        { icon: "shade", title: "Surface stains", text: "Staining from tea, coffee or tobacco on the tooth surface." },
-        { icon: "brush", title: "Areas that are hard to clean", text: "Crowded teeth, braces or restorations can trap plaque." },
-        { icon: "sparkle", title: "A routine check is due", text: "A regular visit to keep problems small and easy to deal with." },
-        { icon: "chew", title: "Bad breath that lingers", text: "Plaque and tartar can contribute to persistent bad breath." },
-      ],
-      note: "These signs can have different causes. An examination helps find out what is happening and whether a cleaning, gum treatment or something else is appropriate.",
-    },
-    explainer: {
-      heading: "What is a professional teeth cleaning?",
-      paragraphs: [
-        "Plaque is a soft, sticky film of bacteria that forms on teeth every day. If it is not removed, it can harden into tartar, also called calculus, which a toothbrush cannot remove.",
-        "During a cleaning, tartar and plaque are removed from the tooth surfaces and around the gum line, and the teeth are usually polished. This is sometimes called scaling and polishing.",
-        "A cleaning does not replace brushing at home. It resets the starting point, so your daily routine can keep things healthy.",
-      ],
-    },
-    process: {
-      heading: "What happens during a cleaning",
-      intro: "Every mouth is different, so your visit may vary. This is the general journey.",
-      steps: [
-        {
-          title: "Check-up first",
-          text: "Dr. Tripathi asks about any concerns and examines your teeth and gums. An X-ray is taken only if it is needed.",
-        },
-        {
-          title: "Removing tartar",
-          text: "Hard deposits are removed from the teeth and around the gum line.",
-        },
-        { title: "Polishing", text: "The teeth are usually polished to remove surface stains and leave them smooth." },
-        {
-          title: "Advice for home",
-          text: "You hear how to brush and clean between your teeth, and when to come back.",
-          links: [{ label: "About gum health", href: "/treatments/gum-and-oral-health/" }],
-        },
-      ],
-      footnote: "If your gums need more than a routine cleaning, Dr. Tripathi will explain why and what is involved.",
-    },
-    decides: {
-      heading: "How your dentist plans your cleaning",
-      intro: "Your dentist will look at:",
-      items: [
-        { title: "Your gums", text: "Any bleeding, swelling or signs of gum disease." },
-        { title: "How much build-up there is", text: "Which affects how long the cleaning takes." },
-        { title: "Your teeth", text: "Any decay, worn areas or restorations to keep an eye on." },
-        { title: "Your routine", text: "How you clean at home, and what could make it easier." },
-        { title: "Your health", text: "Some conditions and medicines affect the gums." },
-      ],
-      closing: "If nothing more is needed, Dr. Tripathi will say so.",
-    },
-    comfort: {
-      heading: "Feeling comfortable",
-      paragraphs: [
-        "Most people find a cleaning straightforward. You may feel vibration, pressure or a scraping sensation, and some areas can feel sensitive.",
-        "Tell Dr. Tripathi if anything is uncomfortable, and he can pause. Questions are always welcome.",
-      ],
-      image: consultImage,
-    },
-    why: {
-      heading: "Why patients in Aliganj choose Roots & Pulp",
-      items: whyCore,
-      equipment: consultationStrip,
-      equipmentNote: "Your visit starts with a conversation.",
-      galleryLink: { label: "See the clinic in the gallery", href: "/gallery/" },
-    },
-    doctorQuote: standardDoctorQuote,
-    aftercare: {
-      heading: "Afterwards",
-      intro: "Your dentist's instructions always come first. This is general guidance.",
-      items: [
-        { title: "Straight after", text: "Teeth may feel smoother, and gums can feel a little tender for a short time." },
-        { title: "Sensitivity", text: "Some people notice mild sensitivity for a few days. Tell your dentist if it does not settle." },
-        { title: "Daily cleaning", text: "Brush twice a day and clean between your teeth, as your dentist shows you." },
-        { title: "Next visit", text: "Your dentist will say how often you should return. It varies from person to person." },
-      ],
-      followUp: "Regular cleanings work best alongside a good routine at home.",
-    },
-    warning: {
-      heading: "When should I contact my dentist?",
-      intro: "Please call the clinic if you notice:",
-      signs: [
-        "gums that keep bleeding or are getting more swollen",
-        "pain that is getting worse",
-        "swelling of the gum or face",
-        "a tooth that feels loose",
-        "sensitivity that is strong or does not settle",
-      ],
-      emergency: emergencyLine,
-    },
-    cost: {
-      heading: "What affects the cost of a cleaning?",
-      intro: "We do not publish a fixed price, because needs vary. The main factors are:",
-      items: [
-        { title: "How much build-up there is", text: "Heavier tartar takes longer to remove." },
-        { title: "The health of your gums", text: "Gum disease may need more than a routine cleaning." },
-        { title: "X-rays", text: "Taken only if needed." },
-        { title: "Follow-up", text: "Whether further visits are recommended." },
-      ],
-      // [CLINIC DETAIL REQUIRED] Whether the consultation is charged separately.
-      closing: "After an examination, Dr. Tripathi will explain what you need and give you an estimate first.",
-    },
-    faqIntro: "Straight answers about teeth cleaning. For anything else, call or send a WhatsApp message.",
-    faqs: [
-      {
-        question: "Does a professional cleaning hurt?",
-        answer:
-          "Most people feel vibration and pressure rather than pain. Some areas can feel sensitive, especially if the gums are inflamed. Tell Dr. Tripathi and he can pause or adjust.",
-      },
-      {
-        question: "How often should I have my teeth cleaned?",
-        answer:
-          "It varies. Some people need cleaning more often than others, depending on their gums, how quickly tartar builds up and their routine at home. Your dentist will advise what suits you.",
-      },
-      {
-        question: "Will a cleaning make my teeth whiter?",
-        answer:
-          "It can remove surface stains, so teeth may look brighter, but it does not change the natural colour of teeth. Whitening is a separate treatment.",
-        link: { label: "About teeth whitening", href: "/treatments/teeth-whitening/" },
-      },
-      {
-        question: "My gums bleed when I brush. Should I stop brushing there?",
-        answer:
-          "No. Bleeding is often a sign of gum inflammation, and gentle, thorough cleaning usually helps. Have your gums checked so the cause can be found.",
-        link: { label: "About gum health", href: "/treatments/gum-and-oral-health/" },
-      },
-      {
-        question: "How much does teeth cleaning cost in Lucknow?",
-        answer:
-          "It depends on how much build-up there is, the health of your gums and whether X-rays are needed. After an examination at our Aliganj clinic, you will get an estimate before treatment begins.",
-      },
-      appointmentFaq,
-    ],
-    related: [
-      { slug: "gum-and-oral-health", text: "When gums need more than a routine cleaning." },
-      { slug: "tooth-coloured-fillings", text: "Repairing cavities found at a check-up." },
-      { slug: "childrens-dentistry", text: "Checkups and prevention for growing teeth." },
-    ],
-    cta: {
-      heading: "Due for a cleaning?",
-      text: "Book a visit, and Dr. Tripathi will check your teeth and gums and explain what, if anything, they need.",
-    },
-  },
-  "tooth-coloured-fillings": {
-    seo: {
-      title: "Tooth-Coloured Fillings in Aliganj, Lucknow · Roots & Pulp",
-      description:
-        "Repair cavities with tooth-coloured fillings matched to your natural teeth. What to expect, aftercare and cost factors. Roots & Pulp, Aliganj, Lucknow.",
-    },
-    // [CLINICAL REVIEW REQUIRED BEFORE PUBLICATION] [CLINIC DETAIL REQUIRED] Filling materials used.
-    clinicallyReviewedOn: "",
-    hero: {
-      eyebrow: "Everyday & preventive care",
-      heading: "Tooth-Coloured Fillings in Aliganj, Lucknow",
-      lede: "Repair cavities with fillings matched to your natural teeth.",
-      text: "A filling repairs a tooth that has been damaged by decay or a small break, so it can work normally again. At Roots & Pulp in Aliganj, Dr. Shubham Tripathi examines the tooth first, shows you what he finds and explains your options.",
-    },
-    glance: [
-      { title: "What it treats", text: "Cavities from decay, and small chips or worn areas." },
-      { title: "Main goal", text: "Remove decay, restore the tooth's shape and stop the damage spreading." },
-      { title: "Appearance", text: "Tooth-coloured material is matched as closely as possible to your teeth." },
-      { title: "Comfort", text: "The area is usually numbed when needed. Your dentist will explain." },
-      { title: "Afterwards", text: "Good cleaning and check-ups help the filling and tooth last." },
-    ],
-    symptoms: {
-      heading: "When might you need a filling?",
-      intro: "These are common reasons people ask a dentist about a filling.",
-      items: [
-        { icon: "spots", title: "A dark spot or small hole", text: "Visible marks or holes that can be signs of decay." },
-        { icon: "temperature", title: "Sensitivity to sweet, hot or cold", text: "A twinge that comes and goes when eating or drinking." },
-        { icon: "crack", title: "A chipped or broken edge", text: "A small piece of tooth that has broken off." },
-        { icon: "bite", title: "Food catching in one place", text: "A rough area or gap where food keeps getting stuck." },
-        { icon: "filling", title: "An old filling that has worn", text: "A filling that is cracked, leaking or coming loose." },
-        { icon: "sparkle", title: "Found at a check-up", text: "Early decay can be found before it causes any pain." },
-      ],
-      note: "These signs can have different causes. An examination, and sometimes an X-ray, shows whether a filling or another treatment is appropriate.",
-    },
-    explainer: {
-      heading: "What is a tooth-coloured filling?",
-      paragraphs: [
-        "When decay damages a tooth, it leaves a weak or hollow area called a cavity. Left alone, decay can grow deeper toward the inside of the tooth.",
-        "A filling removes the decayed part and rebuilds the tooth with a tooth-coloured material, shaped to fit your bite.",
-        "Small cavities are usually simpler to repair. If decay has reached the inside of the tooth, a different treatment may be needed.",
-      ],
-    },
-    process: {
-      heading: "What happens during a filling",
-      intro: "Every tooth is different, so your own plan may vary. This is the general journey.",
-      steps: [
-        {
-          title: "Examination",
-          text: "Dr. Tripathi examines the tooth and may take an X-ray. An intraoral camera can show you the area on screen.",
-        },
-        { title: "Numbing, if needed", text: "The area is numbed so you are comfortable." },
-        { title: "Removing decay", text: "The decayed part of the tooth is removed and the area is prepared." },
-        { title: "Filling and shaping", text: "Tooth-coloured material is placed, shaped and set, then your bite is checked." },
-      ],
-      footnote: "If the damage is larger, Dr. Tripathi will explain other options, such as an inlay, onlay or crown.",
-    },
-    decides: {
-      heading: "How your dentist decides",
-      intro: "Your dentist will look at:",
-      items: [
-        { title: "How deep the decay is", text: "And whether it is close to the inside of the tooth." },
-        { title: "How much tooth remains", text: "Which decides whether a filling is strong enough." },
-        { title: "Where the tooth is", text: "Front and back teeth take different forces." },
-        { title: "Your bite", text: "How the tooth meets the teeth opposite." },
-        { title: "Existing fillings", text: "Whether old fillings need replacing or can stay." },
-      ],
-      closing: "Old fillings are replaced only if they need to be. Dr. Tripathi will tell you if something can wait.",
-    },
-    comfort: {
-      heading: "Feeling comfortable",
-      paragraphs: [
-        "The area is numbed when needed, so you should not feel sharp pain. You may feel pressure or vibration.",
-        "Tell Dr. Tripathi if anything is uncomfortable, and he can pause. You can ask to see the tooth on screen before and after.",
-      ],
-      image: consultImage,
-    },
-    why: {
-      heading: "Why patients in Aliganj choose Roots & Pulp",
-      items: [
-        ...whyCore.slice(0, 2),
-        { title: "See what he sees", text: "An intraoral camera lets you view your own teeth on screen with your dentist." },
-        ...whyCore.slice(2),
-      ],
-      equipment: [
-        {
-          src: "/images/equipment/intraoral-camera-cavities.jpg",
-          alt: "Intraoral camera screen showing cavities in the grooves of back teeth",
-          caption: "Intraoral Camera",
-          detail: "See cavities on screen with your dentist",
-        },
-        {
-          src: "/images/equipment/digital-xray-rvg.jpg",
-          alt: "Digital dental X-ray shown on the clinic laptop",
-          caption: "Digital X-ray (RVG)",
-          detail: "Instant X-rays on screen",
-          position: "center 30%",
-        },
-        consultationStrip[0],
-      ],
-      equipmentNote: "Examination at Roots & Pulp.",
-    },
-    doctorQuote: standardDoctorQuote,
-    aftercare: {
-      heading: "Afterwards",
-      intro: "Your dentist's instructions always come first. This is general guidance.",
-      items: [
-        { title: "Straight after", text: "If you were numbed, avoid chewing on that side until feeling returns." },
-        { title: "The first days", text: "Mild sensitivity can happen and usually settles. Tell your dentist if it does not." },
-        { title: "Your bite", text: "If the tooth feels high when you bite, ask for it to be adjusted." },
-        { title: "Long term", text: "Brush, clean between teeth and keep up check-ups. Decay can start again at the edges." },
-      ],
-      followUp: "Early repair of small cavities is usually simpler than waiting.",
-    },
-    warning: {
-      heading: "When should I contact my dentist?",
-      intro: "Please call the clinic if you notice:",
-      signs: [
-        "pain that is getting worse, or that wakes you",
-        "sensitivity that is strong or does not settle",
-        "a filling that has cracked or come out",
-        "a bite that feels too high",
-        "swelling of the gum or face",
-      ],
-      emergency: emergencyLine,
-    },
-    cost: {
-      heading: "What affects the cost of a filling?",
-      intro: "We do not publish a fixed price, because it depends on your tooth. The main factors are:",
-      items: [
-        { title: "The size of the cavity", text: "Larger repairs take more time and material." },
-        { title: "How many teeth", text: "One filling or several." },
-        { title: "The material", text: "Materials differ in strength, look and cost." },
-        { title: "Imaging", text: "X-rays needed to plan the work." },
-      ],
-      closing: "After an examination, Dr. Tripathi will explain your options and give you an estimate first.",
-    },
-    faqIntro: "Straight answers about fillings. For anything else, call or send a WhatsApp message.",
-    faqs: [
-      {
-        question: "Does getting a filling hurt?",
-        answer:
-          "The area is numbed when needed, so most people feel pressure rather than pain. Some sensitivity afterwards is common and usually settles.",
-      },
-      {
-        question: "Can tooth-coloured fillings be used on back teeth?",
-        answer:
-          "Often, yes, depending on the size of the cavity and your bite. If a filling would not be strong enough, your dentist will explain other options.",
-        link: { label: "About crowns & bridges", href: "/treatments/crowns-and-bridges/" },
-      },
-      {
-        question: "Should I replace my old silver fillings?",
-        answer:
-          "Not automatically. A filling that is sound may not need replacing. Your dentist will check them and tell you if any need attention.",
-      },
-      {
-        question: "What if the decay is deep?",
-        answer:
-          "If decay has reached the inside of the tooth, a filling alone may not be enough. Dr. Tripathi will explain the options, which can include root canal treatment.",
-        link: { label: "About root canal treatment", href: "/treatments/root-canal-treatment/" },
-      },
-      {
-        question: "How much does a filling cost in Lucknow?",
-        answer:
-          "It depends on the size of the cavity, the number of teeth and the material. After an examination at our Aliganj clinic, you will get an estimate before treatment begins.",
-      },
-      appointmentFaq,
-    ],
-    related: [
-      { slug: "root-canal-treatment", text: "When decay has reached the inside of the tooth." },
-      { slug: "crowns-and-bridges", text: "For teeth with more damage than a filling can repair." },
-      { slug: "teeth-cleaning", text: "Prevention, to help stop new cavities forming." },
-    ],
-    cta: {
-      heading: "Think you might need a filling?",
-      text: "Small problems are easier to fix early. Book a check-up, and Dr. Tripathi will show you what he finds and explain the options.",
-    },
-  },
   "tooth-extraction": {
     seo: {
       title: "Tooth Extraction in Aliganj, Lucknow · Roots & Pulp",
@@ -2732,9 +2404,9 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
     clinicallyReviewedOn: "",
     hero: {
       eyebrow: "Everyday & preventive care",
-      heading: "Tooth Extraction in Aliganj, Lucknow",
-      lede: "Careful removal of a tooth that cannot be saved, with clear aftercare.",
-      text: "Keeping your natural teeth is always the first aim. When a tooth cannot be saved, removing it can relieve pain and protect your other teeth. At Roots & Pulp in Aliganj, Dr. Shubham Tripathi will examine the tooth, explain why removal is recommended and talk through what comes next.",
+      heading: "Tooth Extraction in Lucknow",
+      lede: "When a tooth cannot be saved, a clear plan makes the next step easier.",
+      text: "Removing a tooth is never the first choice, but sometimes it is the right one. At Roots & Pulp in Aliganj, Dr. Shubham Tripathi will examine the tooth, tell you honestly whether it can be saved, and explain what happens before and after.",
     },
     glance: [
       { title: "When it is considered", text: "When a tooth is too damaged, infected or loose to be saved." },
@@ -2744,916 +2416,1444 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
       { title: "Afterwards", text: "Clear aftercare advice, and a talk about replacing the tooth if needed." },
     ],
     symptoms: {
-      heading: "Why might a tooth need removing?",
-      intro: "These are common reasons a dentist may discuss extraction.",
+      heading: "Why a tooth may need to be removed",
+      intro: "A dentist will always try to keep your natural teeth where it is sensible to do so. Removal may be recommended when:",
       items: [
-        { icon: "lost", title: "A tooth that cannot be repaired", text: "Decay or a break that has gone too far to restore." },
-        { icon: "crack", title: "A badly cracked tooth", text: "Some cracks extend too far below the gum to fix." },
-        { icon: "swelling", title: "Severe gum disease", text: "When a tooth has lost too much support to stay." },
-        { icon: "night", title: "Ongoing pain or infection", text: "When other treatment is not possible or not suitable." },
-        { icon: "crowded", title: "Crowding", text: "Occasionally, as part of a plan to straighten teeth." },
-        { icon: "sparkle", title: "A problem wisdom tooth", text: "A wisdom tooth that is causing repeated trouble." },
+        { icon: "lost", title: "Severe decay", text: "So much of the tooth is lost that it cannot be rebuilt." },
+        { icon: "crack", title: "A broken tooth", text: "A crack or break that extends below the gum." },
+        { icon: "swelling", title: "Advanced gum disease", text: "The tooth has lost its support and has become loose." },
+        { icon: "night", title: "An infection that cannot be treated", text: "Where other treatment is not suitable." },
+        { icon: "crowded", title: "A crowded mouth", text: "Sometimes a tooth is removed to make room, for example before braces." },
+        { icon: "sparkle", title: "A tooth that is stuck or misplaced", text: "Such as a tooth that has not come through properly." },
       ],
-      note: "Removing a tooth is never automatic. An examination and X-ray show whether the tooth can be saved, and what the options are.",
+      note: "These situations can have different causes. Only an examination, and usually an X-ray, can show whether a tooth can be saved or needs to be removed.",
     },
-    explainer: {
-      heading: "What happens when a tooth is removed?",
-      paragraphs: [
-        "A tooth is held in the jaw by its roots and the bone and gum around them. An extraction gently loosens the tooth from that support and removes it.",
-        "Most extractions are done with the area numbed, and you will feel pressure rather than pain. Some teeth, such as broken or impacted ones, can take longer.",
-        "Afterwards, a blood clot forms in the socket. It protects the area while it heals, which is why the aftercare advice matters.",
+    infoCards: {
+      heading: "Can the tooth be saved?",
+      intro: "Often, yes. Before recommending removal, Dr. Tripathi will consider whether the tooth can be treated.",
+      items: [
+        {
+          title: "Decay or infection inside the tooth",
+          text: "Root canal treatment may be an option.",
+          link: { label: "Root Canal Treatment", href: "/treatments/root-canal-treatment/" },
+        },
+        {
+          title: "A badly damaged tooth",
+          text: "A filling or a crown may protect it.",
+          link: { label: "Tooth-Coloured Fillings", href: "/treatments/tooth-coloured-fillings/" },
+        },
+        {
+          title: "A loose tooth from gum disease",
+          text: "Gum treatment may help in some cases.",
+          link: { label: "Gum & Oral Health", href: "/treatments/gum-and-oral-health/" },
+        },
       ],
+      closing: "If a tooth can be saved, we will say so. If it cannot, we will explain why, so the decision is yours and not rushed.",
     },
     process: {
-      heading: "What to expect",
-      intro: "Every tooth is different, so your own plan may vary. This is the general journey.",
+      heading: "What happens during an extraction",
+      intro: "Your own visit may differ slightly. This is the general journey.",
       steps: [
         {
           title: "Examination and X-ray",
-          text: "Dr. Tripathi examines the tooth, usually takes an X-ray and explains whether it can be saved.",
+          text: "Dr. Tripathi examines the tooth, usually takes an X-ray, and asks about your health and any medicines you take.",
         },
         {
-          title: "Your plan",
-          text: "You hear why removal is recommended, the alternatives and an estimate of cost. There is no pressure to decide on the day.",
+          title: "Your options",
+          text: "You hear whether the tooth can be saved, what removal involves, and what could replace it. There is no pressure to decide on the day.",
         },
-        { title: "Numbing", text: "The area is numbed, and you can say if you feel anything." },
-        { title: "Removing the tooth", text: "The tooth is loosened and removed. You may feel pressure." },
+        { title: "Numbing", text: "The area around the tooth is numbed, so you should not feel pain during the extraction." },
+        { title: "Removing the tooth", text: "The tooth is loosened and gently removed. You may feel pressure or movement, but not sharp pain." },
         {
-          title: "Aftercare and next steps",
-          text: "You receive aftercare advice and, if needed, a talk about replacing the tooth.",
-          links: [{ label: "About dental implants", href: "/treatments/dental-implants/" }],
+          title: "Care of the socket",
+          text: "The area is checked, and you are shown how to look after it. You may be asked to bite on gauze to help bleeding settle.",
         },
       ],
-      footnote: "Your dentist will explain what to expect for your tooth, including whether a review visit is needed.",
+      footnote: "Time and steps depend on the tooth. Your dentist will explain what to expect for yours.",
     },
-    comparison: {
-      heading: "Removing a tooth or saving it",
-      columns: ["Saving the tooth", "Removing the tooth"],
-      rows: [
-        {
-          label: "What happens",
-          values: ["The tooth is repaired, for example with a filling, root canal or crown", "The tooth is taken out"],
-        },
-        { label: "Natural tooth", values: ["Kept, where it can be saved", "Gap left, which may need replacing"] },
-        {
-          label: "Best suited",
-          values: ["A tooth with enough healthy structure to rebuild", "A tooth that cannot be restored"],
-        },
-      ],
-      closing:
-        "The right option depends on the tooth, your health and clinical assessment. Dr. Tripathi will tell you honestly whether a tooth can be saved.",
-      links: [
-        { label: "Root canal treatment", href: "/treatments/root-canal-treatment/" },
-        { label: "Dental implants", href: "/treatments/dental-implants/" },
-        { label: "Dentures", href: "/treatments/dentures/" },
-      ],
-    },
-    decides: {
-      heading: "How your dentist decides",
-      intro: "Your dentist will look at:",
+    options: {
+      heading: "After a tooth is removed: replacement options",
+      suitsLabel: "Planning",
       items: [
-        { title: "Whether the tooth can be saved", text: "How much healthy structure remains." },
-        { title: "The X-ray", text: "The roots, the bone and nearby teeth." },
-        { title: "Your gums and bone", text: "How well the tooth is supported." },
-        { title: "Your health and medicines", text: "Some conditions and medicines affect healing." },
-        { title: "What comes next", text: "Whether and how the gap should be filled." },
+        {
+          title: "A dental implant",
+          what: "A post in the jawbone supports a new tooth.",
+          suits: "A fixed replacement, where the teeth and bone are suitable.",
+          links: [{ label: "Dental Implants", href: "/treatments/dental-implants/" }],
+        },
+        {
+          title: "A bridge",
+          what: "A false tooth held by crowns on the neighbouring teeth.",
+          suits: "A fixed replacement supported by the teeth beside the gap.",
+          links: [{ label: "Crowns & Bridges", href: "/treatments/crowns-and-bridges/" }],
+        },
+        {
+          title: "A denture",
+          what: "A removable replacement for one or more teeth.",
+          suits: "One or several missing teeth.",
+          links: [{ label: "Dentures", href: "/treatments/dentures/" }],
+        },
       ],
-      closing: "Please tell your dentist about any medicines you take, especially blood thinners.",
+      note: "The right option depends on your teeth, gums and priorities. Dr. Tripathi will talk it through, ideally before the tooth is removed, so you can plan.",
     },
     comfort: {
       heading: "Feeling comfortable",
-      // [CLINIC DETAIL REQUIRED] Any additional comfort measures. Do not mention sedation unless confirmed.
       paragraphs: [
-        "It is normal to feel nervous about having a tooth out. The area is numbed first, and you can tell Dr. Tripathi at any time if you feel anything.",
-        "You may feel pressure and movement, which is not the same as pain. Questions are always welcome.",
+        "Many people feel anxious before an extraction. That is understandable, and you can ask as many questions as you like.",
+        "The area is numbed first. During treatment, you can tell Dr. Tripathi if you feel anything, and he can pause. Pressure and a pulling sensation are normal, but pain should not be.",
+        "Please tell him about any medical conditions and the medicines you take, including blood-thinning medicines, before treatment. Do not stop any medicine unless your own doctor advises it.",
       ],
       image: consultImage,
     },
     why: {
       heading: "Why patients in Aliganj choose Roots & Pulp",
       items: [
-        { title: "Saving teeth first", text: "Removal is recommended only when a tooth cannot reasonably be saved." },
-        ...whyCore.slice(0, 2),
-        whyCore[3],
-      ],
-      equipment: [
         {
-          src: "/images/equipment/digital-xray-rvg.jpg",
-          alt: "Digital dental X-ray shown on the clinic laptop",
-          caption: "Digital X-ray (RVG)",
-          detail: "Instant X-rays on screen",
-          position: "center 30%",
+          title: "Honest about saving teeth",
+          text: "Diagnosis comes before treatment, and you are told when a tooth can be saved or when something can wait.",
         },
+        { title: "Clear explanation", text: "You hear your options, and the reasons, before anything begins." },
         {
-          src: "/images/equipment/ultrasonic-cleaner.jpg",
-          alt: "Ultrasonic cleaner used to clean dental instruments before sterilisation",
-          caption: "Ultrasonic Cleaner",
-          detail: "Instrument cleaning before sterilisation",
-        },
-        {
-          src: "/images/equipment/uv-sterilisation-chamber.jpg",
-          alt: "UV chamber holding sterilised dental instruments",
-          caption: "UV Sterilisation Chamber",
-          detail: "Storage for sterilised instruments",
-          position: "center 40%",
+          title: "Open seven days",
+          text: "Monday to Saturday until 8 PM, Sunday until 5 PM, which matters when you are in pain.",
         },
       ],
-      equipmentNote: "Equipment at Roots & Pulp Dental Clinic.",
+      equipmentNote: "",
     },
-    doctorQuote: standardDoctorQuote,
+    compact: true,
     aftercare: {
-      heading: "Afterwards: what to expect",
-      intro: "Your dentist's instructions always come first. This is general guidance.",
+      heading: "Recovery: what to expect",
+      intro: "Healing varies from person to person. Your dentist's own instructions come first.",
       items: [
-        { title: "The first hours", text: "Bite gently on the gauze as advised. Some bleeding at first is normal." },
-        { title: "Protect the clot", text: "Avoid rinsing hard, spitting, smoking or using a straw, as your dentist advises." },
-        { title: "Eating", text: "Choose soft food and chew on the other side until the area settles." },
-        { title: "Healing", text: "Some swelling and discomfort are common. Follow the advice you are given on pain relief." },
+        {
+          title: "The day of extraction",
+          text: "The numbness wears off in a few hours. Some oozing of blood is normal. Take care not to bite your lip or cheek.",
+        },
+        {
+          title: "The first 24 hours",
+          text: "Rest, and avoid strenuous activity. Avoid rinsing or spitting hard, and do not use a straw. These can disturb the blood clot that protects the socket.",
+        },
+        {
+          title: "Days 2 to 3",
+          text: "Soreness and some swelling are common and usually begin to ease. Gentle care of the area continues.",
+        },
+        {
+          title: "The first week and beyond",
+          text: "The gum gradually closes over the socket, and the area becomes more comfortable. Deeper healing continues for weeks.",
+        },
       ],
-      followUp: "Ask about replacing the tooth. A gap can let neighbouring teeth drift over time.",
+    },
+    twoLists: {
+      heading: "Eating and caring for your mouth",
+      columns: [
+        {
+          title: "Do",
+          items: [
+            "Eat soft, lukewarm food at first, and chew on the other side.",
+            "Keep brushing your other teeth, taking care around the area.",
+            "Keep the area clean as your dentist advises.",
+            "Drink plenty of water.",
+          ],
+        },
+        {
+          title: "Avoid",
+          items: [
+            "Very hot drinks, and hard, crunchy or spicy food at first.",
+            "Poking the area with your tongue, fingers or objects.",
+            "Smoking, and tobacco in any form, including chewing tobacco and paan, which slow healing.",
+            "Strenuous exercise on the first day.",
+          ],
+        },
+      ],
+      closing: "Your dentist will give instructions for your own case, including when to return to normal food.",
     },
     warning: {
-      heading: "When should I contact my dentist?",
+      heading: "When should I contact the clinic?",
       intro: "Please call the clinic if you notice:",
       signs: [
-        "bleeding that does not settle with firm pressure",
-        "pain that gets worse after the first few days",
-        "swelling that is increasing",
-        "a fever, or a bad taste or smell from the socket",
+        "bleeding that does not slow after you have bitten on gauze with firm pressure, as you were shown",
+        "pain that is getting worse, or returns strongly after the first few days",
+        "swelling that is increasing after the first two or three days",
+        "a fever, pus or a bad taste that does not go away",
         "numbness that continues after the anaesthetic should have worn off",
       ],
       emergency: emergencyLine,
     },
     cost: {
-      heading: "What affects the cost of an extraction?",
-      intro: "We do not publish a fixed price, because it depends on the tooth. The main factors are:",
+      heading: "What affects the cost of tooth extraction?",
+      intro: "We do not publish fixed prices, because every tooth is different. The main factors are:",
       items: [
-        { title: "Which tooth", text: "Teeth have different numbers and shapes of roots." },
-        { title: "How complex it is", text: "Broken or impacted teeth can take longer." },
-        { title: "Imaging", text: "X-rays needed to plan safely." },
-        { title: "Replacing the tooth", text: "A separate decision, if you choose to fill the gap." },
+        { title: "Whether the extraction is simple or surgical" },
+        { title: "The position and condition of the tooth" },
+        { title: "The X-rays needed" },
+        { title: "Any further treatment, such as a replacement" },
       ],
-      closing: "After an examination, Dr. Tripathi will explain your options and give you an estimate first.",
+      closing: "After an examination, Dr. Tripathi will explain what you need and what it will cost before you begin.",
     },
     faqIntro: "Straight answers about tooth extraction. For anything else, call or send a WhatsApp message.",
     faqs: [
       {
-        question: "Does having a tooth out hurt?",
+        question: "Does tooth extraction hurt?",
         answer:
-          "The area is numbed first, so most people feel pressure rather than pain. Some soreness afterwards is common, and your dentist will explain how to manage it.",
+          "The area is numbed first, so you should feel pressure and movement but not sharp pain. Afterwards, the area is usually sore for a few days. Tell Dr. Tripathi at any point if you feel anything, and he can pause or top up the numbing.",
       },
       {
-        question: "Can the tooth be saved instead?",
+        question: "How long does a tooth extraction take?",
         answer:
-          "Sometimes. Saving the tooth is always considered first, for example with a filling, root canal treatment or a crown. Dr. Tripathi will explain whether that is possible.",
+          "A simple extraction is usually quicker than a surgical one, but it varies with the tooth and your own anatomy. Dr. Tripathi will give you an idea after looking at the tooth and X-ray.",
+      },
+      {
+        question: "Can my tooth be saved instead?",
+        answer:
+          "Often it can, with a root canal, filling, crown or gum treatment. Whether it can depends on how much healthy tooth is left and the support around it. After an examination, we will tell you honestly which applies.",
         link: { label: "About root canal treatment", href: "/treatments/root-canal-treatment/" },
       },
       {
-        question: "What can I eat after an extraction?",
+        question: "What can I eat after a tooth extraction?",
         answer:
-          "Soft food is usually advised at first, and chewing on the other side. Your dentist will tell you when you can eat normally.",
+          "Soft, lukewarm food at first, chewed on the other side. Avoid very hot, hard, crunchy or spicy food until your dentist says you can return to normal. Your dentist will give you advice for your own case.",
+      },
+      {
+        question: "How long does it take to heal?",
+        answer:
+          "The first few days are the most sore, and many people feel more comfortable within about a week. The gum closes gradually, and deeper healing continues for weeks. Healing varies from person to person.",
+      },
+      {
+        question: "What is dry socket?",
+        answer:
+          "The blood clot that forms in the socket protects it while it heals. If it is lost too early, the socket can become painful, often a few days after extraction. Avoid rinsing hard, using a straw and smoking, and call us if pain is getting worse.",
       },
       {
         question: "Do I need to replace the tooth?",
         answer:
-          "Not always, but a gap can affect your bite and let nearby teeth drift. Options include an implant, a bridge or a denture, depending on your situation.",
+          "Not always, but a gap can let neighbouring teeth drift and affect your bite and chewing. It is worth discussing options early.",
         link: { label: "About dental implants", href: "/treatments/dental-implants/" },
       },
       {
         question: "How much does a tooth extraction cost in Lucknow?",
         answer:
-          "It depends on which tooth, how complex the removal is and the imaging needed. After an examination at our Aliganj clinic, you will get an estimate before treatment begins.",
+          "It depends on whether the extraction is simple or surgical, the position of the tooth, the X-rays needed and any further treatment. After an examination at our Aliganj clinic, you will be told the cost before you begin.",
       },
-      appointmentFaq,
+      {
+        question: "Can I smoke or drink after an extraction?",
+        answer:
+          "Please avoid smoking and tobacco in any form, including chewing tobacco and paan, for as long as your dentist advises, because they slow healing. Avoid very hot drinks at first. Your dentist will tell you about alcohol for your own case.",
+      },
     ],
     related: [
-      { slug: "root-canal-treatment", text: "Saving a tooth when the inside is infected." },
       { slug: "dental-implants", text: "A fixed way to replace a missing tooth." },
-      { slug: "dentures", text: "A removable way to replace missing teeth." },
+      { slug: "dentures", text: "A removable option for one tooth or many." },
+      { slug: "crowns-and-bridges", text: "A bridge can fill a gap using the teeth beside it." },
     ],
     cta: {
-      heading: "Worried about a tooth?",
-      text: "Start with an examination. Dr. Tripathi will tell you honestly whether the tooth can be saved, and explain the options either way.",
+      heading: "Told a tooth needs to come out? Get it checked first.",
+      text: "An examination will show whether the tooth can be saved and what your options are. Dr. Tripathi will explain it all, and there is no pressure to decide on the day.",
+    },
+  },
+  "teeth-cleaning": {
+    seo: {
+      title: "Teeth Cleaning in Aliganj, Lucknow · Roots & Pulp",
+      description:
+        "Professional teeth cleaning removes plaque and tartar and helps protect your gums. What to expect and how often. Roots & Pulp, Aliganj, Lucknow.",
+    },
+    // [CLINICAL REVIEW REQUIRED BEFORE PUBLICATION]
+    // [CLINIC DETAIL REQUIRED] Scaling method and equipment, recall interval, comfort measures,
+    // whether the check-up or X-ray is charged separately. [CONFIRM SERVICE AVAILABILITY] Deeper gum cleaning.
+    clinicallyReviewedOn: "",
+    compact: true,
+    hero: {
+      eyebrow: "Everyday & preventive care",
+      heading: "Teeth Cleaning in Lucknow",
+      lede: "Remove what brushing misses, and help keep your gums healthy.",
+      text: "Over time, plaque and tartar build up along the gumline, even if you brush well. A professional clean removes them, and it is one of the simplest ways to look after your gums. At Roots & Pulp in Aliganj, Dr. Shubham Tripathi will check your teeth and gums first and explain what he finds.",
+    },
+    glance: [
+      { title: "What it does", text: "Removes plaque, tartar and some surface stains." },
+      { title: "Who it is for", text: "Most adults, and children as advised by the dentist." },
+      { title: "Comfort", text: "Usually gentle. Tell us if your teeth or gums are tender." },
+      { title: "How often", text: "Your dentist will advise what suits your mouth." },
+    ],
+    symptoms: {
+      heading: "Why a professional clean may help",
+      intro: "Brushing is essential, but it cannot remove hardened tartar. These are common reasons people book a clean.",
+      items: [
+        { icon: "spots", title: "Yellow or brown build-up", text: "Often tartar, which brushing cannot remove." },
+        { icon: "swelling", title: "Bleeding gums", text: "Gums can bleed when plaque has built up along them." },
+        { icon: "chew", title: "Bad breath that lingers", text: "Plaque and tartar can be a cause." },
+        { icon: "brush", title: "A rough feel on the teeth", text: "Tartar feels hard and uneven to the tongue." },
+        { icon: "sparkle", title: "It has been a while", text: "Regular cleans help prevent problems from starting." },
+        {
+          icon: "filling",
+          title: "Before other treatment",
+          text: "A clean gives your dentist a clearer view, and a healthier base.",
+        },
+      ],
+      note: "These signs can have different causes, including gum disease. An examination helps find out what is happening and whether a clean is enough. If you have ongoing bleeding or gum changes, see Gum & Oral Health.",
+    },
+    process: {
+      heading: "What happens during teeth cleaning",
+      intro: "Your own visit may differ slightly. This is the general journey.",
+      steps: [
+        {
+          title: "A quick check",
+          text: "Dr. Tripathi looks at your teeth and gums, and asks about any bleeding or sensitivity. An X-ray is taken only if it is needed.",
+        },
+        // [CLINIC DETAIL REQUIRED] Scaling method. Do not name equipment unless confirmed.
+        {
+          title: "Scaling",
+          text: "Plaque and tartar are removed from the teeth, including along the gumline and between the teeth, using dental instruments.",
+        },
+        {
+          title: "Polishing",
+          text: "The teeth are polished, which smooths the surface and removes some stains. Smooth teeth collect plaque more slowly.",
+        },
+        {
+          title: "Advice",
+          text: "You hear what he found, how to clean at home and when to come back. If your gums need more than a routine clean, he will explain why and what the next step is.",
+          links: [{ label: "About gum health", href: "/treatments/gum-and-oral-health/" }],
+        },
+      ],
+      illustration: "cleaning",
+      caption: "Tartar builds up where brushing cannot reach. A professional clean removes it.",
+    },
+    why: {
+      heading: "Why patients in Aliganj choose Roots & Pulp",
+      items: [
+        {
+          title: "Prevention first",
+          text: "Dr. Tripathi's public health training shapes a focus on keeping problems from starting.",
+        },
+        {
+          title: "A check before a clean",
+          text: "Every recommendation starts with an examination, so you get what you need, nothing more.",
+        },
+        { title: "Clear explanation", text: "You are shown what he finds, in plain language." },
+      ],
+      equipmentNote: "",
+    },
+    aftercare: {
+      heading: "What to expect afterwards",
+      intro: "Your dentist's instructions come first. This is general guidance.",
+      items: [
+        {
+          title: "Straight after",
+          text: "Your mouth may feel fresh and smooth. Gums can be a little tender or may bleed slightly.",
+        },
+        {
+          title: "Sensitivity",
+          text: "Teeth can feel sensitive to hot or cold for a short while. This usually settles. Tell us if it does not.",
+        },
+        {
+          title: "Keeping it clean",
+          text: "Brush twice a day and clean between your teeth. Regular cleans work best alongside good habits at home.",
+        },
+      ],
+      callLine: "Please contact us if bleeding does not settle, or if you notice swelling or severe pain.",
+    },
+    cost: {
+      heading: "What affects the cost of teeth cleaning?",
+      intro: "We do not publish fixed prices, because every mouth is different. The main factors are:",
+      items: [
+        { title: "How much plaque and tartar there is" },
+        { title: "The condition of your gums" },
+        { title: "Whether more than one visit is needed" },
+        { title: "Whether an X-ray or other treatment is needed" },
+      ],
+      closing: "After a quick examination, Dr. Tripathi will tell you what you need and what it will cost, before you begin.",
+    },
+    faqIntro: "Straight answers about teeth cleaning. For anything else, call or send a WhatsApp message.",
+    faqs: [
+      {
+        question: "Is teeth cleaning necessary?",
+        answer:
+          "Brushing removes plaque, but it cannot remove tartar once it hardens. A professional clean removes both, and helps protect your gums. Dr. Tripathi will check your teeth first, and tell you whether a clean is needed, and how often.",
+      },
+      {
+        question: "Does teeth cleaning hurt?",
+        answer:
+          "It is usually comfortable, though you may feel scraping or vibration. Gums that are inflamed can be tender. Tell Dr. Tripathi if anything is uncomfortable, and he can adjust or pause.",
+      },
+      {
+        question: "Does scaling loosen teeth or damage enamel?",
+        answer:
+          "No, scaling removes tartar, not the tooth itself. Teeth can sometimes feel looser or show gaps afterwards, because tartar and swollen gums had been hiding gum problems. If so, your dentist will explain what is happening.",
+      },
+      // [CLINIC DETAIL REQUIRED] Recommended recall interval.
+      {
+        question: "How often should I have my teeth cleaned?",
+        answer:
+          "Many people have a clean about every six months, but it depends on your gums, how quickly tartar builds up and how you clean at home. Your dentist will tell you what suits you.",
+      },
+      {
+        question: "Will cleaning whiten my teeth?",
+        answer:
+          "Polishing removes some surface stains, so teeth often look brighter. It does not change the natural colour of your teeth.",
+        link: { label: "About teeth whitening", href: "/treatments/teeth-whitening/" },
+      },
+      {
+        question: "How much does teeth cleaning cost in Lucknow?",
+        answer:
+          "It depends on how much plaque and tartar there is, the condition of your gums, whether more than one visit is needed and whether X-rays are needed. After a quick examination at our Aliganj clinic, you will be told the cost before you begin.",
+      },
+      {
+        question: "Is it normal for my gums to bleed afterwards?",
+        answer:
+          "Slight bleeding or tenderness can happen, especially if your gums were inflamed. It should settle in a day or two as the gums heal. If it continues, or you have swelling or pain, please contact us.",
+      },
+    ],
+    related: [
+      { slug: "gum-and-oral-health", text: "When bleeding or receding gums need more than a routine clean." },
+      { slug: "tooth-coloured-fillings", text: "If your check-up finds a cavity." },
+      { slug: "teeth-whitening", text: "A cleaner surface is the first step before whitening." },
+    ],
+    cta: {
+      heading: "Due for a clean?",
+      text: "A short visit can help protect your gums for the long term. Dr. Tripathi will check your teeth and explain what you need.",
+    },
+  },
+  "tooth-coloured-fillings": {
+    seo: {
+      title: "Tooth-Coloured Fillings in Aliganj, Lucknow · Roots & Pulp",
+      description:
+        "Tooth-coloured fillings repair cavities with a material matched to your natural teeth. What to expect and what affects cost. Roots & Pulp, Aliganj, Lucknow.",
+    },
+    // [CLINICAL REVIEW REQUIRED BEFORE PUBLICATION]
+    // [CLINIC DETAIL REQUIRED] Filling material and how it is placed, anaesthesia approach, charges.
+    // [CONFIRM SERVICE AVAILABILITY] Silver (amalgam) fillings: the page says nothing either way.
+    // [VERIFY BEFORE PUBLISHING] Hero image is only 500x500.
+    clinicallyReviewedOn: "",
+    compact: true,
+    hero: {
+      eyebrow: "Everyday & preventive care",
+      heading: "Tooth-Coloured Fillings in Lucknow",
+      lede: "Repair a cavity with a filling matched to your natural teeth.",
+      text: "A cavity is a hole that decay has made in a tooth. A filling removes the decay and rebuilds the tooth, and tooth-coloured fillings are chosen to blend in with the teeth around them. At Roots & Pulp in Aliganj, Dr. Shubham Tripathi will show you the cavity and explain what is needed before he begins.",
+    },
+    glance: [
+      { title: "What it treats", text: "Cavities and small areas of tooth damage." },
+      { title: "Goal", text: "Remove decay, rebuild the tooth and protect it." },
+      { title: "Comfort", text: "The area is numbed where needed." },
+      { title: "Visits", text: "Often one, but it depends on the tooth. Your dentist will explain." },
+    ],
+    symptoms: {
+      heading: "Signs you may need a filling",
+      intro: "Early cavities often cause no pain at all, which is why check-ups matter. Later, you might notice:",
+      items: [
+        { icon: "spots", title: "A dark spot or small hole", text: "On the tooth surface, or between teeth." },
+        { icon: "temperature", title: "Sensitivity", text: "To sweet food, or to hot or cold." },
+        { icon: "bite", title: "Food getting stuck", text: "In the same place, again and again." },
+        { icon: "crack", title: "A rough or sharp edge", text: "On a tooth that feels chipped or worn." },
+        { icon: "night", title: "Pain when you chew", text: "Or a tooth that aches now and then." },
+        { icon: "filling", title: "An old filling that has cracked", text: "Or one that has come loose." },
+      ],
+      note: "These signs can have different causes. An examination, and sometimes an X-ray, shows what is happening and whether a filling is the right treatment.",
+    },
+    process: {
+      heading: "What happens during a filling",
+      intro: "Your own visit may differ slightly. This is the general journey.",
+      steps: [
+        {
+          title: "Examination",
+          text: "Dr. Tripathi looks at the tooth, and an X-ray is taken if it is needed. With an intraoral camera, you can see the cavity on screen with him.",
+        },
+        // [CLINIC DETAIL REQUIRED] Confirm anaesthesia approach.
+        {
+          title: "Numbing",
+          text: "The area around the tooth is numbed where needed, so you should not feel pain during the work.",
+        },
+        { title: "Removing the decay", text: "The decayed part of the tooth is removed, and the space is cleaned." },
+        // [CLINIC DETAIL REQUIRED] Filling material and how it is placed. Do not name a brand.
+        {
+          title: "Placing the filling",
+          text: "The tooth-coloured material is placed, shaped to match your tooth and hardened.",
+        },
+        {
+          title: "Checking your bite",
+          text: "He checks that your teeth meet comfortably, and adjusts the filling if needed. You hear how to look after it.",
+        },
+      ],
+      illustration: "filling",
+      caption: "The decayed part is removed and the tooth is rebuilt with a tooth-coloured filling.",
+    },
+    infoCards: {
+      heading: "When a filling may not be enough",
+      intro: "Not every damaged tooth can be rebuilt with a filling alone. Your dentist will advise.",
+      items: [
+        {
+          title: "A large or weakened tooth",
+          text: "If a lot of the tooth is missing, a crown, inlay or onlay may protect it better.",
+          link: { label: "About crowns & bridges", href: "/treatments/crowns-and-bridges/" },
+        },
+        {
+          title: "Decay that has reached the nerve",
+          text: "The tooth may be painful, and may need root canal treatment.",
+          link: { label: "About root canal treatment", href: "/treatments/root-canal-treatment/" },
+        },
+      ],
+      closing:
+        "A small cavity treated early is simpler than a big one later, which is why we recommend regular check-ups.",
+    },
+    why: {
+      heading: "Why patients in Aliganj choose Roots & Pulp",
+      items: [
+        {
+          title: "See it for yourself",
+          text: "An intraoral camera lets you view your own teeth on screen with your dentist.",
+        },
+        {
+          title: "Only what is needed",
+          text: "Diagnosis comes before treatment, and you are told when something can wait.",
+        },
+        {
+          title: "Prevention first",
+          text: "Dr. Tripathi's public health training shapes a focus on stopping cavities before they grow.",
+        },
+      ],
+      equipment: [
+        {
+          src: "/images/equipment/intraoral-camera-cavities.jpg",
+          alt: "Intraoral camera screen showing cavities in the grooves of back teeth",
+          caption: "Intraoral Camera",
+          detail: "See cavities on screen with your dentist",
+        },
+      ],
+      equipmentNote: "Examination at Roots & Pulp.",
+    },
+    aftercare: {
+      heading: "What to expect afterwards",
+      intro: "Your dentist's instructions come first. This is general guidance.",
+      items: [
+        {
+          title: "While you are numb",
+          text: "Take care not to bite your lip, cheek or tongue. Your dentist will tell you when to eat.",
+        },
+        {
+          title: "Sensitivity",
+          text: "The tooth may be sensitive to hot or cold for a short time. Tell us if it does not settle.",
+        },
+        {
+          title: "Your bite",
+          text: "If the tooth feels too high or uncomfortable, ask for it to be adjusted. Do not wait for it to settle.",
+        },
+        {
+          title: "Long term",
+          text: "Decay can return at the edges of a filling, and fillings can wear or chip. Clean between your teeth, and keep up your check-ups.",
+        },
+      ],
+      callLine: "Please contact us if a filling breaks or comes out, if pain is getting worse, or if you notice swelling.",
+    },
+    cost: {
+      heading: "What affects the cost of tooth-coloured fillings?",
+      intro: "We do not publish fixed prices, because every tooth is different. The main factors are:",
+      items: [
+        { title: "The size and number of cavities" },
+        { title: "Where the tooth is in your mouth" },
+        { title: "The material used" },
+        { title: "Whether an X-ray or other treatment is needed" },
+      ],
+      closing: "After an examination, Dr. Tripathi will explain what you need and what it will cost before you begin.",
+    },
+    faqIntro: "Straight answers about fillings. For anything else, call or send a WhatsApp message.",
+    faqs: [
+      {
+        question: "Does a filling hurt?",
+        answer:
+          "The area is numbed where needed, so you should not feel pain during the work. You may feel pressure or vibration. If anything is uncomfortable, tell Dr. Tripathi and he can pause or adjust. The tooth can be sensitive for a short time afterwards.",
+      },
+      {
+        question: "How do I know if I need a filling?",
+        answer:
+          "A dark spot or hole, sensitivity to sweet, hot or cold food, and food catching in one place can all be signs. Early cavities often cause no symptoms, so only an examination, and sometimes an X-ray, can tell.",
+      },
+      {
+        question: "How long does a filling take?",
+        answer:
+          "It depends on the size and position of the cavity. Many fillings are done in one visit, but some teeth need more. Dr. Tripathi will tell you what to expect after examining you.",
+      },
+      // [CLINIC DETAIL REQUIRED] Confirm the material the clinic uses.
+      {
+        question: "What are tooth-coloured fillings made of?",
+        answer:
+          "They are made from a tooth-coloured material that is shaped onto the tooth and hardened. The exact material depends on the tooth and your dentist's advice.",
+      },
+      {
+        question: "Are tooth-coloured fillings better than silver ones?",
+        answer:
+          "They are different. Tooth-coloured fillings blend in with your teeth, and the right material for a particular tooth depends on its size, position and your bite. Your dentist will explain the options for your tooth.",
+      },
+      {
+        question: "How much does a tooth filling cost in Lucknow?",
+        answer:
+          "It depends on the size and number of cavities, where the tooth is, the material and whether an X-ray is needed. After an examination at our Aliganj clinic, you will be told the cost before you begin.",
+      },
+      {
+        question: "When can I eat after a filling?",
+        answer:
+          "Your dentist will tell you. In general, avoid eating while your mouth is numb, so you do not bite your lip or cheek. Be gentle with the tooth until you are advised that it is fully ready.",
+      },
+      {
+        question: "How long does a filling last?",
+        answer:
+          "There is no fixed lifespan. A filling can last for years, but it can wear, chip or have decay form at its edge. Good cleaning and regular check-ups help your dentist spot problems early.",
+      },
+    ],
+    related: [
+      { slug: "crowns-and-bridges", text: "Protect a tooth that is too damaged for a filling." },
+      { slug: "root-canal-treatment", text: "For decay that has reached the inside of the tooth." },
+      { slug: "teeth-cleaning", text: "Regular cleans help prevent new cavities." },
+    ],
+    cta: {
+      heading: "Spotted something on a tooth?",
+      text: "An early check is simpler, and usually smaller, than a late one. Dr. Tripathi will show you what he finds and explain your options.",
     },
   },
   "gum-and-oral-health": {
     seo: {
-      title: "Gum Treatment & Oral Health in Aliganj, Lucknow · Roots & Pulp",
+      title: "Gum Treatment in Aliganj, Lucknow · Roots & Pulp",
       description:
-        "Care for bleeding or receding gums, plus oral cancer screening. Signs to watch for, what to expect and aftercare. Roots & Pulp, Aliganj, Lucknow.",
+        "Treatment for bleeding or receding gums, plus oral cancer screening. Learn the signs, what happens and what affects cost. Roots & Pulp, Aliganj, Lucknow.",
     },
-    // [CLINICAL REVIEW REQUIRED BEFORE PUBLICATION]
-    // [CLINIC DETAIL REQUIRED] Gum treatments offered (deep cleaning, gum surgery) and how screening is done.
+    // [CLINICAL REVIEW REQUIRED BEFORE PUBLICATION] Screening, ulcer guidance and reversibility need particular care.
+    // [CONFIRM SERVICE AVAILABILITY] Deeper cleaning below the gumline (card hidden until confirmed),
+    // care for receding gums and referral practice. [CLINIC DETAIL REQUIRED] How gum health is measured,
+    // how screening is done and the referral pathway, comfort measures, charges.
     clinicallyReviewedOn: "",
     hero: {
-      eyebrow: "Everyday & preventive care",
-      heading: "Gum Treatment & Oral Health in Aliganj, Lucknow",
-      lede: "Care for bleeding or receding gums, plus oral cancer screening.",
-      text: "Healthy gums hold your teeth in place. Gum problems often start quietly, so a check can catch them early. At Roots & Pulp in Aliganj, Dr. Shubham Tripathi, whose public health training shapes a focus on prevention, examines your gums and mouth and explains what he finds.",
+      eyebrow: "Gum & Oral Health",
+      heading: "Gum Treatment in Lucknow",
+      lede: "Bleeding gums are worth checking, not ignoring.",
+      text: "Healthy gums are the foundation of healthy teeth. If your gums bleed, look swollen or have started to pull away from your teeth, an examination can show what is happening and what can help. At Roots & Pulp in Aliganj, Dr. Shubham Tripathi also checks your mouth for early signs of oral cancer.",
     },
     glance: [
-      { title: "What it covers", text: "Bleeding, swollen or receding gums, and checks of the soft tissues of the mouth." },
-      { title: "Main goal", text: "Find problems early and keep gums healthy enough to support your teeth." },
-      { title: "Planning", text: "Starts with an examination of your gums, and X-rays if needed." },
-      { title: "Screening", text: "A look at the soft tissues of the mouth for anything unusual." },
-      { title: "At home", text: "Daily cleaning makes the biggest difference. We will show you how." },
+      { title: "What it treats", text: "Bleeding, swollen or receding gums, and gum disease." },
+      { title: "Also includes", text: "Oral cancer screening." },
+      { title: "Planning", text: "Starts with an examination of your gums and an X-ray if needed." },
+      { title: "Early is easier", text: "Gum problems are generally simpler to manage when caught early." },
+      { title: "Long term", text: "Good home care and regular visits matter as much as treatment." },
     ],
     symptoms: {
-      heading: "Signs worth having checked",
-      intro: "These are common reasons people ask a dentist about their gums or mouth.",
+      heading: "Could this be relevant to you?",
+      intro: "These are common reasons people ask a dentist about their gums.",
       items: [
-        { icon: "swelling", title: "Bleeding gums", text: "Bleeding when brushing or cleaning between teeth." },
-        { icon: "uneven", title: "Receding gums", text: "Teeth that look longer, or gums that have pulled back." },
-        { icon: "chew", title: "Bad breath that lingers", text: "Persistent bad breath or a bad taste." },
-        { icon: "bite", title: "Loose or moving teeth", text: "Teeth that feel loose or have shifted." },
-        { icon: "temperature", title: "Sensitive teeth near the gum", text: "Sensitivity where the root surface is exposed." },
-        { icon: "spots", title: "A patch or sore that does not heal", text: "A white or red patch, lump or ulcer in the mouth." },
+        {
+          icon: "swelling",
+          title: "Bleeding when you brush or clean between your teeth",
+          text: "This is the most common sign.",
+        },
+        { icon: "spots", title: "Red, swollen or tender gums", text: "Healthy gums are usually pink and firm." },
+        { icon: "chew", title: "Bad breath that does not go away", text: "Or a bad taste in your mouth." },
+        {
+          icon: "uneven",
+          title: "Gums pulling away from your teeth",
+          text: "Teeth may look longer, or feel sensitive.",
+        },
+        {
+          icon: "bite",
+          title: "Teeth that feel loose or have moved",
+          text: "Or a change in how your bite fits together.",
+        },
+        { icon: "lost", title: "Pus or a bump on the gum", text: "Sometimes with tenderness." },
+        {
+          icon: "sparkle",
+          title: "A mouth ulcer, lump or patch that does not heal",
+          text: "See the oral cancer screening section below.",
+        },
       ],
-      note: "These signs can have many causes, and most are not serious. An examination helps find out what is happening and what, if anything, is needed.",
+      note: "These signs can have different causes. An examination helps find out what is happening and what, if anything, is needed.",
     },
     explainer: {
-      heading: "Why do gums matter?",
+      heading: "What is gum disease?",
       paragraphs: [
-        "When plaque stays on the teeth, the gums can become inflamed. This is called gingivitis, and it often shows as redness or bleeding. It can usually be reversed with professional cleaning and good daily care.",
-        "If inflammation continues, it can affect the deeper tissues and bone that support the teeth. This is called periodontitis, and over time it can loosen teeth.",
-        "An oral examination also includes a look at the soft tissues of the mouth, so anything unusual can be noticed early and followed up.",
+        "Plaque is a sticky film of bacteria that builds up on teeth every day. If it is not cleaned away, it can irritate the gums and make them inflamed.",
+        "This early stage is called gingivitis. It is common, and usually goes away with good cleaning at home and a professional clean.",
+        "If it is left, the inflammation can spread deeper, and the tissues that support the teeth can start to break down. This more advanced stage is called periodontitis.",
       ],
+      illustration: "gum-stages",
+      caption: "Gum disease develops in stages, and it is easier to manage early. Your dentist will explain what applies to you.",
     },
     process: {
-      heading: "What happens at a gum check",
+      heading: "What happens during gum treatment",
       intro: "Every mouth is different, so your own plan may vary. This is the general journey.",
       steps: [
+        // [CLINIC DETAIL REQUIRED] How gum health is measured at the clinic.
         {
           title: "Listening and examination",
-          text: "Dr. Tripathi asks about your concerns and health, then examines your gums, teeth and the soft tissues of the mouth.",
+          text: "Dr. Tripathi asks about your symptoms, health and habits, then examines your gums and teeth. He may measure the space between your gum and tooth with a small instrument.",
         },
-        { title: "X-rays, if needed", text: "X-rays can show the bone around the teeth." },
         {
-          title: "Cleaning",
-          text: "Plaque and tartar are removed. Some gums need deeper cleaning, which your dentist will explain.",
+          title: "X-ray, if needed",
+          text: "An X-ray can show the bone that supports your teeth, and how much of it remains.",
+        },
+        {
+          title: "Explaining what he finds",
+          text: "With an intraoral camera, you can see your own gums and teeth on screen, while he explains what is happening.",
+        },
+        {
+          title: "Your plan",
+          text: "You hear the options, what each involves, how many visits are likely and an estimate of cost. There is no pressure to decide on the day.",
+        },
+        // [CONFIRM SERVICE AVAILABILITY] Deeper cleaning below the gumline.
+        {
+          title: "Professional cleaning",
+          text: "Plaque and tartar are removed from above and, where needed, just below the gumline.",
           links: [{ label: "About teeth cleaning", href: "/treatments/teeth-cleaning/" }],
         },
-        { title: "Your plan", text: "You hear what was found, what is needed and how to care for your gums at home." },
-        { title: "Review", text: "A follow-up visit checks how your gums are responding." },
+        {
+          title: "Review and maintenance",
+          text: "Your gums are rechecked to see how they have responded, and you are shown how to keep them healthy. A follow-up schedule is agreed.",
+        },
       ],
-      footnote: "If anything needs further investigation, Dr. Tripathi will explain why and what the next step is.",
+      footnote:
+        "The number of visits and the type of treatment depend on your gums. Dr. Tripathi will explain what to expect for you.",
+    },
+    options: {
+      heading: "Your options",
+      items: [
+        {
+          title: "Professional cleaning",
+          what: "Removal of plaque and tartar from the teeth and gumline.",
+          suits: "Early gum inflammation, and as a regular check on gum health.",
+          links: [{ label: "About teeth cleaning", href: "/treatments/teeth-cleaning/" }],
+        },
+        // [CONFIRM SERVICE AVAILABILITY] "Deeper gum cleaning" card omitted until confirmed.
+        // [CONFIRM SERVICE AVAILABILITY and referral practice] Care for receding gums.
+        {
+          title: "Care for receding gums",
+          what: "Finding the cause, and protecting the exposed root. This may involve changes to brushing, treating gum disease, or reducing sensitivity.",
+          suits: "Gums that have pulled back from the teeth.",
+          note: "Gum tissue does not grow back on its own. If more specialised treatment is needed, Dr. Tripathi will explain, including whether a referral is appropriate.",
+        },
+        {
+          title: "Home-care guidance",
+          what: "Showing you how to brush and clean between your teeth effectively.",
+          suits: "Everyone, and often the most important part.",
+        },
+      ],
+    },
+    comparison: {
+      heading: "Early and advanced gum problems",
+      columns: ["Early (gingivitis)", "Advanced (periodontitis)"],
+      rows: [
+        {
+          label: "What is affected",
+          values: ["The gums only", "The gums and the bone and tissue supporting teeth"],
+        },
+        {
+          label: "Common signs",
+          values: ["Bleeding, redness, swelling", "Gums pulling away, bad breath, loose teeth, bone loss on X-ray"],
+        },
+        {
+          label: "Can it be reversed?",
+          values: [
+            "Usually, with good cleaning and care",
+            "Damage already done cannot be reversed, but it can often be managed",
+          ],
+        },
+        {
+          label: "Typical approach",
+          values: ["Professional clean and better home care", "Deeper cleaning and closer follow-up, sometimes more"],
+        },
+        {
+          label: "Why it matters",
+          values: ["Easy to turn around", "Can lead to loose or lost teeth if not controlled"],
+        },
+      ],
+      closing:
+        "Only an examination can tell which stage applies to you, so please do not diagnose yourself from a table. The right approach depends on your oral health and clinical assessment.",
+    },
+    extra: {
+      id: "oral-cancer-screening",
+      heading: "Oral cancer screening",
+      // [CLINIC DETAIL REQUIRED] How screening is done at the clinic, and the referral pathway.
+      paragraphs: [
+        "A screening is a careful check of your mouth for changes that may need a closer look. It is usually a quick look at, and gentle feel of, your lips, cheeks, tongue, the floor and roof of your mouth, and your neck.",
+        "It is useful for anyone, and particularly for people who smoke or use tobacco in any form, including chewing tobacco, gutka and paan, or who drink alcohol regularly.",
+        "Most changes in the mouth turn out to be harmless. Finding any that are not, early, gives the best chance of treating them.",
+      ],
+      listHeading: "Please see a dentist or doctor if you notice",
+      list: [
+        "a mouth ulcer that has not healed within three weeks",
+        "a white or red patch that stays",
+        "a lump or thickening in the mouth or neck",
+        "unexplained bleeding, numbness, or difficulty swallowing or moving your tongue",
+      ],
+      closing: "If anything needs a closer look, Dr. Tripathi will explain what he has seen and what the next step is.",
     },
     decides: {
-      heading: "How your dentist plans your care",
-      intro: "Your dentist will look at:",
+      heading: "How your dentist decides",
+      intro: "Your plan is made for you. Your dentist will look at:",
       items: [
-        { title: "Your gums", text: "Bleeding, swelling and how firmly they hold the teeth." },
-        { title: "The bone", text: "What X-rays show around the roots, if they are needed." },
-        { title: "Your routine", text: "How you clean at home, and what could make it easier." },
-        { title: "Your health", text: "Conditions such as diabetes, and habits such as smoking, affect the gums." },
-        { title: "Your history", text: "Past gum problems and dental treatment." },
+        { title: "Your gums", text: "Their colour, firmness, bleeding and the space around each tooth." },
+        { title: "The X-ray", text: "How much supporting bone remains." },
+        { title: "Your teeth", text: "Whether any are loose, or have moved." },
+        {
+          title: "Your habits",
+          text: "Cleaning, diet, and smoking or tobacco use, which affect gum health.",
+        },
+        {
+          title: "Your health",
+          text: "Some conditions, such as diabetes, can affect gums, and gum disease can affect them. Please tell us about any you have.",
+        },
+        { title: "Your priorities", text: "Time, comfort and what you want to protect." },
       ],
-      closing: "Gum care works best as a partnership. Your dentist will explain what you can do between visits.",
+      closing: "If treatment can wait, or is not needed, Dr. Tripathi will say so.",
     },
     comfort: {
       heading: "Feeling comfortable",
+      // [CLINIC DETAIL REQUIRED] Comfort measures for sensitive patients.
       paragraphs: [
-        "A gum check is usually quick and gentle. If your gums are inflamed, cleaning can feel tender, and the area can be numbed if needed.",
-        "Tell Dr. Tripathi if anything is uncomfortable, and he can pause. Questions are always welcome.",
+        "Inflamed gums can be tender, so a clean may feel more sensitive than you expect. Tell Dr. Tripathi if anything is uncomfortable, and he can adjust or pause.",
+        "Where numbing is needed, it is used. Questions are always welcome, including worries about what the findings mean.",
       ],
       image: consultImage,
     },
     why: {
       heading: "Why patients in Aliganj choose Roots & Pulp",
-      items: whyCore,
-      equipment: consultationStrip,
-      equipmentNote: "Your visit starts with a conversation.",
-      galleryLink: { label: "See the clinic in the gallery", href: "/gallery/" },
+      items: [
+        {
+          title: "Prevention first",
+          text: "Dr. Tripathi's public health training shapes a focus on stopping problems before they start, which is exactly what gum care is about.",
+        },
+        {
+          title: "See it for yourself",
+          text: "An intraoral camera lets you view your own gums and teeth on screen.",
+        },
+        {
+          title: "Honest and clear",
+          text: "Diagnosis comes before treatment, and you hear your options in plain language.",
+        },
+        { title: "Open seven days", text: "Monday to Saturday until 8 PM, Sunday until 5 PM." },
+      ],
+      equipment: [
+        {
+          src: "/images/equipment/digital-xray-rvg.jpg",
+          alt: "RVG digital X-ray system shown on the clinic laptop",
+          caption: "Digital X-rays at Roots & Pulp",
+          position: "center 30%",
+        },
+        {
+          src: "/images/equipment/intraoral-camera-cavities.jpg",
+          alt: "Intraoral camera screen showing close-up views of back teeth",
+          caption: "See your own teeth on screen",
+        },
+      ],
+      equipmentNote: "Examination at Roots & Pulp.",
     },
-    doctorQuote: standardDoctorQuote,
+    doctorNote:
+      "His training in public health shapes an emphasis on prevention, early attention to dental concerns and helping patients keep their teeth healthy.",
     aftercare: {
-      heading: "Looking after your gums",
+      heading: "Afterwards, and keeping your gums healthy",
       intro: "Your dentist's instructions always come first. This is general guidance.",
       items: [
-        { title: "Brushing", text: "Brush twice a day, gently, along the gum line." },
-        { title: "Between the teeth", text: "Clean between your teeth daily, as your dentist shows you." },
-        { title: "After a cleaning", text: "Gums can feel tender or bleed a little at first. This usually settles." },
-        { title: "Regular visits", text: "Keep your review appointments, so changes are noticed early." },
+        {
+          title: "Straight after",
+          text: "Gums can be tender and may bleed slightly. This usually settles in a day or two.",
+        },
+        {
+          title: "Sensitivity",
+          text: "Teeth can feel more sensitive once tartar is gone, especially where gums have receded. It usually eases. Tell us if it does not.",
+        },
+        {
+          title: "Every day",
+          text: "Brush gently twice a day with a soft brush, and clean between your teeth. Your dentist will show you the technique that suits you.",
+        },
+        {
+          title: "Long term",
+          text: "Gum disease can return. Regular check-ups, professional cleans and avoiding tobacco help protect your gums.",
+        },
       ],
-      followUp: "If you smoke, stopping helps your gums heal. Ask if you would like advice.",
+      followUp: "Keep your review appointments. They are how problems are caught early.",
     },
     warning: {
       heading: "When should I contact my dentist?",
       intro: "Please call the clinic if you notice:",
       signs: [
-        "swelling of the gum or face",
-        "a tooth that has become loose",
-        "pus or a bad taste near a tooth",
-        "a sore, patch or lump that has not healed in about two weeks",
-        "bleeding that does not settle",
+        "gum bleeding that does not settle, or is getting heavier",
+        "swelling, pus, or a painful lump on the gum",
+        "a tooth that is becoming loose",
+        "a mouth ulcer, lump or patch that has not healed within three weeks",
+        "pain that is getting worse",
       ],
       emergency: emergencyLine,
     },
     cost: {
-      heading: "What affects the cost of gum care?",
-      intro: "We do not publish fixed prices, because needs vary. The main factors are:",
+      heading: "What affects the cost of gum treatment?",
+      intro: "We do not publish fixed prices, because every mouth is different. The main factors are:",
       items: [
-        { title: "How much treatment is needed", text: "A routine cleaning differs from deeper gum care." },
-        { title: "How many areas", text: "One area of the mouth or several." },
-        { title: "X-rays", text: "Taken only if needed." },
-        { title: "Follow-up", text: "Review visits to check healing." },
+        { title: "How advanced the problem is", text: "Early inflammation differs from advanced gum disease." },
+        { title: "How much of the mouth is affected", text: "One area, or several." },
+        { title: "The type of treatment", text: "A routine clean, or deeper cleaning." },
+        { title: "How many visits", text: "More complex cases need more." },
+        { title: "X-rays", text: "Needed to see the bone." },
+        { title: "Maintenance", text: "Regular reviews and cleans afterwards." },
       ],
-      closing: "After an examination, Dr. Tripathi will explain what you need and give you an estimate first.",
+      closing: "After an examination, Dr. Tripathi will explain what you need and what it will cost before you begin.",
     },
     faqIntro: "Straight answers about gum health. For anything else, call or send a WhatsApp message.",
     faqs: [
       {
         question: "Why do my gums bleed when I brush?",
         answer:
-          "Bleeding is often a sign of gum inflammation caused by plaque. It can usually improve with professional cleaning and good daily care, but it is worth having checked.",
+          "The most common cause is plaque building up along the gumline and irritating the gums. Bleeding does not mean you should stop brushing. It usually means the gums need better cleaning. If it continues for more than a week or two, have your gums checked.",
       },
       {
-        question: "Can gum disease be reversed?",
+        question: "Can gum disease be cured?",
         answer:
-          "Early gum inflammation can usually be reversed. More advanced gum disease can often be controlled, though some changes may not fully reverse. Your dentist will explain what applies to you.",
+          "Early gum disease (gingivitis) can usually be reversed with good cleaning. More advanced disease cannot be reversed once bone has been lost, but it can often be controlled with treatment and regular care. An examination shows which applies.",
       },
       {
-        question: "What is an oral cancer screening?",
+        question: "Can receding gums grow back?",
         answer:
-          "It is a look at the soft tissues of your mouth, tongue and throat area for anything unusual, done as part of an examination. If anything needs further checks, Dr. Tripathi will explain the next step.",
+          "Gum tissue does not usually grow back by itself. The cause is found and treated to stop it getting worse, and sensitivity can be managed. If more specialised treatment is needed, Dr. Tripathi will explain, including whether a referral is appropriate.",
       },
       {
-        question: "Does smoking affect my gums?",
+        question: "Does gum treatment hurt?",
         answer:
-          "Yes. Smoking is linked to gum disease and can slow healing. It can also hide bleeding, so problems may be noticed later.",
+          "Inflamed gums can be tender, so some discomfort is possible. Numbing is used where needed, and you can tell Dr. Tripathi at any point if you feel anything. Gums are often sore for a day or two afterwards.",
+      },
+      {
+        question: "Will I lose my teeth?",
+        answer:
+          "Not necessarily. Most gum problems can be managed, especially when found early. Advanced gum disease can lead to loose teeth if it is not controlled, which is why early checks matter. Dr. Tripathi will tell you honestly where you stand.",
+        link: { label: "About dentures", href: "/treatments/dentures/" },
+      },
+      {
+        question: "How many visits will gum treatment take?",
+        answer:
+          "It depends on how advanced the problem is and how much of the mouth is affected. Early problems may need little more than a clean and better home care. Dr. Tripathi will outline what to expect after examining you.",
       },
       {
         question: "How much does gum treatment cost in Lucknow?",
         answer:
-          "It depends on how much treatment is needed, how many areas are involved and any X-rays. After an examination at our Aliganj clinic, you will get an estimate before treatment begins.",
+          "It depends on how advanced the problem is, how much of the mouth is affected, the type of treatment, the number of visits and X-rays needed. After an examination at our Aliganj clinic, you will be told the cost before you begin.",
+      },
+      {
+        question: "What is oral cancer screening, and who should have it?",
+        answer:
+          "It is a careful check of your mouth, tongue, cheeks and neck for changes that may need a closer look. Anyone can have it, and it is especially worthwhile if you smoke or use tobacco, including chewing tobacco and paan, or drink alcohol regularly.",
+      },
+      {
+        question: "I have a mouth ulcer. Should I be worried?",
+        answer:
+          "Most mouth ulcers are harmless and heal within one to two weeks. If an ulcer has not healed after three weeks, or you notice a lump, a white or red patch or unexplained bleeding, please have it checked promptly.",
       },
       appointmentFaq,
     ],
     related: [
-      { slug: "teeth-cleaning", text: "Professional removal of plaque and tartar." },
-      { slug: "tooth-extraction", text: "When a tooth has lost too much support to stay." },
-      { slug: "dental-implants", text: "Replacing a missing tooth, once gums are healthy." },
+      { slug: "teeth-cleaning", text: "A routine professional clean, and part of keeping gums healthy." },
+      { slug: "tooth-extraction", text: "When a tooth has lost too much support to be saved." },
+      { slug: "dental-implants", text: "One way to replace a tooth that has been lost." },
     ],
     cta: {
-      heading: "Noticed bleeding or receding gums?",
-      text: "Gum problems are easier to manage early. Book a check, and Dr. Tripathi will explain what he finds and what helps.",
+      heading: "Noticed something with your gums? Start with a check.",
+      text: "Gum problems are easier to manage when they are found early. Dr. Tripathi will examine your gums and mouth, and explain what he finds in plain words.",
     },
   },
   dentures: {
     seo: {
       title: "Dentures in Aliganj, Lucknow · Roots & Pulp",
       description:
-        "Removable partial or complete dentures, made to fit comfortably. What to expect, getting used to them and aftercare. Roots & Pulp Dental Clinic, Aliganj, Lucknow.",
+        "Partial and complete dentures made to fit comfortably. What to expect, getting used to them, and what affects cost. Roots & Pulp, Aliganj, Lucknow.",
     },
-    // [CLINICAL REVIEW REQUIRED BEFORE PUBLICATION] [CLINIC DETAIL REQUIRED] Denture materials and laboratory.
+    // [CLINICAL REVIEW REQUIRED BEFORE PUBLICATION]
+    // [CONFIRM SERVICE AVAILABILITY] Immediate and implant-supported dentures (cards hidden until confirmed).
+    // [CLINIC DETAIL REQUIRED] Laboratory, shade and tooth selection, adjustment arrangements, repairs and relines,
+    // charges. [VERIFY BEFORE PUBLISHING] Provenance of dentures.jpg (678x452).
     clinicallyReviewedOn: "",
     hero: {
       eyebrow: "Replacing missing teeth",
-      heading: "Dentures in Aliganj, Lucknow",
-      lede: "Removable partial or complete dentures, made to fit comfortably.",
-      text: "Dentures replace missing teeth with a removable appliance, so you can eat and smile with more confidence. At Roots & Pulp in Aliganj, Dr. Shubham Tripathi will examine your mouth, explain your options and help you through the adjustment period.",
+      heading: "Dentures in Lucknow",
+      lede: "Replace missing teeth with dentures made to fit you comfortably.",
+      text: "Dentures are removable teeth that replace some or all of the teeth you have lost, so you can chew, speak and smile with more confidence. At Roots & Pulp in Aliganj, Dr. Shubham Tripathi will examine your mouth first, explain your options and make sure you know what to expect.",
     },
     glance: [
-      { title: "What they replace", text: "A few missing teeth, or a full set in the upper or lower jaw." },
-      { title: "Two main types", text: "Partial dentures, and complete dentures for when all teeth in a jaw are missing." },
-      { title: "Planning", text: "Starts with an examination of your gums and any remaining teeth." },
-      { title: "Fitting", text: "Usually takes more than one visit, so the denture can be made to fit you." },
-      { title: "Getting used to them", text: "Takes some time. Adjustments are part of the process." },
+      { title: "What they replace", text: "One or several missing teeth, or a full set." },
+      { title: "Two main types", text: "Partial dentures and complete dentures." },
+      { title: "Removable", text: "You take them out to clean them." },
+      { title: "Planning", text: "Starts with an examination, so your dentist can explain what suits you." },
+      {
+        title: "Time",
+        text: "Making dentures takes several steps over more than one visit. Your dentist will explain what to expect.",
+      },
     ],
     symptoms: {
       heading: "Could dentures be relevant to you?",
       intro: "These are common reasons people ask a dentist about dentures.",
       items: [
-        { icon: "gaps", title: "Several missing teeth", text: "Gaps that make eating or speaking harder." },
-        { icon: "lost", title: "All teeth missing in one jaw", text: "A complete denture can replace a full set." },
-        { icon: "denture", title: "An old denture that no longer fits", text: "Dentures can loosen as the gums and bone change." },
-        { icon: "chew", title: "Difficulty chewing", text: "Missing teeth can make some foods hard to eat." },
-        { icon: "adult", title: "Wanting a removable option", text: "Some people prefer a denture they can take out." },
-        { icon: "drift", title: "Teeth drifting into gaps", text: "A partial denture can help hold the space." },
+        { icon: "gaps", title: "Several missing teeth", text: "Gaps that make chewing difficult." },
+        { icon: "denture", title: "All teeth missing in one or both jaws", text: "A full set may be considered." },
+        {
+          icon: "lost",
+          title: "Teeth that cannot be saved",
+          text: "Your dentist may discuss what could replace them.",
+          link: { label: "About tooth extraction", href: "/treatments/tooth-extraction/" },
+        },
+        { icon: "chew", title: "Chewing mostly on one side", text: "Because gaps make the other side work harder." },
+        {
+          icon: "adult",
+          title: "Changes in speech or in how your face looks",
+          text: "Missing teeth can affect both.",
+        },
+        { icon: "uneven", title: "An old denture that no longer fits", text: "Gums change shape over time." },
       ],
-      note: "Everyone's situation is different. An examination helps find out whether dentures, or another option such as an implant or bridge, would suit you.",
+      note: "Everyone's situation is different. An examination is needed to find out whether dentures, or another option, would suit you.",
     },
     explainer: {
       heading: "What are dentures?",
       paragraphs: [
-        "A denture is a removable replacement for missing teeth. False teeth are set into a base that rests on the gums.",
-        "A partial denture fills gaps when some natural teeth remain, and often clips onto them. A complete denture replaces all the teeth in the upper or lower jaw.",
-        "Dentures are made to fit your mouth, but they feel different from natural teeth at first. Most people need some time and a few adjustments to settle in.",
+        "Dentures are replacement teeth, set in a base that rests on your gums. They are made for your mouth, from impressions of your gums and teeth, so they fit you and not a standard shape.",
+        "A partial denture fills gaps while you still have some of your own teeth. A complete denture replaces all the teeth in the upper jaw, the lower jaw or both.",
+        "They can be taken out for cleaning, and some people also take them out at night. Your dentist will advise what is best for you.",
       ],
+      illustration: "dentures",
+      caption:
+        "A partial denture fills gaps between your own teeth. A complete denture replaces a full arch. Your dentist will explain what suits you.",
     },
     process: {
-      heading: "What the process can look like",
-      intro: "Every case is different, and your own plan may vary. This is the general journey.",
+      heading: "What happens during treatment",
+      intro: "Every mouth is different, so your own plan may vary. This is the general journey.",
       steps: [
-        { title: "Examination", text: "Dr. Tripathi examines your gums and any remaining teeth, and may take X-rays." },
+        {
+          title: "Consultation and examination",
+          text: "Dr. Tripathi listens to your concerns, examines your teeth, gums and bite, and usually takes X-rays.",
+        },
         {
           title: "Your plan",
-          text: "You hear your options, what each involves and an estimate of cost. There is no pressure to decide on the day.",
+          text: "You hear your options, what each involves, how long it may take and an estimate of cost. There is no pressure to decide on the day.",
         },
-        // [CLINIC DETAIL REQUIRED] Impression method and laboratory arrangements.
-        { title: "Impressions", text: "Moulds of your mouth are taken so the denture can be made to fit." },
-        { title: "Try-in and fitting", text: "The denture is checked for fit, bite and appearance before it is finished." },
-        { title: "Adjustments", text: "Small adjustments in the following weeks help it settle comfortably." },
+        {
+          title: "Preparing your mouth",
+          text: "If teeth need removing or your gums need treatment, this is done first, and the gums are given time to heal.",
+          links: [{ label: "About gum health", href: "/treatments/gum-and-oral-health/" }],
+        },
+        // [CLINIC DETAIL REQUIRED] Laboratory arrangements, and how shade and tooth shape are chosen.
+        {
+          title: "Impressions and measurements",
+          text: "Impressions of your gums and teeth are taken, and your bite is recorded, so the denture is made to fit you.",
+        },
+        {
+          title: "Try-in and fitting",
+          text: "You may try the denture before it is finished, so shape and fit can be checked. The final denture is then fitted, and you are shown how to put it in, take it out and clean it.",
+        },
+        {
+          title: "Adjustments and review",
+          text: "It is common for a new denture to need small adjustments. You return for check-ups, so any sore spots can be eased.",
+        },
       ],
       footnote: "The number of visits depends on your case and is explained at your consultation.",
     },
-    comparison: {
-      heading: "Denture, bridge or implant?",
-      layout: "table",
-      columns: ["Denture", "Bridge", "Implant"],
-      rows: [
+    options: {
+      heading: "Types of denture",
+      items: [
         {
-          label: "How it works",
+          title: "Partial dentures",
+          what: "Replace some missing teeth, and attach to remaining teeth.",
+          suits: "Someone with several teeth missing but healthy teeth remaining.",
+          note: "Your remaining teeth need to be healthy, and need careful cleaning.",
+        },
+        {
+          title: "Complete dentures",
+          what: "Replace all the teeth in one or both jaws.",
+          suits: "Someone with no teeth in that jaw.",
+          note: "Rest on the gums, so gum shape matters.",
+        },
+        // [CONFIRM SERVICE AVAILABILITY] "Immediate dentures" and "Implant-supported dentures" cards are
+        // omitted until confirmed. The site confirms removable partial and complete dentures only.
+      ],
+    },
+    comparison: {
+      heading: "Partial or complete dentures",
+      columns: ["Partial denture", "Complete denture"],
+      rows: [
+        { label: "Replaces", values: ["Some missing teeth", "All teeth in the upper jaw, lower jaw or both"] },
+        {
+          label: "Your own teeth",
+          values: ["Remain in place and may help hold it", "None remaining, so it rests on the gums"],
+        },
+        {
+          label: "Held in place by",
           values: [
-            "A removable set that rests on the gums",
-            "A replacement tooth held by crowns on the teeth either side",
-            "A post in the jawbone supports a crown",
+            "Clips or contact with your remaining teeth, and your gums",
+            "Close fit to the gums, and suction in the upper jaw",
           ],
         },
-        { label: "Removable", values: ["Yes", "No", "No"] },
-        { label: "Surgery", values: ["No", "No", "Yes, a minor surgical step"] },
+        { label: "Removable", values: ["Yes", "Yes"] },
         {
           label: "Suits",
-          values: [
-            "Many missing teeth, or when surgery is not suitable",
-            "Healthy teeth either side of the gap",
-            "Enough healthy bone and gums",
-          ],
+          values: ["People with some healthy teeth remaining", "People with no teeth, or teeth that cannot be saved"],
         },
       ],
-      closing: "The right option depends on your oral health, priorities and clinical assessment. No option is best for everyone.",
-      links: [
-        { label: "Dental implants", href: "/treatments/dental-implants/" },
-        { label: "Crowns & bridges", href: "/treatments/crowns-and-bridges/" },
-      ],
+      closing:
+        "The right type depends on your remaining teeth, your gums and clinical assessment. Neither is better in every case.",
+      aside: {
+        text: "Dentures are removable. If you are comparing them with a bridge or an implant, the three are compared side by side on the dental implants page.",
+        link: { label: "Dental implants", href: "/treatments/dental-implants/" },
+      },
     },
     decides: {
       heading: "How your dentist decides",
-      intro: "Your dentist will look at:",
+      intro: "Your dentures are planned for you. Your dentist will look at:",
       items: [
-        { title: "Your remaining teeth", text: "How many there are, and how healthy they are." },
-        { title: "Your gums and bone", text: "The shape and health of the ridges the denture rests on." },
-        { title: "Your bite", text: "How the upper and lower jaws meet." },
-        { title: "Your health", text: "Conditions such as a dry mouth affect how dentures feel." },
-        { title: "Your priorities", text: "Comfort, appearance, cost and whether you prefer a removable option." },
+        { title: "Your remaining teeth", text: "Which can be kept, and how healthy they are." },
+        { title: "Your gums and bone", text: "Their shape and the support they give." },
+        { title: "Your bite", text: "How your jaws meet, and how much space there is." },
+        { title: "Your health", text: "Conditions or medicines that affect your mouth. Please tell us about any." },
+        {
+          title: "Your priorities",
+          text: "Comfort, appearance, eating, cost and whether you would prefer a fixed option.",
+        },
+        { title: "Whether another option may suit you better", text: "Such as a bridge or implants." },
       ],
-      closing: "If another option would suit you better, Dr. Tripathi will explain why. You can take time to decide.",
+      closing: "If dentures are not the best answer, Dr. Tripathi will say so. You can take time to decide.",
     },
     comfort: {
-      heading: "Getting used to dentures",
+      heading: "Getting used to your dentures",
+      // [CLINIC DETAIL REQUIRED] Follow-up and adjustment arrangements, and whether adjustments are included.
       paragraphs: [
-        "New dentures can feel bulky, and speaking and eating may feel different at first. This is common and usually improves with practice.",
-        "Sore spots can happen in the first weeks. Tell your dentist rather than waiting, as small adjustments usually help.",
+        "A new denture feels strange at first, and that is normal. Your mouth needs time to learn it.",
+        "You may notice extra saliva, a feeling of fullness, and some difficulty with speaking and chewing. Sore spots can appear, and they can be eased with adjustments, so please do not put up with them.",
+        "Many people find it helps to start with soft food cut into small pieces, chew on both sides together, and practise speaking aloud. Your dentist will give you advice, and every mouth adjusts at its own pace.",
       ],
       image: consultImage,
     },
     why: {
       heading: "Why patients in Aliganj choose Roots & Pulp",
-      items: whyCore,
-      equipment: consultationStrip,
-      equipmentNote: "Your visit starts with a conversation.",
-      galleryLink: { label: "See the clinic in the gallery", href: "/gallery/" },
+      items: [
+        {
+          title: "Made to fit comfortably",
+          text: "Comfort is the aim of every denture, and adjustments are part of the process.",
+        },
+        {
+          title: "Listen first",
+          text: "Dr. Tripathi starts by understanding what matters to you, including how you eat, speak and smile.",
+        },
+        { title: "Clear explanation", text: "You hear your options, including fixed ones, before you decide." },
+        {
+          title: "Open seven days",
+          text: "Monday to Saturday until 8 PM, Sunday until 5 PM, which helps when adjustments are needed.",
+        },
+      ],
+      equipmentNote: "",
     },
     doctorQuote: standardDoctorQuote,
     aftercare: {
       heading: "Caring for your dentures",
-      intro: "Your dentist's instructions always come first. This is general guidance.",
+      intro: "Your dentist's instructions come first. This is general guidance.",
       items: [
-        { title: "Daily cleaning", text: "Clean your dentures every day as your dentist shows you, and rinse after eating." },
-        { title: "At night", text: "Many people are advised to take dentures out at night. Ask what suits you." },
-        { title: "Your mouth", text: "Clean your gums, tongue and any natural teeth too." },
-        { title: "Check-ups", text: "Gums change over time, so dentures may need adjusting or relining." },
+        {
+          title: "Clean them every day",
+          text: "Brush your dentures gently, using a method your dentist recommends, and rinse them after meals. Hold them over a basin of water, in case they slip.",
+        },
+        {
+          title: "Look after your mouth",
+          text: "Clean your gums, tongue and any remaining teeth too. Plaque on remaining teeth causes decay and gum disease.",
+        },
+        {
+          title: "Rest and storage",
+          text: "Your dentist will tell you whether to remove them at night. Keep them in water or a cleaning solution when out, away from very hot water, which can warp them.",
+        },
+        {
+          title: "Keep your reviews",
+          text: "Gums and bone change shape over time, so dentures may need adjusting or replacing. Regular check-ups also include a look for any changes in your mouth.",
+        },
       ],
-      followUp: "Do not try to adjust a denture yourself. A small professional adjustment is safer.",
+      followUp: "A denture that no longer fits well can cause sores, so please do not wait.",
     },
     warning: {
       heading: "When should I contact my dentist?",
       intro: "Please call the clinic if you notice:",
       signs: [
-        "a sore spot that does not heal",
-        "a denture that is cracked, broken or has lost a tooth",
-        "a denture that has become loose or uncomfortable",
-        "swelling of the gums",
-        "a patch or ulcer in the mouth that does not heal in about two weeks",
+        "a sore spot that does not improve within a few days",
+        "a denture that is loose, cracked or broken",
+        "difficulty eating, or the denture rubbing or moving",
+        "a mouth ulcer, white or red patch or lump that has not healed within three weeks",
+        "swelling, pus or bleeding from the gums",
       ],
       emergency: emergencyLine,
     },
     cost: {
       heading: "What affects the cost of dentures?",
-      intro: "We do not publish fixed prices, because needs vary. The main factors are:",
+      intro: "We do not publish fixed prices, because every denture is made for one mouth. The main factors are:",
       items: [
-        { title: "Partial or complete", text: "How many teeth the denture replaces." },
-        { title: "One jaw or both", text: "Upper, lower or both." },
-        { title: "The material", text: "Materials differ in strength, look and cost." },
-        { title: "Preparation", text: "Any extractions or gum care needed first." },
-        { title: "Adjustments", text: "Follow-up visits to help the denture settle." },
+        { title: "The type", text: "Partial or complete, and whether one or both jaws." },
+        { title: "How many teeth are replaced" },
+        { title: "Materials", text: "Different materials differ in look, strength and cost." },
+        { title: "Preparation", text: "Extractions or gum treatment needed first." },
+        { title: "Visits", text: "Fittings, adjustments and reviews." },
+        { title: "Future care", text: "Repairs, adjustments, relines or replacement over time." },
       ],
-      closing: "After an examination, Dr. Tripathi will explain your options and give you an estimate first.",
+      closing: "After an examination, Dr. Tripathi will explain your options and give you an estimate before treatment begins.",
     },
     faqIntro: "Straight answers about dentures. For anything else, call or send a WhatsApp message.",
     faqs: [
       {
         question: "How long does it take to get used to dentures?",
         answer:
-          "It varies. Many people find the first weeks the hardest, and things improve with practice and small adjustments. Your dentist will help you through it.",
+          "It varies. Many people feel more comfortable within a few weeks, but chewing and speaking can take longer to feel natural. Sore spots are common at first and can be eased with adjustments, so please come back instead of waiting.",
+      },
+      // [CLINIC DETAIL REQUIRED] How shade and tooth shape are chosen.
+      {
+        question: "Will dentures look natural?",
+        answer:
+          "Dentures are made to fit your mouth, and the shape and shade of the teeth are chosen with you. No one can promise exactly how they will look, so Dr. Tripathi will discuss what is realistic before you begin.",
       },
       {
         question: "Can I eat normally with dentures?",
         answer:
-          "Most people can eat a wide range of food, though it takes practice. Start with soft food cut into small pieces, and build up gradually.",
+          "Most people can eat a wide range of foods once they have adjusted, although chewing is generally less firm than with natural teeth. Start with soft food cut into small pieces, and chew on both sides at once. Your dentist will advise.",
       },
       {
-        question: "Should I sleep with my dentures in?",
+        question: "Will my dentures fall out or move?",
         answer:
-          "Many people are advised to take them out at night to rest the gums, but follow the advice your dentist gives for you.",
-      },
-      {
-        question: "Can dentures be held in place by implants?",
-        answer:
-          "In some cases, yes. Implant-supported dentures are a different treatment, and your dentist can explain whether they may suit you.",
+          "A well-fitted denture should feel stable, but some movement is possible, particularly lower dentures, because the lower jaw has less to hold on to. If a denture feels loose, tell us, as it may need adjusting.",
         link: { label: "About dental implants", href: "/treatments/dental-implants/" },
+      },
+      {
+        question: "Can I sleep with my dentures in?",
+        answer:
+          "Many dentists advise taking them out at night, to rest the gums and keep them clean, but it depends on your mouth. Your dentist will tell you what is best for you.",
+      },
+      {
+        question: "How long do dentures last?",
+        answer:
+          "There is no fixed lifespan. Gums and bone change shape over time, so dentures may need adjusting, relining or replacing. Regular check-ups let your dentist spot when this is needed.",
+      },
+      {
+        question: "What is the difference between partial and complete dentures?",
+        answer:
+          "A partial denture fills gaps while you still have some natural teeth. A complete denture replaces all the teeth in a jaw. Which one you need depends on how many healthy teeth you have left.",
+      },
+      {
+        question: "Are dentures or implants better?",
+        answer:
+          "Neither is better for everyone. Dentures are removable and usually a shorter process. Implants are fixed but need surgery, healing time and enough healthy bone. Dr. Tripathi will explain which suits you.",
+        link: { label: "Compare on the dental implants page", href: "/treatments/dental-implants/" },
       },
       {
         question: "How much do dentures cost in Lucknow?",
         answer:
-          "It depends on whether you need a partial or complete denture, one jaw or both, the material and any preparation. After an examination at our Aliganj clinic, you will get an estimate before treatment begins.",
+          "It depends on the type, how many teeth are replaced, the materials, any preparation such as extractions, and the number of visits. After an examination at our Aliganj clinic, you will be told the cost before you begin.",
       },
       appointmentFaq,
     ],
     related: [
-      { slug: "dental-implants", text: "A fixed alternative, including implant-supported dentures." },
-      { slug: "crowns-and-bridges", text: "A fixed way to fill a gap using the teeth beside it." },
-      { slug: "tooth-extraction", text: "When teeth that cannot be saved are removed first." },
+      { slug: "dental-implants", text: "A fixed way to replace missing teeth." },
+      { slug: "crowns-and-bridges", text: "A fixed bridge can fill a gap using nearby teeth." },
+      { slug: "tooth-extraction", text: "Where teeth that cannot be saved are removed first." },
     ],
     cta: {
-      heading: "Missing several teeth?",
-      text: "There is more than one way to replace them. Come in for an examination, and Dr. Tripathi will explain what could work for you.",
+      heading: "Missing teeth? Let us talk through your options.",
+      text: "Dentures are one of several ways to replace teeth, and the right one depends on you. Come in for an examination, and Dr. Tripathi will explain what could work and what to expect.",
     },
   },
   "teeth-whitening": {
     seo: {
       title: "Teeth Whitening in Aliganj, Lucknow · Roots & Pulp",
       description:
-        "In-clinic teeth whitening for stained or dull teeth, with realistic expectations set upfront. Who it suits, what to expect and aftercare. Roots & Pulp, Aliganj.",
+        "Professional teeth whitening for stained or dull teeth, with realistic expectations. What to expect and what affects cost. Roots & Pulp, Aliganj, Lucknow.",
     },
-    // [CLINICAL REVIEW REQUIRED BEFORE PUBLICATION]
-    // [CLINIC DETAIL REQUIRED] Whitening system, whether take-home trays are offered, and session details.
+    // [CLINICAL REVIEW REQUIRED BEFORE PUBLICATION] Safety FAQ and sensitivity guidance need particular care.
+    // [CLINIC DETAIL REQUIRED] Whitening product, session length and number, starting shade, maintenance or
+    // take-home options, charges. [CONFIRM SERVICE AVAILABILITY] LED light used for every session ("may be used").
+    // [VERIFY BEFORE PUBLISHING] Provenance and consent of teeth-whitening.webp (used on listing cards only).
     clinicallyReviewedOn: "",
+    compact: true,
     hero: {
       eyebrow: "Cosmetic dentistry",
-      heading: "Teeth Whitening in Aliganj, Lucknow",
-      lede: "Brighten stained or dull teeth, with realistic expectations set upfront.",
-      text: "Teeth naturally darken with age, and tea, coffee and tobacco can stain them. Whitening lightens the natural colour of your teeth. At Roots & Pulp in Aliganj, Dr. Shubham Tripathi checks your teeth and gums first and explains what result is realistic for you.",
+      heading: "Teeth Whitening in Lucknow",
+      lede: "Brighten stained or dull teeth, with realistic expectations set from the start.",
+      text: "Everyday habits like tea, coffee and tobacco, and the passing of time, can leave teeth looking dull or stained. Professional whitening can lighten them, and a short check beforehand helps make sure it is right for you. At Roots & Pulp in Aliganj, Dr. Shubham Tripathi will explain what is realistic before you begin.",
+      image: {
+        src: "/images/equipment/teeth-whitening-light.jpg",
+        alt: "LED teeth whitening lamp used for in-clinic whitening at Roots & Pulp",
+      },
     },
     glance: [
-      { title: "What it does", text: "Lightens the natural colour of teeth." },
-      { title: "What it does not change", text: "The colour of fillings, crowns or other restorations." },
-      { title: "Health first", text: "Decay and gum problems are treated before whitening." },
-      { title: "In the clinic", text: "In-clinic whitening uses an LED whitening light." },
+      { title: "What it does", text: "Lightens the natural colour of your own teeth." },
+      { title: "What it does not change", text: "The colour of fillings, crowns or veneers." },
+      { title: "A check first", text: "Cavities and gum problems are treated before whitening." },
       { title: "Results", text: "Vary from person to person, and fade over time." },
     ],
     symptoms: {
-      heading: "Could whitening be relevant to you?",
-      intro: "These are common reasons people ask a dentist about whitening.",
+      heading: "Why teeth lose their brightness",
+      intro: "Teeth are rarely pure white, and most of us notice them darkening with time. Common reasons include:",
       items: [
-        { icon: "shade", title: "Yellowing with age", text: "Teeth that have gradually darkened over time." },
-        { icon: "temperature", title: "Stains from tea or coffee", text: "Surface and deeper staining from food and drink." },
-        { icon: "spots", title: "Tobacco staining", text: "Discolouration from smoking or chewing tobacco." },
-        { icon: "sparkle", title: "A special occasion", text: "Many people ask before a wedding or event. Planning ahead helps." },
-        { icon: "filling", title: "Uneven shades", text: "Some teeth looking darker than others." },
-        { icon: "adult", title: "After braces", text: "Some people consider whitening once braces are finished." },
+        { icon: "temperature", title: "Tea and coffee", text: "Regular cups can stain the surface of the teeth over time." },
+        {
+          icon: "spots",
+          title: "Tobacco and paan",
+          text: "Smoking, chewing tobacco, gutka and paan are strong stainers.",
+        },
+        { icon: "shade", title: "Ageing", text: "The surface wears, and the layer underneath shows through as yellower." },
+        {
+          icon: "chew",
+          title: "Certain foods and drinks",
+          text: "Such as dark sauces, red wine and some fruits.",
+        },
+        {
+          icon: "crack",
+          title: "Other causes",
+          text: "Some medicines, an injury to a tooth or developmental changes can darken teeth from the inside.",
+        },
       ],
-      note: "Not all discolouration responds to whitening. A single dark tooth, for example, can have a different cause. An examination helps find out what is behind the colour you notice.",
-    },
-    explainer: {
-      heading: "How does teeth whitening work?",
-      paragraphs: [
-        "Whitening uses a gel that lightens the colour inside the tooth's surface layers. In the clinic, a whitening light may be used as part of the process.",
-        "It works on natural tooth colour. Fillings, crowns and veneers do not change colour, so they may need replacing afterwards if you want them to match.",
-        "Results vary. Some stains lighten well, others less so, and the effect fades gradually, especially with staining food, drink or tobacco.",
-      ],
+      note: "Stains have different causes, and not all of them respond to whitening in the same way. A quick examination shows what kind you have, and whether whitening is likely to help.",
+      illustration: "whitening",
+      caption: "Whitening lightens natural tooth colour. Fillings and crowns keep their original shade.",
     },
     process: {
-      heading: "What the journey can look like",
-      intro: "Every smile is different, so your own plan may vary. This is the general journey.",
+      heading: "What happens during teeth whitening",
+      intro: "Your own visit may differ slightly. This is the general journey.",
       steps: [
         {
           title: "Examination",
-          text: "Dr. Tripathi checks your teeth and gums, and looks at the cause of the discolouration.",
+          text: "Dr. Tripathi looks at your teeth and gums, asks about any sensitivity and discusses what you would like to change.",
         },
         {
-          title: "Expectations",
-          text: "You hear what result is realistic, how your fillings or crowns may look afterwards and an estimate of cost.",
-        },
-        {
-          title: "Health first",
-          text: "Any decay or gum problems are treated before whitening.",
+          title: "Treating anything else first",
+          text: "Whitening is not done on teeth with untreated cavities or inflamed gums. If a clean or filling is needed, that comes first.",
           links: [{ label: "About teeth cleaning", href: "/treatments/teeth-cleaning/" }],
         },
-        { title: "Whitening", text: "The gums are protected and the whitening gel is applied, with the whitening light where used." },
-        { title: "Review", text: "The result is checked, and you receive aftercare advice." },
+        // [CLINIC DETAIL REQUIRED] Whether a starting shade is recorded, and how results are measured.
+        {
+          title: "Agreeing what is realistic",
+          text: "You hear what whitening can and cannot do for your teeth, and what to expect. There is no pressure to go ahead.",
+        },
+        // [CLINIC DETAIL REQUIRED] Product, session length, number of sessions. No brand or percentage.
+        {
+          title: "The whitening session",
+          text: "A whitening product is applied to your teeth, with your gums and lips protected. An LED light may be used during the session.",
+        },
+        {
+          title: "Review and advice",
+          text: "You see the result, and you are told how to look after your teeth afterwards, and how to keep the result for as long as possible.",
+        },
       ],
-      footnote: "The number of sessions depends on your teeth and is explained at your consultation.",
+      footnote: "Results and time vary from person to person. Your dentist will explain what to expect for you.",
     },
-    decides: {
-      heading: "Is whitening right for me?",
-      intro: "Your dentist will look at:",
-      items: [
-        { title: "The cause of the colour", text: "Surface stains, age-related darkening or something else." },
-        { title: "Your teeth and gums", text: "Decay and gum problems are treated first." },
-        { title: "Existing restorations", text: "Fillings and crowns at the front of the mouth will not change colour." },
-        { title: "Sensitivity", text: "Teeth that are already sensitive may need a different approach." },
-        { title: "Your goals", text: "What you would like, and what is realistic." },
+    twoLists: {
+      heading: "What whitening can and cannot do",
+      columns: [
+        {
+          title: "It can",
+          items: [
+            "lighten the natural colour of your own teeth",
+            "reduce stains built up from drinks, food and tobacco",
+            "help your teeth look brighter",
+          ],
+        },
+        {
+          title: "It cannot",
+          items: [
+            "change the colour of fillings, crowns or veneers",
+            "remove every kind of stain, particularly deeper ones",
+            "make teeth permanently white. Teeth can stain again, especially with the same habits",
+          ],
+        },
       ],
-      closing: "If whitening is unlikely to give the result you want, Dr. Tripathi will tell you and explain other options.",
-    },
-    comfort: {
-      heading: "Feeling comfortable",
-      paragraphs: [
-        "Whitening does not usually need an anaesthetic. Some people feel temporary sensitivity during or after treatment.",
-        "Tell Dr. Tripathi if anything is uncomfortable. He will explain what to expect and what to do if sensitivity happens.",
-      ],
-      image: consultImage,
+      closing:
+        "Results vary, and no one can promise a particular shade. If whitening is not right for your teeth, Dr. Tripathi will tell you and suggest other options.",
+      links: [{ label: "Cosmetic dentistry", href: "/treatments/cosmetic-dentistry/" }],
     },
     why: {
       heading: "Why patients in Aliganj choose Roots & Pulp",
       items: [
-        { title: "Realistic expectations", text: "What is possible, and what is not, is explained upfront." },
-        { title: "Health before looks", text: "Teeth and gums are checked before any whitening." },
-        ...whyCore.slice(3),
-      ],
-      equipment: [
         {
-          src: "/images/equipment/teeth-whitening-light.jpg",
-          alt: "LED teeth whitening light used for in-clinic whitening",
-          caption: "Teeth Whitening Light",
-          detail: "In-clinic LED whitening",
-          position: "center 45%",
+          title: "Realistic expectations, set upfront",
+          text: "You will hear what whitening can and cannot do for your teeth before you decide.",
         },
-        consultationStrip[0],
-        consultationStrip[1],
+        {
+          title: "A check first",
+          text: "Diagnosis comes before treatment, so cavities and gum problems are dealt with before whitening.",
+        },
+        {
+          title: "In-clinic LED whitening",
+          text: "The clinic has an in-clinic LED whitening light, as seen in our gallery.",
+        },
       ],
-      equipmentNote: "In-clinic whitening at Roots & Pulp.",
-      galleryLink: { label: "See the equipment in the gallery", href: "/gallery/#equipment" },
+      equipmentNote: "",
     },
-    doctorQuote: standardDoctorQuote,
     aftercare: {
-      heading: "Afterwards, and keeping your result",
+      heading: "What to expect afterwards",
       intro: "Your dentist's instructions always come first. This is general guidance.",
       items: [
-        { title: "Sensitivity", text: "Temporary sensitivity is common. Tell your dentist if it is strong or does not settle." },
-        { title: "The first days", text: "Your dentist may suggest avoiding strongly staining food and drink for a while." },
-        { title: "Everyday care", text: "Brush twice a day and keep up regular cleaning." },
-        { title: "Over time", text: "Whitening fades gradually. Your dentist can advise on keeping your result." },
+        {
+          title: "Sensitivity",
+          text: "Teeth can feel sensitive to hot, cold or air for a short time. This usually settles. Tell us if it is strong or lasts.",
+        },
+        {
+          title: "Staining foods and drinks",
+          text: "For a short period after whitening, your teeth can pick up stain more easily. Your dentist will tell you what to avoid and for how long.",
+        },
+        {
+          title: "Everyday care",
+          text: "Brush twice a day and clean between your teeth. Regular professional cleans help keep your teeth looking their best.",
+        },
+        {
+          title: "Making it last",
+          text: "Stopping tobacco and cutting back on staining drinks helps. How long results last differs for everyone.",
+        },
       ],
-      followUp: "Results vary from person to person, and are not permanent.",
-    },
-    warning: {
-      heading: "When should I contact my dentist?",
-      intro: "Please call the clinic if you notice:",
-      signs: [
-        "sensitivity that is strong or does not settle",
-        "sore or white patches on the gums after whitening",
-        "pain in a particular tooth",
-        "swelling of the gums",
-      ],
-      emergency: emergencyLine,
+      callLine: "Please contact us if sensitivity is severe, your gums are sore or swollen, or you have pain that does not settle.",
     },
     cost: {
-      heading: "What affects the cost of whitening?",
-      intro: "We do not publish fixed prices, because needs vary. The main factors are:",
+      heading: "What affects the cost of teeth whitening?",
+      intro: "We do not publish fixed prices, because needs differ. The main factors are:",
       items: [
-        { title: "The type of whitening", text: "The approach your dentist recommends." },
-        { title: "How many sessions", text: "Some stains need more than one session." },
-        { title: "Health work first", text: "Cleaning or fillings that may be needed beforehand." },
-        { title: "Matching restorations", text: "Whether fillings or crowns need replacing afterwards." },
+        { title: "The type of whitening, and how many sessions it takes" },
+        { title: "How stained your teeth are" },
+        { title: "Any cleaning or other treatment needed first" },
+        { title: "Any follow-up or maintenance" },
       ],
-      closing: "After an examination, Dr. Tripathi will explain your options and give you an estimate first.",
+      closing: "After a short examination, Dr. Tripathi will tell you what you need and what it will cost before you begin.",
     },
     faqIntro: "Straight answers about teeth whitening. For anything else, call or send a WhatsApp message.",
     faqs: [
       {
-        question: "Does teeth whitening hurt?",
+        question: "Is teeth whitening safe?",
         answer:
-          "Whitening does not usually hurt, but some people feel temporary sensitivity. Your dentist will check your teeth first and explain what to expect.",
+          "When it is done properly, after an examination and under a dentist's supervision, it is generally considered safe. Whitening is not suitable for everyone, for example if you have untreated cavities or gum problems, so Dr. Tripathi will check your teeth first.",
       },
       {
-        question: "Will whitening work on my fillings or crowns?",
+        question: "Does teeth whitening cause sensitivity?",
         answer:
-          "No. Whitening works on natural tooth colour only. Fillings and crowns keep their colour, so they may stand out afterwards. Your dentist will discuss this before you start.",
+          "It can. Some people notice temporary sensitivity to hot, cold or air, which usually settles within a short time. Tell us if you are prone to sensitive teeth, as this can be taken into account.",
       },
       {
-        question: "How long does whitening last?",
+        question: "How long do the results last?",
         answer:
-          "It varies. Results fade gradually, faster with tea, coffee and tobacco. Your dentist can advise how to look after your result.",
+          "It varies. Teeth can stain again, especially with tea, coffee, tobacco and paan. Regular cleaning and cutting down on stains help results last longer. Your dentist will give advice for your own teeth.",
       },
       {
-        question: "Is whitening safe for my teeth?",
+        question: "Will whitening work on crowns, fillings or veneers?",
         answer:
-          "When planned and carried out by a dentist after an examination, whitening is a commonly used treatment. Teeth and gums are checked first, and any problems treated before you begin.",
+          "No. Whitening only changes the natural colour of your own teeth, so crowns, fillings and veneers stay the same. If one of them is visible, your dentist will discuss options, such as replacing it to match.",
+        link: { label: "About tooth-coloured fillings", href: "/treatments/tooth-coloured-fillings/" },
+      },
+      {
+        question: "How white will my teeth get?",
+        answer:
+          "It depends on the type and depth of the stains and the natural colour of your teeth. No one can promise a particular shade. Dr. Tripathi will explain what is realistic for you before you begin.",
+      },
+      {
+        question: "Is whitening the same as teeth cleaning?",
+        answer:
+          "No. Cleaning removes plaque and tartar, and polishing removes some surface stains. Whitening changes the natural colour of the tooth. A clean is often done first.",
+        link: { label: "About teeth cleaning", href: "/treatments/teeth-cleaning/" },
       },
       {
         question: "How much does teeth whitening cost in Lucknow?",
         answer:
-          "It depends on the type of whitening, the number of sessions and any treatment needed first. After an examination at our Aliganj clinic, you will get an estimate before treatment begins.",
-      },
-      appointmentFaq,
-    ],
-    related: [
-      { slug: "cosmetic-dentistry", text: "Other ways to change how your teeth look." },
-      { slug: "teeth-cleaning", text: "Removing surface stains and tartar first." },
-      { slug: "tooth-coloured-fillings", text: "Replacing fillings that no longer match." },
-    ],
-    cta: {
-      heading: "Thinking about whitening?",
-      text: "Start with a check. Dr. Tripathi will look at what is causing the colour you notice and explain what is realistic, with no pressure.",
-    },
-  },
-  "emergency-dental-care": {
-    seo: {
-      title: "Emergency Dentist in Aliganj, Lucknow · Roots & Pulp",
-      description:
-        "Severe tooth pain, swelling, or a broken or knocked-out tooth? Call Roots & Pulp in Aliganj, Lucknow first. Open 7 days. What to do before you arrive.",
-    },
-    // [CLINICAL REVIEW REQUIRED BEFORE PUBLICATION]
-    // [CLINIC DETAIL REQUIRED] Whether same-day emergency slots are kept and any out-of-hours arrangement.
-    // The page does not claim 24-hour care.
-    clinicallyReviewedOn: "",
-    hero: {
-      eyebrow: "Urgent care",
-      heading: "Emergency Dental Care in Aliganj, Lucknow",
-      lede: "Severe pain, swelling, or a broken or knocked-out tooth? Call us first.",
-      text: "Dental problems rarely happen at a convenient time. Roots & Pulp in Aliganj is open seven days, Monday to Saturday until 8 PM and Sunday until 5 PM. Call first, so we can advise you and plan your visit.",
-    },
-    glance: [
-      { title: "Call first", text: "Phone or WhatsApp so we can advise you and plan your visit." },
-      { title: "Open seven days", text: "Monday to Saturday 10 AM to 8 PM, Sunday 10 AM to 5 PM." },
-      { title: "First aim", text: "Find the cause and relieve pain, then plan any further treatment." },
-      { title: "Medical emergencies", text: "Breathing difficulty or spreading swelling needs emergency medical care first." },
-      { title: "Afterwards", text: "A clear plan for any treatment the tooth needs." },
-    ],
-    symptoms: {
-      heading: "Common dental emergencies",
-      intro: "These are common reasons people call the clinic urgently.",
-      items: [
-        { icon: "night", title: "Severe toothache", text: "Pain that is throbbing, constant or keeping you awake." },
-        { icon: "swelling", title: "Swelling", text: "Swelling of the gum, face or jaw." },
-        { icon: "crack", title: "A broken or chipped tooth", text: "A piece of tooth that has broken off." },
-        { icon: "lost", title: "A knocked-out tooth", text: "A tooth that has come out after a knock or fall." },
-        { icon: "filling", title: "A lost filling or crown", text: "A filling, crown or temporary that has come off." },
-        { icon: "bite", title: "Pain after treatment", text: "Pain or swelling that is getting worse after dental work." },
-      ],
-      note: "If you have difficulty breathing or swallowing, swelling spreading toward the eye or neck, or a serious injury to the head or face, seek emergency medical care straight away.",
-    },
-    explainer: {
-      heading: "What to do before you arrive",
-      paragraphs: [
-        "Knocked-out adult tooth: handle it by the crown, not the root, and do not scrub it. Keep it moist, for example in milk, and call us straight away. Time matters. Do not put a baby tooth back in.",
-        "Broken tooth or lost filling: keep any pieces, rinse your mouth gently with water and avoid chewing on that side. Do not try to glue a crown or filling yourself.",
-        "Toothache or swelling: call us for advice. Do not place painkillers directly on the gum. If you take pain relief, follow the instructions on the pack.",
-      ],
-    },
-    process: {
-      heading: "What happens at an urgent visit",
-      intro: "Every situation is different. This is the general journey.",
-      steps: [
-        { title: "Call first", text: "Tell us what has happened, so we can advise you and plan your visit." },
-        {
-          title: "Examination",
-          text: "Dr. Tripathi listens, examines the area and usually takes an X-ray to find the cause.",
-        },
-        { title: "Relief first", text: "The first aim is to relieve pain and stabilise the problem." },
-        {
-          title: "Your plan",
-          text: "You hear what further treatment, if any, the tooth needs and an estimate of cost.",
-          links: [{ label: "About root canal treatment", href: "/treatments/root-canal-treatment/" }],
-        },
-      ],
-      footnote: "Some problems can be fully treated in one visit, others need follow-up. Dr. Tripathi will explain what applies to you.",
-    },
-    decides: {
-      heading: "How your dentist decides",
-      intro: "Your dentist will look at:",
-      items: [
-        { title: "The cause of the pain", text: "Decay, infection, a crack, gums or something else." },
-        { title: "The X-ray", text: "What is happening inside the tooth and around the root." },
-        { title: "Whether the tooth can be saved", text: "Saving the tooth is considered first." },
-        { title: "Any swelling or infection", text: "And whether it is spreading." },
-        { title: "Your health", text: "Relevant medical conditions and medicines." },
-      ],
-      closing: "You will be told what needs doing now and what can wait.",
-    },
-    comfort: {
-      heading: "Feeling comfortable",
-      paragraphs: [
-        "Being in pain is stressful. The first aim is to find the cause and help you feel better.",
-        "If treatment is needed, the area is numbed first, and you can tell Dr. Tripathi at any time if you feel anything.",
-      ],
-      image: consultImage,
-    },
-    why: {
-      heading: "Why patients in Aliganj call Roots & Pulp",
-      items: [
-        { title: "Open seven days", text: "Monday to Saturday until 8 PM, Sunday until 5 PM." },
-        { title: "Call or WhatsApp first", text: "So we can advise you before you travel." },
-        { title: "Diagnosis before treatment", text: "The cause is found before anything is done." },
-        { title: "Saving teeth first", text: "Removal is recommended only when a tooth cannot be saved." },
-      ],
-      equipment: [
-        {
-          src: "/images/equipment/digital-xray-rvg.jpg",
-          alt: "Digital dental X-ray shown on the clinic laptop",
-          caption: "Digital X-ray (RVG)",
-          detail: "Instant X-rays on screen",
-          position: "center 30%",
-        },
-        {
-          src: "/images/clinic-entrance.jpg",
-          alt: "Street entrance and signboard of Roots & Pulp Dental Clinic in Aliganj",
-          caption: "Our entrance in Sector Q, Aliganj",
-          position: "center 40%",
-        },
-        consultationStrip[0],
-      ],
-      equipmentNote: "Find us in Sector Q, Aliganj.",
-      galleryLink: { label: "Get directions and contact details", href: "/contact/" },
-    },
-    doctorQuote: standardDoctorQuote,
-    aftercare: {
-      heading: "After an urgent visit",
-      intro: "Your dentist's instructions always come first. This is general guidance.",
-      items: [
-        { title: "Follow the plan", text: "Complete any further treatment the tooth needs, so the problem does not return." },
-        { title: "Pain relief", text: "Use pain relief only as advised, and follow the instructions on the pack." },
-        { title: "Eating", text: "Avoid chewing on the affected side until your dentist says it is ready." },
-        { title: "Watch for changes", text: "Call if pain or swelling gets worse." },
-      ],
-      followUp: "Temporary relief is not the same as a fix. Keep your follow-up appointment.",
-    },
-    warning: {
-      heading: "When to seek urgent help",
-      intro: "Call the clinic straight away if you have:",
-      signs: [
-        "a knocked-out adult tooth",
-        "swelling of the face, gum or jaw",
-        "severe pain that is not settling",
-        "a fever with tooth pain",
-        "bleeding that does not stop with firm pressure",
-      ],
-      emergency: emergencyLine,
-    },
-    cost: {
-      heading: "What affects the cost of emergency care?",
-      intro: "We do not publish fixed prices, because every situation is different. The main factors are:",
-      items: [
-        { title: "The cause", text: "What is behind the pain or damage." },
-        { title: "Treatment needed now", text: "What is done to relieve pain and stabilise the tooth." },
-        { title: "Imaging", text: "X-rays needed to find the cause." },
-        { title: "Further treatment", text: "Any follow-up the tooth needs." },
-      ],
-      closing: "Dr. Tripathi will explain what is needed and give you an estimate before treatment begins.",
-    },
-    faqIntro: "Straight answers for urgent dental problems. Call us first if you are in pain.",
-    faqs: [
-      {
-        question: "What counts as a dental emergency?",
-        answer:
-          "Severe pain, swelling, a knocked-out adult tooth, a broken tooth or bleeding that does not stop are all reasons to call. If you are unsure, call and we will advise.",
-      },
-      {
-        question: "What should I do if a tooth is knocked out?",
-        answer:
-          "For an adult tooth, handle it by the crown, do not scrub it, keep it moist, for example in milk, and call us straight away. Do not put a baby tooth back in. For serious head or face injuries, seek emergency medical care first.",
-        link: { label: "About children's dentistry", href: "/treatments/childrens-dentistry/" },
-      },
-      {
-        question: "Are you open on Sundays?",
-        answer: "Yes. We are open Monday to Saturday 10:00 AM to 8:00 PM and Sunday 10:00 AM to 5:00 PM.",
-      },
-      {
-        question: "My crown or filling fell out. Is that an emergency?",
-        answer:
-          "It is usually not dangerous, but call us so the tooth can be protected. Keep the crown safe, avoid chewing on that side and do not glue it yourself.",
-      },
-      {
-        question: "Should I go to a hospital instead?",
-        answer:
-          "For difficulty breathing or swallowing, swelling spreading toward the eye or neck, or a serious head or face injury, seek emergency medical care straight away.",
-      },
-      {
-        question: "How much does emergency dental care cost in Lucknow?",
-        answer:
-          "It depends on the cause and the treatment needed. At our Aliganj clinic, Dr. Tripathi will explain what is needed and give you an estimate before treatment begins.",
+          "It depends on the type of whitening, how many sessions are needed, how stained your teeth are, and any cleaning or treatment needed first. After a short examination at our Aliganj clinic, you will be told the cost before you begin.",
       },
     ],
     related: [
-      { slug: "root-canal-treatment", text: "Treating infection inside a tooth." },
-      { slug: "tooth-extraction", text: "When a tooth cannot be saved." },
-      { slug: "crowns-and-bridges", text: "Protecting a broken or weakened tooth." },
+      { slug: "teeth-cleaning", text: "A clean surface comes first, and helps keep results." },
+      { slug: "cosmetic-dentistry", text: "Options for chips, gaps and shape, as well as colour." },
+      { slug: "tooth-coloured-fillings", text: "For old or stained fillings that whitening cannot change." },
     ],
     cta: {
-      heading: "In pain? Call us first.",
-      text: "We are open seven days. Call or WhatsApp and tell us what has happened, so we can advise you and plan your visit.",
+      heading: "Thinking about whitening? Start with a check.",
+      text: "A short examination shows whether whitening is right for your teeth, and what to expect. Dr. Tripathi will explain everything, with no pressure.",
     },
   },
 };

@@ -44,6 +44,16 @@ export function WhatsAppMark({ className }: IconProps) {
   );
 }
 
+export function CalendarIcon({ className }: IconProps) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.7">
+      <rect x="3.8" y="5.2" width="16.4" height="15" rx="2.6" />
+      <path strokeLinecap="round" d="M3.8 9.8h16.4M8.2 3.2v3.6M15.8 3.2v3.6" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="m9.2 15 2 2 3.8-3.8" />
+    </svg>
+  );
+}
+
 export function ArrowIcon({ className }: IconProps) {
   return (
     <svg className={className} viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.7">

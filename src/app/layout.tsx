@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { DM_Sans, DM_Serif_Display, Lato, Montserrat } from "next/font/google";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
-import { MobileActionBar } from "@/components/MobileActionBar";
+import { FloatingContactActions } from "@/components/FloatingContactActions";
 import { RevealOnScroll } from "@/components/RevealOnScroll";
 import { SiteCursor } from "@/components/SiteCursor";
 import { clinic, homeSeo, siteUrl } from "@/lib/clinic";
@@ -93,7 +93,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         <RevealOnScroll />
         {children}
         <Footer />
-        <MobileActionBar />
+        <FloatingContactActions />
         <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(graph)} />
       </body>
     </html>

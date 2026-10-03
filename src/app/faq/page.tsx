@@ -24,7 +24,6 @@ const treatmentQuestions: [slug: string, question: string][] = [
   ["childrens-dentistry", "When should my child first see a dentist?"],
   ["teeth-cleaning", "How often should I have my teeth cleaned?"],
   ["teeth-whitening", "Will whitening work on my fillings or crowns?"],
-  ["emergency-dental-care", "What counts as a dental emergency?"],
 ];
 
 const treatmentFaqs = treatmentQuestions.flatMap(([slug, question]) => {

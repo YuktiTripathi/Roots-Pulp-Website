@@ -10,7 +10,7 @@ const site = (process.env.NEXT_PUBLIC_SITE_URL || "https://rootsandpulp.com").re
 const treatmentSlugs = [
   "teeth-cleaning", "tooth-coloured-fillings", "tooth-extraction", "gum-and-oral-health",
   "root-canal-treatment", "crowns-and-bridges", "dental-implants", "dentures", "teeth-whitening",
-  "cosmetic-dentistry", "braces-and-aligners", "childrens-dentistry", "emergency-dental-care",
+  "cosmetic-dentistry", "braces-and-aligners", "childrens-dentistry",
 ];
 const indexable = [
   "/", "/treatments/", "/doctor/dr-shubham-tripathi/", "/about/", "/gallery/", "/reviews/", "/contact/", "/faq/",

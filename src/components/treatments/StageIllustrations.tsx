@@ -357,6 +357,146 @@ function CosmeticPair({ concern }: { concern: "stain" | "chip" | "gap" | "worn" 
   );
 }
 
+/* Gum line and bone behind a tooth, shared by the cleaning and gum stage drawings. */
+function GumAndBone({ gumTop = 74, boneTop = 96, inflamed = false }: { gumTop?: number; boneTop?: number; inflamed?: boolean }) {
+  return (
+    <>
+      <rect x="2" y={boneTop} width="116" height={166 - boneTop} rx="8" fill={C.bone} />
+      {[[16, boneTop + 18], [100, boneTop + 26], [20, boneTop + 44], [96, boneTop + 52]].map(([cx, cy]) => (
+        <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r="2.4" fill={C.boneDot} />
+      ))}
+      <path
+        d={`M2 ${gumTop + 4} C14 ${gumTop - 4} 26 ${gumTop - 2} 34 ${gumTop + 2} L86 ${gumTop + 2} C94 ${gumTop - 2} 106 ${gumTop - 4} 118 ${gumTop + 4} L118 ${boneTop + 8} L2 ${boneTop + 8} Z`}
+        fill={inflamed ? "#eda5a2" : C.gum}
+        stroke={inflamed ? C.red : C.gumLine}
+        strokeWidth="1.4"
+      />
+    </>
+  );
+}
+
+/* Teeth cleaning: plaque and tartar at the gum line, then the cleaned tooth. */
+function CleaningTooth({ stage }: { stage: "buildup" | "clean" }) {
+  return (
+    <svg viewBox="0 0 120 170" aria-hidden="true" focusable="false">
+      <path d={TOOTH} fill="#fff" stroke={C.navy} strokeWidth="2.2" strokeLinejoin="round" />
+      <GumAndBone />
+      {stage === "buildup" ? (
+        <>
+          <path d="M23 50 C22 60 25 68 29 76 L38 76 C33 70 30 62 30 52 Z" fill="#e8cf86" stroke="#b8933a" strokeWidth="1" />
+          <path d="M97 50 C98 60 95 68 91 76 L82 76 C87 70 90 62 90 52 Z" fill="#e8cf86" stroke="#b8933a" strokeWidth="1" />
+          <path d="M22 34 C22 26 26 20 32 18" fill="none" stroke="#e8cf86" strokeWidth="3" strokeLinecap="round" />
+          <Label x={104} y={42} text="Tartar" from={[94, 60]} />
+        </>
+      ) : null}
+    </svg>
+  );
+}
+
+/* Filling: a cavity, the decay removed, the tooth rebuilt. */
+function FillingTooth({ stage }: { stage: "cavity" | "prepared" | "filled" }) {
+  const hole = "M44 18 C50 26 58 28 66 22 C68 32 66 44 58 48 C50 50 44 44 42 34 Z";
+  return (
+    <svg viewBox="0 0 120 170" aria-hidden="true" focusable="false">
+      <path d={TOOTH} fill="#fff" stroke={C.navy} strokeWidth="2.2" strokeLinejoin="round" />
+      {stage === "cavity" ? <path d={hole} fill="#9b6b3c" stroke="#6e4a26" strokeWidth="1.2" /> : null}
+      {stage === "prepared" ? <path d={hole} fill="#f1ece4" stroke={C.navy} strokeWidth="1.4" strokeDasharray="3 2" /> : null}
+      {stage === "filled" ? <path d={hole} fill={C.tealSoft} stroke={C.teal} strokeWidth="1.6" /> : null}
+    </svg>
+  );
+}
+
+/* Gum disease: healthy gum, inflamed gum, advanced gum disease with a deeper pocket and bone loss. */
+function GumStage({ stage }: { stage: "healthy" | "inflamed" | "advanced" }) {
+  const advanced = stage === "advanced";
+  return (
+    <svg viewBox="0 0 120 170" aria-hidden="true" focusable="false">
+      <path d={TOOTH} fill="#fff" stroke={C.navy} strokeWidth="2.2" strokeLinejoin="round" />
+      <GumAndBone gumTop={advanced ? 92 : 72} boneTop={advanced ? 122 : 96} inflamed={stage !== "healthy"} />
+      {stage === "inflamed" ? (
+        <>
+          {[26, 32, 88, 94].map((cx) => (
+            <circle key={cx} cx={cx} cy="70" r="2.2" fill="#e8cf86" stroke="#b8933a" strokeWidth="0.6" />
+          ))}
+        </>
+      ) : null}
+      {advanced ? (
+        <>
+          <path d="M33 92 L36 118" stroke={C.red} strokeWidth="1.4" strokeDasharray="3 2" />
+          <path d="M87 92 L84 118" stroke={C.red} strokeWidth="1.4" strokeDasharray="3 2" />
+          <Label x={104} y={136} text="Bone loss" from={[92, 122]} />
+        </>
+      ) : null}
+    </svg>
+  );
+}
+
+/* Dentures: top-down arch. A partial denture fills gaps; a complete denture replaces the full arch. */
+function DentureArch({ kind }: { kind: "partial" | "complete" }) {
+  const count = 10;
+  const missing = new Set([2, 3, 6, 7]);
+  const teeth = Array.from({ length: count }, (_, i) => {
+    const t = (i / (count - 1)) * 2 - 1;
+    const angle = (Math.atan2(156 * t, 62) * 180) / Math.PI;
+    return { x: 80 + 62 * t, y: 24 + 78 * t * t, angle, front: Math.abs(t) < 0.5 };
+  });
+  return (
+    <svg viewBox="0 0 160 120" aria-hidden="true" focusable="false">
+      <path d="M10 112 C10 30 40 6 80 6 C120 6 150 30 150 112" fill="none" stroke={C.gum} strokeWidth="22" strokeLinecap="round" />
+      {kind === "complete" ? (
+        <path d="M12 110 C12 32 41 8 80 8 C119 8 148 32 148 110" fill="none" stroke="#e79a96" strokeWidth="14" strokeLinecap="round" opacity="0.8" />
+      ) : null}
+      {teeth.map((tooth, i) => {
+        const replaced = kind === "complete" || missing.has(i);
+        return (
+          <ellipse
+            key={i}
+            cx={tooth.x}
+            cy={tooth.y}
+            rx={tooth.front ? 6 : 8}
+            ry={tooth.front ? 4.5 : 6.5}
+            transform={`rotate(${tooth.angle.toFixed(1)} ${tooth.x.toFixed(1)} ${tooth.y.toFixed(1)})`}
+            fill={replaced ? C.ivory : "#fff"}
+            stroke={replaced ? C.teal : C.navy}
+            strokeWidth="1.6"
+          />
+        );
+      })}
+      {kind === "partial" ? (
+        <path
+          d={`M${teeth[2].x} ${teeth[2].y} Q80 60 ${teeth[7].x} ${teeth[7].y}`}
+          fill="none"
+          stroke={C.metal}
+          strokeWidth="2"
+          strokeDasharray="4 3"
+        />
+      ) : null}
+    </svg>
+  );
+}
+
+/* Whitening: a stained tooth, the same tooth lighter, and a filling that keeps its colour. */
+function WhiteningTooth({ stage }: { stage: "stained" | "lighter" | "filling" }) {
+  return (
+    <svg viewBox="0 0 80 90" aria-hidden="true" focusable="false">
+      <path
+        d={INCISOR}
+        transform="translate(23 14)"
+        fill={stage === "stained" ? "#e6d2a6" : "#fbf8f1"}
+        stroke={C.navy}
+        strokeWidth="1.8"
+        strokeLinejoin="round"
+      />
+      {stage === "filling" ? (
+        <>
+          <path d="M23 6 L34 6 L33 26 C29 27 25 26 24 24 Z" transform="translate(23 14)" fill="#e6d2a6" stroke={C.teal} strokeWidth="1.2" />
+          <Label x={60} y={12} text="Filling" from={[52, 26]} />
+        </>
+      ) : null}
+    </svg>
+  );
+}
+
 type Panel = { title: string; art: ReactNode };
 type Figure = {
   label: string;
@@ -443,6 +583,69 @@ const figures: Record<StageIllustration, Figure> = {
           { title: "Chipped edge rebuilt", art: <CosmeticPair concern="chip" /> },
           { title: "Gap narrowed", art: <CosmeticPair concern="gap" /> },
           { title: "Worn tooth restored", art: <CosmeticPair concern="worn" /> },
+        ],
+      },
+    ],
+  },
+  cleaning: {
+    label: "Illustration of a tooth at the gum line with plaque and tartar build-up, and the same tooth after cleaning.",
+    rows: [
+      {
+        panels: [
+          { title: "Plaque and tartar at the gum line", art: <CleaningTooth stage="buildup" /> },
+          { title: "After a professional clean", art: <CleaningTooth stage="clean" /> },
+        ],
+      },
+    ],
+  },
+  filling: {
+    label:
+      "Three-stage illustration of a tooth: a cavity, the decayed part removed, and the tooth rebuilt with a tooth-coloured filling.",
+    rows: [
+      {
+        panels: [
+          { title: "A cavity", art: <FillingTooth stage="cavity" /> },
+          { title: "Decay removed", art: <FillingTooth stage="prepared" /> },
+          { title: "Filling in place", art: <FillingTooth stage="filled" /> },
+        ],
+      },
+    ],
+  },
+  "gum-stages": {
+    label:
+      "Three-panel illustration of a tooth and gum: healthy gum, inflamed gum with plaque, and advanced gum disease with a deeper pocket and bone loss.",
+    rows: [
+      {
+        panels: [
+          { title: "Healthy gum", art: <GumStage stage="healthy" /> },
+          { title: "Inflamed gum (gingivitis)", art: <GumStage stage="inflamed" /> },
+          { title: "Advanced (periodontitis)", art: <GumStage stage="advanced" /> },
+        ],
+      },
+    ],
+  },
+  dentures: {
+    label:
+      "Two-panel illustration: a partial denture filling gaps between natural teeth, and a complete denture replacing a full arch.",
+    rows: [
+      {
+        wide: true,
+        panels: [
+          { title: "Partial denture", art: <DentureArch kind="partial" /> },
+          { title: "Complete denture", art: <DentureArch kind="complete" /> },
+        ],
+      },
+    ],
+  },
+  whitening: {
+    label:
+      "Three-panel illustration: a stained tooth, the same tooth lighter after whitening, and a filling that keeps its original colour.",
+    rows: [
+      {
+        panels: [
+          { title: "Stained tooth", art: <WhiteningTooth stage="stained" /> },
+          { title: "Lighter after whitening", art: <WhiteningTooth stage="lighter" /> },
+          { title: "Fillings do not change", art: <WhiteningTooth stage="filling" /> },
         ],
       },
     ],

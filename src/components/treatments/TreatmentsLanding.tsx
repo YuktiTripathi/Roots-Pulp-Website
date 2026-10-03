@@ -54,10 +54,6 @@ const treatmentImages: Record<string, { src: string; alt: string }> = {
     src: "/images/treatments/teeth-whitening.webp",
     alt: "A smile shown before and after whitening",
   },
-  "emergency-dental-care": {
-    src: "/images/treatments/emergency-dental-care.jpg",
-    alt: "A person holding their cheek in discomfort",
-  },
 };
 
 export function treatmentImage(slug: string) {

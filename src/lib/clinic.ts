@@ -238,12 +238,6 @@ export const treatments: Treatment[] = [
     group: "For children",
     featured: true,
   },
-  {
-    slug: "emergency-dental-care",
-    name: "Emergency Dental Care",
-    overview: "Severe pain, swelling, or a broken or knocked-out tooth? Call us first.",
-    group: "Urgent care",
-  },
 ];
 
 export const featuredTreatments = [
@@ -264,7 +258,6 @@ export const treatmentGroups = [
   "Cosmetic dentistry",
   "Straightening teeth",
   "For children",
-  "Urgent care",
 ] as const;
 
 export function treatmentHref(slug: string) {
