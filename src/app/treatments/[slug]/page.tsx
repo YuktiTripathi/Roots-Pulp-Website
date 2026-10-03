@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { PhoneIcon } from "@/components/Icons";
 import { TreatmentDetail } from "@/components/treatments/TreatmentDetail";
 import { TreatmentListItem, treatmentImage } from "@/components/treatments/TreatmentsLanding";
-import { bookingUrl, clinic, telHref, treatments, whatsappHref } from "@/lib/clinic";
+import { bookingUrl, telHref, treatments, whatsappHref } from "@/lib/clinic";
 import { stagger } from "@/lib/motion";
 import { treatmentPageJsonLd } from "@/lib/schema";
 import { jsonLd, pageMetadata } from "@/lib/seo";
@@ -105,15 +106,12 @@ export default async function TreatmentPage({ params }: { params: Promise<Params
                 A full explanation of this treatment is being prepared for publication. Dr. Shubham Tripathi can talk
                 it through with you at the clinic.
               </p>
-              <p className="notice enter" style={stagger(3)}>
-                {clinic.disclaimer}
-              </p>
               <div className="hero-actions enter" style={stagger(4)}>
                 <Link className="btn btn-primary" href={bookingUrl} target="_blank" rel="noopener noreferrer">
                   Book an Appointment
                 </Link>
                 <a className="btn btn-secondary" href={telHref()}>
-                  Call {clinic.phoneDisplay}
+                  <PhoneIcon className="call-icon" /> Call
                 </a>
                 <a className="btn btn-tertiary" href={whatsappHref()}>
                   WhatsApp Us

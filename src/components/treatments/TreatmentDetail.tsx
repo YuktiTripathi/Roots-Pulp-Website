@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FAQSection } from "@/components/FAQSection";
 import { FinalCTA } from "@/components/FinalCTA";
+import { PhoneIcon } from "@/components/Icons";
 import { StageFigure } from "@/components/treatments/StageIllustrations";
 import { TreatmentListItem, treatmentImage } from "@/components/treatments/TreatmentsLanding";
 import { bookingUrl, clinic, doctor, telHref, treatments, whatsappHref, type Treatment } from "@/lib/clinic";
@@ -170,15 +171,12 @@ export function TreatmentDetail({ treatment, content }: { treatment: Treatment; 
                   Book an Appointment
                 </Link>
                 <a className="btn btn-secondary" href={telHref()}>
-                  Call {clinic.phoneDisplay}
+                  <PhoneIcon className="call-icon" /> Call
                 </a>
                 <a className="btn btn-tertiary" href={whatsappHref()}>
                   WhatsApp Us
                 </a>
               </div>
-              <p className="notice enter" style={stagger(5)}>
-                {clinic.disclaimer}
-              </p>
             </div>
             {image ? (
               <figure className="tx-hero-visual">
@@ -654,7 +652,7 @@ export function TreatmentDetail({ treatment, content }: { treatment: Treatment; 
             <p className="tp-call-line reveal">
               <strong>When should I call?</strong> {content.aftercare.callLine}{" "}
               <a className="text-link" href={telHref()}>
-                Call {clinic.phoneDisplay}
+                <PhoneIcon className="call-icon" /> Call
               </a>
             </p>
           ) : null}
@@ -678,7 +676,7 @@ export function TreatmentDetail({ treatment, content }: { treatment: Treatment; 
               </p>
               <div className="hero-actions">
                 <a className="btn btn-primary" href={telHref()}>
-                  Call {clinic.phoneDisplay}
+                  <PhoneIcon className="call-icon" /> Call
                 </a>
                 <a className="btn btn-secondary" href={whatsappHref()}>
                   WhatsApp Us

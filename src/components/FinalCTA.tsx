@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { bookingUrl, clinic, telHref, whatsappHref } from "@/lib/clinic";
+import { bookingUrl, telHref, whatsappHref } from "@/lib/clinic";
+import { PhoneIcon } from "./Icons";
 
 type FinalCTAProps = {
   heading?: string;
@@ -27,7 +28,7 @@ export function FinalCTA({
           </Link>
           {showCall ? (
             <a className="btn btn-line" href={telHref()}>
-              Call {clinic.phoneDisplay}
+              <PhoneIcon className="call-icon" /> Call
             </a>
           ) : null}
           <a className="btn btn-line" href={whatsappHref()}>
