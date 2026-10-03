@@ -213,20 +213,6 @@ const consultImage = {
 const standardDoctorQuote =
   "Dental treatment can feel confusing. Findings, options and the reasoning behind a treatment plan are explained in simple, understandable terms.";
 
-
-const whyCore = [
-  { title: "Listen first", text: "Dr. Tripathi starts by understanding your concerns, then examines." },
-  {
-    title: "Diagnosis before treatment",
-    text: "Every recommendation follows an examination, and you are told when something can wait.",
-  },
-  {
-    title: "Prevention matters",
-    text: "Dr. Tripathi's public health training shapes a focus on keeping problems from coming back.",
-  },
-  { title: "Open seven days", text: "Monday to Saturday until 8 PM, Sunday until 5 PM." },
-];
-
 const appointmentFaq: TreatmentFaq = {
   question: "Do I need an appointment, and are you open on Sundays?",
   answer:
@@ -2418,9 +2404,9 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
     clinicallyReviewedOn: "",
     hero: {
       eyebrow: "Everyday & preventive care",
-      heading: "Tooth Extraction in Aliganj, Lucknow",
-      lede: "Careful removal of a tooth that cannot be saved, with clear aftercare.",
-      text: "Keeping your natural teeth is always the first aim. When a tooth cannot be saved, removing it can relieve pain and protect your other teeth. At Roots & Pulp in Aliganj, Dr. Shubham Tripathi will examine the tooth, explain why removal is recommended and talk through what comes next.",
+      heading: "Tooth Extraction in Lucknow",
+      lede: "When a tooth cannot be saved, a clear plan makes the next step easier.",
+      text: "Removing a tooth is never the first choice, but sometimes it is the right one. At Roots & Pulp in Aliganj, Dr. Shubham Tripathi will examine the tooth, tell you honestly whether it can be saved, and explain what happens before and after.",
     },
     glance: [
       { title: "When it is considered", text: "When a tooth is too damaged, infected or loose to be saved." },
@@ -2430,196 +2416,238 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
       { title: "Afterwards", text: "Clear aftercare advice, and a talk about replacing the tooth if needed." },
     ],
     symptoms: {
-      heading: "Why might a tooth need removing?",
-      intro: "These are common reasons a dentist may discuss extraction.",
+      heading: "Why a tooth may need to be removed",
+      intro: "A dentist will always try to keep your natural teeth where it is sensible to do so. Removal may be recommended when:",
       items: [
-        { icon: "lost", title: "A tooth that cannot be repaired", text: "Decay or a break that has gone too far to restore." },
-        { icon: "crack", title: "A badly cracked tooth", text: "Some cracks extend too far below the gum to fix." },
-        { icon: "swelling", title: "Severe gum disease", text: "When a tooth has lost too much support to stay." },
-        { icon: "night", title: "Ongoing pain or infection", text: "When other treatment is not possible or not suitable." },
-        { icon: "crowded", title: "Crowding", text: "Occasionally, as part of a plan to straighten teeth." },
-        { icon: "sparkle", title: "A problem wisdom tooth", text: "A wisdom tooth that is causing repeated trouble." },
+        { icon: "lost", title: "Severe decay", text: "So much of the tooth is lost that it cannot be rebuilt." },
+        { icon: "crack", title: "A broken tooth", text: "A crack or break that extends below the gum." },
+        { icon: "swelling", title: "Advanced gum disease", text: "The tooth has lost its support and has become loose." },
+        { icon: "night", title: "An infection that cannot be treated", text: "Where other treatment is not suitable." },
+        { icon: "crowded", title: "A crowded mouth", text: "Sometimes a tooth is removed to make room, for example before braces." },
+        { icon: "sparkle", title: "A tooth that is stuck or misplaced", text: "Such as a tooth that has not come through properly." },
       ],
-      note: "Removing a tooth is never automatic. An examination and X-ray show whether the tooth can be saved, and what the options are.",
+      note: "These situations can have different causes. Only an examination, and usually an X-ray, can show whether a tooth can be saved or needs to be removed.",
     },
-    explainer: {
-      heading: "What happens when a tooth is removed?",
-      paragraphs: [
-        "A tooth is held in the jaw by its roots and the bone and gum around them. An extraction gently loosens the tooth from that support and removes it.",
-        "Most extractions are done with the area numbed, and you will feel pressure rather than pain. Some teeth, such as broken or impacted ones, can take longer.",
-        "Afterwards, a blood clot forms in the socket. It protects the area while it heals, which is why the aftercare advice matters.",
+    infoCards: {
+      heading: "Can the tooth be saved?",
+      intro: "Often, yes. Before recommending removal, Dr. Tripathi will consider whether the tooth can be treated.",
+      items: [
+        {
+          title: "Decay or infection inside the tooth",
+          text: "Root canal treatment may be an option.",
+          link: { label: "Root Canal Treatment", href: "/treatments/root-canal-treatment/" },
+        },
+        {
+          title: "A badly damaged tooth",
+          text: "A filling or a crown may protect it.",
+          link: { label: "Tooth-Coloured Fillings", href: "/treatments/tooth-coloured-fillings/" },
+        },
+        {
+          title: "A loose tooth from gum disease",
+          text: "Gum treatment may help in some cases.",
+          link: { label: "Gum & Oral Health", href: "/treatments/gum-and-oral-health/" },
+        },
       ],
+      closing: "If a tooth can be saved, we will say so. If it cannot, we will explain why, so the decision is yours and not rushed.",
     },
     process: {
-      heading: "What to expect",
-      intro: "Every tooth is different, so your own plan may vary. This is the general journey.",
+      heading: "What happens during an extraction",
+      intro: "Your own visit may differ slightly. This is the general journey.",
       steps: [
         {
           title: "Examination and X-ray",
-          text: "Dr. Tripathi examines the tooth, usually takes an X-ray and explains whether it can be saved.",
+          text: "Dr. Tripathi examines the tooth, usually takes an X-ray, and asks about your health and any medicines you take.",
         },
         {
-          title: "Your plan",
-          text: "You hear why removal is recommended, the alternatives and an estimate of cost. There is no pressure to decide on the day.",
+          title: "Your options",
+          text: "You hear whether the tooth can be saved, what removal involves, and what could replace it. There is no pressure to decide on the day.",
         },
-        { title: "Numbing", text: "The area is numbed, and you can say if you feel anything." },
-        { title: "Removing the tooth", text: "The tooth is loosened and removed. You may feel pressure." },
+        { title: "Numbing", text: "The area around the tooth is numbed, so you should not feel pain during the extraction." },
+        { title: "Removing the tooth", text: "The tooth is loosened and gently removed. You may feel pressure or movement, but not sharp pain." },
         {
-          title: "Aftercare and next steps",
-          text: "You receive aftercare advice and, if needed, a talk about replacing the tooth.",
-          links: [{ label: "About dental implants", href: "/treatments/dental-implants/" }],
+          title: "Care of the socket",
+          text: "The area is checked, and you are shown how to look after it. You may be asked to bite on gauze to help bleeding settle.",
         },
       ],
-      footnote: "Your dentist will explain what to expect for your tooth, including whether a review visit is needed.",
+      footnote: "Time and steps depend on the tooth. Your dentist will explain what to expect for yours.",
     },
-    comparison: {
-      heading: "Removing a tooth or saving it",
-      columns: ["Saving the tooth", "Removing the tooth"],
-      rows: [
-        {
-          label: "What happens",
-          values: ["The tooth is repaired, for example with a filling, root canal or crown", "The tooth is taken out"],
-        },
-        { label: "Natural tooth", values: ["Kept, where it can be saved", "Gap left, which may need replacing"] },
-        {
-          label: "Best suited",
-          values: ["A tooth with enough healthy structure to rebuild", "A tooth that cannot be restored"],
-        },
-      ],
-      closing:
-        "The right option depends on the tooth, your health and clinical assessment. Dr. Tripathi will tell you honestly whether a tooth can be saved.",
-      links: [
-        { label: "Root canal treatment", href: "/treatments/root-canal-treatment/" },
-        { label: "Dental implants", href: "/treatments/dental-implants/" },
-        { label: "Dentures", href: "/treatments/dentures/" },
-      ],
-    },
-    decides: {
-      heading: "How your dentist decides",
-      intro: "Your dentist will look at:",
+    options: {
+      heading: "After a tooth is removed: replacement options",
+      suitsLabel: "Planning",
       items: [
-        { title: "Whether the tooth can be saved", text: "How much healthy structure remains." },
-        { title: "The X-ray", text: "The roots, the bone and nearby teeth." },
-        { title: "Your gums and bone", text: "How well the tooth is supported." },
-        { title: "Your health and medicines", text: "Some conditions and medicines affect healing." },
-        { title: "What comes next", text: "Whether and how the gap should be filled." },
+        {
+          title: "A dental implant",
+          what: "A post in the jawbone supports a new tooth.",
+          suits: "A fixed replacement, where the teeth and bone are suitable.",
+          links: [{ label: "Dental Implants", href: "/treatments/dental-implants/" }],
+        },
+        {
+          title: "A bridge",
+          what: "A false tooth held by crowns on the neighbouring teeth.",
+          suits: "A fixed replacement supported by the teeth beside the gap.",
+          links: [{ label: "Crowns & Bridges", href: "/treatments/crowns-and-bridges/" }],
+        },
+        {
+          title: "A denture",
+          what: "A removable replacement for one or more teeth.",
+          suits: "One or several missing teeth.",
+          links: [{ label: "Dentures", href: "/treatments/dentures/" }],
+        },
       ],
-      closing: "Please tell your dentist about any medicines you take, especially blood thinners.",
+      note: "The right option depends on your teeth, gums and priorities. Dr. Tripathi will talk it through, ideally before the tooth is removed, so you can plan.",
     },
     comfort: {
       heading: "Feeling comfortable",
-      // [CLINIC DETAIL REQUIRED] Any additional comfort measures. Do not mention sedation unless confirmed.
       paragraphs: [
-        "It is normal to feel nervous about having a tooth out. The area is numbed first, and you can tell Dr. Tripathi at any time if you feel anything.",
-        "You may feel pressure and movement, which is not the same as pain. Questions are always welcome.",
+        "Many people feel anxious before an extraction. That is understandable, and you can ask as many questions as you like.",
+        "The area is numbed first. During treatment, you can tell Dr. Tripathi if you feel anything, and he can pause. Pressure and a pulling sensation are normal, but pain should not be.",
+        "Please tell him about any medical conditions and the medicines you take, including blood-thinning medicines, before treatment. Do not stop any medicine unless your own doctor advises it.",
       ],
       image: consultImage,
     },
     why: {
       heading: "Why patients in Aliganj choose Roots & Pulp",
       items: [
-        { title: "Saving teeth first", text: "Removal is recommended only when a tooth cannot reasonably be saved." },
-        ...whyCore.slice(0, 2),
-        whyCore[3],
-      ],
-      equipment: [
         {
-          src: "/images/equipment/digital-xray-rvg.jpg",
-          alt: "Digital dental X-ray shown on the clinic laptop",
-          caption: "Digital X-ray (RVG)",
-          detail: "Instant X-rays on screen",
-          position: "center 30%",
+          title: "Honest about saving teeth",
+          text: "Diagnosis comes before treatment, and you are told when a tooth can be saved or when something can wait.",
         },
+        { title: "Clear explanation", text: "You hear your options, and the reasons, before anything begins." },
         {
-          src: "/images/equipment/ultrasonic-cleaner.jpg",
-          alt: "Ultrasonic cleaner used to clean dental instruments before sterilisation",
-          caption: "Ultrasonic Cleaner",
-          detail: "Instrument cleaning before sterilisation",
-        },
-        {
-          src: "/images/equipment/uv-sterilisation-chamber.jpg",
-          alt: "UV chamber holding sterilised dental instruments",
-          caption: "UV Sterilisation Chamber",
-          detail: "Storage for sterilised instruments",
-          position: "center 40%",
+          title: "Open seven days",
+          text: "Monday to Saturday until 8 PM, Sunday until 5 PM, which matters when you are in pain.",
         },
       ],
-      equipmentNote: "Equipment at Roots & Pulp Dental Clinic.",
+      equipmentNote: "",
     },
-    doctorQuote: standardDoctorQuote,
+    compact: true,
     aftercare: {
-      heading: "Afterwards: what to expect",
-      intro: "Your dentist's instructions always come first. This is general guidance.",
+      heading: "Recovery: what to expect",
+      intro: "Healing varies from person to person. Your dentist's own instructions come first.",
       items: [
-        { title: "The first hours", text: "Bite gently on the gauze as advised. Some bleeding at first is normal." },
-        { title: "Protect the clot", text: "Avoid rinsing hard, spitting, smoking or using a straw, as your dentist advises." },
-        { title: "Eating", text: "Choose soft food and chew on the other side until the area settles." },
-        { title: "Healing", text: "Some swelling and discomfort are common. Follow the advice you are given on pain relief." },
+        {
+          title: "The day of extraction",
+          text: "The numbness wears off in a few hours. Some oozing of blood is normal. Take care not to bite your lip or cheek.",
+        },
+        {
+          title: "The first 24 hours",
+          text: "Rest, and avoid strenuous activity. Avoid rinsing or spitting hard, and do not use a straw. These can disturb the blood clot that protects the socket.",
+        },
+        {
+          title: "Days 2 to 3",
+          text: "Soreness and some swelling are common and usually begin to ease. Gentle care of the area continues.",
+        },
+        {
+          title: "The first week and beyond",
+          text: "The gum gradually closes over the socket, and the area becomes more comfortable. Deeper healing continues for weeks.",
+        },
       ],
-      followUp: "Ask about replacing the tooth. A gap can let neighbouring teeth drift over time.",
+    },
+    twoLists: {
+      heading: "Eating and caring for your mouth",
+      columns: [
+        {
+          title: "Do",
+          items: [
+            "Eat soft, lukewarm food at first, and chew on the other side.",
+            "Keep brushing your other teeth, taking care around the area.",
+            "Keep the area clean as your dentist advises.",
+            "Drink plenty of water.",
+          ],
+        },
+        {
+          title: "Avoid",
+          items: [
+            "Very hot drinks, and hard, crunchy or spicy food at first.",
+            "Poking the area with your tongue, fingers or objects.",
+            "Smoking, and tobacco in any form, including chewing tobacco and paan, which slow healing.",
+            "Strenuous exercise on the first day.",
+          ],
+        },
+      ],
+      closing: "Your dentist will give instructions for your own case, including when to return to normal food.",
     },
     warning: {
-      heading: "When should I contact my dentist?",
+      heading: "When should I contact the clinic?",
       intro: "Please call the clinic if you notice:",
       signs: [
-        "bleeding that does not settle with firm pressure",
-        "pain that gets worse after the first few days",
-        "swelling that is increasing",
-        "a fever, or a bad taste or smell from the socket",
+        "bleeding that does not slow after you have bitten on gauze with firm pressure, as you were shown",
+        "pain that is getting worse, or returns strongly after the first few days",
+        "swelling that is increasing after the first two or three days",
+        "a fever, pus or a bad taste that does not go away",
         "numbness that continues after the anaesthetic should have worn off",
       ],
       emergency: emergencyLine,
     },
     cost: {
-      heading: "What affects the cost of an extraction?",
-      intro: "We do not publish a fixed price, because it depends on the tooth. The main factors are:",
+      heading: "What affects the cost of tooth extraction?",
+      intro: "We do not publish fixed prices, because every tooth is different. The main factors are:",
       items: [
-        { title: "Which tooth", text: "Teeth have different numbers and shapes of roots." },
-        { title: "How complex it is", text: "Broken or impacted teeth can take longer." },
-        { title: "Imaging", text: "X-rays needed to plan safely." },
-        { title: "Replacing the tooth", text: "A separate decision, if you choose to fill the gap." },
+        { title: "Whether the extraction is simple or surgical" },
+        { title: "The position and condition of the tooth" },
+        { title: "The X-rays needed" },
+        { title: "Any further treatment, such as a replacement" },
       ],
-      closing: "After an examination, Dr. Tripathi will explain your options and give you an estimate first.",
+      closing: "After an examination, Dr. Tripathi will explain what you need and what it will cost before you begin.",
     },
     faqIntro: "Straight answers about tooth extraction. For anything else, call or send a WhatsApp message.",
     faqs: [
       {
-        question: "Does having a tooth out hurt?",
+        question: "Does tooth extraction hurt?",
         answer:
-          "The area is numbed first, so most people feel pressure rather than pain. Some soreness afterwards is common, and your dentist will explain how to manage it.",
+          "The area is numbed first, so you should feel pressure and movement but not sharp pain. Afterwards, the area is usually sore for a few days. Tell Dr. Tripathi at any point if you feel anything, and he can pause or top up the numbing.",
       },
       {
-        question: "Can the tooth be saved instead?",
+        question: "How long does a tooth extraction take?",
         answer:
-          "Sometimes. Saving the tooth is always considered first, for example with a filling, root canal treatment or a crown. Dr. Tripathi will explain whether that is possible.",
+          "A simple extraction is usually quicker than a surgical one, but it varies with the tooth and your own anatomy. Dr. Tripathi will give you an idea after looking at the tooth and X-ray.",
+      },
+      {
+        question: "Can my tooth be saved instead?",
+        answer:
+          "Often it can, with a root canal, filling, crown or gum treatment. Whether it can depends on how much healthy tooth is left and the support around it. After an examination, we will tell you honestly which applies.",
         link: { label: "About root canal treatment", href: "/treatments/root-canal-treatment/" },
       },
       {
-        question: "What can I eat after an extraction?",
+        question: "What can I eat after a tooth extraction?",
         answer:
-          "Soft food is usually advised at first, and chewing on the other side. Your dentist will tell you when you can eat normally.",
+          "Soft, lukewarm food at first, chewed on the other side. Avoid very hot, hard, crunchy or spicy food until your dentist says you can return to normal. Your dentist will give you advice for your own case.",
+      },
+      {
+        question: "How long does it take to heal?",
+        answer:
+          "The first few days are the most sore, and many people feel more comfortable within about a week. The gum closes gradually, and deeper healing continues for weeks. Healing varies from person to person.",
+      },
+      {
+        question: "What is dry socket?",
+        answer:
+          "The blood clot that forms in the socket protects it while it heals. If it is lost too early, the socket can become painful, often a few days after extraction. Avoid rinsing hard, using a straw and smoking, and call us if pain is getting worse.",
       },
       {
         question: "Do I need to replace the tooth?",
         answer:
-          "Not always, but a gap can affect your bite and let nearby teeth drift. Options include an implant, a bridge or a denture, depending on your situation.",
+          "Not always, but a gap can let neighbouring teeth drift and affect your bite and chewing. It is worth discussing options early.",
         link: { label: "About dental implants", href: "/treatments/dental-implants/" },
       },
       {
         question: "How much does a tooth extraction cost in Lucknow?",
         answer:
-          "It depends on which tooth, how complex the removal is and the imaging needed. After an examination at our Aliganj clinic, you will get an estimate before treatment begins.",
+          "It depends on whether the extraction is simple or surgical, the position of the tooth, the X-rays needed and any further treatment. After an examination at our Aliganj clinic, you will be told the cost before you begin.",
       },
-      appointmentFaq,
+      {
+        question: "Can I smoke or drink after an extraction?",
+        answer:
+          "Please avoid smoking and tobacco in any form, including chewing tobacco and paan, for as long as your dentist advises, because they slow healing. Avoid very hot drinks at first. Your dentist will tell you about alcohol for your own case.",
+      },
     ],
     related: [
-      { slug: "root-canal-treatment", text: "Saving a tooth when the inside is infected." },
       { slug: "dental-implants", text: "A fixed way to replace a missing tooth." },
-      { slug: "dentures", text: "A removable way to replace missing teeth." },
+      { slug: "dentures", text: "A removable option for one tooth or many." },
+      { slug: "crowns-and-bridges", text: "A bridge can fill a gap using the teeth beside it." },
     ],
     cta: {
-      heading: "Worried about a tooth?",
-      text: "Start with an examination. Dr. Tripathi will tell you honestly whether the tooth can be saved, and explain the options either way.",
+      heading: "Told a tooth needs to come out? Get it checked first.",
+      text: "An examination will show whether the tooth can be saved and what your options are. Dr. Tripathi will explain it all, and there is no pressure to decide on the day.",
     },
   },
   "teeth-cleaning": {
