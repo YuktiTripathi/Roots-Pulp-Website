@@ -2,7 +2,8 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { concerns, treatmentHref, treatments } from "@/lib/clinic";
+import { concerns, treatments } from "@/lib/clinic";
+import { concernIntro } from "@/lib/homeContent";
 import { stagger } from "@/lib/motion";
 import { ArrowIcon } from "./Icons";
 import { TreatmentCard } from "./TreatmentCard";
@@ -26,6 +27,9 @@ export function ConcernExplorer() {
           <h2 id="concerns-heading" className="reveal" style={stagger(1)}>
             What brings you in today?
           </h2>
+          <p className="section-intro reveal" style={stagger(2)}>
+            {concernIntro}
+          </p>
         </div>
         <div className="concern-explorer">
           <ul className="concern-grid" role="list">
@@ -57,7 +61,7 @@ export function ConcernExplorer() {
                 <TreatmentCard key={treatment.slug} treatment={treatment} />
               ))}
             </div>
-            <Link className="text-link" href={treatmentHref(related[0]?.slug ?? "root-canal-treatment")}>
+            <Link className="text-link" href={concern.href}>
               Browse related treatment pages <span aria-hidden="true">→</span>
             </Link>
           </div>

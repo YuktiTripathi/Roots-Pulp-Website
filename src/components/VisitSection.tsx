@@ -14,7 +14,7 @@ export function VisitSection() {
     <section className="section visit" aria-labelledby="visit-heading">
       <div className="section-inner visit-grid">
         <div className="reveal">
-          <h2 id="visit-heading">Visit Roots & Pulp</h2>
+          <h2 id="visit-heading">Visit Roots &amp; Pulp in Aliganj</h2>
           <p className="visit-name">{clinic.name}</p>
           <address>
             {clinic.streetAddress}
@@ -31,13 +31,21 @@ export function VisitSection() {
             ))}
           </dl>
           <p className="visit-contacts">
-            <a href={telHref()}>Call: {clinic.phoneDisplay}</a>
-            <a href={whatsappHref()}>WhatsApp: {clinic.whatsappDisplay}</a>
+            <span>Phone: {clinic.phoneDisplay}</span>
+            <span>WhatsApp: {clinic.whatsappDisplay}</span>
           </p>
-          <a className="btn btn-primary" href={directionsUrl} target="_blank" rel="noopener noreferrer">
-            Get directions
-            <span className="sr-only"> (opens in a new tab)</span>
-          </a>
+          <div className="visit-actions">
+            <a className="btn btn-primary" href={directionsUrl} target="_blank" rel="noopener noreferrer">
+              Get Directions
+              <span className="sr-only"> (opens in a new tab)</span>
+            </a>
+            <a className="btn btn-secondary" href={telHref()}>
+              Call Clinic
+            </a>
+            <a className="btn btn-secondary" href={whatsappHref()}>
+              WhatsApp
+            </a>
+          </div>
         </div>
         <div className="map-panel reveal" style={{ "--i": 1 } as CSSProperties}>
           {mapReady ? (

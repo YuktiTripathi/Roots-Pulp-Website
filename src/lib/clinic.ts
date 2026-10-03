@@ -238,10 +238,10 @@ export function treatmentHref(slug: string) {
 
 export const concerns = [
   {
-    title: "I have tooth pain",
+    title: "My tooth hurts",
     detail: "Root canal treatment, fillings",
     href: treatmentHref("root-canal-treatment"),
-    treatmentSlugs: ["root-canal-treatment", "tooth-coloured-fillings"],
+    treatmentSlugs: ["root-canal-treatment", "tooth-coloured-fillings", "tooth-extraction"],
   },
   {
     title: "I'm missing a tooth",
@@ -250,26 +250,26 @@ export const concerns = [
     treatmentSlugs: ["dental-implants", "crowns-and-bridges", "dentures"],
   },
   {
-    title: "My teeth are stained or chipped",
-    detail: "Whitening, cosmetic dentistry",
+    title: "My gums bleed or feel sore",
+    detail: "Gum care and cleaning",
+    href: treatmentHref("gum-and-oral-health"),
+    treatmentSlugs: ["gum-and-oral-health", "teeth-cleaning"],
+  },
+  {
+    title: "I want to improve my smile",
+    detail: "Whitening, cosmetic dentistry, braces and aligners",
     href: treatmentHref("cosmetic-dentistry"),
-    treatmentSlugs: ["teeth-whitening", "cosmetic-dentistry"],
+    treatmentSlugs: ["cosmetic-dentistry", "teeth-whitening", "braces-and-aligners"],
   },
   {
-    title: "My teeth are crooked",
-    detail: "Braces & aligners",
-    href: treatmentHref("braces-and-aligners"),
-    treatmentSlugs: ["braces-and-aligners"],
-  },
-  {
-    title: "My child needs a checkup",
+    title: "My child needs dental care",
     detail: "Children's dentistry",
     href: treatmentHref("childrens-dentistry"),
     treatmentSlugs: ["childrens-dentistry"],
   },
   {
-    title: "I'm due for a cleaning",
-    detail: "Teeth cleaning, gum care",
+    title: "I just need a check-up",
+    detail: "Check-ups and cleaning",
     href: treatmentHref("teeth-cleaning"),
     treatmentSlugs: ["teeth-cleaning", "gum-and-oral-health"],
   },
@@ -296,14 +296,6 @@ export const carePrinciples = [
     title: "Open seven days",
     body: "Monday to Saturday until 8 PM, and Sundays until 5 PM, so care fits around work and school.",
   },
-] as const;
-
-export const trustItems = [
-  "BDS, MPH",
-  "Rotary Endodontics Certified",
-  "Life Member, Indian Dental Association",
-  "Reg. No. 20606, U.P. State Dental Council",
-  "Open 7 days",
 ] as const;
 
 export const expectations = [
@@ -378,7 +370,7 @@ export const homeFaqs = [
       "Booking ahead means shorter waiting times, so we recommend calling, sending a WhatsApp message or booking online.",
   },
   {
-    question: "What happens at my first visit?",
+    question: "What happens during my first visit?",
     answer:
       "Dr. Tripathi will ask about your concerns and medical history, examine your teeth and gums, and may recommend an X-ray. He'll explain what he finds and discuss your options. There's no pressure to start treatment the same day.",
   },
@@ -390,14 +382,11 @@ export const homeFaqs = [
     question: "Are you open on Sundays?",
     answer: "Yes, from 10:00 AM to 5:00 PM. Monday to Saturday, we're open from 10:00 AM to 8:00 PM.",
   },
+  // [VERIFY BEFORE PUBLISHING]: Dr. Shubham to approve this wording.
   {
-    question: "How do I know if I need a root canal?",
+    question: "What should I do if I have severe tooth pain?",
     answer:
-      "Lingering sensitivity to hot or cold, pain when biting, swelling near a tooth or a darkening tooth can all be signs. Only an examination can confirm it.",
-    link: {
-      href: "/treatments/root-canal-treatment/",
-      label: "Read about root canal treatment",
-    },
+      "Call the clinic or send a WhatsApp message and describe what is happening, and we will tell you how soon to come in. If you have swelling on your face that is spreading, a fever, trouble swallowing or breathing, or an injury to your face or jaw, go to the nearest hospital emergency department.",
   },
 ] as const;
 

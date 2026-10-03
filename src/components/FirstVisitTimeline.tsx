@@ -2,49 +2,15 @@
 
 import { useState } from "react";
 import { stagger } from "@/lib/motion";
+import { firstVisit } from "@/lib/homeContent";
 import { photos } from "@/lib/photos";
 import { CrossfadePhoto } from "./CrossfadePhoto";
 
 const STEP_PHOTOS = [photos.waitingArea, photos.planning, photos.mirror] as const;
 
-const STEPS = [
-  {
-    num: "01",
-    title: "Arrival",
-    desc: "You\u2019ll be welcomed by our team. A short form about your health and dental concerns.",
-    photo: 0,
-  },
-  {
-    num: "02",
-    title: "Consultation",
-    desc: "Dr. Tripathi listens first, then examines your teeth and gums, with an X-ray if needed.",
-    photo: 1,
-  },
-  {
-    num: "03",
-    title: "Explanation",
-    desc: "What he\u2019s found, shown and explained in plain language, so you understand exactly what\u2019s going on.",
-    photo: 1,
-  },
-  {
-    num: "04",
-    title: "Your plan",
-    desc: "Options, number of visits and a clear cost estimate. There\u2019s no pressure to decide on the day.",
-    photo: 1,
-  },
-  {
-    num: "05",
-    title: "Treatment",
-    desc: "Carried out gently, with regular check-ins to make sure you\u2019re comfortable.",
-    photo: 2,
-  },
-  {
-    num: "06",
-    title: "Follow-up",
-    desc: "Aftercare advice and a recommended date for your next visit.",
-    photo: 2,
-  },
-];
+/** Which photograph accompanies each step: waiting area, planning, then the mirror. */
+const STEP_PHOTO_INDEX = [0, 1, 1, 1, 2, 2] as const;
+const STEPS = firstVisit.steps.map((step, index) => ({ ...step, photo: STEP_PHOTO_INDEX[index] }));
 
 export function FirstVisitTimeline() {
   const [activeStep, setActiveStep] = useState(0);
@@ -54,11 +20,29 @@ export function FirstVisitTimeline() {
     <section className="section first-visit" aria-labelledby="first-visit-heading">
       <div className="section-inner">
         <div className="section-heading">
-          <p className="eyebrow reveal">What to expect</p>
+          <p className="eyebrow reveal">{firstVisit.eyebrow}</p>
           <h2 id="first-visit-heading" className="reveal" style={stagger(1)}>
-            Your first visit
+            {firstVisit.heading}
           </h2>
+          <p className="section-intro reveal" style={stagger(2)}>
+            {firstVisit.intro}
+          </p>
         </div>
+
+        {/* Mobile: every step visible in a plain vertical list. */}
+        <ol className="timeline-list">
+          {STEPS.map((item, index) => (
+            <li key={item.num} className="reveal" style={stagger(index)}>
+              <span className="timeline-list-num" aria-hidden="true">
+                {item.num}
+              </span>
+              <div>
+                <h3>{item.title}</h3>
+                <p>{item.desc}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
 
         <div className="timeline-container reveal" style={stagger(2)}>
           <ol className="timeline-track">

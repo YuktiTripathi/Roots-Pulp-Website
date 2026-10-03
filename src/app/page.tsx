@@ -1,22 +1,18 @@
 import type { Metadata } from "next";
 import "./home.css";
-import { BeforeAfterSection } from "@/components/BeforeAfterSection";
-import { ClinicGallery } from "@/components/ClinicGallery";
-import { EquipmentBento } from "@/components/EquipmentBento";
-import { ClinicShowcase } from "@/components/ClinicShowcase";
 import { ConcernCards } from "@/components/ConcernCards";
 import { DentalGuideCards } from "@/components/DentalGuideCards";
 import { DoctorSection } from "@/components/DoctorSection";
-import { EditorialStatements } from "@/components/EditorialStatements";
-import { ExpectationsSection } from "@/components/ExpectationsSection";
 import { FAQSection } from "@/components/FAQSection";
 import { FeaturedTreatments } from "@/components/FeaturedTreatments";
 import { FinalCTA } from "@/components/FinalCTA";
 import { FirstVisitTimeline } from "@/components/FirstVisitTimeline";
 import { Hero } from "@/components/Hero";
+import { InsideClinic } from "@/components/InsideClinic";
 import { ReviewsSection } from "@/components/ReviewsSection";
-import { RootsAndPulpStory } from "@/components/RootsAndPulpStory";
+import { TechnologySection } from "@/components/TechnologySection";
 import { VisitSection } from "@/components/VisitSection";
+import { WhyDifferent } from "@/components/WhyDifferent";
 import { homeSeo } from "@/lib/clinic";
 import { homeWebPageJsonLd } from "@/lib/schema";
 import { jsonLd, pageMetadata } from "@/lib/seo";
@@ -29,22 +25,22 @@ export default function HomePage() {
   return (
     <main id="content">
       <Hero />
-      <RootsAndPulpStory />
-      <EditorialStatements />
-      <DoctorSection />
       <ConcernCards />
       <FeaturedTreatments />
-      <ExpectationsSection />
+      <WhyDifferent />
+      <DoctorSection />
       <FirstVisitTimeline />
-      <ClinicShowcase />
-      <ClinicGallery />
-      <EquipmentBento />
+      <InsideClinic />
+      <TechnologySection />
       <ReviewsSection />
-      <BeforeAfterSection />
       <DentalGuideCards />
       <FAQSection />
       <VisitSection />
-      <FinalCTA showCall />
+      <FinalCTA
+        heading="Not sure what your teeth need?"
+        supporting="Start with a conversation. Tell us what's bothering you, and we'll help you understand what comes next."
+        showCall
+      />
       <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(webpage)} />
     </main>
   );

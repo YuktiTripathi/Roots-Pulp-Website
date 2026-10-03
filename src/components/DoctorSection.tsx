@@ -1,54 +1,40 @@
 import Image from "next/image";
 import Link from "next/link";
-import { bookingUrl, doctor, doctorCredentials, doctorExperience } from "@/lib/clinic";
+import { bookingUrl, doctor, doctorExperience } from "@/lib/clinic";
+import { doctorIntro } from "@/lib/homeContent";
 import { stagger } from "@/lib/motion";
-import { ArrowIcon } from "./Icons";
 
 export function DoctorSection() {
   return (
     <section className="section doctor-section" aria-labelledby="doctor-heading">
       <div className="section-inner doctor-grid">
-        <div className="doctor-intro">
-          <h2 id="doctor-heading" className="reveal">
-            Meet Dr. Shubham Tripathi
-          </h2>
-          <p className="role reveal" style={stagger(1)}>
-            BDS, MPH · Founder & Director
-          </p>
-        </div>
-        <div className="doctor-photo reveal reveal--mask">
+        <div className="doctor-photo reveal reveal--left">
+          {/* TODO: replace with a relaxed natural-light portrait without folded arms once photographed. */}
           <Image
             src={doctor.portrait}
-            alt={doctor.profileAlt}
+            alt={doctor.heroAlt}
             width={doctor.portraitWidth}
             height={doctor.portraitHeight}
             sizes="(max-width: 800px) 70vw, 360px"
-            className="doctor-portrait mask-img"
-            unoptimized
+            className="doctor-portrait"
           />
         </div>
-        <div className="doctor-body">
-          <p className="reveal" style={stagger(2)}>
-            Dr. Tripathi brings {doctorExperience.inline} and a specialised certification in rotary
-            endodontics to every consultation. His Master of Public Health gives him a strong focus on prevention:
-            helping you avoid the next problem, not just fixing the current one.
+        <div className="doctor-body reveal reveal--right" style={stagger(1)}>
+          <h2 id="doctor-heading">{doctorIntro.heading}</h2>
+          <p className="doctor-lead">{doctorIntro.supporting}</p>
+          {doctorIntro.paragraphs.map((paragraph) => (
+            <p key={paragraph}>{paragraph}</p>
+          ))}
+          <p className="doctor-credline">
+            {doctorIntro.credentialPrefix}
+            {doctorExperience.inline}
           </p>
-          <blockquote className="reveal" style={stagger(3)}>
-            <p>&ldquo;{doctor.quote}&rdquo;</p>
-          </blockquote>
-          <ul className="credential-list">
-            {doctorCredentials.map((item, index) => (
-              <li key={item} className="reveal reveal--left credential-item" style={stagger(index)}>
-                {item}
-              </li>
-            ))}
-          </ul>
-          <div className="hero-actions reveal" style={stagger(4)}>
+          <div className="hero-actions">
             <Link className="btn btn-primary" href="/doctor/dr-shubham-tripathi/">
-              Read Dr. Tripathi&apos;s profile <ArrowIcon className="arrow" />
+              Meet Dr. Shubham <span aria-hidden="true">→</span>
             </Link>
             <Link className="btn btn-secondary" href={bookingUrl} target="_blank" rel="noopener noreferrer">
-              Book with Dr. Tripathi
+              Book an Appointment
             </Link>
           </div>
         </div>
