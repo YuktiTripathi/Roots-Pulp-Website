@@ -16,15 +16,6 @@ type Params = { slug: string };
 
 export const dynamicParams = false;
 
-const pendingClinicalReview = new Set([
-  "dentures",
-  "gum-and-oral-health",
-  "teeth-cleaning",
-  "teeth-whitening",
-  "tooth-coloured-fillings",
-  "tooth-extraction",
-]);
-
 export function generateStaticParams() {
   return treatments.map((item) => ({ slug: item.slug }));
 }
@@ -43,7 +34,6 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
       description: content.seo.description,
       path,
       image: ogImage,
-      noindex: pendingClinicalReview.has(slug) && !content.clinicallyReviewedOn,
     });
   }
   // A treatment without written content shows a short placeholder, which stays out of search results.
