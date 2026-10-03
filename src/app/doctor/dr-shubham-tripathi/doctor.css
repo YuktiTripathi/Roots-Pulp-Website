@@ -232,7 +232,7 @@
   transition: transform 0.9s var(--ease-out);
 }
 
-.doctor-approach-list li:hover .doctor-approach-photo { transform: scale(1.05); }
+.doctor-approach-list li:hover .doctor-approach-photo { transform: scale(1.035); }
 
 .doctor-approach-num {
   position: absolute;
@@ -339,4 +339,8 @@
 @media (prefers-reduced-motion: reduce) {
   .doctor-approach-list li:hover .doctor-approach-photo,
   .doctor-credential-grid li:hover .doctor-credential-icon { transform: none; }
+}
+
+@media (hover: none) {
+  .doctor-approach-list li:hover .doctor-approach-photo { transform: none; }
 }

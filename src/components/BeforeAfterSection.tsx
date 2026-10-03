@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import Image from "next/image";
+import { useId, useState } from "react";
 
 type SliderProps = {
   beforeSrc: string;
@@ -8,6 +9,8 @@ type SliderProps = {
   afterSrc: string;
   afterAlt: string;
   label?: string;
+  width?: number;
+  height?: number;
 };
 
 export function BeforeAfterSlider({
@@ -16,89 +19,59 @@ export function BeforeAfterSlider({
   afterSrc,
   afterAlt,
   label,
+  width = 1200,
+  height = 900,
 }: SliderProps) {
   const [position, setPosition] = useState(50);
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  const handleMove = (clientX: number) => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    const x = Math.max(0, Math.min(clientX - rect.left, rect.width));
-    const percentage = (x / rect.width) * 100;
-    setPosition(percentage);
-  };
+  const id = useId();
 
   return (
-    <div
-      className="ba-slider"
-      ref={containerRef}
-      style={{ position: "relative", overflow: "hidden", touchAction: "none" }}
-      onPointerMove={(e) => {
-        if (e.buttons === 1) handleMove(e.clientX);
-      }}
-      onPointerDown={(e) => handleMove(e.clientX)}
-    >
-      <img
+    <figure className="ba-case">
+      <div className="ba-slider" style={{ aspectRatio: `${width} / ${height}` }}>
+      <Image
         className="ba-slider-after"
         src={afterSrc}
         alt={afterAlt}
-        style={{ display: "block", width: "100%", height: "auto" }}
-        draggable={false}
+        width={width}
+        height={height}
+        sizes="(max-width: 900px) 100vw, 720px"
       />
-      
-      <img
+      <Image
         className="ba-slider-before"
         src={beforeSrc}
         alt={beforeAlt}
+        width={width}
+        height={height}
+        sizes="(max-width: 900px) 100vw, 720px"
         style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
           clipPath: `inset(0 ${100 - position}% 0 0)`,
         }}
-        draggable={false}
       />
-      
-      <div
-        className="ba-handle"
-        style={{
-          position: "absolute",
-          top: 0,
-          bottom: 0,
-          left: `${position}%`,
-          width: "2px",
-          backgroundColor: "white",
-          cursor: "ew-resize",
-          transform: "translateX(-50%)",
-        }}
-      >
-        <div 
-          style={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: "32px",
-            height: "32px",
-            backgroundColor: "white",
-            borderRadius: "50%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            boxShadow: "0 2px 6px rgba(0,0,0,0.2)"
-          }}
-        >
+      <span className="ba-side-label is-before" aria-hidden="true">Before</span>
+      <span className="ba-side-label is-after" aria-hidden="true">After</span>
+      <label className="sr-only" htmlFor={id}>
+        Compare before and after images
+      </label>
+      <input
+        id={id}
+        className="ba-range"
+        type="range"
+        min="0"
+        max="100"
+        value={position}
+        onChange={(event) => setPosition(Number(event.target.value))}
+        aria-valuetext={`${position}% before image visible`}
+      />
+      <span className="ba-handle" style={{ left: `${position}%` }} aria-hidden="true">
+        <span>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M15 18l6-6-6-6M9 18l-6-6 6-6" />
           </svg>
-        </div>
+        </span>
+      </span>
       </div>
-      
-      {label && <div className="ba-label">{label}</div>}
-    </div>
+      {label ? <figcaption className="ba-label">{label}</figcaption> : null}
+    </figure>
   );
 }
 

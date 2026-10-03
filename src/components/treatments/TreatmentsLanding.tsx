@@ -19,8 +19,8 @@ const treatmentImages: Record<string, { src: string; alt: string }> = {
     alt: "Illustration of a dental bridge replacing missing teeth",
   },
   "braces-and-aligners": {
-    src: "/images/treatments/braces-and-aligners.jpg",
-    alt: "Clear aligners beside fixed braces",
+    src: "/images/treatments/braces-aligners/braces-and-aligners-hero.png",
+    alt: "Tooth-coloured fixed braces on upper and lower teeth",
   },
   "childrens-dentistry": {
     src: "/images/treatments/childrens-dentistry.jpg",

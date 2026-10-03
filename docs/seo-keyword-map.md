@@ -8,6 +8,7 @@ is used anywhere unless it can be independently verified.
 | Page | Route | Primary | Secondary (use only where natural) |
 |---|---|---|---|
 | Homepage | `/` | dental clinic in Aliganj Lucknow | dentist in Aliganj Lucknow, dentist near Sector Q Aliganj, dental clinic open Sunday Lucknow |
+| About | `/about/` | Roots & Pulp Dental Clinic | Dr. Shubham Tripathi, dental care in Lucknow. Brand and navigational intent; does not compete with the homepage phrase |
 | Treatments | `/treatments/` | dental treatments in Aliganj Lucknow | dental services Lucknow |
 | Root canal | `/treatments/root-canal-treatment/` | root canal treatment in Aliganj Lucknow | RCT dentist Aliganj, rotary endodontics Lucknow, root canal cost Lucknow, does a root canal hurt |
 | Implants | `/treatments/dental-implants/` | dental implants in Aliganj Lucknow | implant dentist Aliganj, missing tooth replacement Lucknow, implant vs bridge |

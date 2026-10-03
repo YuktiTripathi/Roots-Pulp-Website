@@ -15,7 +15,9 @@ export function RevealOnScroll() {
 
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const coarsePointer = window.matchMedia("(pointer: coarse)").matches;
     const supported = typeof IntersectionObserver !== "undefined";
+    document.documentElement.classList.add("motion-ready");
 
     const io = supported
       ? new IntersectionObserver(
@@ -33,7 +35,12 @@ export function RevealOnScroll() {
 
     const track = (node: Element) => {
       if (node.classList.contains("is-visible")) return;
-      if (reduce || !io) node.classList.add("is-visible");
+      if (reduce || !io) {
+        node.classList.add("is-visible");
+        return;
+      }
+      const rect = node.getBoundingClientRect();
+      if (rect.top <= window.innerHeight * 0.9 && rect.bottom >= 0) node.classList.add("is-visible");
       else io.observe(node);
     };
 
@@ -53,9 +60,40 @@ export function RevealOnScroll() {
     });
     mutations.observe(document.body, { childList: true, subtree: true });
 
+    // A single passive scroll listener drives the few editorial images that opt in.
+    // The movement is intentionally small and disabled for touch and reduced motion.
+    const parallaxItems = reduce || coarsePointer
+      ? []
+      : Array.from(document.querySelectorAll<HTMLElement>("[data-parallax]"));
+    let frame = 0;
+    const updateParallax = () => {
+      frame = 0;
+      const viewportHeight = window.innerHeight;
+      parallaxItems.forEach((item) => {
+        const rect = item.getBoundingClientRect();
+        if (rect.bottom < 0 || rect.top > viewportHeight) return;
+        const progress = (rect.top + rect.height / 2 - viewportHeight / 2) / (viewportHeight / 2 + rect.height / 2);
+        const distance = Number(item.dataset.parallax || 12);
+        const offset = Math.max(-1, Math.min(1, progress)) * distance;
+        item.style.setProperty("--parallax-y", `${offset.toFixed(2)}px`);
+      });
+    };
+    const requestParallax = () => {
+      if (!frame) frame = window.requestAnimationFrame(updateParallax);
+    };
+    if (parallaxItems.length) {
+      updateParallax();
+      window.addEventListener("scroll", requestParallax, { passive: true });
+      window.addEventListener("resize", requestParallax);
+    }
+
     return () => {
       io?.disconnect();
       mutations.disconnect();
+      if (frame) window.cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", requestParallax);
+      window.removeEventListener("resize", requestParallax);
+      document.documentElement.classList.remove("motion-ready");
     };
   }, [pathname]);
 

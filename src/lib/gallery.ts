@@ -1,4 +1,4 @@
-export type GalleryCategory = "entrance" | "consultation" | "treatment" | "equipment";
+export type GalleryCategory = "entrance" | "inside" | "consultation" | "treatment" | "equipment";
 
 export type GalleryImage = {
   src: string;
@@ -39,6 +39,41 @@ export const gallerySections: GallerySection[] = [
         alt: "Street entrance and signboard of Roots & Pulp Dental Clinic in Aliganj",
         caption: "Clinic entrance",
         category: "entrance",
+      },
+    ],
+  },
+  {
+    id: "inside",
+    category: "inside",
+    label: "Inside Roots & Pulp",
+    eyebrow: "Inside Roots & Pulp",
+    heading: "A look around the clinic",
+    description: "Real views of the spaces where patients arrive, wait and receive care.",
+    layout: "named",
+    images: [
+      {
+        src: "/images/clinic/roots-pulp-waiting-area-lucknow.webp",
+        alt: "Patient waiting area at Roots & Pulp Dental Clinic in Aliganj, Lucknow",
+        caption: "Comfortable patient waiting area",
+        width: 1024,
+        height: 858,
+        category: "inside",
+      },
+      {
+        src: "/images/clinic/roots-pulp-clinic-interior-lucknow.webp",
+        alt: "Clinic interior at Roots & Pulp Dental Clinic in Lucknow",
+        caption: "Clinic reception and patient space",
+        width: 1024,
+        height: 768,
+        category: "inside",
+      },
+      {
+        src: "/images/clinic/roots-pulp-treatment-room-lucknow.webp",
+        alt: "Dental treatment room at Roots & Pulp Dental Clinic in Aliganj, Lucknow",
+        caption: "Dental treatment room",
+        width: 1024,
+        height: 895,
+        category: "inside",
       },
     ],
   },

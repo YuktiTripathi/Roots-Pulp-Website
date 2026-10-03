@@ -30,7 +30,7 @@
 }
 
 @keyframes reviews-settle {
-  from { transform: scale(1.1); }
+  from { transform: scale(1.03); }
   to { transform: none; }
 }
 
@@ -201,7 +201,7 @@
 }
 
 .patient-video-poster { transition: transform 0.8s var(--ease-out); }
-.patient-video-play:hover .patient-video-poster { transform: scale(1.05); }
+.patient-video-play:hover .patient-video-poster { transform: scale(1.035); }
 .patient-video-frame { overflow: hidden; }
 
 .patient-video-icon {
@@ -487,6 +487,11 @@
   .review-card:hover,
   .patient-video-play:hover .patient-video-icon,
   .patient-video-play:hover .patient-video-poster { transform: none; }
+}
+
+@media (hover: none) {
+  .patient-video-play:hover .patient-video-poster,
+  .patient-video-play:hover .patient-video-icon { transform: none; }
 }
 
 @media (max-width: 980px) {

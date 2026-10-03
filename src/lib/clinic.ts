@@ -311,17 +311,17 @@ export const treatmentExplorerTabs = treatmentGroups.map((group) => ({
 export const carePrinciples = [
   {
     num: "01",
-    title: "You'll understand your treatment.",
+    title: "You'll understand your treatment",
     body: "We explain what we find and walk you through your options before anything begins.",
   },
   {
     num: "02",
-    title: "Prevention comes first.",
+    title: "Prevention comes first",
     body: "Public health training means we focus on keeping problems from coming back.",
   },
   {
     num: "03",
-    title: "Open seven days.",
+    title: "Open seven days",
     body: "Monday to Saturday until 8 PM, and Sundays until 5 PM, so care fits around work and school.",
   },
 ] as const;
@@ -336,23 +336,23 @@ export const trustItems = [
 
 export const expectations = [
   {
-    title: "The same dentist, every visit.",
+    title: "The same dentist, every visit",
     body: "Dr. Tripathi plans and oversees your care from first consultation to follow-up.",
     /** [VERIFY: confirm he sees every patient] */
     published: false,
   },
   {
-    title: "You'll understand your treatment.",
+    title: "You'll understand your treatment",
     body: "We explain what we find and walk you through your options before anything begins.",
     published: true,
   },
   {
-    title: "Prevention comes first.",
+    title: "Prevention comes first",
     body: "Public health training means we focus on keeping problems from coming back.",
     published: true,
   },
   {
-    title: "Open seven days.",
+    title: "Open seven days",
     body: "Monday to Saturday until 8 PM, and Sundays until 5 PM, so care fits around work and school.",
     published: true,
   },

@@ -36,7 +36,7 @@ export default function GalleryPage() {
               <h1 id="gallery-heading" className="enter" style={stagger(1)}>
                 A closer look at
                 <br />
-                where your care begins.
+                where your care begins
               </h1>
               <p className="lede enter" style={stagger(2)}>
                 Step inside Roots &amp; Pulp Dental Clinic and see the entrance, the consultation desk, the

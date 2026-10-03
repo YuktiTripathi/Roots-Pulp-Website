@@ -82,6 +82,7 @@ export type TreatmentPageContent = {
     intro: string;
     items: { myth: string; fact: string }[];
     illustration?: StageIllustration;
+    image?: { src: string; alt: string; width: number; height: number };
     caption?: string;
   };
   explainer?: {
@@ -98,6 +99,8 @@ export type TreatmentPageContent = {
     steps: (TreatmentCardItem & { links?: TreatmentLink[] })[];
     footnote?: string;
     illustration?: StageIllustration;
+    /** A supplied image, when given, replaces the drawn illustration. */
+    image?: { src: string; alt: string; width: number; height: number };
     caption?: string;
   };
   /** Option cards. [CONFIRM SERVICE AVAILABILITY] before the page is reviewed and indexed. */
@@ -144,6 +147,7 @@ export type TreatmentPageContent = {
     listHeading?: string;
     list?: string[];
     closing?: string;
+    image?: { src: string; alt: string; width: number; height: number };
   };
   decides?: {
     heading: string;
@@ -973,7 +977,7 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
       { slug: "tooth-extraction", text: "Where an unsaveable tooth is removed before replacement." },
     ],
     cta: {
-      heading: "Missing a tooth? Start with the options.",
+      heading: "Missing a tooth? Start with the options",
       text: "There is more than one way to fill a gap, and the right one depends on you. Come in for an examination, and Dr. Tripathi will explain what could work and what each involves.",
     },
   },
@@ -1404,24 +1408,38 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
       items: [
         {
           icon: "crowded",
+          image: "/images/treatments/braces-aligners/crowded-teeth.png",
           title: "Crowded teeth",
           text: "Teeth that overlap or twist because there is not enough space.",
         },
-        { icon: "gap", title: "Gaps between teeth", text: "Spaces that bother you or catch food." },
+        {
+          icon: "gap",
+          image: "/images/treatments/braces-aligners/gaps-between-teeth.png",
+          title: "Gaps between teeth",
+          text: "Spaces that bother you or catch food.",
+        },
         {
           icon: "bite",
+          image: "/images/treatments/braces-aligners/uneven-bite.png",
           title: "Teeth that stick out, or an uneven bite",
           text: "The upper and lower teeth do not meet as they should.",
         },
-        { icon: "brush", title: "Teeth that are hard to clean", text: "Crowding can make plaque harder to remove." },
+        {
+          icon: "brush",
+          image: "/images/treatments/braces-aligners/hard-to-clean.png",
+          title: "Teeth that are hard to clean",
+          text: "Crowding can make plaque harder to remove.",
+        },
         {
           icon: "sparkle",
+          image: "/images/treatments/braces-aligners/crooked-growing-teeth.png",
           title: "A child or teenager whose teeth are coming through crooked",
           text: "Early advice can help parents plan.",
           link: { label: "About children's dentistry", href: "/treatments/childrens-dentistry/" },
         },
         {
           icon: "adult",
+          image: "/images/treatments/braces-aligners/adult-aligners.png",
           title: "Wanting to straighten teeth as an adult",
           text: "Many adults ask about this, and it is not only for teens.",
         },
@@ -1435,7 +1453,12 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
         "Braces use small brackets and a wire to apply that pressure. Clear aligners use a series of removable trays, each one moving the teeth a little.",
         "Teeth move gradually. That is why treatment takes months, and why check-ups along the way matter.",
       ],
-      illustration: "braces",
+      image: {
+        src: "/images/treatments/braces-aligners/how-braces-aligners-work.jpg",
+        alt: "Four illustrated stages showing crowded teeth, braces applying steady pressure, aligned teeth and a retainer",
+        width: 1024,
+        height: 682,
+      },
       caption:
         "Teeth move gradually, and a retainer helps keep them in place afterwards. Your dentist will explain your plan.",
     },
@@ -1480,6 +1503,7 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
       items: [
         {
           title: "Fixed metal braces",
+          image: "/images/treatments/braces-aligners/fixed-metal-braces.png",
           what: "Brackets bonded to the teeth with a wire that is adjusted over time.",
           suits: "A wide range of cases, including more complex ones.",
           note: "Stay in place throughout treatment.",
@@ -1487,17 +1511,20 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
         // [CONFIRM SERVICE AVAILABILITY] Delete this card if tooth-coloured braces are not offered.
         {
           title: "Fixed tooth-coloured braces",
+          image: "/images/treatments/braces-aligners/fixed-tooth-coloured-braces.jpg",
           what: "Similar to metal braces, with brackets that blend in with the teeth.",
           suits: "People who want braces that are less noticeable.",
         },
         {
           title: "Clear aligners",
+          image: "/images/treatments/braces-aligners/clear-aligners.png",
           what: "A series of clear, removable trays that move the teeth step by step.",
           suits: "Many mild to moderate cases, when the person can wear them as instructed.",
           note: "Removable for eating and cleaning, but they only work when worn.",
         },
         {
           title: "Retainers",
+          image: "/images/treatments/braces-aligners/retainers.png",
           what: "A removable or fixed device that holds teeth in position after treatment.",
           suits: "Everyone finishing treatment.",
           note: "Part of treatment, not an extra.",
@@ -1757,34 +1784,38 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
       items: [
         {
           icon: "sparkle",
+          image: "/images/treatments/childrens-dentistry/first-checkup.png",
           title: "A first checkup",
           text: "It is commonly advised once the first tooth appears, and by around the first birthday.",
         },
-        { icon: "spots", title: "Dark spots or small holes", text: "These can be early signs of decay." },
+        {
+          icon: "spots",
+          image: "/images/treatments/childrens-dentistry/dark-spots.png",
+          title: "Dark spots or small holes",
+          text: "These can be early signs of decay.",
+        },
         {
           icon: "temperature",
+          image: "/images/treatments/childrens-dentistry/sensitivity.png",
           title: "Toothache or sensitivity",
           text: "Pain with hot, cold or sweet food, or when chewing.",
         },
         {
-          icon: "swelling",
-          title: "Bleeding or red gums",
-          text: "Especially when brushing.",
-          link: { label: "About gum health", href: "/treatments/gum-and-oral-health/" },
-        },
-        {
           icon: "thumb",
+          image: "/images/treatments/childrens-dentistry/thumb-sucking.png",
           title: "Thumb sucking or a dummy",
           text: "Habits that continue as teeth come through.",
         },
         {
           icon: "crowded",
+          image: "/images/treatments/childrens-dentistry/crowded-teeth.png",
           title: "Crowded or crooked teeth",
           text: "An early look can help you plan ahead.",
           link: { label: "About braces & aligners", href: "/treatments/braces-and-aligners/" },
         },
         {
           icon: "crack",
+          image: "/images/treatments/childrens-dentistry/mouth-injury.png",
           title: "A knock to the mouth",
           text: "A chipped, loosened or knocked tooth needs prompt attention.",
         },
@@ -1808,7 +1839,12 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
           fact: "How often your child has sugary food and drink matters as much as how much. Cleaning habits matter too.",
         },
       ],
-      illustration: "milk-teeth",
+      image: {
+        src: "/images/treatments/childrens-dentistry/milk-teeth-matter.png",
+        alt: "A child thinking about brushing, healthy food, dental visits and oral habits",
+        width: 1024,
+        height: 768,
+      },
       caption: "Milk teeth hold the space for the permanent teeth developing beneath them.",
     },
     process: {
@@ -1846,23 +1882,27 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
       items: [
         {
           title: "Checkups",
+          image: "/images/treatments/childrens-dentistry/checkup.png",
           what: "A regular look at teeth, gums and bite as your child grows.",
           suits: "Problems are easier to deal with when found early.",
         },
         {
           title: "Cleaning and prevention",
+          image: "/images/treatments/childrens-dentistry/cleaning.png",
           what: "Professional cleaning, plus advice on brushing, diet and fluoride toothpaste.",
           suits: "Prevention is the focus of the clinic.",
           links: [{ label: "About teeth cleaning", href: "/treatments/teeth-cleaning/" }],
         },
         {
           title: "Fillings for cavities",
+          image: "/images/treatments/childrens-dentistry/fillings.png",
           what: "Tooth-coloured repair of decayed teeth.",
           suits: "Stops decay spreading.",
           links: [{ label: "About tooth-coloured fillings", href: "/treatments/tooth-coloured-fillings/" }],
         },
         {
           title: "Early care and advice",
+          image: "/images/treatments/childrens-dentistry/milk-teeth-matter.png",
           what: "Guidance on habits such as thumb sucking, and when to review growing teeth.",
           suits: "Helps you plan, so you are not caught by surprise.",
         },
@@ -1898,10 +1938,10 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
         ],
       },
       image: {
-        src: "/images/doctor/explain-consult.jpg",
-        alt: "Dr. Shubham Tripathi speaking with a patient beside the consultation desk",
-        width: 981,
-        height: 637,
+        src: "/images/treatments/childrens-dentistry/child-comfort.jpg",
+        alt: "Dr. Shubham Tripathi sitting beside a child patient at Roots & Pulp",
+        width: 768,
+        height: 1024,
       },
     },
     why: {
@@ -2053,7 +2093,7 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
       { slug: "braces-and-aligners", text: "When to check how teeth and jaws are growing." },
     ],
     cta: {
-      heading: "A calm first visit starts here.",
+      heading: "A calm first visit starts here",
       text: "There is no need to wait for a problem. Bring your child in for a gentle checkup, and Dr. Tripathi will explain what he sees, in words you both understand.",
     },
   },
@@ -2089,17 +2129,39 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
       heading: "Could cosmetic dentistry be relevant to you?",
       intro: "These are common reasons people ask a dentist about changing how their teeth look.",
       items: [
-        { icon: "shade", title: "Stained or dull teeth", text: "Colour that has darkened or faded over time." },
-        { icon: "crack", title: "A chipped or worn front tooth", text: "An edge that has broken or worn down." },
-        { icon: "gap", title: "A gap between teeth", text: "Spaces you would like to close or reduce." },
+        {
+          icon: "shade",
+          image: "/images/treatments/cosmetic/stained.png",
+          title: "Stained or dull teeth",
+          text: "Colour that has darkened or faded over time.",
+        },
+        {
+          icon: "crack",
+          image: "/images/treatments/cosmetic/chipped.png",
+          title: "A chipped or worn front tooth",
+          text: "An edge that has broken or worn down.",
+        },
+        {
+          icon: "gap",
+          image: "/images/treatments/cosmetic/gap.png",
+          title: "A gap between teeth",
+          text: "Spaces you would like to close or reduce.",
+        },
         {
           icon: "uneven",
+          image: "/images/treatments/cosmetic/uneven.png",
           title: "Uneven, short or oddly shaped teeth",
           text: "Teeth that look different from their neighbours.",
         },
-        { icon: "filling", title: "Old fillings that stand out", text: "Fillings that no longer match your teeth." },
+        {
+          icon: "filling",
+          image: "/images/treatments/cosmetic/old-filling.png",
+          title: "Old fillings that stand out",
+          text: "Fillings that no longer match your teeth.",
+        },
         {
           icon: "sparkle",
+          image: "/images/treatments/cosmetic/special-occasion.png",
           title: "A smile for a special occasion",
           text: "Many people ask before a wedding or event. Planning ahead helps.",
         },
@@ -2113,7 +2175,12 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
         "Many do more than improve appearance. For example, repairing a chipped tooth can also protect it, and a well-fitted restoration can help you bite comfortably.",
         "The best results start with healthy teeth and gums, and with realistic expectations. That is why your dentist will talk through your goals first.",
       ],
-      illustration: "cosmetic",
+      image: {
+        src: "/images/treatments/cosmetic/overview.png",
+        alt: "Five examples of cosmetic changes: a whiter smile, chipped or worn teeth, gaps, uneven teeth, and a balanced smile",
+        width: 1024,
+        height: 309,
+      },
       caption: "Different concerns call for different treatments. Your dentist will explain what suits your teeth.",
     },
     process: {
@@ -2155,6 +2222,7 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
       items: [
         {
           title: "Teeth whitening",
+          image: "/images/treatments/cosmetic/whitening.jpg",
           what: "Lightens the natural colour of teeth.",
           suits: "Stained or dull teeth with healthy gums.",
           note: "Results vary, and it does not change fillings or crowns.",
@@ -2162,18 +2230,21 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
         },
         {
           title: "Dental bonding",
+          image: "/images/treatments/cosmetic/bonding.jpg",
           what: "Tooth-coloured material shaped onto a tooth to repair or reshape it.",
           suits: "Small chips, small gaps or worn edges.",
           note: "Usually a quick, conservative option.",
         },
         {
           title: "Reshaping",
+          image: "/images/treatments/cosmetic/reshaping.jpg",
           what: "Gentle adjustments to the shape of a tooth.",
           suits: "Slightly uneven or pointed edges.",
           note: "Only suitable where there is enough healthy tooth.",
         },
         {
           title: "Restorations",
+          image: "/images/treatments/cosmetic/restorations.jpg",
           what: "Tooth-coloured fillings, inlays, onlays and crowns.",
           suits: "Teeth with more damage that need protection as well as a better look.",
           links: [
@@ -2184,6 +2255,7 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
         // [CONFIRM SERVICE AVAILABILITY] Veneers are not mentioned anywhere else on the site. Delete if not offered.
         {
           title: "Veneers",
+          image: "/images/treatments/cosmetic/veneers.jpg",
           what: "Thin shells that cover the front of a tooth.",
           suits: "More visible changes in colour or shape.",
         },
@@ -2438,12 +2510,42 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
       heading: "Why a tooth may need to be removed",
       intro: "A dentist will always try to keep your natural teeth where it is sensible to do so. Removal may be recommended when:",
       items: [
-        { icon: "lost", title: "Severe decay", text: "So much of the tooth is lost that it cannot be rebuilt." },
-        { icon: "crack", title: "A broken tooth", text: "A crack or break that extends below the gum." },
-        { icon: "swelling", title: "Advanced gum disease", text: "The tooth has lost its support and has become loose." },
-        { icon: "night", title: "An infection that cannot be treated", text: "Where other treatment is not suitable." },
-        { icon: "crowded", title: "A crowded mouth", text: "Sometimes a tooth is removed to make room, for example before braces." },
-        { icon: "sparkle", title: "A tooth that is stuck or misplaced", text: "Such as a tooth that has not come through properly." },
+        {
+          icon: "lost",
+          image: "/images/treatments/extraction/severe-decay.jpg",
+          title: "Severe decay",
+          text: "So much of the tooth is lost that it cannot be rebuilt.",
+        },
+        {
+          icon: "crack",
+          image: "/images/treatments/extraction/broken-tooth.jpg",
+          title: "A broken tooth",
+          text: "A crack or break that extends below the gum.",
+        },
+        {
+          icon: "swelling",
+          image: "/images/treatments/extraction/gum-disease.jpg",
+          title: "Advanced gum disease",
+          text: "The tooth has lost its support and has become loose.",
+        },
+        {
+          icon: "night",
+          image: "/images/treatments/extraction/infection.jpg",
+          title: "An infection that cannot be treated",
+          text: "Where other treatment is not suitable.",
+        },
+        {
+          icon: "crowded",
+          image: "/images/treatments/extraction/crowded.jpg",
+          title: "A crowded mouth",
+          text: "Sometimes a tooth is removed to make room, for example before braces.",
+        },
+        {
+          icon: "sparkle",
+          image: "/images/treatments/extraction/impacted.jpg",
+          title: "A tooth that is stuck or misplaced",
+          text: "Such as a tooth that has not come through properly.",
+        },
       ],
       note: "These situations can have different causes. Only an examination, and usually an X-ray, can show whether a tooth can be saved or needs to be removed.",
     },
@@ -2488,6 +2590,12 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
           text: "The area is checked, and you are shown how to look after it. You may be asked to bite on gauze to help bleeding settle.",
         },
       ],
+      image: {
+        src: "/images/treatments/extraction/procedure.jpg",
+        alt: "Steps of a tooth extraction: examination and X-ray, discussing options, numbing, removing the tooth, and biting on gauze",
+        width: 1024,
+        height: 576,
+      },
       footnote: "Time and steps depend on the tooth. Your dentist will explain what to expect for yours.",
     },
     options: {
@@ -2496,18 +2604,21 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
       items: [
         {
           title: "A dental implant",
+          image: "/images/treatments/extraction/implant.jpg",
           what: "A post in the jawbone supports a new tooth.",
           suits: "A fixed replacement, where the teeth and bone are suitable.",
           links: [{ label: "Dental Implants", href: "/treatments/dental-implants/" }],
         },
         {
           title: "A bridge",
+          image: "/images/treatments/extraction/bridge.jpg",
           what: "A false tooth held by crowns on the neighbouring teeth.",
           suits: "A fixed replacement supported by the teeth beside the gap.",
           links: [{ label: "Crowns & Bridges", href: "/treatments/crowns-and-bridges/" }],
         },
         {
           title: "A denture",
+          image: "/images/treatments/extraction/denture.jpg",
           what: "A removable replacement for one or more teeth.",
           suits: "One or several missing teeth.",
           links: [{ label: "Dentures", href: "/treatments/dentures/" }],
@@ -2665,7 +2776,7 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
       { slug: "crowns-and-bridges", text: "A bridge can fill a gap using the teeth beside it." },
     ],
     cta: {
-      heading: "Told a tooth needs to come out? Get it checked first.",
+      heading: "Told a tooth needs to come out? Get it checked first",
       text: "An examination will show whether the tooth can be saved and what your options are. Dr. Tripathi will explain it all, and there is no pressure to decide on the day.",
     },
   },
@@ -2696,13 +2807,39 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
       heading: "Why a professional clean may help",
       intro: "Brushing is essential, but it cannot remove hardened tartar. These are common reasons people book a clean.",
       items: [
-        { icon: "spots", title: "Yellow or brown build-up", text: "Often tartar, which brushing cannot remove." },
-        { icon: "swelling", title: "Bleeding gums", text: "Gums can bleed when plaque has built up along them." },
-        { icon: "chew", title: "Bad breath that lingers", text: "Plaque and tartar can be a cause." },
-        { icon: "brush", title: "A rough feel on the teeth", text: "Tartar feels hard and uneven to the tongue." },
-        { icon: "sparkle", title: "It has been a while", text: "Regular cleans help prevent problems from starting." },
+        {
+          icon: "spots",
+          image: "/images/treatments/teeth-cleaning/build-up.jpg",
+          title: "Yellow or brown build-up",
+          text: "Often tartar, which brushing cannot remove.",
+        },
+        {
+          icon: "swelling",
+          image: "/images/treatments/teeth-cleaning/bleeding.jpg",
+          title: "Bleeding gums",
+          text: "Gums can bleed when plaque has built up along them.",
+        },
+        {
+          icon: "chew",
+          image: "/images/treatments/teeth-cleaning/bad-breath.jpg",
+          title: "Bad breath that lingers",
+          text: "Plaque and tartar can be a cause.",
+        },
+        {
+          icon: "brush",
+          image: "/images/treatments/teeth-cleaning/rough-feel.jpg",
+          title: "A rough feel on the teeth",
+          text: "Tartar feels hard and uneven to the tongue.",
+        },
+        {
+          icon: "sparkle",
+          image: "/images/treatments/teeth-cleaning/check-up.jpg",
+          title: "It has been a while",
+          text: "Regular cleans help prevent problems from starting.",
+        },
         {
           icon: "filling",
+          image: "/images/treatments/teeth-cleaning/before-treatment.jpg",
           title: "Before other treatment",
           text: "A clean gives your dentist a clearer view, and a healthier base.",
         },
@@ -2732,7 +2869,12 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
           links: [{ label: "About gum health", href: "/treatments/gum-and-oral-health/" }],
         },
       ],
-      illustration: "cleaning",
+      image: {
+        src: "/images/treatments/teeth-cleaning/procedure.jpg",
+        alt: "Steps of a professional clean: examination, scaling, polishing and home-care advice",
+        width: 1024,
+        height: 341,
+      },
       caption: "Tartar builds up where brushing cannot reach. A professional clean removes it.",
     },
     why: {
@@ -2858,12 +3000,42 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
       heading: "Signs you may need a filling",
       intro: "Early cavities often cause no pain at all, which is why check-ups matter. Later, you might notice:",
       items: [
-        { icon: "spots", title: "A dark spot or small hole", text: "On the tooth surface, or between teeth." },
-        { icon: "temperature", title: "Sensitivity", text: "To sweet food, or to hot or cold." },
-        { icon: "bite", title: "Food getting stuck", text: "In the same place, again and again." },
-        { icon: "crack", title: "A rough or sharp edge", text: "On a tooth that feels chipped or worn." },
-        { icon: "night", title: "Pain when you chew", text: "Or a tooth that aches now and then." },
-        { icon: "filling", title: "An old filling that has cracked", text: "Or one that has come loose." },
+        {
+          icon: "spots",
+          image: "/images/treatments/fillings/dark-spot.jpg",
+          title: "A dark spot or small hole",
+          text: "On the tooth surface, or between teeth.",
+        },
+        {
+          icon: "temperature",
+          image: "/images/treatments/fillings/sensitivity.jpg",
+          title: "Sensitivity",
+          text: "To sweet food, or to hot or cold.",
+        },
+        {
+          icon: "bite",
+          image: "/images/treatments/fillings/food-stuck.jpg",
+          title: "Food getting stuck",
+          text: "In the same place, again and again.",
+        },
+        {
+          icon: "crack",
+          image: "/images/treatments/fillings/sharp-edge.jpg",
+          title: "A rough or sharp edge",
+          text: "On a tooth that feels chipped or worn.",
+        },
+        {
+          icon: "night",
+          image: "/images/treatments/fillings/chewing-pain.jpg",
+          title: "Pain when you chew",
+          text: "Or a tooth that aches now and then.",
+        },
+        {
+          icon: "filling",
+          image: "/images/treatments/fillings/cracked-filling.jpg",
+          title: "An old filling that has cracked",
+          text: "Or one that has come loose.",
+        },
       ],
       note: "These signs can have different causes. An examination, and sometimes an X-ray, shows what is happening and whether a filling is the right treatment.",
     },
@@ -2891,7 +3063,12 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
           text: "He checks that your teeth meet comfortably, and adjusts the filling if needed. You hear how to look after it.",
         },
       ],
-      illustration: "filling",
+      image: {
+        src: "/images/treatments/fillings/procedure.jpg",
+        alt: "Illustrated steps of treating a tooth: examination, removing the damaged area, polishing, and a finished tooth",
+        width: 1024,
+        height: 341,
+      },
       caption: "The decayed part is removed and the tooth is rebuilt with a tooth-coloured filling.",
     },
     infoCards: {
@@ -3056,24 +3233,43 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
       items: [
         {
           icon: "swelling",
+          image: "/images/treatments/gum-health/bleeding.jpg",
           title: "Bleeding when you brush or clean between your teeth",
           text: "This is the most common sign.",
         },
-        { icon: "spots", title: "Red, swollen or tender gums", text: "Healthy gums are usually pink and firm." },
-        { icon: "chew", title: "Bad breath that does not go away", text: "Or a bad taste in your mouth." },
+        {
+          icon: "spots",
+          image: "/images/treatments/gum-health/red-gums.jpg",
+          title: "Red, swollen or tender gums",
+          text: "Healthy gums are usually pink and firm.",
+        },
+        {
+          icon: "chew",
+          image: "/images/treatments/gum-health/bad-breath.jpg",
+          title: "Bad breath that does not go away",
+          text: "Or a bad taste in your mouth.",
+        },
         {
           icon: "uneven",
+          image: "/images/treatments/gum-health/receding.jpg",
           title: "Gums pulling away from your teeth",
           text: "Teeth may look longer, or feel sensitive.",
         },
         {
           icon: "bite",
+          image: "/images/treatments/gum-health/loose.jpg",
           title: "Teeth that feel loose or have moved",
           text: "Or a change in how your bite fits together.",
         },
-        { icon: "lost", title: "Pus or a bump on the gum", text: "Sometimes with tenderness." },
+        {
+          icon: "lost",
+          image: "/images/treatments/gum-health/bump.jpg",
+          title: "Pus or a bump on the gum",
+          text: "Sometimes with tenderness.",
+        },
         {
           icon: "sparkle",
+          image: "/images/treatments/gum-health/ulcer.jpg",
           title: "A mouth ulcer, lump or patch that does not heal",
           text: "See the oral cancer screening section below.",
         },
@@ -3087,7 +3283,12 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
         "This early stage is called gingivitis. It is common, and usually goes away with good cleaning at home and a professional clean.",
         "If it is left, the inflammation can spread deeper, and the tissues that support the teeth can start to break down. This more advanced stage is called periodontitis.",
       ],
-      illustration: "gum-stages",
+      image: {
+        src: "/images/treatments/gum-health/stages.jpg",
+        alt: "Stages of gum disease: healthy gums, gingivitis, periodontal pockets, and periodontitis",
+        width: 1024,
+        height: 576,
+      },
       caption: "Gum disease develops in stages, and it is easier to manage early. Your dentist will explain what applies to you.",
     },
     process: {
@@ -3197,6 +3398,12 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
         "unexplained bleeding, numbness, or difficulty swallowing or moving your tongue",
       ],
       closing: "If anything needs a closer look, Dr. Tripathi will explain what he has seen and what the next step is.",
+      image: {
+        src: "/images/treatments/gum-health/oral-cancer.jpg",
+        alt: "Examples of white or red patches in the mouth that a dentist would check",
+        width: 1024,
+        height: 768,
+      },
     },
     decides: {
       heading: "How your dentist decides",
@@ -3364,7 +3571,7 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
       { slug: "dental-implants", text: "One way to replace a tooth that has been lost." },
     ],
     cta: {
-      heading: "Noticed something with your gums? Start with a check.",
+      heading: "Noticed something with your gums? Start with a check",
       text: "Gum problems are easier to manage when they are found early. Dr. Tripathi will examine your gums and mouth, and explain what he finds in plain words.",
     },
   },
@@ -3661,7 +3868,7 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
       { slug: "tooth-extraction", text: "Where teeth that cannot be saved are removed first." },
     ],
     cta: {
-      heading: "Missing teeth? Let us talk through your options.",
+      heading: "Missing teeth? Let us talk through your options",
       text: "Dentures are one of several ways to replace teeth, and the right one depends on you. Come in for an examination, and Dr. Tripathi will explain what could work and what to expect.",
     },
   },
@@ -3871,7 +4078,7 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
       { slug: "tooth-coloured-fillings", text: "For old or stained fillings that whitening cannot change." },
     ],
     cta: {
-      heading: "Thinking about whitening? Start with a check.",
+      heading: "Thinking about whitening? Start with a check",
       text: "A short examination shows whether whitening is right for your teeth, and what to expect. Dr. Tripathi will explain everything, with no pressure.",
     },
   },

@@ -10,7 +10,7 @@ export function DoctorSection() {
           <h2 id="doctor-heading">Meet Dr. Shubham Tripathi</h2>
           <p className="role">BDS, MPH · Founder & Director</p>
         </div>
-        <div className="doctor-photo">
+        <div className="doctor-photo reveal">
           <Image
             src={doctor.portrait}
             alt={doctor.profileAlt}

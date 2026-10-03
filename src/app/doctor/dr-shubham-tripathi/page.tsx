@@ -73,7 +73,7 @@ export default function DoctorPage() {
             <figure className="doctor-profile-figure">
               <div className="doctor-portrait-wrap">
                 <div
-                  className="doctor-portrait-stage reveal reveal--mask"
+                  className="doctor-portrait-stage reveal"
                  
                 >
                   <Image
@@ -83,7 +83,7 @@ export default function DoctorPage() {
                     height={doctor.portraitHeight}
                     sizes="(max-width: 980px) 70vw, 420px"
                     priority
-                    className="doctor-profile-photo mask-img"
+                    className="doctor-profile-photo"
                   />
                 </div>
                 <p className="doctor-reg enter" style={stagger(5)}>

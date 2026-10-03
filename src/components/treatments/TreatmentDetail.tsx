@@ -252,7 +252,7 @@ export function TreatmentDetail({ treatment, content }: { treatment: Treatment; 
         <section className={`tp-section ${tone("myths")}`} aria-labelledby="myths-heading">
           <div className="tx-wrap">
             <SectionHead id="myths-heading" heading={content.myths.heading} intro={content.myths.intro} />
-            <div className={content.myths.illustration ? "tp-myths has-art" : "tp-myths"}>
+            <div className={content.myths.illustration || content.myths.image ? "tp-myths has-art" : "tp-myths"}>
               <ul>
                 {content.myths.items.map((item, index) => (
                   <li key={item.myth} className="tp-myth reveal" style={stagger(index)}>
@@ -263,7 +263,18 @@ export function TreatmentDetail({ treatment, content }: { treatment: Treatment; 
                   </li>
                 ))}
               </ul>
-              {content.myths.illustration ? (
+              {content.myths.image ? (
+                <figure className="tp-myths-art tp-stages-photo reveal">
+                  <Image
+                    src={content.myths.image.src}
+                    alt={content.myths.image.alt}
+                    width={content.myths.image.width}
+                    height={content.myths.image.height}
+                    sizes="(max-width: 900px) 100vw, 480px"
+                  />
+                  {content.myths.caption ? <figcaption>{content.myths.caption}</figcaption> : null}
+                </figure>
+              ) : content.myths.illustration ? (
                 <StageFigure kind={content.myths.illustration} caption={content.myths.caption ?? ""} className="tp-myths-art" />
               ) : null}
             </div>
@@ -319,7 +330,18 @@ export function TreatmentDetail({ treatment, content }: { treatment: Treatment; 
               </li>
             ))}
           </ol>
-          {content.process.illustration ? (
+          {content.process.image ? (
+            <figure className="tp-stages tp-stages-photo reveal">
+              <Image
+                src={content.process.image.src}
+                alt={content.process.image.alt}
+                width={content.process.image.width}
+                height={content.process.image.height}
+                sizes="(max-width: 1180px) 100vw, 1140px"
+              />
+              {content.process.caption ? <figcaption>{content.process.caption}</figcaption> : null}
+            </figure>
+          ) : content.process.illustration ? (
             <StageFigure kind={content.process.illustration} caption={content.process.caption ?? ""} />
           ) : null}
           {content.process.footnote ? <p className="tp-footnote reveal">{content.process.footnote}</p> : null}
@@ -449,6 +471,17 @@ export function TreatmentDetail({ treatment, content }: { treatment: Treatment; 
                 </div>
               ) : null}
               {extra.closing ? <p className="tp-closing reveal">{extra.closing}</p> : null}
+              {extra.image ? (
+                <figure className="tp-stages tp-stages-photo reveal">
+                  <Image
+                    src={extra.image.src}
+                    alt={extra.image.alt}
+                    width={extra.image.width}
+                    height={extra.image.height}
+                    sizes="(max-width: 1180px) 100vw, 1140px"
+                  />
+                </figure>
+              ) : null}
             </div>
           </div>
         </section>
