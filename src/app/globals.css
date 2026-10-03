@@ -12,6 +12,7 @@
   --ink: #172033;
   --muted: #3e4c5f;
   --line: rgba(16, 32, 72, 0.12);
+  --focus-ring: #1b3566;
   --shadow: 0 12px 32px rgba(16, 32, 72, 0.06);
   --radius: 18px;
   --header: 128px;
@@ -59,7 +60,7 @@ button { cursor: pointer; }
   white-space: nowrap;
   border: 0;
 }
-.skip:focus {
+.skip:focus-visible {
   position: fixed;
   left: 12px;
   top: 12px;
@@ -75,9 +76,22 @@ button { cursor: pointer; }
   border-radius: 8px;
 }
 
-:focus-visible {
-  outline: 2px solid var(--teal);
-  outline-offset: 3px;
+:where(a, button, input, select, textarea, summary, [tabindex]:not([tabindex="-1"])):focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
+.btn:focus-visible,
+.menu-toggle:focus-visible,
+.map-action:focus-visible {
+  border-radius: 999px;
+}
+
+.site-footer :focus-visible,
+.final-cta :focus-visible,
+.gallery-lightbox :focus-visible {
+  --focus-ring: #ffffff;
 }
 
 .sr-only {
@@ -616,7 +630,7 @@ button { cursor: pointer; }
 
 .final-cta { background: var(--navy); color: white; padding: 88px 0; }
 .final-cta p { margin: 14px 0 0; max-width: 36rem; color: rgba(255, 255, 255, 0.82); }
-.final-cta .btn-light:focus-visible, .final-cta .btn-line:focus-visible { outline-color: white; }
+.final-cta .btn-light:focus-visible, .final-cta .btn-line:focus-visible { outline-color: var(--focus-ring); }
 
 .site-footer { background: var(--navy-deep); color: rgba(255, 255, 255, 0.86); padding: 64px 0 28px; }
 .footer-grid {
@@ -644,6 +658,7 @@ button { cursor: pointer; }
 .site-footer ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
 .site-footer a { color: white; text-decoration: none; }
 .site-footer a:hover { text-decoration: underline; }
+.site-footer a:focus-visible { text-decoration: none; }
 .footer-bottom, .footer-disclaimer {
   width: min(var(--max), calc(100% - 40px));
   margin: 28px auto 0;
@@ -705,7 +720,7 @@ button { cursor: pointer; }
 .contact-action.is-book-appointment { background: var(--navy); border-color: var(--navy); color: white; }
 .contact-action.is-book-appointment .contact-action-icon { color: white; }
 .contact-action-long { display: none; }
-.contact-action:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+.contact-action:focus-visible { outline-color: var(--focus-ring); outline-offset: 4px; border-radius: 12px; }
 
 @media (max-width: 1359px) {
   body { padding-bottom: calc(72px + env(safe-area-inset-bottom)); }

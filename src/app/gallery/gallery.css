@@ -171,7 +171,7 @@
 .gallery-item:hover .gallery-item-zoom,
 .gallery-item-btn:focus-visible .gallery-item-zoom { opacity: 1; transform: none; }
 .gallery-item:hover figcaption { transform: translateY(-2px); }
-.gallery-item-btn:focus-visible { outline: 3px solid var(--teal); outline-offset: -3px; border-radius: 18px; }
+.gallery-item-btn:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 4px; border-radius: 18px; }
 
 /* Touch screens have no hover, so the zoom cue stays visible. */
 @media (hover: none) {
@@ -226,7 +226,7 @@
 .gallery-named-btn:hover .gallery-named-img { transform: scale(1.04); }
 .gallery-named-btn:hover .gallery-item-zoom,
 .gallery-named-btn:focus-visible .gallery-item-zoom { opacity: 1; transform: none; }
-.gallery-named-btn:focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; }
+.gallery-named-btn:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 4px; border-radius: 18px; }
 .gallery-named figcaption {
   display: flex;
   flex-direction: column;
@@ -314,7 +314,7 @@
 .gallery-lightbox-close svg,
 .gallery-lightbox-nav svg { width: 22px; height: 22px; }
 .gallery-lightbox-close { position: absolute; top: 16px; right: 16px; }
-.gallery-lightbox :focus-visible { outline-color: white; }
+.gallery-lightbox :focus-visible { outline-color: var(--focus-ring); }
 
 @media (prefers-reduced-motion: no-preference) {
   .gallery-lightbox { animation: gallery-fade 0.25s ease both; }

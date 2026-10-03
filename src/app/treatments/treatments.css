@@ -88,7 +88,7 @@
   border-color: var(--teal);
   box-shadow: 0 20px 40px rgba(16, 32, 72, 0.11);
 }
-.tx-card:has(a:focus-visible) { outline: 2px solid var(--teal); outline-offset: 3px; }
+.tx-card:has(a:focus-visible) { outline: 2px solid var(--focus-ring); outline-offset: 4px; }
 .tx-media { position: relative; }
 .tx-photo {
   position: relative;
@@ -220,7 +220,7 @@
 .tp-soft { background: var(--soft); }
 .tp-section h2 { color: var(--navy); font-size: clamp(1.8rem, 3vw, 2.6rem); }
 .tp-intro { margin-top: 12px; max-width: 62ch; color: var(--muted); }
-.tp-closing { margin-top: 24px; max-width: 64ch; color: var(--navy); font-weight: 600; }
+.tp-closing { margin-top: 24px; width: 100%; color: var(--navy); font-weight: 600; }
 .tp-footnote { margin-top: 22px; color: var(--muted); font-size: 0.95rem; }
 .tp-footnote .text-link { margin-left: 4px; }
 .tp-strip {
@@ -230,7 +230,7 @@
   border-radius: 0 12px 12px 0;
   background: var(--teal-soft);
   color: var(--teal);
-  max-width: 72ch;
+  width: 100%;
 }
 .tp-links { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px 24px; }
 
@@ -469,7 +469,7 @@
   border-radius: 16px;
   background: white;
 }
-.tp-table-wrap:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
+.tp-table-wrap:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 4px; border-radius: 12px; }
 .tp-table { width: 100%; min-width: 680px; border-collapse: collapse; }
 .tp-table th,
 .tp-table td { padding: 14px 18px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }

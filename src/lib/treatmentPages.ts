@@ -1111,14 +1111,14 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
       items: [
         {
           title: "Crown",
-          image: "/images/treatments/crowns-bridges/crown.jpg",
+          image: "/images/treatments/crowns-bridges/crown.png",
           what: "A cap that covers the whole visible part of a tooth.",
           suits: "A tooth that is heavily filled, cracked, worn or root-treated.",
           note: "Needs the tooth to be shaped to fit.",
         },
         {
           title: "Bridge",
-          image: "/images/treatments/crowns-bridges/bridge.jpg",
+          image: "/images/treatments/crowns-bridges/bridge.png",
           what: "A replacement tooth supported by crowns on the teeth either side of a gap.",
           suits: "Someone with a missing tooth and healthy teeth beside the gap.",
           note: "The neighbouring teeth are shaped to hold it.",
@@ -1126,7 +1126,7 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
         },
         {
           title: "Inlay or onlay",
-          image: "/images/treatments/crowns-bridges/inlay-onlay.jpg",
+          image: "/images/treatments/crowns-bridges/inlay-onlay.png",
           what: "A lab-made piece that fills or covers part of a tooth.",
           suits: "A tooth with moderate damage that does not need a full crown.",
           note: "Keeps more of the natural tooth than a full crown.",
