@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import "./home.css";
 import { BeforeAfterSection } from "@/components/BeforeAfterSection";
 import { ClinicGallery } from "@/components/ClinicGallery";
+import { EquipmentBento } from "@/components/EquipmentBento";
 import { ClinicShowcase } from "@/components/ClinicShowcase";
 import { ConcernCards } from "@/components/ConcernCards";
 import { DentalGuideCards } from "@/components/DentalGuideCards";
@@ -38,12 +40,13 @@ export default function HomePage() {
       <FirstVisitTimeline />
       <ClinicShowcase />
       <ClinicGallery />
+      <EquipmentBento />
       <ReviewsSection />
       <BeforeAfterSection />
       <DentalGuideCards />
       <FAQSection />
       <VisitSection />
-      <FinalCTA />
+      <FinalCTA showCall />
       <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(webpage)} />
     </main>
   );

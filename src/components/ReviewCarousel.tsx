@@ -1,15 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { googleBusinessProfileUrl, googleReviews } from "@/lib/clinic";
 import { ChevronLeftIcon, ChevronRightIcon } from "./Icons";
 
 export function ReviewCarousel({ showHeading = true }: { showHeading?: boolean }) {
   const [index, setIndex] = useState(0);
+  const [direction, setDirection] = useState<1 | -1>(1);
+  const dragStart = useRef<number | null>(null);
   const total = googleReviews.length;
 
+  // FLOW: no autoplay. Buttons, arrow keys and a swipe move one review at a time.
   function go(next: number) {
     if (!total) return;
+    setDirection(next < index ? -1 : 1);
     setIndex((next + total) % total);
   }
 
@@ -23,8 +27,25 @@ export function ReviewCarousel({ showHeading = true }: { showHeading?: boolean }
           </div>
         ) : null}
         {total > 0 ? (
-          <div className="review-carousel">
-            <blockquote key={`${googleReviews[index].name}-${googleReviews[index].date}`}>
+          <div
+            className="review-carousel"
+            onKeyDown={(event) => {
+              if (event.key === "ArrowLeft") go(index - 1);
+              if (event.key === "ArrowRight") go(index + 1);
+            }}
+            onPointerDown={(event) => (dragStart.current = event.clientX)}
+            onPointerUp={(event) => {
+              if (dragStart.current === null) return;
+              const delta = event.clientX - dragStart.current;
+              dragStart.current = null;
+              if (Math.abs(delta) > 40) go(index + (delta < 0 ? 1 : -1));
+            }}
+          >
+            <blockquote
+              key={`${googleReviews[index].name}-${googleReviews[index].date}`}
+              className={direction === 1 ? "review-slide from-right" : "review-slide from-left"}
+              aria-live="polite"
+            >
               <p>{googleReviews[index].text}</p>
               <footer>
                 {googleReviews[index].name}

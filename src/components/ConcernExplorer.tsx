@@ -3,6 +3,8 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { concerns, treatmentHref, treatments } from "@/lib/clinic";
+import { stagger } from "@/lib/motion";
+import { ArrowIcon } from "./Icons";
 import { TreatmentCard } from "./TreatmentCard";
 
 export function ConcernExplorer() {
@@ -20,13 +22,15 @@ export function ConcernExplorer() {
     <section className="section concerns" aria-labelledby="concerns-heading">
       <div className="section-inner">
         <div className="section-heading">
-          <p className="eyebrow">Start with what you notice</p>
-          <h2 id="concerns-heading">What brings you in today?</h2>
+          <p className="eyebrow reveal">Start with what you notice</p>
+          <h2 id="concerns-heading" className="reveal" style={stagger(1)}>
+            What brings you in today?
+          </h2>
         </div>
         <div className="concern-explorer">
           <ul className="concern-grid" role="list">
             {concerns.map((item, index) => (
-              <li key={item.title}>
+              <li key={item.title} className="reveal" style={stagger(index + 1)}>
                 <button
                   type="button"
                   className={index === active ? "concern-choice is-active" : "concern-choice"}
@@ -36,8 +40,9 @@ export function ConcernExplorer() {
                   <span className="concern-index" aria-hidden="true">
                     0{index + 1}
                   </span>
-                  <h3>{item.title}</h3>
-                  <p>{item.detail}</p>
+                  <span className="concern-title">{item.title}</span>
+                  <span className="concern-detail">{item.detail}</span>
+                  <ArrowIcon className="concern-arrow" />
                 </button>
               </li>
             ))}
@@ -47,7 +52,7 @@ export function ConcernExplorer() {
               Treatments commonly discussed for this concern include the options below. Only a dental examination
               can determine what is appropriate for you.
             </p>
-            <div className="treat-rail">
+            <div key={active} className="treat-rail swap">
               {related.map((treatment) => (
                 <TreatmentCard key={treatment.slug} treatment={treatment} />
               ))}

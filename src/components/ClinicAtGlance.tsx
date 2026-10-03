@@ -6,7 +6,7 @@ const glanceItems = [
   { value: "7+", label: "Years of clinical experience", numeric: 7, suffix: "+" },
   { value: "BDS · MPH", label: "Qualifications", numeric: null, suffix: "" },
   { value: "7 Days", label: "Clinic availability", numeric: 7, suffix: " Days" },
-  { value: "20606", label: "U.P. State Dental Council registration", numeric: 20606, suffix: "" },
+  { value: "20606", label: "U.P. State Dental Council registration", numeric: null, suffix: "" },
 ] as const;
 
 function useCountUp(target: number | null, shouldAnimate: boolean) {
@@ -41,7 +41,7 @@ function GlanceItem({ item, animate }: { item: (typeof glanceItems)[number]; ani
     item.numeric !== null && animate && count !== null ? `${count}${item.suffix}` : item.value;
 
   return (
-    <li>
+    <li className="reveal">
       <span className="trust-value">{shown}</span>
       <span className="trust-label">{item.label}</span>
     </li>
@@ -76,7 +76,7 @@ export function ClinicAtGlance() {
 
   return (
     <section className="trust-strip" aria-label="Clinic at a glance" ref={ref}>
-      <ul>
+      <ul className="stagger">
         {glanceItems.map((item) => (
           <GlanceItem key={item.label} item={item} animate={animate} />
         ))}

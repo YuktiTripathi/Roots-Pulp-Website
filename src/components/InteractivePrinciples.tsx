@@ -59,7 +59,7 @@ export function InteractivePrinciples() {
             </button>
           ))}
         </div>
-        <div className="principle-panel" role="tabpanel" aria-label={current.title}>
+        <div key={active} className="principle-panel swap" role="tabpanel" aria-label={current.title}>
           <p className="principle-kicker">{current.num}</p>
           <h3>{current.title}</h3>
           <p>{current.body}</p>

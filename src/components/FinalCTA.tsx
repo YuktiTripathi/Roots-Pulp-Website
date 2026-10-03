@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { bookingUrl, telHref, whatsappHref } from "@/lib/clinic";
-import { PhoneIcon } from "./Icons";
+import { stagger } from "@/lib/motion";
+import { ArrowIcon, PhoneIcon } from "./Icons";
 
 type FinalCTAProps = {
   heading?: string;
@@ -20,11 +21,15 @@ export function FinalCTA({
   return (
     <section className="final-cta" aria-labelledby="final-heading">
       <div className="section-inner">
-        <h2 id="final-heading">{heading}</h2>
-        <p>{supporting}</p>
-        <div className="hero-actions">
+        <h2 id="final-heading" className="reveal">
+          {heading}
+        </h2>
+        <p className="reveal" style={stagger(1)}>
+          {supporting}
+        </p>
+        <div className="hero-actions reveal" style={stagger(2)}>
           <Link className="btn btn-light" href={bookingUrl} target="_blank" rel="noopener noreferrer">
-            Book an Appointment
+            Book an Appointment <ArrowIcon className="arrow" />
           </Link>
           {showCall ? (
             <a className="btn btn-line" href={telHref()}>
@@ -35,7 +40,11 @@ export function FinalCTA({
             WhatsApp Us
           </a>
         </div>
-        {note ? <p className="final-cta-note">{note}</p> : null}
+        {note ? (
+          <p className="final-cta-note reveal" style={stagger(3)}>
+            {note}
+          </p>
+        ) : null}
       </div>
     </section>
   );

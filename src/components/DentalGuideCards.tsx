@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { stagger } from "@/lib/motion";
+import { ArrowIcon } from "./Icons";
 
 const guides = [
   {
@@ -26,18 +28,22 @@ const guides = [
 export function DentalGuideCards() {
   return (
     <section className="section guides" aria-labelledby="guides-heading">
-      <div className="section-inner reveal">
+      <div className="section-inner">
         <div className="section-heading">
-          <p className="eyebrow">Dental guides</p>
-          <h2 id="guides-heading">Understand your dental care</h2>
+          <p className="eyebrow reveal">Dental guides</p>
+          <h2 id="guides-heading" className="reveal" style={stagger(1)}>Understand your dental care</h2>
         </div>
         <div className="guide-grid">
-          {guides.map((guide) => (
-            <Link key={guide.href} href={guide.href} className="guide-card">
-              <h3>{guide.title}</h3>
-              <p>{guide.teaser}</p>
-              <span className="text-link">Read more <span aria-hidden="true">→</span></span>
-            </Link>
+          {guides.map((guide, index) => (
+            <div key={guide.href} className="reveal" style={stagger(index + 1)}>
+              <Link href={guide.href} className="guide-card lift">
+                <h3>{guide.title}</h3>
+                <p>{guide.teaser}</p>
+                <span className="text-link" aria-hidden="true">
+                  Read more <ArrowIcon className="arrow" />
+                </span>
+              </Link>
+            </div>
           ))}
         </div>
         <p className="guide-note">

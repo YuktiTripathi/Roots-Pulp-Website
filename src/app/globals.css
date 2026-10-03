@@ -16,6 +16,7 @@
   --shadow: 0 12px 32px rgba(16, 32, 72, 0.06);
   --radius: 18px;
   --header: 128px;
+  --header-compact: 92px;
   --sans: "DM Sans Variable", "DM Sans", "Segoe UI", sans-serif;
   --serif: "DM Serif Display", Georgia, "Times New Roman", serif;
   --times: "Times New Roman", Times, serif;
@@ -43,7 +44,7 @@ h1, h2, h3 {
   letter-spacing: -0.02em;
   line-height: 1.12;
   margin: 0;
-  scroll-margin-top: calc(var(--header) + 16px);
+  scroll-margin-top: calc(var(--header-compact) + 24px);
 }
 p { margin: 0; }
 button, input, select { font: inherit; }
@@ -178,14 +179,39 @@ button { cursor: pointer; }
 .status-dot.is-open { background: #1f7a62; }
 
 .site-header {
+  --header-now: var(--header);
   position: sticky;
   top: 0;
   z-index: 50;
   width: 100%;
-  background: var(--ivory);
+  background: transparent;
   border-top: 6px solid var(--navy);
   border-bottom: 2px solid var(--teal);
+  transition: border-color var(--dur-normal) var(--ease-soft), box-shadow var(--dur-normal) var(--ease-soft), margin-bottom var(--dur-normal) var(--ease-out);
 }
+/* GLASS. The surface is a separate layer: a backdrop-filter on the header itself would become the
+   containing block for the fixed mobile menu inside it. */
+.site-header::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--ivory);
+  transition: background-color var(--dur-normal) var(--ease-soft);
+}
+.site-header.is-scrolled {
+  --header-now: var(--header-compact);
+  /* The bar gets shorter; the margin gives the difference back so nothing below the header moves. */
+  margin-bottom: calc(var(--header) - var(--header-compact));
+  border-bottom-color: rgba(14, 74, 71, 0.22);
+  box-shadow: 0 10px 30px -18px rgba(16, 32, 72, 0.22);
+}
+.site-header.is-scrolled::after {
+  background: rgba(246, 241, 231, 0.84);
+  -webkit-backdrop-filter: blur(14px) saturate(1.15);
+  backdrop-filter: blur(14px) saturate(1.15);
+}
+.site-header.is-menu-open::after { background: var(--ivory); }
 .site-header::before {
   content: "";
   position: absolute;
@@ -198,7 +224,8 @@ button { cursor: pointer; }
   pointer-events: none;
 }
 .header-bar {
-  height: var(--header);
+  height: var(--header-now);
+  transition: height var(--dur-normal) var(--ease-out);
   width: min(var(--max), calc(100% - 32px));
   margin: 0 auto;
   display: flex;
@@ -211,6 +238,8 @@ button { cursor: pointer; }
   gap: 12px;
   flex: none;
 }
+.site-header .brand { transform-origin: left center; transition: transform var(--dur-normal) var(--ease-out); }
+.site-header.is-scrolled .brand { transform: scale(0.78); }
 .brand-mark,
 .brand-words { text-decoration: none; }
 .brand img { width: 112px; height: 112px; object-fit: contain; display: block; }
@@ -260,6 +289,23 @@ button { cursor: pointer; }
   font-size: 0.94rem;
   font-weight: 560;
 }
+.desktop-nav a { position: relative; transition: color var(--dur-fast) var(--ease-soft); }
+.desktop-nav a::after {
+  content: "";
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 9px;
+  height: 1.5px;
+  border-radius: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--dur-normal) var(--ease-out);
+}
+.desktop-nav a:hover { color: var(--teal); }
+.desktop-nav a:hover::after,
+.desktop-nav a[aria-current="page"]::after { transform: scaleX(1); }
 .desktop-nav a[aria-current="page"] { color: var(--teal); }
 .header-actions { display: flex; align-items: center; gap: 12px; margin-left: 8px; }
 .header-booking {
@@ -291,7 +337,7 @@ button { cursor: pointer; }
 .menu-toggle svg { width: 20px; height: 20px; }
 .mobile-menu {
   position: fixed;
-  inset: var(--header) 0 0 0;
+  inset: calc(var(--header-now) + 8px) 0 0 0;
   background: var(--ivory);
   z-index: 60;
   overflow: auto;
@@ -309,6 +355,23 @@ button { cursor: pointer; }
 .mobile-menu a[aria-current="page"] { color: var(--teal); }
 .mobile-menu-contact { display: grid; gap: 4px; margin-top: 18px; }
 .mobile-menu-contact .status-line { min-height: 48px; }
+@keyframes menu-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .mobile-menu { animation: menu-in 260ms var(--ease-out) both; }
+  .mobile-menu nav a,
+  .mobile-menu-contact { animation: enter-up 420ms var(--ease-out) both; animation-delay: calc(60ms + var(--i, 0) * 35ms); }
+  .mobile-menu nav a:nth-child(2) { --i: 1; }
+  .mobile-menu nav a:nth-child(3) { --i: 2; }
+  .mobile-menu nav a:nth-child(4) { --i: 3; }
+  .mobile-menu nav a:nth-child(5) { --i: 4; }
+  .mobile-menu nav a:nth-child(6) { --i: 5; }
+  .mobile-menu nav a:nth-child(n + 7), .mobile-menu-contact { --i: 6; }
+}
+.mobile-menu a { transition: color var(--dur-fast) var(--ease-soft), padding-left var(--dur-normal) var(--ease-out); }
+.mobile-menu nav a[aria-current="page"] { padding-left: 10px; box-shadow: inset 2px 0 0 var(--teal); }
 
 .hero {
   width: min(1240px, calc(100% - 40px));
@@ -375,6 +438,52 @@ button { cursor: pointer; }
 }
 .credential-card p:nth-child(2) { font-family: var(--serif); font-size: 1.35rem; line-height: 1.15; margin-top: 4px; color: var(--navy); }
 .credential-card p:last-child, .location-card p:last-child { color: var(--muted); font-size: 0.88rem; margin-top: 4px; }
+
+/* Hero motion. One cinematic moment on load, then everything rests. */
+.hero-visual::before {
+  content: "";
+  position: absolute;
+  inset: 8% 0 0 4%;
+  background: radial-gradient(closest-side, rgba(14, 74, 71, 0.09), transparent 72%);
+  pointer-events: none;
+}
+.hero-media { transform-origin: 50% 100%; }
+@keyframes hero-settle {
+  from { transform: scale(1.04); }
+  to { transform: none; }
+}
+@keyframes ring-in {
+  from { opacity: 0; transform: scale(0.94); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes draw-in {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+@keyframes hero-drift {
+  to { transform: translateY(-18px); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  /* Very slow, once. The portrait is never transparent, so it still paints immediately. */
+  .hero-media { animation: hero-settle 12s var(--ease-out) both; }
+  .hero-rings span { animation: ring-in 1.6s var(--ease-out) both; }
+  .hero-rings span:last-child { animation-delay: 0.15s; }
+  .hero-tooth path { stroke-dasharray: 1; animation: draw-in 2.4s var(--ease-soft) 0.3s both; }
+  .credential-card { animation: enter-up 0.9s var(--ease-out) 0.55s both; }
+  .location-card { animation: enter-up 0.9s var(--ease-out) 0.7s both; }
+}
+/* Subtle depth: decorative layers drift a few pixels as the page scrolls. CSS scroll timelines only,
+   so browsers without support simply show the static layout. Desktop only. */
+@supports (animation-timeline: scroll()) {
+  @media (min-width: 981px) and (prefers-reduced-motion: no-preference) {
+    .hero-rings, .hero-tooth {
+      animation: hero-drift linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 640px;
+    }
+    .hero-tooth { animation-name: hero-drift; }
+  }
+}
 
 .trust-strip { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: white; }
 .trust-strip ul {
@@ -448,24 +557,7 @@ button { cursor: pointer; }
 }
 
 .concerns { background: white; }
-.concern-grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-.concern-grid a {
-  display: flex;
-  flex-direction: column;
-  min-height: 210px;
-  height: 100%;
-  text-decoration: none;
-  background: var(--ivory);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 22px;
-  transition: border-color 0.2s ease, transform 0.2s ease;
-}
-.concern-grid a:hover { border-color: var(--navy); transform: translateY(-3px); }
-.concern-index { color: var(--teal); font-size: 0.78rem; letter-spacing: 0.12em; font-weight: 700; }
-.concern-grid h3 { font-size: 1.7rem; margin: 14px 0 8px; color: var(--navy); }
-.concern-grid p { color: var(--muted); }
-.concern-grid .text-link { margin-top: auto; }
+
 
 .treatments { background: var(--ivory); }
 .treat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
@@ -477,12 +569,18 @@ button { cursor: pointer; }
   display: flex;
   flex-direction: column;
   min-width: 0;
-  transition: transform 0.25s ease, border-color 0.25s ease;
+  position: relative;
 }
-.treat-card:hover { transform: translateY(-3px); border-color: var(--teal); }
-.treat-media { position: relative; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 18px 18px 0 0; background: var(--soft); }
-.treat-art { width: 100%; height: 100%; display: block; transition: transform 0.4s ease; }
-.treat-card:hover .treat-art { transform: scale(1.035); }
+.treat-card:hover { border-color: rgba(14, 74, 71, 0.45); }
+.treat-card:focus-within { outline: 2px solid var(--teal); outline-offset: 3px; }
+.treat-photo { object-fit: cover; }
+/* The heading link covers the card, so the whole card is one target. */
+.treat-link { color: inherit; text-decoration: none; }
+.treat-link::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
+.treat-link:focus-visible { outline: none; }
+.treat-media { position: relative; aspect-ratio: 4 / 3; }
+.treat-frame { position: absolute; inset: 0; border-radius: 17px 17px 0 0; background: var(--soft); }
+.treat-art { width: 100%; height: 100%; display: block; }
 .treat-badge {
   position: absolute;
   left: 20px;
@@ -496,6 +594,11 @@ button { cursor: pointer; }
   place-items: center;
   color: var(--navy);
   box-shadow: 0 8px 16px rgba(16, 32, 72, 0.08);
+  z-index: 1;
+  transition: transform var(--dur-normal) var(--ease-out), color var(--dur-fast) var(--ease-soft);
+}
+@media (hover: hover) and (pointer: fine) {
+  .treat-card:hover .treat-badge { transform: translateY(-2px) rotate(-3deg); color: var(--teal); }
 }
 .glyph { width: 26px; height: 26px; }
 .treat-body { padding: 36px 20px 18px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
@@ -573,9 +676,49 @@ button { cursor: pointer; }
   font-family: var(--serif);
   font-size: 1.35rem;
 }
-.accordion-item button span { font-family: var(--sans); color: var(--teal); font-size: 1.4rem; }
-.accordion-item [role="region"] { padding: 0 0 18px; color: var(--muted); }
-.accordion-item [hidden] { display: none; }
+.accordion-item button:hover { color: var(--teal); }
+/* Plus that turns into a minus: the vertical bar rotates flat. */
+.accordion-icon { position: relative; flex: none; width: 16px; height: 16px; color: var(--teal); }
+.accordion-icon::before,
+.accordion-icon::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1.5px;
+  margin-top: -0.75px;
+  border-radius: 2px;
+  background: currentColor;
+  transition: transform 280ms var(--ease-out);
+}
+.accordion-icon::after { transform: rotate(90deg); }
+.accordion-item.is-open .accordion-icon::after { transform: rotate(0deg); }
+/* Height animates through grid rows (0fr to 1fr), the content fades and settles. */
+.accordion-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition: grid-template-rows 280ms var(--ease-out), visibility 0s linear 280ms;
+}
+.accordion-item.is-open .accordion-panel {
+  grid-template-rows: 1fr;
+  visibility: visible;
+  transition: grid-template-rows 280ms var(--ease-out), visibility 0s;
+}
+.accordion-panel-inner {
+  min-height: 0;
+  overflow: hidden;
+  color: var(--muted);
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 220ms var(--ease-soft), transform 280ms var(--ease-out);
+}
+.accordion-panel-inner > :last-child { padding-bottom: 18px; }
+.accordion-item.is-open .accordion-panel-inner { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .accordion-panel, .accordion-panel-inner, .accordion-icon::before, .accordion-icon::after { transition: none; }
+}
 
 .visit { background: white; }
 .visit-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 36px; align-items: center; }
@@ -630,7 +773,18 @@ button { cursor: pointer; }
   font-weight: 700;
 }
 
-.final-cta { background: var(--navy); color: white; padding: 88px 0; }
+.final-cta {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(60% 90% at 85% 10%, rgba(54, 140, 130, 0.22), transparent 70%),
+    radial-gradient(50% 70% at 0% 100%, rgba(27, 53, 102, 0.9), transparent 70%),
+    var(--navy);
+  color: white;
+  padding: 104px 0;
+}
+.final-cta h2 { max-width: 18ch; font-size: clamp(2.4rem, 5vw, 4.2rem); }
 section.final-cta h2 { color: white; }
 section.final-cta p { color: rgba(255, 255, 255, 0.82); }
 .final-cta p { margin: 14px 0 0; max-width: 36rem; color: rgba(255, 255, 255, 0.82); }
@@ -649,14 +803,6 @@ section.final-cta p { color: rgba(255, 255, 255, 0.82); }
   white-space: nowrap;
 }
 .brand-footer .brand-tagline { color: #d08a90; }
-.reveal {
-  opacity: 1;
-  transform: none;
-}
-.motion-ready .reveal:not(.is-visible) {
-  opacity: 0;
-  transform: translateY(20px);
-}
 .footer-title { color: white; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; font-size: 0.78rem; margin-bottom: 10px; }
 .site-footer ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
 .site-footer a { color: white; text-decoration: none; }
@@ -906,7 +1052,7 @@ section.final-cta p { color: rgba(255, 255, 255, 0.82); }
 @media (max-width: 720px) {
   .section { padding: 64px 0; }
   .section-inner, .hero { width: min(100% - 32px, var(--max)); }
-  :root { --header: 100px; }
+  :root { --header: 100px; --header-compact: 76px; }
   .brand img { width: 68px; height: 68px; }
   .brand-footer img { width: 84px; height: 84px; }
   .brand { gap: 8px; }
@@ -961,52 +1107,62 @@ section.final-cta p { color: rgba(255, 255, 255, 0.82); }
   to { opacity: 1; transform: none; }
 }
 
-.site-cursor-canvas {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 180;
-}
-
-@media (pointer: coarse), (prefers-reduced-motion: reduce) {
-  .site-cursor-canvas { display: none; }
-}
-
 /* ==========================================================================
    Motion system
-   Opt in with the .reveal variants below and the .motion-page wrapper class.
-   Only transform, opacity and clip-path are animated.
+   One language, six families. Every timing and distance below comes from these tokens.
+   REVEAL  .reveal (+ --left/--right/--scale/--mask) fades and rises once, on entering the viewport.
+   STAGGER --i on an item (set by stagger() in lib/motion.ts, or .stagger on the parent) delays it.
+   LIFT    .lift on an interactive card: rises a few pixels with a slightly deeper shadow.
+   ZOOM    .zoom on a card with an image inside .zoom-media: the photo eases in slowly.
+   GLASS   the scrolled header (see .site-header.is-scrolled).
+   FLOW    carousels and rails: snap scrolling and slow eased track movement.
+   Only transform, opacity and clip-path animate. Everything collapses under reduced motion.
    ========================================================================== */
 :root {
-  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1); /* ease-premium */
   --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-fast: 220ms;
+  --dur-normal: 420ms;
+  --dur-slow: 700ms;
+  --dur-editorial: 1000ms;
   --stagger: 80ms;
+  --reveal-shift: 20px;
+  --lift: -5px;
+  --zoom: 1.035;
+  --shadow-lift: 0 18px 40px -18px rgba(16, 32, 72, 0.28);
+}
+@media (max-width: 720px) {
+  :root { --reveal-shift: 14px; --lift: -3px; --zoom: 1.02; --stagger: 60ms; }
 }
 
+/* REVEAL */
+/* Progressive enhancement: content is visible until RevealOnScroll marks the page .motion-ready. */
+.motion-ready .reveal:not(.is-visible) { opacity: 0; transform: translateY(var(--reveal-shift)); }
 .reveal.is-visible {
+  opacity: 1;
+  transform: none;
   transition:
-    opacity 0.7s var(--ease-out) calc(var(--i, 0) * var(--stagger)),
-    transform 0.7s var(--ease-out) calc(var(--i, 0) * var(--stagger)),
+    opacity var(--dur-slow) var(--ease-out) calc(var(--i, 0) * var(--stagger)),
+    transform var(--dur-slow) var(--ease-out) calc(var(--i, 0) * var(--stagger)),
     var(--reveal-extra, background-color 0s);
 }
 /* Elements that are both revealed and interactive list their hover transitions in --reveal-extra,
    otherwise the reveal transition above would replace them. */
-.motion-ready .reveal--left:not(.is-visible) { transform: translateX(-28px); }
-.motion-ready .reveal--right:not(.is-visible) { transform: translateX(28px); }
-.motion-ready .reveal--scale:not(.is-visible) { transform: scale(0.96); }
-/* Image reveal. The frame is observed, the image inside is clipped. Clipping the observed element itself
-   makes IntersectionObserver treat it as invisible, so it would never reveal. */
+.motion-ready .reveal--left:not(.is-visible) { transform: translateX(-24px); }
+.motion-ready .reveal--right:not(.is-visible) { transform: translateX(24px); }
+.motion-ready .reveal--scale:not(.is-visible) { transform: scale(0.97); }
+/* Image reveal. The frame is observed, the image inside is unmasked. Clipping the observed element itself
+   makes IntersectionObserver treat it as invisible, so it would never reveal. The image starts 92% visible
+   and is never transparent, so it still counts for Largest Contentful Paint straight away. */
 .reveal--mask { opacity: 1; transform: none; }
 :where(.reveal--mask) { background: var(--soft); }
-.motion-ready .reveal--mask:not(.is-visible) .mask-img { clip-path: inset(0 0 100% 0); transform: scale(1.04); }
-.motion-ready .reveal--mask-left:not(.is-visible) .mask-img { clip-path: inset(0 100% 0 0); }
+.motion-ready .reveal--mask:not(.is-visible) .mask-img { clip-path: inset(8% 0 0 0); transform: scale(1.04); }
+.motion-ready .reveal--mask-left:not(.is-visible) .mask-img { clip-path: inset(0 8% 0 0); }
 .reveal--mask.is-visible .mask-img {
   clip-path: inset(0 0 0 0);
   transform: none;
   transition:
-    clip-path 1s var(--ease-out) calc(var(--i, 0) * var(--stagger)),
+    clip-path var(--dur-editorial) var(--ease-out) calc(var(--i, 0) * var(--stagger)),
     transform 1.4s var(--ease-out) calc(var(--i, 0) * var(--stagger));
 }
 .parallax-image { overflow: hidden; }
@@ -1016,39 +1172,96 @@ section.final-cta p { color: rgba(255, 255, 255, 0.82); }
   will-change: transform;
 }
 
+/* STAGGER: children of .stagger pick up their index automatically (capped so groups finish fast). */
+.stagger > :nth-child(2) { --i: 1; }
+.stagger > :nth-child(3) { --i: 2; }
+.stagger > :nth-child(4) { --i: 3; }
+.stagger > :nth-child(5) { --i: 4; }
+.stagger > :nth-child(n + 6) { --i: 5; }
+
 /* Above the fold entrance. Plays on load, no scrolling needed. */
 @keyframes enter-up {
   from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: none; }
 }
-@media (prefers-reduced-motion: no-preference) {
-  .enter { animation: enter-up 0.8s var(--ease-out) both; animation-delay: calc(var(--i, 0) * 70ms); }
-  .hero-portrait { animation: hero-image-settle 1s var(--ease-out) both; }
+/* Transform only, for the largest text on a page: it is painted from the first frame. */
+@keyframes enter-rise {
+  from { transform: translateY(14px); }
+  to { transform: none; }
 }
-@keyframes hero-image-settle {
-  from { opacity: 0; transform: translateY(8px) scale(1.025); }
+/* Content swapped in place (tabs, explorers, carousels). */
+@keyframes swap-in {
+  from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: none; }
 }
-
-/* Buttons, opt in per page */
-.motion-page .btn {
-  transition:
-    background-color 0.25s var(--ease-soft),
-    color 0.25s var(--ease-soft),
-    border-color 0.25s var(--ease-soft),
-    transform 0.3s var(--ease-out),
-    box-shadow 0.3s var(--ease-out);
+@media (prefers-reduced-motion: no-preference) {
+  .enter { animation: enter-up 0.8s var(--ease-out) both; animation-delay: calc(var(--i, 0) * 70ms); }
+  .enter-rise { animation: enter-rise 0.9s var(--ease-out) both; animation-delay: calc(var(--i, 0) * 70ms); }
+  .swap { animation: swap-in 340ms var(--ease-out) both; }
 }
-.motion-page .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(16, 32, 72, 0.14); }
-.motion-page .btn:active { transform: translateY(0); box-shadow: none; }
-.motion-page .btn .arrow { transition: transform 0.3s var(--ease-out); }
-.motion-page .btn:hover .arrow { transform: translateX(4px); }
-@media (hover: none) {
-  .motion-page .btn:hover { transform: none; box-shadow: none; }
-  .treat-card:hover,
-  .concern-grid a:hover { transform: none; border-color: var(--line); }
-  .treat-card:hover .treat-art,
-  .treat-card:hover .arrow { transform: none; }
+
+/* LIFT: interactive cards only. Informational cards stay still so they don't look clickable. */
+.lift {
+  transition:
+    transform var(--dur-normal) var(--ease-out),
+    box-shadow var(--dur-normal) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-soft);
+  --reveal-extra: box-shadow var(--dur-normal) var(--ease-out), border-color var(--dur-fast) var(--ease-soft);
+}
+.lift .arrow { transition: transform var(--dur-normal) var(--ease-out); }
+
+/* ZOOM: photography inside a card eases in slowly. */
+.zoom-media { overflow: hidden; }
+.zoom-media img { transition: transform var(--dur-slow) var(--ease-out); }
+
+@media (hover: hover) and (pointer: fine) {
+  .lift:hover { transform: translateY(var(--lift)); box-shadow: var(--shadow-lift); }
+  .lift:hover .arrow { transform: translateX(3px); }
+  .zoom:hover .zoom-media img { transform: scale(var(--zoom)); }
+}
+.lift:focus-within { box-shadow: var(--shadow-lift); }
+
+/* Buttons */
+.btn {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    background-color var(--dur-fast) var(--ease-soft),
+    color var(--dur-fast) var(--ease-soft),
+    border-color var(--dur-fast) var(--ease-soft),
+    transform var(--dur-normal) var(--ease-out),
+    box-shadow var(--dur-normal) var(--ease-out);
+}
+.btn .arrow { transition: transform var(--dur-normal) var(--ease-out); }
+/* Primary booking buttons: one soft highlight passes through on hover. Never on a loop. */
+.btn-primary::after,
+.btn-light::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, 0.16) 50%, transparent 70%);
+  transform: translateX(-120%);
+  pointer-events: none;
+}
+.btn-light::after { background: linear-gradient(105deg, transparent 30%, rgba(14, 74, 71, 0.08) 50%, transparent 70%); }
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover { transform: translateY(-2px); }
+  .btn-primary:hover, .btn-light:hover { box-shadow: 0 12px 26px -10px rgba(16, 32, 72, 0.45); }
+  .btn:hover .arrow { transform: translateX(3px); }
+  .btn-primary:hover::after,
+  .btn-light:hover::after { transform: translateX(120%); transition: transform 0.9s var(--ease-soft); }
+}
+.btn:active { transform: translateY(0); box-shadow: none; }
+
+/* Page transition (app/template.tsx). Starts mostly visible so navigation never feels delayed. */
+@keyframes page-in {
+  from { opacity: 0.75; transform: translateY(4px); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .page-transition { animation: page-in 260ms var(--ease-out) backwards; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1059,7 +1272,8 @@ section.final-cta p { color: rgba(255, 255, 255, 0.82); }
   .reveal--mask { opacity: 1; transform: none; }
   .reveal--mask .mask-img { clip-path: none; transform: none; }
   .parallax-layer { transform: none; will-change: auto; }
-  .motion-page .btn:hover { transform: none; box-shadow: none; }
+  .lift:hover, .btn:hover, .zoom:hover .zoom-media img { transform: none; }
+  .btn-primary::after, .btn-light::after { display: none; }
 }
 .page + .faq { padding-top: 24px; }
 .footer-address { font-style: normal; margin: 14px 0 0; line-height: 1.6; }
@@ -1071,6 +1285,10 @@ section.final-cta p { color: rgba(255, 255, 255, 0.82); }
   overflow: hidden;
   border-radius: var(--radius);
   background: var(--soft);
+  opacity: 0.45;
+  transform: scale(0.95);
+  cursor: pointer;
+  transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
 }
 .ba-slider-after,
 .ba-slider-before {
@@ -1104,6 +1322,9 @@ section.final-cta p { color: rgba(255, 255, 255, 0.82); }
 }
 .ba-handle > span {
   position: absolute;
+  z-index: 1;
+  box-shadow: 0 10px 24px -12px rgba(16, 32, 72, 0.45);
+  transition: transform var(--dur-normal) var(--ease-out), background-color var(--dur-fast) var(--ease-soft);
   top: 50%;
   left: 50%;
   width: 36px;

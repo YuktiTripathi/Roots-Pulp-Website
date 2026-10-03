@@ -13,6 +13,10 @@ const SLIDES = [
   { photo: photos.happyPatient, caption: "A reason to smile" },
 ] as const;
 
+/**
+ * FLOW: a centre-focused carousel. The active photograph sits in the middle, neighbours peek in at a
+ * slightly smaller scale. Swipe or drag, arrow buttons, dots and the keyboard all move it.
+ */
 export function ClinicShowcase() {
   const track = useRef<HTMLUListElement>(null);
   const [edges, setEdges] = useState({ start: true, end: false });

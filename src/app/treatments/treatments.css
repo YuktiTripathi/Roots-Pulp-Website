@@ -84,7 +84,7 @@
   transition: transform 0.4s var(--ease-out), border-color 0.25s ease, box-shadow 0.4s var(--ease-out);
 }
 .tx-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(var(--lift));
   border-color: var(--teal);
   box-shadow: 0 14px 28px rgba(16, 32, 72, 0.08);
 }
@@ -720,4 +720,55 @@
   .tx-list a:hover .tx-img,
   .tx-card:hover .tx-badge,
   .tx-list a:hover .tx-go { transform: none; }
+}
+
+/* On-this-page navigator (desktop only). Sticks just under the compact header. */
+.tp-sectionnav { display: none; }
+@media (min-width: 1081px) {
+  .tp-sectionnav {
+    display: block;
+    position: sticky;
+    top: calc(var(--header-compact) + 8px);
+    z-index: 40;
+    padding: 10px 0;
+    pointer-events: none;
+  }
+  .tp-sectionnav ol {
+    pointer-events: auto;
+    list-style: none;
+    margin: 0 auto;
+    padding: 5px;
+    width: fit-content;
+    max-width: 100%;
+    display: flex;
+    gap: 2px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.86);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 10px 28px -16px rgba(16, 32, 72, 0.3);
+  }
+  .tp-sectionnav a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 38px;
+    padding: 0 14px;
+    border-radius: 999px;
+    color: var(--muted);
+    font-size: 0.86rem;
+    font-weight: 620;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color var(--dur-fast) var(--ease-soft), color var(--dur-fast) var(--ease-soft);
+  }
+  .tp-sectionnav-num { color: var(--teal); font-size: 0.72rem; letter-spacing: 0.08em; transition: color var(--dur-fast) var(--ease-soft); }
+  .tp-sectionnav a:hover { color: var(--navy); background: var(--teal-soft); }
+  .tp-sectionnav a[aria-current="location"] { background: var(--navy); color: white; }
+  .tp-sectionnav a[aria-current="location"] .tp-sectionnav-num { color: rgba(255, 255, 255, 0.7); }
+  /* Anchored sections land below the header and the navigator. */
+  .tp-page section[id], .tp-page .faq[id] { scroll-margin-top: calc(var(--header-compact) + 84px); }
 }

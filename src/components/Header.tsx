@@ -17,11 +17,30 @@ function isCurrent(pathname: string, href: string) {
 export function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const menuId = useId();
 
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
+
+  // GLASS: one passive listener, state only changes when the threshold is crossed.
+  useEffect(() => {
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      setScrolled(window.scrollY > 24);
+    };
+    const onScroll = () => {
+      if (!frame) frame = window.requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -38,7 +57,7 @@ export function Header() {
   }, [open]);
 
   return (
-    <header className="site-header">
+    <header className={`site-header${scrolled ? " is-scrolled" : ""}${open ? " is-menu-open" : ""}`}>
       <div className="header-bar">
         <Logo variant="header" />
         <nav className="desktop-nav" aria-label="Primary">

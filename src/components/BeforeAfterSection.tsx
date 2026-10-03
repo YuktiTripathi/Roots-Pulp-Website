@@ -77,14 +77,14 @@ export function BeforeAfterSlider({
 
 export function BeforeAfterSection() {
   return (
-    <section className="section before-after reveal" aria-labelledby="before-after-heading">
+    <section className="section before-after" aria-labelledby="before-after-heading">
       <div className="section-inner">
         <div className="section-heading">
-          <p className="eyebrow">Treatment cases</p>
-          <h2 id="before-after-heading">Before and after, with consent</h2>
+          <p className="eyebrow reveal">Treatment cases</p>
+          <h2 id="before-after-heading" className="reveal">Before and after, with consent</h2>
         </div>
 
-        <div className="ba-coming-soon">
+        <div className="ba-coming-soon reveal">
           <div className="ba-placeholder" aria-hidden="true">
             {/* Two side-by-side placeholder panels representing before/after */}
             <div className="ba-panel">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type CSSProperties } from "react";
 import { clinic, directionsUrl, fullAddress, telHref, whatsappHref } from "@/lib/clinic";
 import { openingHoursDisplay } from "@/lib/openingHours";
 
@@ -13,7 +13,7 @@ export function VisitSection() {
   return (
     <section className="section visit" aria-labelledby="visit-heading">
       <div className="section-inner visit-grid">
-        <div>
+        <div className="reveal">
           <h2 id="visit-heading">Visit Roots & Pulp</h2>
           <p className="visit-name">{clinic.name}</p>
           <address>
@@ -39,7 +39,7 @@ export function VisitSection() {
             <span className="sr-only"> (opens in a new tab)</span>
           </a>
         </div>
-        <div className="map-panel">
+        <div className="map-panel reveal" style={{ "--i": 1 } as CSSProperties}>
           {mapReady ? (
             <iframe title={`Map showing ${clinic.name} at ${clinic.streetAddress}, ${clinic.locality}`} src={mapSrc} loading="lazy" />
           ) : (

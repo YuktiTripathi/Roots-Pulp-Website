@@ -1,3 +1,4 @@
+import { stagger } from "@/lib/motion";
 import Link from "next/link";
 import { InteractivePrinciples } from "./InteractivePrinciples";
 
@@ -5,7 +6,7 @@ export function RootsAndPulpStory() {
   return (
     <section className="section story" aria-labelledby="story-heading">
       <div className="section-inner story-grid">
-        <div className="story-art" aria-hidden="true">
+        <div className="story-art reveal reveal--scale" aria-hidden="true">
           <svg viewBox="0 0 420 520">
             <circle cx="210" cy="230" r="168" fill="none" stroke="#102048" strokeOpacity="0.16" />
             <circle cx="210" cy="230" r="128" fill="none" stroke="#0e4a47" strokeOpacity="0.28" />
@@ -22,7 +23,7 @@ export function RootsAndPulpStory() {
           </svg>
           <p className="story-label">Enamel, pulp and roots</p>
         </div>
-        <div className="story-copy">
+        <div className="story-copy reveal" style={stagger(1)}>
           <h2 id="story-heading">Why we&apos;re called Roots &amp; Pulp</h2>
           <p>
             From the outside, a tooth looks simple. Underneath the enamel sits the pulp, a living core of nerves

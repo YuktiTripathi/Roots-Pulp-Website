@@ -11,7 +11,6 @@ import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { FloatingContactActions } from "@/components/FloatingContactActions";
 import { RevealOnScroll } from "@/components/RevealOnScroll";
-import { SiteCursor } from "@/components/SiteCursor";
 import { clinic, homeSeo, siteUrl } from "@/lib/clinic";
 import { clinicJsonLd, doctorJsonLd, websiteJsonLd } from "@/lib/schema";
 import { defaultOgImage, jsonLd } from "@/lib/seo";
@@ -66,7 +65,6 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         <a className="skip" href="#content">
           Skip to content
         </a>
-        <SiteCursor />
         <Header />
         <RevealOnScroll />
         {children}

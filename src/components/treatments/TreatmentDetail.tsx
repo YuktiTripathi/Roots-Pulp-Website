@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { FAQSection } from "@/components/FAQSection";
+import { TreatmentSectionNav } from "@/components/treatments/TreatmentSectionNav";
 import { FinalCTA } from "@/components/FinalCTA";
 import { PhoneIcon } from "@/components/Icons";
 import { StageFigure } from "@/components/treatments/StageIllustrations";
@@ -213,8 +214,20 @@ export function TreatmentDetail({ treatment, content }: { treatment: Treatment; 
         </div>
       </section>
 
+      <TreatmentSectionNav
+        sections={[
+          { id: "when", label: "When you may need it" },
+          ...(explainer ? [{ id: "overview", label: "Overview" }] : []),
+          { id: "procedure", label: "Procedure" },
+          ...(options ? [{ id: "options", label: "Options" }] : []),
+          { id: "aftercare", label: "Recovery" },
+          { id: "cost", label: "Cost" },
+          { id: "faqs", label: "FAQs" },
+        ]}
+      />
+
       {/* Symptoms */}
-      <section className={`tp-section ${tone("symptoms")}`} aria-labelledby="symptoms-heading">
+      <section id="when" className={`tp-section ${tone("symptoms")}`} aria-labelledby="symptoms-heading">
         <div className="tx-wrap">
           <SectionHead id="symptoms-heading" heading={content.symptoms.heading} intro={content.symptoms.intro} />
           {symptomGroups.map((group) => (
@@ -284,7 +297,7 @@ export function TreatmentDetail({ treatment, content }: { treatment: Treatment; 
 
       {/* What it is */}
       {explainer ? (
-        <section className={`tp-section ${tone("what")}`} aria-labelledby="what-heading">
+        <section id="overview" className={`tp-section ${tone("what")}`} aria-labelledby="what-heading">
           <div className="tx-wrap">
             <div className="tp-explain">
               <SectionHead id="what-heading" heading={explainer.heading} />
@@ -315,7 +328,7 @@ export function TreatmentDetail({ treatment, content }: { treatment: Treatment; 
       ) : null}
 
       {/* Process */}
-      <section className={`tp-section ${tone("process")}`} aria-labelledby="process-heading">
+      <section id="procedure" className={`tp-section ${tone("process")}`} aria-labelledby="process-heading">
         <div className="tx-wrap">
           <SectionHead id="process-heading" heading={content.process.heading} intro={content.process.intro} />
           <ol className={`tp-steps tp-steps-${content.process.steps.length}`}>
@@ -350,7 +363,7 @@ export function TreatmentDetail({ treatment, content }: { treatment: Treatment; 
 
       {/* Options */}
       {options ? (
-        <section className={`tp-section ${tone("options")}`} aria-labelledby="options-heading">
+        <section id="options" className={`tp-section ${tone("options")}`} aria-labelledby="options-heading">
           <div className="tx-wrap">
             <SectionHead id="options-heading" heading={options.heading} />
             <ul className={`tp-options tp-options-${options.items.length}`}>
@@ -676,7 +689,7 @@ export function TreatmentDetail({ treatment, content }: { treatment: Treatment; 
       )}
 
       {/* Aftercare */}
-      <section className={`tp-section ${tone("aftercare")}`} aria-labelledby="aftercare-heading">
+      <section id="aftercare" className={`tp-section ${tone("aftercare")}`} aria-labelledby="aftercare-heading">
         <div className="tx-wrap">
           <SectionHead id="aftercare-heading" heading={content.aftercare.heading} intro={content.aftercare.intro} />
           <Cards items={content.aftercare.items} numbered />
@@ -721,7 +734,7 @@ export function TreatmentDetail({ treatment, content }: { treatment: Treatment; 
       ) : null}
 
       {/* Cost */}
-      <section className={`tp-section ${tone("cost")}`} aria-labelledby="cost-heading">
+      <section id="cost" className={`tp-section ${tone("cost")}`} aria-labelledby="cost-heading">
         <div className="tx-wrap">
           <SectionHead id="cost-heading" heading={content.cost.heading} intro={content.cost.intro} />
           <Cards items={content.cost.items} numbered />
@@ -734,6 +747,7 @@ export function TreatmentDetail({ treatment, content }: { treatment: Treatment; 
         heading="Common questions"
         intro={content.faqIntro}
         className={tone("faq")}
+        id="faqs"
       />
 
       {related.length ? (

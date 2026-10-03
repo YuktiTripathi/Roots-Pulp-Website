@@ -1,3 +1,4 @@
+import { stagger } from "@/lib/motion";
 export function EditorialStatements() {
   return (
     <>
@@ -10,10 +11,12 @@ export function EditorialStatements() {
       </section>
       <section className="statement statement-surface" aria-labelledby="surface-statement">
         <div className="section-inner">
-          <h2 id="surface-statement" className="reveal">
-            <span>Dental Care</span>
-            <span>that goes deeper</span>
-            <span>
+          <h2 id="surface-statement">
+            <span className="reveal">Dental Care</span>{" "}
+            <span className="reveal" style={stagger(1)}>
+              that goes deeper
+            </span>{" "}
+            <span className="reveal" style={stagger(2)}>
               than the <em>surface</em>
             </span>
           </h2>

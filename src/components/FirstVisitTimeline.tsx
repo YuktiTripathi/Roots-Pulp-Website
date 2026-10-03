@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { stagger } from "@/lib/motion";
 import { photos } from "@/lib/photos";
 import { CrossfadePhoto } from "./CrossfadePhoto";
 
@@ -51,13 +52,15 @@ export function FirstVisitTimeline() {
 
   return (
     <section className="section first-visit" aria-labelledby="first-visit-heading">
-      <div className="section-inner reveal">
+      <div className="section-inner">
         <div className="section-heading">
-          <p className="eyebrow">What to expect</p>
-          <h2 id="first-visit-heading">Your first visit</h2>
+          <p className="eyebrow reveal">What to expect</p>
+          <h2 id="first-visit-heading" className="reveal" style={stagger(1)}>
+            Your first visit
+          </h2>
         </div>
 
-        <div className="timeline-container">
+        <div className="timeline-container reveal" style={stagger(2)}>
           <ol className="timeline-track">
             {STEPS.map((item, index) => (
               <li key={item.num}>
@@ -76,7 +79,7 @@ export function FirstVisitTimeline() {
           </ol>
 
           <div className="timeline-stage">
-            <div className="timeline-panel" id="first-visit-panel" aria-live="polite">
+            <div key={step.num} className="timeline-panel swap" id="first-visit-panel" aria-live="polite">
               <p className="timeline-kicker">{step.num}</p>
               <h3 className="timeline-title">{step.title}</h3>
               <p className="timeline-desc">{step.desc}</p>
