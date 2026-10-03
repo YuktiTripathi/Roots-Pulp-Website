@@ -77,11 +77,12 @@ export default function AboutPage() {
             <div className="about-copy">
               <p className="eyebrow reveal">About Roots &amp; Pulp</p>
               <h1 id="about-heading" className="reveal" style={stagger(1)}>
-                Know what&apos;s wrong, what your options are, and what happens next.
+                Know what&apos;s wrong, what your options are, and what happens next
               </h1>
               <p className="lede reveal" style={stagger(2)}>
-                That is the standard every visit at Roots &amp; Pulp is held to. We are a dental clinic in Sector
-                Q, Aliganj, Lucknow.
+                That is the standard every visit at Roots &amp; Pulp is held to.
+                <br />
+                We are a dental clinic in Sector Q, Aliganj, Lucknow.
               </p>
               <div className="hero-actions reveal" style={stagger(3)}>
                 <Link className="btn btn-primary" href={bookingUrl} target="_blank" rel="noopener noreferrer">
@@ -116,17 +117,17 @@ export default function AboutPage() {
           >
             <div className="parallax-layer">
               <Image
-                src={photos.listening.src}
-                alt={photos.listening.alt}
-                width={photos.listening.width}
-                height={photos.listening.height}
+                src={photos.consultationDesk.src}
+                alt={photos.consultationDesk.alt}
+                width={photos.consultationDesk.width}
+                height={photos.consultationDesk.height}
                 sizes="(max-width: 980px) 100vw, 480px"
                 className="mask-img"
-                style={{ objectPosition: photos.listening.position }}
+                style={{ objectPosition: photos.consultationDesk.position }}
               />
             </div>
           </figure>
-          <div className="about-copy">
+          <div className="about-copy about-justify">
             <p className="eyebrow reveal">Why Roots &amp; Pulp exists</p>
             <h2 id="why-heading" className="reveal" style={stagger(1)}>
               People should never feel like just another case in a dental chair.
@@ -180,7 +181,7 @@ export default function AboutPage() {
 
       <section className="section about-vision" aria-labelledby="vision-heading">
         <div className="section-inner about-vision-inner">
-          <div className="about-vision-copy">
+          <div className="about-vision-copy about-justify">
             <p className="eyebrow reveal">Our vision</p>
             <h2 id="vision-heading" className="reveal" style={stagger(1)}>
               A clinic you return to through different stages of life.
@@ -247,7 +248,7 @@ export default function AboutPage() {
           <div className="about-copy">
             <p className="eyebrow reveal">Your dentist</p>
             <h2 id="doctor-heading" className="reveal" style={stagger(1)}>
-              A dentist who also thinks in public health.
+              A dentist who also thinks in public health
             </h2>
             <p className="reveal" style={stagger(2)}>
               Dr. Shubham Tripathi, Founder and Director, trained in both dentistry (BDS) and public health (MPH).
@@ -270,7 +271,7 @@ export default function AboutPage() {
         <div className="section-inner about-split about-clinic-grid">
           <div className="about-copy">
             <h2 id="clinic-heading" className="reveal">
-              A calm place in Aliganj
+              A calm place in Aliganj, Lucknow
             </h2>
             <p className="reveal" style={stagger(1)}>
               Roots &amp; Pulp is in Sector Q, Aliganj, near Saraswati Vidya Mandir School.
@@ -287,7 +288,7 @@ export default function AboutPage() {
             <p className="about-follow reveal" style={stagger(3)}>
               <a className="text-link" href={directionsUrl} target="_blank" rel="noopener noreferrer">
                 Get directions <span aria-hidden="true">→</span>
-                <span className="visually-hidden"> (opens in a new tab)</span>
+                <span className="sr-only"> (opens in a new tab)</span>
               </a>
             </p>
           </div>
@@ -308,7 +309,7 @@ export default function AboutPage() {
                 alt={photos.waitingArea.alt}
                 width={photos.waitingArea.width}
                 height={photos.waitingArea.height}
-                sizes="(max-width: 640px) 68vw, 280px"
+                sizes="(max-width: 640px) 78vw, 340px"
                 className="mask-img"
               />
             </figure>
@@ -317,7 +318,7 @@ export default function AboutPage() {
       </section>
 
       <FinalCTA
-        heading="Start with a conversation."
+        heading="Start with a conversation"
         supporting="You don't need to know what treatment you need before you visit. If something has been bothering you, such as pain, sensitivity, a change in your smile or just a question, let us take a look and explain what we see."
         showCall
       />

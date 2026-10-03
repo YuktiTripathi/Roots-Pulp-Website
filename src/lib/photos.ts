@@ -18,6 +18,13 @@ export const photos = {
     alt: "Dr. Shubham Tripathi listening to a patient during a consultation at Roots & Pulp Dental Clinic",
     position: "center 30%",
   },
+  consultationDesk: {
+    src: `${care}/dr-shubham-consultation-desk.webp`,
+    width: 1000,
+    height: 1000,
+    alt: "Dr. Shubham Tripathi listening to a patient at the consultation desk at Roots & Pulp Dental Clinic",
+    position: "center",
+  },
   consultation: {
     src: `${care}/dr-shubham-patient-consultation.webp`,
     width: 1024,

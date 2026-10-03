@@ -631,6 +631,8 @@ button { cursor: pointer; }
 }
 
 .final-cta { background: var(--navy); color: white; padding: 88px 0; }
+section.final-cta h2 { color: white; }
+section.final-cta p { color: rgba(255, 255, 255, 0.82); }
 .final-cta p { margin: 14px 0 0; max-width: 36rem; color: rgba(255, 255, 255, 0.82); }
 .final-cta .btn-light:focus-visible, .final-cta .btn-line:focus-visible { outline-color: var(--focus-ring); }
 

@@ -130,7 +130,7 @@
 }
 
 .about-editorial-photo img {
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 1 / 1;
   border-radius: 0;
 }
 
@@ -324,7 +324,7 @@
   position: absolute;
   bottom: 0;
   left: 0;
-  width: min(58%, 280px);
+  width: min(70%, 340px);
   padding: 7px;
   border-radius: calc(var(--radius) + 4px);
   background: var(--ivory);
@@ -411,5 +411,26 @@
   .about-vision-quote {
     margin-top: 34px;
     padding-top: 28px;
+  }
+}
+
+/* Long-form paragraphs read as justified blocks; hyphenation keeps the word spacing even. */
+.about-justify > p:not(.eyebrow),
+.about-justify > blockquote {
+  text-align: justify;
+  hyphens: auto;
+}
+
+/* Short headings stay on a single line on larger screens. */
+@media (min-width: 641px) {
+  #walk-out-heading,
+  #small-things-heading {
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 640px) {
+  .about-clinic-support {
+    width: min(78%, 300px);
   }
 }
