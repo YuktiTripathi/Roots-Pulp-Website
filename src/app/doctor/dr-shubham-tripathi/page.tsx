@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { FinalCTA } from "@/components/FinalCTA";
-import { bookingUrl, doctor, whatsappHref } from "@/lib/clinic";
+import { bookingUrl, doctor, doctorExperience, whatsappHref } from "@/lib/clinic";
 import { stagger } from "@/lib/motion";
 import { photos } from "@/lib/photos";
 import "./doctor.css";
@@ -43,8 +43,8 @@ const credentials = [
     icon: "qual",
   },
   {
-    title: "8+ Years",
-    detail: "of Experience",
+    title: doctorExperience.short,
+    detail: doctorExperience.detail,
     icon: "years",
   },
   {
@@ -115,8 +115,8 @@ export default function DoctorPage() {
               </ul>
               <p className="enter" style={stagger(3)}>
                 Dr. Shubham Tripathi founded Roots &amp; Pulp Dental Clinic in Aliganj with a simple aim: to offer
-                careful, unhurried dental care where patients feel heard, informed and comfortable. With over seven
-                years of clinical experience, he treats patients across different stages of life, from a child&apos;s
+                careful, unhurried dental care where patients feel heard, informed and comfortable. With{" "}
+                {doctorExperience.inline}, he treats patients across different stages of life, from a child&apos;s
                 first <Link href="/treatments/childrens-dentistry/">dental check-up</Link> to restorative and aesthetic
                 treatments such as <Link href="/treatments/root-canal-treatment/">root canal treatment</Link>,{" "}
                 <Link href="/treatments/crowns-and-bridges/">crowns</Link>,{" "}

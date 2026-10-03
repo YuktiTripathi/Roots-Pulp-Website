@@ -73,7 +73,7 @@ export function websiteJsonLd() {
 
 /**
  * Dr. Shubham Tripathi. Only credentials stated elsewhere on the site are used.
- * Years of experience are left out until the 7 vs 8+ figure is confirmed.
+ * Experience is confirmed as 8+ years. It is not emitted in Person schema.
  */
 export function doctorJsonLd() {
   return {

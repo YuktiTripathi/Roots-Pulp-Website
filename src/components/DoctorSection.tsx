@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { bookingUrl, doctor, doctorCredentials } from "@/lib/clinic";
+import { bookingUrl, doctor, doctorCredentials, doctorExperience } from "@/lib/clinic";
 import { stagger } from "@/lib/motion";
 import { ArrowIcon } from "./Icons";
 
@@ -29,7 +29,7 @@ export function DoctorSection() {
         </div>
         <div className="doctor-body">
           <p className="reveal" style={stagger(2)}>
-            Dr. Tripathi brings over seven years of clinical experience and a specialised certification in rotary
+            Dr. Tripathi brings {doctorExperience.inline} and a specialised certification in rotary
             endodontics to every consultation. His Master of Public Health gives him a strong focus on prevention:
             helping you avoid the next problem, not just fixing the current one.
           </p>

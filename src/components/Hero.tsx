@@ -1,69 +1,59 @@
 import Image from "next/image";
 import Link from "next/link";
-import { bookingUrl, clinic, doctor, telHref, whatsappHref } from "@/lib/clinic";
-import { ArrowIcon } from "./Icons";
+import { bookingUrl, clinic, telHref, whatsappHref } from "@/lib/clinic";
+import { getGoogleRating } from "@/lib/googleRating";
+import { ClinicAtGlance } from "./ClinicAtGlance";
 import { OpeningStatus } from "./OpeningStatus";
-import { stagger } from "@/lib/motion";
 
-export function Hero() {
+export async function Hero() {
+  const liveRating = await getGoogleRating();
+  const manualRating = process.env.NEXT_PUBLIC_GOOGLE_RATING || null;
+
   return (
     <section className="hero" id="hero" aria-labelledby="home-heading">
       <div className="hero-copy">
-        <p className="eyebrow enter">Dental clinic in Aliganj, Lucknow</p>
-        <h1 id="home-heading" className="enter-rise" style={stagger(1)}>Dental care that goes deeper than the surface</h1>
-        <p className="lede enter" style={stagger(2)}>
-          Careful diagnosis, clear explanations and gentle treatment for the whole family, from Dr. Shubham
-          Tripathi and the team at Roots & Pulp.
+        <p className="eyebrow">Dental Clinic in Aliganj, Lucknow</p>
+        <h1 id="home-heading">Dental care that goes deeper than the surface.</h1>
+        <p className="lede">
+          Dr. Shubham Tripathi examines carefully, explains what he finds in plain language, and plans treatment
+          around you. Family dental care in Sector Q, Aliganj, open seven days.
         </p>
-        <div className="hero-actions enter" style={stagger(3)}>
+        <div className="hero-actions">
           <Link className="btn btn-primary" href={bookingUrl} target="_blank" rel="noopener noreferrer">
-            Book an Appointment <ArrowIcon className="arrow" />
+            Book an Appointment
           </Link>
-          <a className="btn btn-secondary" href={telHref()}>
-            Call {clinic.phoneDisplay}
-          </a>
-          <a className="btn btn-tertiary" href={whatsappHref()}>
+          <a className="btn btn-secondary" href={whatsappHref()}>
             WhatsApp Us
           </a>
         </div>
-        <div className="enter" style={stagger(4)}>
-          <OpeningStatus suffix={clinic.streetAddress} />
-        </div>
+        <a className="text-link hero-call" href={telHref()} aria-label="Call Roots & Pulp Dental Clinic">
+          Call the clinic
+        </a>
+        <OpeningStatus suffix={clinic.streetAddress} />
       </div>
+
       <div className="hero-visual">
-        <div className="hero-rings" aria-hidden="true">
-          <span />
-          <span />
-        </div>
-        <svg className="hero-tooth" viewBox="0 0 220 280" aria-hidden="true">
-          <path
-            d="M110 18c36 0 62 26 70 66 10 52-4 78-8 98l-18 72c-8 24-24 38-44 38s-36-14-44-38l-18-72c-4-20-18-46-8-98C48 44 74 18 110 18Z"
-            fill="none"
-            stroke="currentColor"
-            pathLength={1}
+        {/* TODO [NEW PHOTO REQUIRED]: wide daylight photo of the consultation space, 1600px or wider. */}
+        {/* TODO [VERIFY BEFORE PUBLISHING]: patient consent for the identifiable patient in this photo. */}
+        <figure className="hero-card">
+          <Image
+            src="/images/consultation-banner.jpg"
+            alt="Dr. Shubham Tripathi talking with a patient at the consultation desk at Roots & Pulp Dental Clinic, Aliganj"
+            width={768}
+            height={1024}
+            priority
+            sizes="(max-width: 980px) 100vw, 520px"
+            className="hero-card-img"
           />
-        </svg>
-        <Image
-          src={doctor.portrait}
-          alt={doctor.heroAlt}
-          width={doctor.portraitWidth}
-          height={doctor.portraitHeight}
-          priority
-          unoptimized
-          className="hero-portrait hero-media"
-        />
-        <aside className="credential-card">
-          <p>BDS · MPH</p>
-          <p>Founder & Director</p>
-          <p>Roots & Pulp Dental Clinic</p>
-        </aside>
-        <aside className="location-card">
-          <p>
-            {clinic.neighbourhood}, {clinic.locality}
-          </p>
-          <p>{clinic.addressLine1}</p>
-        </aside>
+          <figcaption className="hero-chip">
+            <span>Dr. Shubham Tripathi</span>
+            <span>Founder &amp; Director</span>
+          </figcaption>
+        </figure>
       </div>
+
+      {/* TODO [LIVE GOOGLE REVIEWS INTEGRATION REQUIRED]: set GOOGLE_PLACES_API_KEY and GOOGLE_PLACE_ID. Check Google's current terms on caching and attribution. */}
+      <ClinicAtGlance liveRating={liveRating} manualRating={manualRating} />
     </section>
   );
 }

@@ -16,7 +16,6 @@ import { FirstVisitTimeline } from "@/components/FirstVisitTimeline";
 import { Hero } from "@/components/Hero";
 import { ReviewsSection } from "@/components/ReviewsSection";
 import { RootsAndPulpStory } from "@/components/RootsAndPulpStory";
-import { TrustStrip } from "@/components/TrustStrip";
 import { VisitSection } from "@/components/VisitSection";
 import { homeSeo } from "@/lib/clinic";
 import { homeWebPageJsonLd } from "@/lib/schema";
@@ -30,7 +29,6 @@ export default function HomePage() {
   return (
     <main id="content">
       <Hero />
-      <TrustStrip />
       <RootsAndPulpStory />
       <EditorialStatements />
       <DoctorSection />

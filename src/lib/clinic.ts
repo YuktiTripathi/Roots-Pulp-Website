@@ -45,6 +45,13 @@ export const clinic = {
     "Dental clinic in Sector Q, Aliganj, Lucknow, led by Dr. Shubham Tripathi (BDS, MPH). Checkups, root canal treatment, implants, crowns, braces and aligners, and children's dentistry. Open 7 days.",
 } as const;
 
+/** Confirmed by the clinic: 8+ years. Use these everywhere; never type the number elsewhere. */
+export const doctorExperience = {
+  short: "8+ Years",
+  detail: "of Experience",
+  inline: "8+ years of clinical experience",
+} as const;
+
 export const doctor = {
   name: "Dr. Shubham Tripathi",
   honorificPrefix: "Dr.",
@@ -398,7 +405,7 @@ export const doctorCredentials = [
   "Bachelor of Dental Surgery (BDS)",
   "Master of Public Health (MPH)",
   "Specialised Certification in Rotary Endodontics",
-  "Over 7 years of clinical experience",
+  doctorExperience.inline,
   "Life Member, Indian Dental Association",
   "Chief Dental Consultant, Re-Life Hospital, Bahraich",
   "U.P. State Dental Council Reg. No. 20606",
@@ -407,7 +414,7 @@ export const doctorCredentials = [
 export const homeSeo = {
   title: "Dental Clinic in Aliganj, Lucknow · Roots & Pulp",
   description:
-    "Doctor-led dental care in Sector Q, Aliganj, open 7 days. Root canals, implants, crowns, braces, aligners and children's dentistry. Book, call or WhatsApp.",
+    "Dental clinic in Sector Q, Aliganj, Lucknow. Dr. Shubham Tripathi explains clearly and plans treatment around you. Open 7 days. Book, call or WhatsApp.",
 } as const;
 
 export const visitReasons = [
