@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { clinic, clinicPhotos } from "@/lib/clinic";
 
@@ -12,15 +13,13 @@ export function ClinicGallery() {
           {clinicPhotos.map((photo) => (
             <li key={photo.caption}>
               <figure>
-                {photo.src ? (
-                  // Real clinic photographs are inserted through clinicPhotos when supplied.
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" />
-                ) : (
-                  <div className="photo-placeholder" role="img" aria-label={`${photo.alt}. Photograph to be added.`}>
-                    <span>{photo.caption}</span>
-                  </div>
-                )}
+                <Image
+                  src={photo.src}
+                  alt={photo.alt}
+                  width={photo.width}
+                  height={photo.height}
+                  sizes="(max-width: 700px) 100vw, 560px"
+                />
                 <figcaption>{photo.caption}</figcaption>
               </figure>
             </li>

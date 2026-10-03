@@ -2,32 +2,90 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent, type MouseEvent } from "react";
+import { flushSync } from "react-dom";
 import { ChevronLeftIcon, ChevronRightIcon, CloseIcon } from "@/components/Icons";
 import { galleryFilters, gallerySections, type GalleryImage } from "@/lib/gallery";
 import { stagger } from "@/lib/motion";
+
+const MORPH_NAME = "gallery-photo";
 
 function imageSizes(count: number, index: number) {
   if (count === 1) return "(max-width: 980px) 100vw, 1140px";
   return index === 0 ? "(max-width: 980px) 100vw, 660px" : "(max-width: 980px) 100vw, 470px";
 }
 
+/** Runs `update` inside a view transition where supported; returns null when it ran without one. */
+function viewTransition(update: () => void | Promise<void>) {
+  if (!document.startViewTransition || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    void update();
+    return null;
+  }
+  return document.startViewTransition(update);
+}
+
+function inViewport(element: Element) {
+  const rect = element.getBoundingClientRect();
+  return rect.bottom > 0 && rect.top < window.innerHeight;
+}
+
+function preload(src: string) {
+  const image = new window.Image();
+  image.src = src;
+}
+
 export function GalleryTour() {
   const [filter, setFilter] = useState<(typeof galleryFilters)[number]["id"]>("all");
   const [open, setOpen] = useState<number | null>(null);
+  const [morph, setMorph] = useState(false);
   const opener = useRef<HTMLElement | null>(null);
 
   const sections = gallerySections.filter((section) => filter === "all" || section.category === filter);
   const frames = useMemo(() => sections.flatMap((section) => section.images), [sections]);
 
-  const show = useCallback((index: number, trigger?: HTMLElement | null) => {
-    if (trigger) opener.current = trigger;
-    setOpen(index);
+  const show = useCallback((index: number, trigger: HTMLElement) => {
+    opener.current = trigger;
+    const thumb = trigger.querySelector("img");
+    if (thumb) thumb.style.viewTransitionName = MORPH_NAME;
+    const transition = viewTransition(async () => {
+      if (thumb) thumb.style.viewTransitionName = "";
+      flushSync(() => {
+        setMorph(true);
+        setOpen(index);
+      });
+      const full = document.querySelector<HTMLImageElement>(".gallery-lightbox img");
+      await Promise.race([full?.decode().catch(() => undefined), new Promise((resolve) => setTimeout(resolve, 250))]);
+    });
+    if (!transition) {
+      if (thumb) thumb.style.viewTransitionName = "";
+      setMorph(false);
+    }
   }, []);
 
   const close = useCallback(() => {
-    setOpen(null);
+    const thumb = open == null ? null : document.querySelector<HTMLImageElement>(`[data-frame="${open}"] img`);
+    if (morph && thumb && inViewport(thumb)) {
+      const transition = viewTransition(() => {
+        flushSync(() => setOpen(null));
+        thumb.style.viewTransitionName = MORPH_NAME;
+      });
+      transition?.finished.finally(() => {
+        thumb.style.viewTransitionName = "";
+      });
+    } else {
+      setOpen(null);
+    }
     opener.current?.focus();
-  }, []);
+  }, [open, morph]);
+
+  function applyFilter(id: typeof filter) {
+    if (id === filter) return;
+    viewTransition(() => {
+      flushSync(() => {
+        setFilter(id);
+        setOpen(null);
+      });
+    });
+  }
 
   useEffect(() => {
     if (open == null) return;
@@ -48,10 +106,7 @@ export function GalleryTour() {
   // Warm the neighbouring images so next and previous feel instant.
   useEffect(() => {
     if (open == null || frames.length < 2) return;
-    [(open + 1) % frames.length, (open - 1 + frames.length) % frames.length].forEach((index) => {
-      const preload = new window.Image();
-      preload.src = frames[index].src;
-    });
+    [(open + 1) % frames.length, (open - 1 + frames.length) % frames.length].forEach((index) => preload(frames[index].src));
   }, [open, frames]);
 
   function goToSection(event: MouseEvent<HTMLAnchorElement>, id: string) {
@@ -77,10 +132,7 @@ export function GalleryTour() {
               type="button"
               aria-pressed={filter === item.id}
               className={filter === item.id ? "is-active" : undefined}
-              onClick={() => {
-                setFilter(item.id);
-                setOpen(null);
-              }}
+              onClick={() => applyFilter(item.id)}
             >
               {item.label}
             </button>
@@ -108,19 +160,14 @@ export function GalleryTour() {
                 {section.images.map((image, imageIndex) => {
                   const index = frames.findIndex((frame) => frame.src === image.src);
                   return (
-                    <li
-                      key={image.src}
-                      className="reveal"
-                      style={{
-                        ...stagger(imageIndex % 3),
-                        ["--ratio" as string]: (image.width ?? 4) / (image.height ?? 3),
-                      }}
-                    >
+                    <li key={image.src} className="reveal" style={stagger(imageIndex % 3)}>
                       <figure className="gallery-named-item">
                         <button
                           type="button"
                           className="gallery-named-btn"
+                          data-frame={index}
                           onClick={(event) => show(index, event.currentTarget)}
+                          onPointerEnter={() => preload(image.src)}
                           aria-label={`Open larger view: ${image.caption ?? image.alt}`}
                         >
                           <Image
@@ -130,6 +177,7 @@ export function GalleryTour() {
                             height={image.height ?? 900}
                             sizes="(max-width: 640px) 100vw, (max-width: 980px) 50vw, 380px"
                             className="gallery-named-img"
+                            style={image.position ? { transformOrigin: image.position } : undefined}
                           />
                           <span className="gallery-item-zoom" aria-hidden="true">
                             <svg viewBox="0 0 24 24">
@@ -155,7 +203,9 @@ export function GalleryTour() {
                       <button
                         type="button"
                         className="gallery-item-btn"
+                        data-frame={index}
                         onClick={(event) => show(index, event.currentTarget)}
+                        onPointerEnter={() => preload(image.src)}
                         aria-label={`Open larger view: ${image.alt}`}
                       >
                         <Image
@@ -219,6 +269,7 @@ export function GalleryTour() {
           image={current}
           index={open ?? 0}
           total={frames.length}
+          morph={morph}
           onClose={close}
           onPrev={() => setOpen((index) => (index == null ? index : (index - 1 + frames.length) % frames.length))}
           onNext={() => setOpen((index) => (index == null ? index : (index + 1) % frames.length))}
@@ -232,6 +283,7 @@ function Lightbox({
   image,
   index,
   total,
+  morph,
   onClose,
   onPrev,
   onNext,
@@ -239,6 +291,8 @@ function Lightbox({
   image: GalleryImage;
   index: number;
   total: number;
+  /** Opened with a shared-element view transition, so the image's own entrance animation is skipped. */
+  morph: boolean;
   onClose: () => void;
   onPrev: () => void;
   onNext: () => void;
@@ -270,7 +324,7 @@ function Lightbox({
   return (
     <div
       ref={dialog}
-      className="gallery-lightbox"
+      className={`gallery-lightbox${morph ? " is-morph" : ""}`}
       role="dialog"
       aria-modal="true"
       aria-label={`Image ${index + 1} of ${total}: ${image.alt}`}
@@ -296,7 +350,7 @@ function Lightbox({
       <figure>
         {/* Loaded only when opened. The optimiser is not needed for a single full size view. */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img key={image.src} src={image.src} alt={image.alt} />
+        <img key={image.src} src={image.src} alt={image.alt} style={{ viewTransitionName: MORPH_NAME }} />
         <figcaption>
           {image.caption ?? image.alt}
           {image.detail ? <span>{image.detail}</span> : null}

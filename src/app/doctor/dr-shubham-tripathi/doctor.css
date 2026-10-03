@@ -207,18 +207,19 @@
   border-radius: 18px;
   background: var(--ivory);
   overflow: hidden;
-  --reveal-extra: box-shadow 0.35s var(--ease-out), border-color 0.25s ease;
-  transition: box-shadow 0.35s var(--ease-out), border-color 0.25s ease;
+  --reveal-extra: box-shadow 0.35s var(--ease-out), border-color 0.25s ease, translate 0.35s var(--ease-out);
+  transition: box-shadow 0.35s var(--ease-out), border-color 0.25s ease, translate 0.35s var(--ease-out);
 }
 
 .doctor-approach-list li:hover {
-  border-color: rgba(14, 74, 71, 0.4);
+  translate: 0 -3px;
+  border-color: rgba(14, 74, 71, 0.35);
   box-shadow: 0 18px 38px rgba(16, 32, 72, 0.1);
 }
 
 .doctor-approach-media {
   position: relative;
-  height: 240px;
+  aspect-ratio: 4 / 5;
   flex: none;
   overflow: hidden;
 }
@@ -227,13 +228,12 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 35%;
-  transform-origin: center 35%;
+  transform-origin: center 30%;
   display: block;
   transition: transform 0.9s var(--ease-out);
 }
 
-.doctor-approach-list li:hover .doctor-approach-photo { transform: scale(1.02); }
+.doctor-approach-list li:hover .doctor-approach-photo { transform: scale(1.03); }
 
 .doctor-approach-num {
   position: absolute;
@@ -325,6 +325,7 @@
   .doctor-profile-grid { grid-template-columns: 1fr; gap: 28px; }
   .doctor-portrait-wrap { max-width: 440px; }
   .doctor-approach-list { grid-template-columns: 1fr; }
+  .doctor-approach-media { aspect-ratio: 5 / 4; }
   .doctor-credential-grid { grid-template-columns: 1fr 1fr; }
 }
 
@@ -340,8 +341,10 @@
 @media (prefers-reduced-motion: reduce) {
   .doctor-approach-list li:hover .doctor-approach-photo,
   .doctor-credential-grid li:hover .doctor-credential-icon { transform: none; }
+  .doctor-approach-list li:hover { translate: none; }
 }
 
 @media (hover: none) {
   .doctor-approach-list li:hover .doctor-approach-photo { transform: none; }
+  .doctor-approach-list li:hover { translate: none; box-shadow: none; }
 }

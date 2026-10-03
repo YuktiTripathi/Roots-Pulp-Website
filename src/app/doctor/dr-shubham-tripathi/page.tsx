@@ -4,6 +4,7 @@ import Link from "next/link";
 import { FinalCTA } from "@/components/FinalCTA";
 import { bookingUrl, doctor, whatsappHref } from "@/lib/clinic";
 import { stagger } from "@/lib/motion";
+import { photos } from "@/lib/photos";
 import "./doctor.css";
 import { pageMetadata, jsonLd } from "@/lib/seo";
 import { webPageJsonLd } from "@/lib/schema";
@@ -21,20 +22,17 @@ const approach = [
   {
     title: "Listen carefully",
     text: "Every consultation begins with understanding the patient's concerns, symptoms and expectations before deciding what comes next.",
-    image: "/images/doctor/listen-consult.jpg",
-    alt: "Dr. Shubham Tripathi listening during a consultation",
+    photo: photos.listening,
   },
   {
     title: "Explain clearly",
     text: "Dental treatment can feel confusing. Findings, options and the reasoning behind a treatment plan are explained in simple, understandable terms.",
-    image: "/images/doctor/explain-consult.jpg",
-    alt: "Dr. Shubham Tripathi explaining a treatment plan",
+    photo: photos.explaining,
   },
   {
     title: "Treat thoughtfully",
     text: "Treatment is planned around the individual's needs, with attention to precision, comfort and long-term oral health.",
-    image: "/images/doctor/treat.jpg",
-    alt: "Dr. Shubham Tripathi providing dental treatment",
+    photo: photos.chairside,
   },
 ] as const;
 
@@ -169,12 +167,13 @@ export default function DoctorPage() {
               <li key={item.title} className="reveal" style={stagger(index)}>
                 <div className="doctor-approach-media">
                   <Image
-                    src={item.image}
-                    alt={item.alt}
-                    width={800}
-                    height={600}
-                    sizes="(max-width: 980px) 100vw, 360px"
+                    src={item.photo.src}
+                    alt={item.photo.alt}
+                    width={item.photo.width}
+                    height={item.photo.height}
+                    sizes="(max-width: 980px) 100vw, 400px"
                     className="doctor-approach-photo"
+                    style={{ objectPosition: item.photo.position }}
                   />
                   <span className="doctor-approach-num" aria-hidden="true">
                     {String(index + 1).padStart(2, "0")}

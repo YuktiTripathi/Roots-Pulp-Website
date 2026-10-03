@@ -183,15 +183,25 @@
 .tx-guidance { background: var(--soft); padding: 64px 0; }
 .tx-guidance p { margin-top: 14px; max-width: 52ch; color: var(--muted); }
 
-.tx-approach ol {
+.tx-approach-layout {
+  margin-top: 32px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.95fr);
+  gap: 32px 64px;
+  align-items: center;
+}
+.tx-approach-steps {
   list-style: none;
-  margin: 28px 0 0;
+  margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 28px;
+  gap: 8px;
 }
-.tx-approach li { position: relative; padding-top: 22px; border-top: 1px solid var(--line); }
+.tx-approach li {
+  position: relative;
+  padding: 22px 0 22px 0;
+  border-top: 1px solid var(--line);
+}
 .tx-approach li::before {
   content: "";
   position: absolute;
@@ -199,12 +209,31 @@
   left: 0;
   width: 44px;
   height: 2px;
-  background: var(--teal);
+  background: var(--line);
   transform-origin: left center;
+  transition: width 0.45s var(--ease-out), background-color 0.3s ease;
 }
+.tx-approach li[data-active]::before { width: 88px; background: var(--teal); }
 .tx-step { display: block; margin-bottom: 8px; color: var(--teal); font-family: var(--serif); font-size: 1.6rem; line-height: 1; }
 .tx-approach h3 { color: var(--navy); font-size: 0.85rem; letter-spacing: 0.12em; text-transform: uppercase; }
-.tx-approach li p { margin-top: 8px; color: var(--muted); }
+.tx-approach-trigger {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+}
+/* Whole step is the click target; focus ring is drawn around the step. */
+.tx-approach-trigger::after { content: ""; position: absolute; inset: 0; border-radius: 8px; }
+.tx-approach-trigger:focus-visible { outline: none; }
+.tx-approach-trigger:focus-visible::after { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+.tx-approach li p { margin-top: 8px; max-width: 42ch; color: var(--muted); transition: opacity 0.3s ease; }
+.tx-approach li:not([data-active]) p { opacity: 0.72; }
+.tx-approach-media { width: min(100%, 448px); justify-self: end; }
+.tx-approach-media .crossfade-photo { aspect-ratio: 4 / 5; border-radius: 22px; }
 .tx-approach .lede a { color: var(--teal); }
 
 .tx-close { background: var(--navy); color: white; padding: 64px 0; }
@@ -665,14 +694,15 @@
   .tx-hero-grid,
   .tx-grid,
   .tx-list,
-  .tx-approach ol { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tx-approach-layout { grid-template-columns: 1fr; }
+  .tx-approach-media { width: 100%; justify-self: stretch; order: -1; }
+  .tx-approach-media .crossfade-photo { aspect-ratio: 4 / 3; }
 }
 
 @media (max-width: 680px) {
   .tx-hero-grid,
   .tx-grid,
-  .tx-list,
-  .tx-approach ol { grid-template-columns: 1fr; }
+  .tx-list { grid-template-columns: 1fr; }
   .tx-hero-frame { height: 260px; }
   .tx-hero-visual::before { inset: 12px -6px -10px 12px; }
 }

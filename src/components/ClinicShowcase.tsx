@@ -1,87 +1,89 @@
 "use client";
 
-import { useEffect, useId, useRef, useState } from "react";
-import { showcaseSlides } from "@/lib/clinic";
+import Image from "next/image";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { photos } from "@/lib/photos";
 import { ChevronLeftIcon, ChevronRightIcon } from "./Icons";
 
-const INTERVAL = 5500;
+const SLIDES = [
+  { photo: photos.explaining, caption: "Talking through your options" },
+  { photo: photos.procedure, caption: "Care in progress" },
+  { photo: photos.mirror, caption: "Seeing it together" },
+  { photo: photos.reviewingSmile, caption: "Seeing the result" },
+  { photo: photos.happyPatient, caption: "A reason to smile" },
+] as const;
 
 export function ClinicShowcase() {
-  const [index, setIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const regionId = useId();
-  const reduceMotion = useRef(false);
+  const track = useRef<HTMLUListElement>(null);
+  const [edges, setEdges] = useState({ start: true, end: false });
 
-  useEffect(() => {
-    reduceMotion.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const measure = useCallback(() => {
+    const node = track.current;
+    if (!node) return;
+    setEdges({
+      start: node.scrollLeft <= 4,
+      end: node.scrollLeft + node.clientWidth >= node.scrollWidth - 4,
+    });
   }, []);
 
   useEffect(() => {
-    if (paused || reduceMotion.current) return;
-    const id = window.setInterval(() => {
-      setIndex((value) => (value + 1) % showcaseSlides.length);
-    }, INTERVAL);
-    return () => window.clearInterval(id);
-  }, [paused]);
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, [measure]);
 
-  function go(next: number) {
-    setIndex((next + showcaseSlides.length) % showcaseSlides.length);
+  function step(direction: 1 | -1) {
+    const node = track.current;
+    const card = node?.querySelector("li");
+    if (!node || !card) return;
+    const gap = parseFloat(getComputedStyle(node).columnGap) || 0;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    node.scrollBy({ left: direction * (card.getBoundingClientRect().width + gap), behavior: reduce ? "auto" : "smooth" });
   }
 
   return (
-    <section
-      className="showcase"
-      aria-roledescription="carousel"
-      aria-label="Inside Roots & Pulp"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-    >
+    <section className="showcase" aria-labelledby="showcase-heading">
       <div className="section-inner showcase-head">
-        <p className="eyebrow">Inside the clinic</p>
-        <h2 id={regionId}>A closer look at Roots & Pulp</h2>
-      </div>
-      <div className="showcase-frame">
-        <div className="showcase-track" style={{ transform: `translateX(-${index * 100}%)` }}>
-          {showcaseSlides.map((slide, slideIndex) => (
-            <figure
-              className="showcase-slide"
-              key={slide.caption}
-              aria-hidden={slideIndex !== index}
-            >
-              {slide.src ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={slide.src} alt={slide.alt} loading={slideIndex === 0 ? undefined : "lazy"} decoding="async" />
-              ) : (
-                <div className="showcase-placeholder" role="img" aria-label={`${slide.alt}. Photograph to be added.`}>
-                  <span>{slide.caption}</span>
-                </div>
-              )}
-              <figcaption>{slide.caption}</figcaption>
-            </figure>
-          ))}
+        <div>
+          <p className="eyebrow">Inside the clinic</p>
+          <h2 id="showcase-heading">A closer look at Roots & Pulp</h2>
         </div>
-        <button className="showcase-nav is-prev" type="button" aria-controls={regionId} onClick={() => go(index - 1)}>
-          <ChevronLeftIcon />
-          <span className="sr-only">Previous photograph</span>
-        </button>
-        <button className="showcase-nav is-next" type="button" onClick={() => go(index + 1)}>
-          <ChevronRightIcon />
-          <span className="sr-only">Next photograph</span>
-        </button>
+        <div className="showcase-controls">
+          <button className="showcase-nav" type="button" onClick={() => step(-1)} disabled={edges.start} aria-controls="showcase-track">
+            <ChevronLeftIcon />
+            <span className="sr-only">Previous photographs</span>
+          </button>
+          <button className="showcase-nav" type="button" onClick={() => step(1)} disabled={edges.end} aria-controls="showcase-track">
+            <ChevronRightIcon />
+            <span className="sr-only">Next photographs</span>
+          </button>
+        </div>
       </div>
-      <div className="showcase-dots" role="tablist" aria-label="Clinic photographs">
-        {showcaseSlides.map((slide, slideIndex) => (
-          <button
-            key={slide.caption}
-            type="button"
-            role="tab"
-            aria-selected={slideIndex === index}
-            aria-label={slide.caption}
-            className={slideIndex === index ? "is-active" : undefined}
-            onClick={() => go(slideIndex)}
-          />
+      <ul
+        ref={track}
+        id="showcase-track"
+        className="showcase-track"
+        tabIndex={0}
+        aria-label="Clinic photographs, scroll sideways for more"
+        onScroll={measure}
+      >
+        {SLIDES.map(({ photo, caption }) => (
+          <li key={photo.src} className="showcase-card">
+            <figure>
+              <div className="showcase-media">
+                <Image
+                  src={photo.src}
+                  alt={photo.alt}
+                  fill
+                  sizes="(max-width: 680px) 78vw, (max-width: 1100px) 42vw, 360px"
+                  style={{ objectPosition: photo.position }}
+                />
+              </div>
+              <figcaption>{caption}</figcaption>
+            </figure>
+          </li>
         ))}
-      </div>
+      </ul>
     </section>
   );
 }

@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
+import { TreatmentApproach } from "@/components/treatments/TreatmentApproach";
 import { additionalTreatments, FeaturedTreatmentCard, TreatmentListItem } from "@/components/treatments/TreatmentsLanding";
 import { bookingUrl, featuredTreatments, whatsappHref } from "@/lib/clinic";
 import { stagger } from "@/lib/motion";
+import { photos } from "@/lib/photos";
 import "./treatments.css";
 import { pageMetadata, jsonLd } from "@/lib/seo";
 import { webPageJsonLd } from "@/lib/schema";
@@ -16,21 +18,6 @@ const seo = {
 };
 
 export const metadata: Metadata = pageMetadata({ ...seo });
-
-const approach = [
-  {
-    title: "Listen",
-    text: "We begin by understanding your concerns, symptoms and expectations.",
-  },
-  {
-    title: "Diagnose",
-    text: "We examine the problem carefully before recommending treatment.",
-  },
-  {
-    title: "Explain",
-    text: "We make sure you understand your options and the reasoning behind the treatment plan.",
-  },
-];
 
 export default function TreatmentsPage() {
   return (
@@ -69,12 +56,13 @@ export default function TreatmentsPage() {
             <figure className="tx-hero-visual">
               <div className="tx-hero-frame reveal reveal--mask">
                 <Image
-                  src="/images/treatments/hero-care.jpg"
-                  alt="Dr. Shubham Tripathi treating a patient at Roots & Pulp"
+                  src={photos.procedure.src}
+                  alt={photos.procedure.alt}
                   fill
                   priority
                   sizes="(max-width: 900px) 100vw, 480px"
                   className="tx-hero-img mask-img"
+                  style={{ objectPosition: photos.procedure.position }}
                 />
               </div>
             </figure>
@@ -145,17 +133,7 @@ export default function TreatmentsPage() {
             the available options before treatment begins.{" "}
             <Link href="/doctor/dr-shubham-tripathi/">Meet Dr. Shubham Tripathi</Link>.
           </p>
-          <ol>
-            {approach.map((item, index) => (
-              <li key={item.title} className="reveal" style={stagger(index)}>
-                <span className="tx-step" aria-hidden="true">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <h3>{item.title}</h3>
-                <p>{item.text}</p>
-              </li>
-            ))}
-          </ol>
+          <TreatmentApproach />
         </div>
       </section>
 

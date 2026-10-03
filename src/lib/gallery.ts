@@ -1,3 +1,5 @@
+import { photos, type ClinicPhoto } from "@/lib/photos";
+
 export type GalleryCategory = "entrance" | "inside" | "consultation" | "treatment" | "people" | "equipment";
 
 export type GalleryImage = {
@@ -9,8 +11,14 @@ export type GalleryImage = {
   /** Intrinsic size, required for "named" sections where photos keep their own shape. */
   width?: number;
   height?: number;
+  /** object-position used when the photo is cropped, so faces stay in frame. */
+  position?: string;
   category: GalleryCategory;
 };
+
+function fromPhoto(photo: ClinicPhoto, caption: string, category: GalleryCategory): GalleryImage {
+  return { ...photo, caption, category };
+}
 
 export type GallerySection = {
   id: string;
@@ -87,30 +95,10 @@ export const gallerySections: GallerySection[] = [
       "Before treatment begins, there is time to discuss your concerns, understand what has been found, and talk through the options.",
     layout: "named",
     images: [
-      {
-        src: "/images/doctor/listen-consult.jpg",
-        alt: "Dr. Shubham Tripathi in consultation with a patient at the clinic desk",
-        caption: "Listening to a patient's concerns",
-        width: 1024,
-        height: 768,
-        category: "consultation",
-      },
-      {
-        src: "/images/doctor/explain-consult.jpg",
-        alt: "Dr. Shubham Tripathi explaining a dental X-ray to a patient",
-        caption: "Explaining findings clearly",
-        width: 981,
-        height: 637,
-        category: "consultation",
-      },
-      {
-        src: "/images/clinic/roots-pulp-about-consultation-lucknow.webp",
-        alt: "Dr. Shubham Tripathi completing a treatment plan with a patient",
-        caption: "Planning the next steps",
-        width: 819,
-        height: 1024,
-        category: "consultation",
-      },
+      fromPhoto(photos.listening, "Listening to a patient's concerns", "consultation"),
+      fromPhoto(photos.explaining, "Explaining findings clearly", "consultation"),
+      fromPhoto(photos.planning, "Planning the next steps", "consultation"),
+      fromPhoto(photos.consultation, "Talking through the options", "consultation"),
     ],
   },
   {
@@ -123,46 +111,12 @@ export const gallerySections: GallerySection[] = [
       "Treatment takes place in a clinical setting, with the chair, instruments and lighting arranged for the procedure.",
     layout: "named",
     images: [
-      {
-        src: "/images/doctor/treat.jpg",
-        alt: "Dr. Shubham Tripathi examining a patient's teeth at Roots & Pulp",
-        caption: "A careful dental examination",
-        width: 819,
-        height: 1024,
-        category: "treatment",
-      },
-      {
-        src: "/images/clinic/care/examining-patient-with-mirror.webp",
-        alt: "Dr. Shubham Tripathi treating a patient who is holding a dental mirror",
-        caption: "Patient involved in their care",
-        width: 819,
-        height: 1024,
-        category: "treatment",
-      },
-      {
-        src: "/images/clinic/care/treating-patient-in-chair.webp",
-        alt: "Dr. Shubham Tripathi providing dental treatment in the clinic chair",
-        caption: "Treatment in the dental chair",
-        width: 819,
-        height: 1024,
-        category: "treatment",
-      },
-      {
-        src: "/images/clinic/care/patient-dental-examination.webp",
-        alt: "Dr. Shubham Tripathi examining a patient's teeth at the clinic",
-        caption: "Checking teeth and gums",
-        width: 819,
-        height: 1024,
-        category: "treatment",
-      },
-      {
-        src: "/images/clinic/care/dental-checkup-in-progress.webp",
-        alt: "A dental checkup in progress at Roots & Pulp Dental Clinic",
-        caption: "A checkup in progress",
-        width: 819,
-        height: 1024,
-        category: "treatment",
-      },
+      fromPhoto(photos.mirror, "Patient involved in their care", "treatment"),
+      fromPhoto(photos.chairside, "Treatment in the dental chair", "treatment"),
+      fromPhoto(photos.closeUp, "A careful dental examination", "treatment"),
+      fromPhoto(photos.procedure, "Care in progress", "treatment"),
+      fromPhoto(photos.branded, "A checkup in progress", "treatment"),
+      fromPhoto(photos.examination, "Checking teeth and gums", "treatment"),
     ],
   },
   {
@@ -175,22 +129,8 @@ export const gallerySections: GallerySection[] = [
       "Appointments include time to see, understand and talk about your smile, along with the treatment itself.",
     layout: "named",
     images: [
-      {
-        src: "/images/clinic/care/patient-reviewing-smile.webp",
-        alt: "A patient looking at her smile in a mirror after a dental appointment",
-        caption: "Reviewing her smile",
-        width: 819,
-        height: 1024,
-        category: "people",
-      },
-      {
-        src: "/images/clinic/care/doctor-with-patient.webp",
-        alt: "Dr. Shubham Tripathi with a patient at Roots & Pulp Dental Clinic",
-        caption: "Dr. Shubham with a patient",
-        width: 819,
-        height: 1024,
-        category: "people",
-      },
+      fromPhoto(photos.reviewingSmile, "Reviewing her smile", "people"),
+      fromPhoto(photos.happyPatient, "Dr. Shubham with a patient", "people"),
     ],
   },
   {

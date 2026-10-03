@@ -106,71 +106,44 @@
   object-fit: cover;
 }
 
-.about-hero-media,
-.about-editorial-pair,
 .about-clinic-media {
   position: relative;
 }
 
-.about-hero-media {
+.about-hero-photo {
   width: min(100%, 560px);
   justify-self: end;
-  padding: 0 0 46px 34px;
-  background: transparent;
-}
-
-.about-hero-photo {
   overflow: hidden;
   border-radius: var(--radius);
 }
 
 .about-hero-photo img {
-  aspect-ratio: 1.55 / 1;
+  aspect-ratio: 4 / 3;
   border-radius: 0;
-  object-position: center;
 }
 
-.about-hero-inset {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: min(38%, 190px);
-  padding: 7px;
-  border-radius: calc(var(--radius) + 4px);
-  background: var(--ivory);
-}
-
-.about-hero-inset img {
-  aspect-ratio: 4 / 5;
-  object-position: center 18%;
-}
-
-.about-editorial-pair {
-  padding: 0 34px 72px 0;
-}
-
+/* Portrait image set slightly off the copy's centre line for an editorial, asymmetric feel. */
 .about-editorial-photo {
-  overflow: hidden;
+  width: min(100%, 440px);
+  margin-bottom: 64px;
   border-radius: var(--radius);
 }
 
 .about-editorial-photo img {
-  aspect-ratio: 1.54 / 1;
+  aspect-ratio: 4 / 5;
   border-radius: 0;
 }
 
-.about-supporting-photo {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  width: min(58%, 300px);
-  padding: 7px;
-  border-radius: calc(var(--radius) + 4px);
-  background: white;
+.about-walk-out-grid {
+  grid-template-columns: minmax(280px, 0.85fr) minmax(0, 1.15fr);
 }
 
-.about-supporting-photo img {
-  aspect-ratio: 8 / 7;
+.about-walk-out-photo {
+  width: min(100%, 440px);
+}
+
+.about-walk-out-photo img {
+  aspect-ratio: 4 / 5;
 }
 
 .about-lead {
@@ -233,17 +206,29 @@
 
 .about-vision-inner {
   display: grid;
-  justify-items: center;
-  text-align: center;
+  grid-template-columns: minmax(0, 55fr) minmax(280px, 45fr);
+  gap: 48px 72px;
+  align-items: center;
 }
 
 .about-vision-inner h2 {
   max-width: 20ch;
 }
 
-.about-vision-inner > p:not(.eyebrow) {
+.about-vision-copy > p:not(.eyebrow) {
   max-width: 40rem;
   line-height: 1.75;
+}
+
+.about-vision-photo {
+  overflow: hidden;
+  border-radius: var(--radius);
+}
+
+.about-vision-photo img {
+  aspect-ratio: 4 / 5;
+  max-height: 620px;
+  border-radius: 0;
 }
 
 .about-vision-quote {
@@ -257,16 +242,9 @@
   line-height: 1.38;
 }
 
-.about-small-things-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
-  gap: 48px 64px;
-  align-items: center;
-}
-
 .about-small-things-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 36px 30px;
   margin: 0;
   padding: 0;
@@ -290,12 +268,6 @@
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.12em;
-}
-
-.about-waiting-photo img {
-  aspect-ratio: 5 / 6;
-  max-height: 540px;
-  object-position: center;
 }
 
 .about-doctor-grid {
@@ -342,7 +314,7 @@
 }
 
 .about-clinic-photo img {
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 1 / 1;
   max-height: 570px;
   border-radius: 0;
   object-position: center;
@@ -366,7 +338,8 @@
   .about-hero-grid,
   .about-split,
   .about-why .about-split,
-  .about-small-things-layout,
+  .about-walk-out-grid,
+  .about-vision-inner,
   .about-doctor-grid,
   .about-clinic-grid {
     grid-template-columns: 1fr;
@@ -377,16 +350,28 @@
     max-width: none;
   }
 
-  .about-hero-media,
+  .about-hero-photo,
   .about-clinic-media {
     justify-self: start;
   }
 
-  .about-hero-media {
+  .about-hero-photo,
+  .about-vision-photo {
     width: min(100%, 620px);
   }
 
-  .about-editorial-pair {
+  .about-editorial-photo {
+    margin-bottom: 0;
+  }
+
+  .about-editorial-photo img,
+  .about-walk-out-photo img,
+  .about-vision-photo img {
+    aspect-ratio: 5 / 4;
+  }
+
+  .about-editorial-photo,
+  .about-walk-out-photo {
     width: min(100%, 620px);
   }
 
@@ -398,20 +383,15 @@
     width: min(100%, 520px);
   }
 
-  .about-waiting-photo {
-    width: min(100%, 620px);
-  }
-
-  .about-waiting-photo img {
-    aspect-ratio: 6 / 5;
-    max-height: none;
+  .about-small-things-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 640px) {
   .about-hero-grid,
   .about-split,
-  .about-small-things-layout {
+  .about-vision-inner {
     gap: 38px;
   }
 
@@ -422,14 +402,6 @@
 
   .about-checklist {
     padding: 8px 20px;
-  }
-
-  .about-hero-media {
-    padding: 0 0 34px 20px;
-  }
-
-  .about-editorial-pair {
-    padding: 0 22px 56px 0;
   }
 
   .about-clinic-media {

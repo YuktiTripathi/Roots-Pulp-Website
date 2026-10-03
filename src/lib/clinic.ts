@@ -68,41 +68,6 @@ export const heroVideoPath = "/assets/clinic-hero.mp4";
 export const heroVideoSrc = process.env.NEXT_PUBLIC_HERO_VIDEO || "";
 export const heroPoster = "/images/hero-poster.jpg";
 
-export type ShowcaseSlide = {
-  src: string | null;
-  alt: string;
-  caption: string;
-};
-
-export const showcaseSlides: ShowcaseSlide[] = [
-  {
-    src: doctor.portrait,
-    alt: doctor.profileAlt,
-    caption: "Dr. Shubham Tripathi",
-  },
-  {
-    src: "/images/clinic-entrance.jpg",
-    alt: "Entrance and signage of Roots & Pulp Dental Clinic in Sector Q, Aliganj",
-    caption: "Clinic entrance",
-  },
-  {
-    src: "/images/doctor/listen-consult.jpg",
-    alt: "Dr. Shubham Tripathi in consultation with a patient at the clinic desk",
-    caption: "Consultation",
-  },
-  {
-    src: "/images/doctor/treat.jpg",
-    alt: "Dental treatment underway in the chair at Roots & Pulp",
-    caption: "Treatment room",
-  },
-  {
-    src: "/images/equipment/apex-locator.jpg",
-    alt: "Electronic apex locator used to measure root canal length",
-    caption: "Treatment equipment",
-  },
-  // [NEW PHOTO REQUIRED] Reception area.
-]
-
 export function telHref() {
   return `tel:${clinic.phoneTel}`;
 }
@@ -358,29 +323,37 @@ export const expectations = [
   },
 ] as const;
 
-export const clinicPhotos: { src: string | null; caption: string; alt: string }[] = [
+/** Homepage "Inside the clinic" grid. Spaces only; people photos live in the showcase carousel above it. */
+export const clinicPhotos = [
   {
     src: "/images/clinic-entrance.jpg",
+    width: 1024,
+    height: 963,
     caption: "Entrance and signage",
     alt: "Entrance and signage of Roots & Pulp Dental Clinic in Sector Q, Aliganj",
   },
   {
-    src: "/images/doctor/listen-consult.jpg",
-    caption: "Consultation desk",
-    alt: "Dr. Shubham Tripathi in consultation with a patient at the clinic desk",
+    src: "/images/clinic/roots-pulp-waiting-area-lucknow.webp",
+    width: 1024,
+    height: 858,
+    caption: "Waiting area",
+    alt: "Patient waiting area at Roots & Pulp Dental Clinic in Aliganj, Lucknow",
   },
   {
-    src: "/images/doctor/treat.jpg",
+    src: "/images/clinic/roots-pulp-clinic-interior-lucknow.webp",
+    width: 1024,
+    height: 768,
+    caption: "Reception",
+    alt: "Reception and interior of Roots & Pulp Dental Clinic in Aliganj, Lucknow",
+  },
+  {
+    src: "/images/clinic/roots-pulp-treatment-room-lucknow.webp",
+    width: 1024,
+    height: 895,
     caption: "Treatment room",
-    alt: "Dental treatment underway in the chair at Roots & Pulp",
+    alt: "Dental treatment room at Roots & Pulp Dental Clinic in Aliganj, Lucknow",
   },
-  {
-    src: "/images/equipment/uv-sterilisation-chamber.jpg",
-    caption: "Sterilised instrument storage",
-    alt: "UV chamber holding sterilised dental instruments at Roots & Pulp",
-  },
-  // [NEW PHOTO REQUIRED] Reception area.
-]
+] as const;
 
 export type GoogleReview = {
   name: string;

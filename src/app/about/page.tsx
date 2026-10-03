@@ -5,6 +5,7 @@ import { FinalCTA } from "@/components/FinalCTA";
 import { bookingUrl, clinic, directionsUrl, doctor } from "@/lib/clinic";
 import { stagger } from "@/lib/motion";
 import { openingHoursShort } from "@/lib/openingHours";
+import { photos } from "@/lib/photos";
 import { pageMetadata, jsonLd } from "@/lib/seo";
 import { webPageJsonLd } from "@/lib/schema";
 import "./about.css";
@@ -57,7 +58,7 @@ export default function AboutPage() {
             path: seo.path,
             type: "AboutPage",
             breadcrumb: [{ name: "About", path: "/about/" }],
-            image: "/images/doctor/listen-consult.jpg",
+            image: photos.consultation.src,
           }),
         )}
       />
@@ -91,55 +92,40 @@ export default function AboutPage() {
                 </Link>
               </div>
             </div>
-            <div className="about-hero-media reveal reveal--mask" style={stagger(2)}>
-              <figure className="about-figure about-hero-photo">
-                <Image
-                  src="/images/doctor/listen-consult.jpg"
-                  alt="Dr. Shubham Tripathi in conversation with a patient during a consultation at Roots & Pulp"
-                  width={1024}
-                  height={653}
-                  sizes="(max-width: 980px) 100vw, 560px"
-                  priority
-                  className="mask-img"
-                />
-              </figure>
-              <figure className="about-figure about-hero-inset">
-                <Image
-                  src="/images/clinic/roots-pulp-about-consultation-lucknow.webp"
-                  alt="Dr. Shubham Tripathi speaking with a patient during a consultation at Roots & Pulp"
-                  width={819}
-                  height={1024}
-                  sizes="(max-width: 640px) 42vw, 190px"
-                />
-              </figure>
-            </div>
+            <figure className="about-figure about-hero-photo reveal reveal--mask" style={stagger(2)}>
+              <Image
+                src={photos.consultation.src}
+                alt={photos.consultation.alt}
+                width={photos.consultation.width}
+                height={photos.consultation.height}
+                sizes="(max-width: 980px) 100vw, 560px"
+                priority
+                className="mask-img"
+                style={{ objectPosition: photos.consultation.position }}
+              />
+            </figure>
           </div>
         </div>
       </section>
 
       <section className="section about-why" aria-labelledby="why-heading">
         <div className="section-inner about-split">
-          <div className="about-editorial-pair">
-            <figure className="about-figure about-editorial-photo reveal reveal--mask">
+          <figure
+            className="about-figure about-editorial-photo parallax-image reveal reveal--mask"
+            data-parallax="14"
+          >
+            <div className="parallax-layer">
               <Image
-                src="/images/doctor/explain-consult.jpg"
-                alt="Dr. Shubham Tripathi going through findings with a patient using a laptop"
-                width={981}
-                height={637}
-                sizes="(max-width: 980px) 100vw, 520px"
+                src={photos.listening.src}
+                alt={photos.listening.alt}
+                width={photos.listening.width}
+                height={photos.listening.height}
+                sizes="(max-width: 980px) 100vw, 480px"
                 className="mask-img"
+                style={{ objectPosition: photos.listening.position }}
               />
-            </figure>
-            <figure className="about-figure about-supporting-photo reveal" style={stagger(1)}>
-              <Image
-                src="/images/clinic/roots-pulp-treatment-room-lucknow.webp"
-                alt="Dental treatment room at Roots & Pulp Dental Clinic in Aliganj, Lucknow"
-                width={1024}
-                height={895}
-                sizes="(max-width: 640px) 72vw, 300px"
-              />
-            </figure>
-          </div>
+            </div>
+          </figure>
           <div className="about-copy">
             <p className="eyebrow reveal">Why Roots &amp; Pulp exists</p>
             <h2 id="why-heading" className="reveal" style={stagger(1)}>
@@ -160,45 +146,68 @@ export default function AboutPage() {
       </section>
 
       <section className="section about-walk-out" aria-labelledby="walk-out-heading">
-        <div className="section-inner about-narrow">
-          <div className="section-heading about-centred">
+        <div className="section-inner about-split about-walk-out-grid">
+          <figure className="about-figure about-walk-out-photo reveal">
+            <Image
+              src={photos.explaining.src}
+              alt={photos.explaining.alt}
+              width={photos.explaining.width}
+              height={photos.explaining.height}
+              sizes="(max-width: 980px) 100vw, 440px"
+              style={{ objectPosition: photos.explaining.position }}
+            />
+          </figure>
+          <div>
             <h2 id="walk-out-heading" className="reveal">
               What you walk out with
             </h2>
             <p className="reveal" style={stagger(1)}>
               After an examination, and an X-ray if one is needed, you should have:
             </p>
+            <ul className="about-checklist reveal" style={stagger(2)}>
+              {walkOutItems.map((item) => (
+                <li key={item}>
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m5 12 4 4L19 6" />
+                  </svg>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
           </div>
-          <ul className="about-checklist reveal" style={stagger(2)}>
-            {walkOutItems.map((item) => (
-              <li key={item}>
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="m5 12 4 4L19 6" />
-                </svg>
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
         </div>
       </section>
 
       <section className="section about-vision" aria-labelledby="vision-heading">
         <div className="section-inner about-vision-inner">
-          <p className="eyebrow reveal">Our vision</p>
-          <h2 id="vision-heading" className="reveal" style={stagger(1)}>
-            A clinic you return to through different stages of life.
-          </h2>
-          <p className="reveal" style={stagger(2)}>
-            We want Roots &amp; Pulp to be a place people come back to, not because they are afraid something might
-            go wrong, but because they feel genuinely cared for here. We want to move away from hurried,
-            procedure-first dentistry and build a culture of prevention, honest conversations, thoughtful
-            treatment, and long-term relationships.
-          </p>
-          <blockquote className="about-vision-quote reveal" style={stagger(3)}>
-            If someone leaves Roots &amp; Pulp feeling a little less anxious, a little more informed, and confident
-            that their health is being looked after with sincerity, then we have built the kind of clinic we set
-            out to create.
-          </blockquote>
+          <div className="about-vision-copy">
+            <p className="eyebrow reveal">Our vision</p>
+            <h2 id="vision-heading" className="reveal" style={stagger(1)}>
+              A clinic you return to through different stages of life.
+            </h2>
+            <p className="reveal" style={stagger(2)}>
+              We want Roots &amp; Pulp to be a place people come back to, not because they are afraid something might
+              go wrong, but because they feel genuinely cared for here. We want to move away from hurried,
+              procedure-first dentistry and build a culture of prevention, honest conversations, thoughtful
+              treatment, and long-term relationships.
+            </p>
+            <blockquote className="about-vision-quote reveal" style={stagger(3)}>
+              If someone leaves Roots &amp; Pulp feeling a little less anxious, a little more informed, and confident
+              that their health is being looked after with sincerity, then we have built the kind of clinic we set
+              out to create.
+            </blockquote>
+          </div>
+          <figure className="about-figure about-vision-photo reveal reveal--mask" style={stagger(1)}>
+            <Image
+              src={photos.reviewingSmile.src}
+              alt={photos.reviewingSmile.alt}
+              width={photos.reviewingSmile.width}
+              height={photos.reviewingSmile.height}
+              sizes="(max-width: 980px) 100vw, 480px"
+              className="mask-img"
+              style={{ objectPosition: photos.reviewingSmile.position }}
+            />
+          </figure>
         </div>
       </section>
 
@@ -209,28 +218,17 @@ export default function AboutPage() {
               Small things that matter
             </h2>
           </div>
-          <div className="about-small-things-layout">
-            <ol className="about-small-things-grid">
-              {smallThings.map((item, index) => (
-                <li key={item.title} className="about-small-thing reveal" style={stagger(index)}>
-                  <span className="about-num" aria-hidden="true">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <h3>{item.title}</h3>
-                  <p>{item.text}</p>
-                </li>
-              ))}
-            </ol>
-            <figure className="about-figure about-waiting-photo reveal">
-              <Image
-                src="/images/clinic/roots-pulp-waiting-area-lucknow.webp"
-                alt="Patient waiting area at Roots & Pulp Dental Clinic in Aliganj, Lucknow"
-                width={1024}
-                height={858}
-                sizes="(max-width: 980px) 100vw, 420px"
-              />
-            </figure>
-          </div>
+          <ol className="about-small-things-grid">
+            {smallThings.map((item, index) => (
+              <li key={item.title} className="about-small-thing reveal" style={stagger(index)}>
+                <span className="about-num" aria-hidden="true">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
 
@@ -296,21 +294,20 @@ export default function AboutPage() {
           <div className="about-clinic-media">
             <figure className="about-figure about-clinic-photo reveal reveal--mask">
               <Image
-                src="/images/consultation-banner.jpg"
-                alt="A consultation underway at the desk at Roots & Pulp Dental Clinic, Aliganj"
-                width={768}
-                height={1024}
+                src={photos.interior.src}
+                alt={photos.interior.alt}
+                width={photos.interior.width}
+                height={photos.interior.height}
                 sizes="(max-width: 980px) 100vw, 390px"
                 className="mask-img"
               />
             </figure>
-            {/* TODO [NEW PHOTO REQUIRED]: add a daylight photo of reception or the waiting area as a second image (about-reception.jpg). */}
             <figure className="about-figure about-clinic-support reveal reveal--mask reveal--mask-left">
               <Image
-                src="/images/clinic/roots-pulp-clinic-interior-lucknow.webp"
-                alt="Reception and interior of Roots & Pulp Dental Clinic in Aliganj, Lucknow"
-                width={1024}
-                height={768}
+                src={photos.waitingArea.src}
+                alt={photos.waitingArea.alt}
+                width={photos.waitingArea.width}
+                height={photos.waitingArea.height}
                 sizes="(max-width: 640px) 68vw, 280px"
                 className="mask-img"
               />

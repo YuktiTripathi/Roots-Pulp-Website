@@ -181,6 +181,7 @@
   .gallery-item:hover .gallery-item-img,
   .gallery-named-btn:hover,
   .gallery-named-btn:hover .gallery-named-img { transform: none; }
+  .gallery-named-btn:hover::after { opacity: 0; }
   .gallery-named-btn:hover {
     box-shadow: 0 1px 2px rgba(11, 23, 48, 0.06), 0 12px 28px -18px rgba(11, 23, 48, 0.35);
   }
@@ -194,21 +195,17 @@
 }
 .gallery-layout-3 .gallery-item:first-child { grid-row: span 2; }
 
-/* Named photos: each picture shown whole, with its name written underneath. */
+/* Named photos: masonry columns, each picture shown whole with its name written underneath. */
 .gallery-named {
   list-style: none;
   margin: 32px 0 0;
   padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 32px 20px;
+  columns: 3;
+  column-gap: 20px;
 }
-/* Justified rows: each photo grows in proportion to its shape, so a row ends level with no cropping. */
 .gallery-named li {
-  --row: 320px;
-  flex: var(--ratio) 1 calc(var(--ratio) * var(--row));
-  max-width: calc(var(--ratio) * var(--row) * 1.6);
-  min-width: 0;
+  break-inside: avoid;
+  margin-bottom: 32px;
 }
 .gallery-named-item { margin: 0; }
 .gallery-named-btn {
@@ -229,10 +226,21 @@
   width: 100%;
   height: auto;
   transform-origin: center 35%;
-  transition: transform 1.1s var(--ease-out);
+  transition: transform 0.8s var(--ease-out);
+}
+.gallery-named-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(11, 23, 48, 0.08);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
 }
 .gallery-named-btn:hover { transform: translateY(-2px); box-shadow: 0 2px 4px rgba(11, 23, 48, 0.05), 0 16px 30px -20px rgba(11, 23, 48, 0.32); }
-.gallery-named-btn:hover .gallery-named-img { transform: scale(1.02); }
+.gallery-named-btn:hover::after { opacity: 1; }
+.gallery-named-btn:hover .gallery-named-img { transform: scale(1.03); }
+.gallery-named-btn .gallery-item-zoom { z-index: 1; }
 .gallery-named-btn:hover .gallery-item-zoom,
 .gallery-named-btn:focus-visible .gallery-item-zoom { opacity: 1; transform: none; }
 .gallery-named-btn:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 4px; border-radius: 18px; }
@@ -259,10 +267,12 @@
 .gallery-block-inside .gallery-named {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 32px 20px;
+  columns: auto;
 }
 .gallery-block-inside .gallery-named li {
-  max-width: none;
   min-width: 0;
+  margin-bottom: 0;
 }
 .gallery-block-inside .gallery-named-btn { box-shadow: none; }
 .gallery-block-inside .gallery-named-img {
@@ -348,7 +358,18 @@
 @media (prefers-reduced-motion: no-preference) {
   .gallery-lightbox { animation: gallery-fade 0.25s ease both; }
   .gallery-lightbox img { animation: gallery-zoom 0.45s var(--ease-out) both; }
+  .gallery-lightbox.is-morph img { animation: none; }
 }
+
+/* View transitions: a soft crossfade when filtering, and the clicked photo growing into the lightbox. */
+::view-transition-old(root),
+::view-transition-new(root) { animation-duration: 0.3s; }
+::view-transition-group(gallery-photo) {
+  animation-duration: 0.45s;
+  animation-timing-function: var(--ease-out);
+}
+::view-transition-old(gallery-photo),
+::view-transition-new(gallery-photo) { height: 100%; }
 
 @keyframes gallery-fade {
   from { opacity: 0; }
@@ -368,7 +389,7 @@
   .gallery-layout-1 .gallery-item,
   .gallery-layout-3 .gallery-item { aspect-ratio: 4 / 3; }
   .gallery-hero-visual::before { inset: 14px -8px -10px 14px; }
-  .gallery-named li { --row: 220px; }
+  .gallery-named { columns: 2; }
   .gallery-block-inside .gallery-named { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
@@ -377,8 +398,8 @@
   .gallery-filters { width: min(100% - 32px, var(--max)); }
   .gallery-hero-frame { height: 300px; }
   .gallery-item figcaption { font-size: 1.15rem; left: 16px; }
-  .gallery-named { gap: 28px; }
-  .gallery-named li { flex-basis: 100%; max-width: none; }
+  .gallery-named { columns: 1; }
+  .gallery-named li { margin-bottom: 28px; }
   .gallery-named-title { font-size: 1.2rem; }
   .gallery-block-inside .gallery-named { grid-template-columns: 1fr; }
   .gallery-lightbox { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto; padding: 72px 12px 16px; }
