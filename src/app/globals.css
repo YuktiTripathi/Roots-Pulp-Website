@@ -15,11 +15,11 @@
   --shadow: 0 12px 32px rgba(16, 32, 72, 0.06);
   --radius: 18px;
   --header: 128px;
-  --sans: var(--font-sans), "Segoe UI", sans-serif;
-  --serif: var(--font-serif), Georgia, "Times New Roman", serif;
+  --sans: "DM Sans Variable", "DM Sans", "Segoe UI", sans-serif;
+  --serif: "DM Serif Display", Georgia, "Times New Roman", serif;
   --times: "Times New Roman", Times, serif;
-  --montserrat: var(--font-montserrat), "Montserrat", sans-serif;
-  --lato: var(--font-lato), Lato, sans-serif;
+  --montserrat: "Montserrat", sans-serif;
+  --lato: "Lato", sans-serif;
   --max: 1140px;
 }
 

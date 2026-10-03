@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { DM_Sans, DM_Serif_Display, Lato, Montserrat } from "next/font/google";
+import "@fontsource-variable/dm-sans";
+import "@fontsource/dm-serif-display/400.css";
+import "@fontsource/dm-serif-display/400-italic.css";
+import "@fontsource/montserrat/500.css";
+import "@fontsource/montserrat/600.css";
+import "@fontsource/lato/400.css";
+import "@fontsource/lato/700.css";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { FloatingContactActions } from "@/components/FloatingContactActions";
@@ -10,34 +16,6 @@ import { clinic, homeSeo, siteUrl } from "@/lib/clinic";
 import { clinicJsonLd, doctorJsonLd, websiteJsonLd } from "@/lib/schema";
 import { defaultOgImage, jsonLd } from "@/lib/seo";
 import "./globals.css";
-
-const sans = DM_Sans({
-  subsets: ["latin"],
-  variable: "--font-sans",
-  display: "swap",
-});
-
-const serif = DM_Serif_Display({
-  subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
-  variable: "--font-serif",
-  display: "swap",
-});
-
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  weight: ["500", "600"],
-  variable: "--font-montserrat",
-  display: "swap",
-});
-
-const lato = Lato({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  variable: "--font-lato",
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -69,7 +47,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
   const graph = [clinicJsonLd(), websiteJsonLd(), doctorJsonLd()];
 
   return (
-    <html lang="en" className={`${sans.variable} ${serif.variable} ${montserrat.variable} ${lato.variable}`}>
+    <html lang="en">
       <head>
         {/*
           Decorative script face for the 12px logo tagline. Loaded as a non-blocking stylesheet

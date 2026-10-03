@@ -1017,32 +1017,43 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
         {
           group: "To protect a tooth",
           icon: "filling",
+          image: "/images/treatments/crowns-bridges/large-decay.jpg",
           title: "A large filling or heavy decay",
           text: "Not much natural tooth is left to hold a filling.",
         },
         {
           group: "To protect a tooth",
           icon: "crack",
+          image: "/images/treatments/crowns-bridges/cracked-tooth.jpg",
           title: "A cracked or worn tooth",
           text: "A crown can help hold it together, depending on the crack.",
         },
         {
           group: "To protect a tooth",
           icon: "treated",
+          image: "/images/treatments/crowns-bridges/root-treated-crown.jpg",
           title: "After a root canal",
           text: "Many treated teeth are protected with a crown.",
           link: { label: "About root canal treatment", href: "/treatments/root-canal-treatment/" },
         },
-        { group: "To fill a gap", icon: "gap", title: "A missing tooth", text: "A bridge is one way to replace it." },
+        {
+          group: "To fill a gap",
+          icon: "gap",
+          image: "/images/treatments/crowns-bridges/missing-tooth.jpg",
+          title: "A missing tooth",
+          text: "A bridge is one way to replace it.",
+        },
         {
           group: "To fill a gap",
           icon: "drift",
+          image: "/images/treatments/crowns-bridges/drifting-teeth.jpg",
           title: "Teeth drifting into a gap",
           text: "A gap can let neighbouring teeth tilt.",
         },
         {
           group: "To fill a gap",
           icon: "chew",
+          image: "/images/treatments/crowns-bridges/chewing-pressure.jpg",
           title: "Chewing on one side",
           text: "Because a gap makes the other side work harder.",
         },
@@ -1056,7 +1067,12 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
         "A bridge replaces a missing tooth. A false tooth sits in the gap, and it is held by crowns on the teeth either side. Those teeth act like anchors.",
         "Both are made to match the shape, bite and, where possible, the colour of your own teeth. Both are fixed in place, so they are not taken out at night.",
       ],
-      illustration: "crown-bridge",
+      image: {
+        src: "/images/treatments/crowns-bridges/crowns-and-bridges-overview.jpg",
+        alt: "Illustrated steps showing how a dental crown covers a damaged tooth and how a bridge replaces a missing tooth",
+        width: 1024,
+        height: 576,
+      },
       caption:
         "A crown covers one tooth. A bridge replaces a missing tooth using the teeth beside the gap. Your dentist will explain what your plan involves.",
     },
@@ -1095,12 +1111,14 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
       items: [
         {
           title: "Crown",
+          image: "/images/treatments/crowns-bridges/crown.jpg",
           what: "A cap that covers the whole visible part of a tooth.",
           suits: "A tooth that is heavily filled, cracked, worn or root-treated.",
           note: "Needs the tooth to be shaped to fit.",
         },
         {
           title: "Bridge",
+          image: "/images/treatments/crowns-bridges/bridge.jpg",
           what: "A replacement tooth supported by crowns on the teeth either side of a gap.",
           suits: "Someone with a missing tooth and healthy teeth beside the gap.",
           note: "The neighbouring teeth are shaped to hold it.",
@@ -1108,6 +1126,7 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
         },
         {
           title: "Inlay or onlay",
+          image: "/images/treatments/crowns-bridges/inlay-onlay.jpg",
           what: "A lab-made piece that fills or covers part of a tooth.",
           suits: "A tooth with moderate damage that does not need a full crown.",
           note: "Keeps more of the natural tooth than a full crown.",
