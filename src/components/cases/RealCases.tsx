@@ -23,6 +23,9 @@ export function RealCases() {
           <p className="section-intro reveal" style={stagger(2)}>
             {casesCopy.intro}
           </p>
+          <p className="cases-tagline reveal" style={stagger(3)}>
+            {casesCopy.tagline}
+          </p>
         </div>
         <CasesLayout featured={featured} more={more} moreHref={casesPageHref} />
       </div>

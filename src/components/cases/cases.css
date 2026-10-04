@@ -1,5 +1,13 @@
 /* Real dental cases section (homepage). Every class carries the cases- prefix. */
 
+.cases-tagline {
+  margin: 14px 0 0;
+  color: var(--teal);
+  font-family: var(--serif);
+  font-size: clamp(1.1rem, 1.8vw, 1.3rem);
+  line-height: 1.35;
+}
+
 .cases-grid {
   display: grid;
   grid-template-columns: 7fr 5fr;
