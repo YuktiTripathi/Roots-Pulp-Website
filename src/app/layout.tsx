@@ -9,6 +9,7 @@ import "@fontsource/lato/400.css";
 import "@fontsource/lato/700.css";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { SiteCursor } from "@/components/SiteCursor";
 import { FloatingContactActions } from "@/components/FloatingContactActions";
 import { RevealOnScroll } from "@/components/RevealOnScroll";
 import { clinic, homeSeo, siteUrl } from "@/lib/clinic";
@@ -65,6 +66,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         <a className="skip" href="#content">
           Skip to content
         </a>
+        <SiteCursor />
         <Header />
         <RevealOnScroll />
         {children}

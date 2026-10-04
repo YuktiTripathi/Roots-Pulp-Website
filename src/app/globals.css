@@ -1338,3 +1338,16 @@ section.final-cta p { color: rgba(255, 255, 255, 0.82); }
 
 /* FAQ page: keep the two question groups close together. */
 main > .faq:has(+ .page) { padding-bottom: 24px; }
+
+/* Cursor splash effect (SiteCursor). Mouse and trackpad only; off for touch and reduced motion. */
+.site-cursor-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 180;
+}
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .site-cursor-canvas { display: none; }
+}
