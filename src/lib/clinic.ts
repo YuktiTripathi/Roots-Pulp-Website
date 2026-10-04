@@ -5,15 +5,18 @@
 
 export const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://rootsandpulp.com").replace(/\/$/, "");
 
-/** Google Business Profile share link supplied by the clinic. */
+/** Public links supplied by the clinic. An environment variable, when set, overrides the default. */
+const envUrl = (value: string | undefined) => value?.trim() || "";
+
+/** Google Business Profile share link. */
 export const googleBusinessProfileUrl =
-  process.env.NEXT_PUBLIC_GOOGLE_BUSINESS_URL || "https://share.google/uS1ZDQ6N1XaZiPDCz";
+  envUrl(process.env.NEXT_PUBLIC_GOOGLE_BUSINESS_URL) || "https://share.google/jGRRvI3dgHxa6rNE4";
 
-/** [VERIFY] Google Maps URL of the Business Profile. */
-export const googleMapsUrl = process.env.NEXT_PUBLIC_GOOGLE_MAPS_URL ?? "";
+/** Google Maps link of the Business Profile. */
+export const googleMapsUrl = envUrl(process.env.NEXT_PUBLIC_GOOGLE_MAPS_URL) || "https://maps.app.goo.gl/FVM4m11smeKyYTb2A";
 
-/** [VERIFY] Official Instagram. Hidden until set. */
-export const instagramUrl = process.env.NEXT_PUBLIC_INSTAGRAM_URL ?? "";
+/** Official Instagram. */
+export const instagramUrl = envUrl(process.env.NEXT_PUBLIC_INSTAGRAM_URL) || "https://www.instagram.com/roots_n_pulp/";
 
 /** [VERIFY] Latitude / longitude from the Business Profile pin. */
 export const clinicLatitude = process.env.NEXT_PUBLIC_CLINIC_LAT ?? "";
