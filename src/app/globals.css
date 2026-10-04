@@ -948,16 +948,6 @@ section.final-cta p { color: rgba(255, 255, 255, 0.82); }
 }
 
 /* Tablets and phones: the photograph becomes a banner above the copy, never behind text. */
-@media (max-width: 1100px) {
-  .hero { grid-template-areas: "copy" "strip"; }
-  .hero-bg { position: relative; inset: auto; z-index: 0; width: 100%; aspect-ratio: 16 / 9; max-height: 420px; }
-  .hero-bg::after { display: none; }
-  .hero-bg-img { object-position: var(--pos-mobile, 70% 35%); }
-  .hero-copy { padding: 32px 0 0; }
-  .hero-copy > * { max-width: 640px; }
-  .trust-strip { margin-top: 28px; }
-}
-
 @media (max-width: 980px) {
   .hero-title { max-width: 16ch; font-size: clamp(2.1rem, 8vw, 3.2rem); }
   .trust-strip { margin: 22px auto 40px; }
@@ -994,7 +984,44 @@ section.final-cta p { color: rgba(255, 255, 255, 0.82); }
   .footer-bottom { flex-direction: column; }
 }
 
-@media (max-width: 600px) {
+/* Tablet (768 to 1023px): the photograph stays full-bleed behind the text, which sits on the left
+   over a soft cream fade, as on desktop. Each slide has its own framing. */
+@media (max-width: 1023px) {
+  .hero-bg-img { object-position: var(--pos-tablet, var(--pos)); }
+  .hero-bg::after {
+    background: linear-gradient(90deg, rgba(246, 241, 231, 0.96) 0%, rgba(246, 241, 231, 0.88) 38%, rgba(246, 241, 231, 0) 66%);
+  }
+  .hero-copy { padding: 64px 0 116px; }
+  .hero-copy > * { max-width: 440px; }
+  .hero-title { max-width: 12ch; font-size: clamp(2.4rem, 5.6vw, 3.4rem); }
+  .hero .lede { font-size: 1.02rem; }
+  .trust-strip { margin: -40px auto 40px; }
+}
+
+/* Phones (under 768px): a taller full-bleed hero with the text at the bottom over a bottom-up cream
+   fade, so faces stay clear in the upper part of the frame. */
+@media (max-width: 767px) {
+  .hero-carousel { min-height: clamp(640px, 94svh, 740px); }
+  /* A slightly tighter, bottom-anchored framing lifts faces into the clear upper part of the frame. */
+  .hero-bg-img { object-position: var(--pos-mobile, var(--pos)); transform: scale(var(--zoom-mobile, 1.3)); transform-origin: 50% 100%; }
+  .hero-bg::after {
+    background: linear-gradient(0deg, rgba(246, 241, 231, 0.97) 0%, rgba(246, 241, 231, 0.93) 44%, rgba(246, 241, 231, 0.78) 55%, rgba(246, 241, 231, 0.3) 64%, rgba(246, 241, 231, 0) 72%);
+  }
+  .hero-copy { margin-top: auto; padding: 0 0 88px; }
+  .hero-copy > * { max-width: 100%; }
+  .hero .eyebrow { font-size: 0.75rem; margin-bottom: 8px; }
+  .hero-title { max-width: 15ch; font-size: clamp(2.2rem, 9.4vw, 3rem); }
+  .hero .lede { margin-top: 10px; font-size: 0.97rem; }
+  .hero .lede p + p { margin-top: 4px; }
+  .hero-actions { margin: 16px 0 4px; }
+  .hero-actions .btn { min-height: 46px; padding: 0 16px; }
+  /* The fixed contact bar already offers a call button on phones. */
+  .hero-call { display: none; }
+  /* Kept short on phones: opening hours also appear in the visit section. */
+  .hero .status-line { display: none; }
+}
+
+@media (max-width: 359px) {
   .hero-actions { flex-direction: column; }
   .hero-actions .btn { width: 100%; min-height: 48px; }
 }
