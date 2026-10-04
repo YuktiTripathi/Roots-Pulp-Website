@@ -1009,15 +1009,28 @@ section.final-cta p { color: rgba(255, 255, 255, 0.82); }
   .trust-strip { margin: 28px auto 40px; }
 }
 
+/* Phones: portrait photographs (served through <picture>). The slide text sits on the bright, empty
+   upper part of the photo over a soft cream fade; the people are in the lower half. The buttons follow
+   just below the photograph. --hero-photo-h keeps the frame and the overlaid text the same height. */
 @media (max-width: 767px) {
-  .hero-bg { aspect-ratio: 4 / 3; max-height: none; }
-  .hero-bg-img { object-position: var(--pos-mobile, var(--pos)); }
-  .hero-copy { margin-top: -36px; }
+  .hero-carousel { --hero-photo-top: clamp(110px, 40vw, 150px); --hero-photo-h: min(158vw, 700px); }
+  /* The photo starts a little below the top: the heading begins on cream and the lower lines sit on
+     the bright, faded top of the photograph, keeping the people clear of the text. */
+  .hero-bg { aspect-ratio: auto; margin-top: var(--hero-photo-top); height: var(--hero-photo-h); max-height: none; }
+  .hero-bg-img { object-position: var(--pos-portrait, 60% 50%); }
+  .hero-bg::after {
+    background:
+      linear-gradient(180deg, rgba(246, 241, 231, 1) 0%, rgba(246, 241, 231, 0.75) 18%, rgba(246, 241, 231, 0) 36%),
+      linear-gradient(0deg, rgba(246, 241, 231, 1) 0%, rgba(246, 241, 231, 0) 12%);
+  }
+  .hero-copy { margin-top: calc(-1 * (var(--hero-photo-top) + var(--hero-photo-h))); }
+  .hero-slides { min-height: calc(var(--hero-photo-top) + var(--hero-photo-h)); padding-top: 22px; }
+  .hero-slide { align-self: start; }
   .hero .eyebrow { font-size: 0.75rem; margin-bottom: 8px; }
-  .hero-title { max-width: 15ch; font-size: clamp(2.2rem, 9.4vw, 3rem); }
-  .hero .lede { margin-top: 10px; font-size: 0.97rem; }
+  .hero-title { max-width: 15ch; font-size: clamp(2.1rem, 8.8vw, 2.8rem); }
+  .hero .lede { margin-top: 10px; font-size: 0.95rem; max-width: 34ch; }
   .hero .lede p + p { margin-top: 4px; }
-  .hero-actions { margin: 16px 0 4px; }
+  .hero-actions { margin: 4px 0 4px; }
   .hero-actions .btn { min-height: 46px; padding: 0 16px; }
   /* The fixed contact bar already offers a call button on phones. */
   .hero-call { display: none; }

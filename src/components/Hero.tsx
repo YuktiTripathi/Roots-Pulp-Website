@@ -11,10 +11,11 @@ const slides: HeroSlide[] = [
   {
     image: {
       src: "/images/hero/dental-checkup-hero.webp",
+      portraitSrc: "/images/hero/dental-checkup-hero-portrait.webp",
       alt: "Dr. Shubham Tripathi examining a patient's teeth in the treatment chair at Roots & Pulp Dental Clinic, Aliganj",
       position: "78% 30%",
       tabletPosition: "70% 30%",
-      mobilePosition: "72% 30%",
+      portraitPosition: "62% 50%",
     },
     eyebrow,
     heading: "Dental care that goes deeper than the surface",
@@ -26,10 +27,11 @@ const slides: HeroSlide[] = [
   {
     image: {
       src: "/images/hero/smiling-patient-hero.webp",
+      portraitSrc: "/images/hero/smiling-patient-hero-portrait.webp",
       alt: "A patient smiling at her reflection in a hand mirror in the dental chair",
       position: "80% 35%",
       tabletPosition: "75% 35%",
-      mobilePosition: "80% 35%",
+      portraitPosition: "68% 50%",
     },
     eyebrow,
     heading: "There is no bigger success than your Smile",
@@ -41,10 +43,11 @@ const slides: HeroSlide[] = [
   {
     image: {
       src: "/images/hero/advanced-technology-hero.webp",
+      portraitSrc: "/images/hero/advanced-technology-hero-portrait.webp",
       alt: "Dr. Shubham Tripathi explaining a digital dental X-ray to a patient at Roots & Pulp Dental Clinic in Aliganj, Lucknow",
       position: "82% 35%",
       tabletPosition: "100% 35%",
-      mobilePosition: "100% 35%",
+      portraitPosition: "72% 50%",
     },
     eyebrow: "Advanced Dental Care in Aliganj, Lucknow",
     heading: "Advanced dentistry without the premium price tag",

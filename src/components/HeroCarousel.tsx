@@ -1,10 +1,18 @@
 "use client";
 
-import Image from "next/image";
+import { getImageProps } from "next/image";
 import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
 
 export type HeroSlide = {
-  image: { src: string; alt: string; position: string; tabletPosition: string; mobilePosition: string };
+  image: {
+    src: string;
+    /** Portrait version (1122 x 1402) served to phones instead of the landscape photograph. */
+    portraitSrc: string;
+    alt: string;
+    position: string;
+    tabletPosition: string;
+    portraitPosition: string;
+  };
   eyebrow: string;
   heading: string;
   paragraphs: readonly string[];
@@ -44,19 +52,37 @@ export function HeroCarousel({ slides, children }: { slides: readonly HeroSlide[
       aria-label="Welcome to Roots & Pulp"
     >
       <div className="hero-bg">
-        {slides.map((slide, slideIndex) => (
-          <Image
-            key={slide.image.src}
-            src={slide.image.src}
-            alt={slideIndex === index ? slide.image.alt : ""}
-            fill
-            priority={slideIndex === 0}
-            sizes="100vw"
-            quality={85}
-            className={`hero-bg-img${slideIndex === index ? " is-active" : ""}`}
-            style={{ "--pos": slide.image.position, "--pos-tablet": slide.image.tabletPosition, "--pos-mobile": slide.image.mobilePosition } as CSSProperties}
-          />
-        ))}
+        {slides.map((slide, slideIndex) => {
+          const active = slideIndex === index;
+          const common = {
+            alt: active ? slide.image.alt : "",
+            fill: true,
+            priority: slideIndex === 0,
+            sizes: "100vw",
+            quality: 85,
+          } as const;
+          // Art direction: phones get the portrait photograph, larger screens the landscape one.
+          const { props: portrait } = getImageProps({ ...common, src: slide.image.portraitSrc });
+          const { props: landscape } = getImageProps({ ...common, src: slide.image.src });
+          return (
+            <picture key={slide.image.src}>
+              <source media="(max-width: 767px)" srcSet={portrait.srcSet} sizes={portrait.sizes} />
+              {/* eslint-disable-next-line jsx-a11y/alt-text -- alt comes from getImageProps */}
+              <img
+                {...landscape}
+                className={`hero-bg-img${active ? " is-active" : ""}`}
+                style={
+                  {
+                    ...landscape.style,
+                    "--pos": slide.image.position,
+                    "--pos-tablet": slide.image.tabletPosition,
+                    "--pos-portrait": slide.image.portraitPosition,
+                  } as CSSProperties
+                }
+              />
+            </picture>
+          );
+        })}
       </div>
 
       <div className="hero-copy">
