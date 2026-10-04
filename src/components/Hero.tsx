@@ -27,8 +27,9 @@ export async function Hero() {
         <p className="eyebrow">Dental Clinic in Aliganj, Lucknow</p>
         <h1 id="home-heading">Dental care that goes deeper than the surface</h1>
         <p className="lede">
-          Dr. Shubham Tripathi examines carefully, explains what he finds in plain language, and plans treatment
-          around you. Family dental care in Sector Q, Aliganj, open seven days.
+          We take the time to understand what&rsquo;s really going on and explain it clearly.
+          <br />
+          So every treatment feels considered, comfortable, and right for you.
         </p>
         <div className="hero-actions">
           <Link className="btn btn-primary" href={bookingUrl} target="_blank" rel="noopener noreferrer">
