@@ -68,7 +68,124 @@ export type DentalCase = {
 export const casesPageHref: string | null = null;
 
 export const dentalCases: DentalCase[] = [
-  // Add real, consented cases here. Leave empty until supplied. The section hides itself when empty.
+  // TODO [VERIFY BEFORE PUBLISHING]: concern, title, summary and treatment page for each case were written
+  // from the photographs alone. Dr. Shubham to confirm the treatment actually carried out, and that
+  // written consent is on file: consent is set to true on the clinic's instruction to publish these.
+  {
+    id: "teeth-cleaning-stains-tartar",
+    mode: "comparison",
+    featured: true,
+    order: 1,
+    concern: "Heavy stains and tartar",
+    title: "Professional teeth cleaning",
+    summary: "Heavy stain and tartar deposits were cleaned from the teeth and along the gum line.",
+    treatmentSlug: "teeth-cleaning",
+    before: {
+      src: "/images/cases/teeth-cleaning-heavy-stains-tartar-aliganj-lucknow-before.webp",
+      alt: "Before view of teeth with heavy brown stains and tartar along the gum line, Roots & Pulp Dental Clinic, Aliganj, Lucknow",
+      width: 1080,
+      height: 612,
+    },
+    after: {
+      src: "/images/cases/teeth-cleaning-heavy-stains-tartar-aliganj-lucknow-after.webp",
+      alt: "After view of the same teeth cleaned of stains and tartar",
+      width: 1080,
+      height: 612,
+    },
+    consent: true,
+  },
+  {
+    id: "front-teeth-gap",
+    mode: "comparison",
+    featured: true,
+    order: 2,
+    concern: "Gap between front teeth",
+    title: "Closing a front tooth gap",
+    summary: "The gap between the two upper front teeth was closed.",
+    treatmentSlug: "cosmetic-dentistry",
+    before: {
+      src: "/images/cases/cosmetic-front-teeth-gap-closure-aliganj-lucknow-before.webp",
+      alt: "Before view of a visible gap between the upper front teeth, Roots & Pulp Dental Clinic, Aliganj, Lucknow",
+      width: 1080,
+      height: 611,
+    },
+    after: {
+      src: "/images/cases/cosmetic-front-teeth-gap-closure-aliganj-lucknow-after.webp",
+      alt: "After view of the same upper front teeth with the gap closed",
+      width: 1080,
+      height: 611,
+    },
+    consent: true,
+  },
+  {
+    id: "broken-front-tooth",
+    mode: "comparison",
+    featured: true,
+    order: 3,
+    concern: "Broken front tooth",
+    title: "Front tooth restoration",
+    summary: "The broken edge of an upper front tooth was rebuilt to a natural shape.",
+    treatmentSlug: "tooth-coloured-fillings",
+    before: {
+      src: "/images/cases/tooth-coloured-filling-broken-front-tooth-aliganj-lucknow-before.webp",
+      alt: "Before view of a chipped upper front tooth with a broken edge, Roots & Pulp Dental Clinic, Aliganj, Lucknow",
+      width: 1080,
+      height: 611,
+    },
+    after: {
+      src: "/images/cases/tooth-coloured-filling-broken-front-tooth-aliganj-lucknow-after.webp",
+      alt: "After view of the same front tooth restored to its full shape",
+      width: 1080,
+      height: 611,
+    },
+    consent: true,
+  },
+  {
+    id: "missing-front-teeth",
+    mode: "comparison",
+    featured: true,
+    order: 4,
+    concern: "Broken and missing front teeth",
+    title: "Rebuilding the upper front teeth",
+    summary: "Broken, decayed and missing upper front teeth were restored to a complete row.",
+    treatmentSlug: "crowns-and-bridges",
+    before: {
+      src: "/images/cases/crowns-bridges-broken-missing-front-teeth-aliganj-lucknow-before.webp",
+      alt: "Before view of broken, decayed and missing upper front teeth, Roots & Pulp Dental Clinic, Aliganj, Lucknow",
+      width: 1080,
+      height: 414,
+    },
+    after: {
+      src: "/images/cases/crowns-bridges-broken-missing-front-teeth-aliganj-lucknow-after.webp",
+      alt: "After view of a complete, even row of upper front teeth",
+      width: 1080,
+      height: 414,
+    },
+    consent: true,
+  },
+  {
+    id: "yellow-stained-teeth",
+    mode: "comparison",
+    featured: true,
+    order: 5,
+    concern: "Yellow, stained teeth",
+    title: "Teeth whitening",
+    summary: "Yellow staining on the front teeth was lightened.",
+    treatmentSlug: "teeth-whitening",
+    before: {
+      src: "/images/cases/teeth-whitening-yellow-stains-aliganj-lucknow-before.webp",
+      alt: "Before view of yellow stained front teeth, Roots & Pulp Dental Clinic, Aliganj, Lucknow",
+      width: 1024,
+      height: 560,
+    },
+    after: {
+      src: "/images/cases/teeth-whitening-yellow-stains-aliganj-lucknow-after.webp",
+      alt: "After view of the same teeth noticeably lighter in shade",
+      width: 1024,
+      height: 560,
+    },
+    consent: true,
+  },
 ];
 
 /** Natural link labels, one per treatment. Do not repeat exact match phrases across cases. */
@@ -80,6 +197,7 @@ export const caseLinkLabels: Record<string, string> = {
   "gum-and-oral-health": "About gum care",
   "tooth-coloured-fillings": "About tooth coloured fillings",
   "teeth-whitening": "About teeth whitening",
+  "teeth-cleaning": "About teeth cleaning",
   "braces-and-aligners": "About braces and aligners",
 };
 
