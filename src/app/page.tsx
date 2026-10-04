@@ -17,6 +17,9 @@ import { homeSeo } from "@/lib/clinic";
 import { homeWebPageJsonLd } from "@/lib/schema";
 import { jsonLd, pageMetadata } from "@/lib/seo";
 
+/** The page is static and regenerated in the background at most once a week (Google rating). */
+export const revalidate = 604800;
+
 export const metadata: Metadata = pageMetadata({ title: homeSeo.title, description: homeSeo.description, path: "/" });
 
 export default function HomePage() {

@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
-import { googleBusinessProfileUrl } from "@/lib/clinic";
-import type { GoogleRating } from "@/lib/googleRating";
+import type { GooglePlaceRating } from "@/lib/googlePlaces";
 
 // TODO [VERIFY BEFORE PUBLISHING]: 2,500+ Happy Patients against clinic records.
 const PATIENTS = 2500;
@@ -58,11 +57,13 @@ const icons: Record<"people" | "star" | "calendar", ReactNode> = {
 };
 
 export function ClinicAtGlance({
-  liveRating = null,
-  manualRating = null,
+  place = null,
+  fallbackUrl = null,
 }: {
-  liveRating?: GoogleRating;
-  manualRating?: string | null;
+  /** Live values from Google Places (fetched server-side). */
+  place?: GooglePlaceRating | null;
+  /** Google listing link used when Google did not return one. */
+  fallbackUrl?: string | null;
 }) {
   const ref = useRef<HTMLElement>(null);
   const [armed, setArmed] = useState(false);
@@ -92,23 +93,29 @@ export function ClinicAtGlance({
 
   const patients = useCountUp(PATIENTS, armed, animate);
 
-  // TODO [VERIFY BEFORE PUBLISHING]: the Google rating figure against the live profile.
-  const ratingValue = liveRating ? `${liveRating.rating.toFixed(1)} ★` : manualRating ? `${manualRating} ★` : "★";
-  const ratingLabel = liveRating || manualRating ? "Rated on Google" : "Read our Google reviews";
+  // Live values only; with no rating the card falls back to the static "Read our Google reviews".
+  const rating = place?.rating ?? null;
+  const count = place?.userRatingCount ?? null;
+  const href = place?.googleMapsUri ?? fallbackUrl;
+  const live = rating !== null;
 
-  const ratingBody = (
+  const ratingBody = live ? (
     <>
       <span className="trust-icon">{icons.star}</span>
-      <span className="trust-value">{ratingValue}</span>
-      <span className="trust-label">{ratingLabel}</span>
-      {liveRating ? <span className="trust-meta">{liveRating.count} reviews</span> : null}
-      {liveRating || manualRating ? (
-        <span className="trust-more" aria-hidden="true">
-          Read Google Reviews →
-        </span>
-      ) : null}
+      <span className="trust-value">{rating.toFixed(1)} ★</span>
+      <span className="trust-label">Google Reviews</span>
+      {count !== null ? <span className="trust-meta">{count.toLocaleString("en-IN")} patient reviews</span> : null}
+    </>
+  ) : (
+    <>
+      <span className="trust-icon">{icons.star}</span>
+      <span className="trust-value">★</span>
+      <span className="trust-label">Read our Google reviews</span>
     </>
   );
+  const ratingName = live
+    ? `Rated ${rating.toFixed(1)} out of 5 on Google${count !== null ? ` from ${count} reviews` : ""}. Read Roots & Pulp Google reviews (opens in a new tab)`
+    : "Read Roots & Pulp Google reviews (opens in a new tab)";
 
   return (
     <section className="trust-strip" aria-label="Clinic highlights" ref={ref}>
@@ -119,14 +126,8 @@ export function ClinicAtGlance({
           <span className="trust-label">Happy Patients</span>
         </li>
         <li className="trust-rating">
-          {googleBusinessProfileUrl ? (
-            <a
-              className="trust-link"
-              href={googleBusinessProfileUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Read Roots & Pulp Google reviews (opens in a new tab)"
-            >
+          {href ? (
+            <a className="trust-link" href={href} target="_blank" rel="noopener noreferrer" aria-label={ratingName}>
               {ratingBody}
             </a>
           ) : (

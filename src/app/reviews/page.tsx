@@ -18,8 +18,8 @@ const seo = {
 
 export const metadata: Metadata = pageMetadata({ ...seo });
 
-/** Re-fetch Google reviews at most once a day. */
-export const revalidate = 86400;
+/** Re-fetch Google reviews at most once a week. */
+export const revalidate = 604800;
 
 export default async function ReviewsPage() {
   const reviews = await getAllGoogleReviews();

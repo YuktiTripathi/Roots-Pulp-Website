@@ -84,9 +84,6 @@ export function whatsappHref(message: string = clinic.whatsappPrefill) {
 }
 
 /** Online booking page on Kivi Health. */
-/** Shown wherever the live Google rating is unavailable. [VERIFY BEFORE PUBLISHING] against the live profile. */
-export const googleRatingFallback = "4.9";
-
 export const bookingUrl = "https://kivihealth.com/iam/dr.shubham.tripathi.d4cuynx3jxpn/bookslot";
 
 export const directionsUrl =

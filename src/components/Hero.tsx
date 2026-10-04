@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { bookingUrl, clinic, googleRatingFallback, telHref, whatsappHref } from "@/lib/clinic";
-import { getGoogleRating } from "@/lib/googleRating";
+import { bookingUrl, clinic, googleBusinessProfileUrl, telHref, whatsappHref } from "@/lib/clinic";
+import { getGooglePlaceRating } from "@/lib/googlePlaces";
 import { ClinicAtGlance } from "./ClinicAtGlance";
 import { HeroCarousel, type HeroSlide } from "./HeroCarousel";
 import { OpeningStatus } from "./OpeningStatus";
@@ -59,8 +59,8 @@ const slides: HeroSlide[] = [
 ];
 
 export async function Hero() {
-  const liveRating = await getGoogleRating();
-  const manualRating = process.env.NEXT_PUBLIC_GOOGLE_RATING || googleRatingFallback;
+  // Fetched here, on the server; only the three public values are passed to the trust strip.
+  const place = await getGooglePlaceRating();
 
   return (
     <section className="hero" id="hero" aria-labelledby="home-heading">
@@ -79,9 +79,7 @@ export async function Hero() {
         </a>
         <OpeningStatus suffix={clinic.streetAddress} />
       </HeroCarousel>
-
-      {/* TODO [LIVE GOOGLE REVIEWS INTEGRATION REQUIRED]: set GOOGLE_PLACES_API_KEY and GOOGLE_PLACE_ID. Check Google's current terms on caching and attribution. */}
-      <ClinicAtGlance liveRating={liveRating} manualRating={manualRating} />
+      <ClinicAtGlance place={place} fallbackUrl={googleBusinessProfileUrl} />
     </section>
   );
 }
