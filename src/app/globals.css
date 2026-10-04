@@ -394,37 +394,6 @@ button { cursor: pointer; }
   transition: opacity 700ms var(--ease-soft), visibility 0s linear 700ms;
 }
 .hero-slide.is-active { opacity: 1; visibility: visible; transition: opacity 700ms var(--ease-soft) 150ms, visibility 0s; }
-.hero-controls { display: flex; align-items: center; gap: 8px; margin-top: 18px; }
-.hero-arrow {
-  width: 40px;
-  height: 40px;
-  display: grid;
-  place-items: center;
-  padding: 0;
-  border: 1px solid var(--line);
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.85);
-  color: var(--navy);
-  cursor: pointer;
-  transition: border-color var(--dur-fast) var(--ease-soft), background-color var(--dur-fast) var(--ease-soft);
-}
-.hero-arrow:hover { border-color: var(--navy); background: white; }
-.hero-arrow svg { width: 18px; height: 18px; }
-.hero-dots { display: flex; }
-.hero-dots button { position: relative; width: 28px; height: 40px; padding: 0; border: 0; background: none; cursor: pointer; }
-.hero-dots button::before {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 8px;
-  height: 8px;
-  margin: -4px 0 0 -4px;
-  border-radius: 999px;
-  background: rgba(16, 32, 72, 0.25);
-  transition: transform var(--dur-normal) var(--ease-out), background-color var(--dur-fast) var(--ease-soft);
-}
-.hero-dots button.is-active::before { background: var(--navy); transform: scaleX(2.4); }
 /* Keeps the headline readable where it overlaps the photograph. */
 .hero-bg::after {
   content: "";

@@ -1,8 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useState, type CSSProperties, type ReactNode } from "react";
-import { ChevronLeftIcon, ChevronRightIcon } from "./Icons";
+import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
 
 export type HeroSlide = {
   image: { src: string; alt: string; position: string; mobilePosition: string };
@@ -12,10 +11,11 @@ export type HeroSlide = {
 };
 
 /** Slow and calm: long enough to read the heading and supporting copy. */
-const INTERVAL = 6500;
+const INTERVAL = 8000;
 
 /**
- * Two-slide hero. Backgrounds and text crossfade in place, so the layout never moves.
+ * Two-slide hero that changes on its own every 8 seconds; there are no manual controls.
+ * Backgrounds and text crossfade in place, so the layout never moves.
  * Autoplay pauses on hover, on keyboard focus and while the tab is hidden, and is off for reduced motion.
  * Only the first slide's heading is the page <h1>; the others use the same styling on an <h2>.
  */
@@ -46,8 +46,6 @@ export function HeroCarousel({ slides, children }: { slides: readonly HeroSlide[
     return () => window.clearTimeout(id);
   }, [index, reduced, hovered, focused, hidden, total]);
 
-  const go = useCallback((next: number) => setIndex((next + total) % total), [total]);
-
   return (
     <div
       className="hero-carousel"
@@ -59,10 +57,6 @@ export function HeroCarousel({ slides, children }: { slides: readonly HeroSlide[
       onFocus={() => setFocused(true)}
       onBlur={(event) => {
         if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setFocused(false);
-      }}
-      onKeyDown={(event) => {
-        if (event.key === "ArrowLeft") go(index - 1);
-        if (event.key === "ArrowRight") go(index + 1);
       }}
     >
       <div className="hero-bg">
@@ -113,28 +107,6 @@ export function HeroCarousel({ slides, children }: { slides: readonly HeroSlide[
 
         {children}
 
-        {total > 1 ? (
-          <div className="hero-controls">
-            <button type="button" className="hero-arrow" onClick={() => go(index - 1)} aria-label="Previous slide">
-              <ChevronLeftIcon />
-            </button>
-            <div className="hero-dots" role="group" aria-label="Choose a slide">
-              {slides.map((slide, slideIndex) => (
-                <button
-                  key={slide.heading}
-                  type="button"
-                  className={slideIndex === index ? "is-active" : undefined}
-                  aria-label={`Show slide ${slideIndex + 1}: ${slide.heading}`}
-                  aria-current={slideIndex === index ? "true" : undefined}
-                  onClick={() => go(slideIndex)}
-                />
-              ))}
-            </div>
-            <button type="button" className="hero-arrow" onClick={() => go(index + 1)} aria-label="Next slide">
-              <ChevronRightIcon />
-            </button>
-          </div>
-        ) : null}
       </div>
     </div>
   );
