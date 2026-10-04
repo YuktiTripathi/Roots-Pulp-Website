@@ -13,7 +13,7 @@ export async function Hero() {
     <section className="hero" id="hero" aria-labelledby="home-heading">
       <div className="hero-copy">
         <p className="eyebrow">Dental Clinic in Aliganj, Lucknow</p>
-        <h1 id="home-heading">Dental care that goes deeper than the surface.</h1>
+        <h1 id="home-heading">Dental care that goes deeper than the surface</h1>
         <p className="lede">
           Dr. Shubham Tripathi examines carefully, explains what he finds in plain language, and plans treatment
           around you. Family dental care in Sector Q, Aliganj, open seven days.
