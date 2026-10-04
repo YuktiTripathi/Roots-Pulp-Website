@@ -9,6 +9,7 @@ import { FinalCTA } from "@/components/FinalCTA";
 import { FirstVisitTimeline } from "@/components/FirstVisitTimeline";
 import { Hero } from "@/components/Hero";
 import { InsideClinic } from "@/components/InsideClinic";
+import { RealCases } from "@/components/cases/RealCases";
 import { ReviewsSection } from "@/components/ReviewsSection";
 import { TechnologySection } from "@/components/TechnologySection";
 import { VisitSection } from "@/components/VisitSection";
@@ -30,6 +31,7 @@ export default function HomePage() {
       <Hero />
       <ConcernCards />
       <FeaturedTreatments />
+      <RealCases />
       <WhyDifferent />
       <DoctorSection />
       <FirstVisitTimeline />

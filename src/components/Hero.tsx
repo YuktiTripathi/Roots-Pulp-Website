@@ -5,8 +5,6 @@ import { ClinicAtGlance } from "./ClinicAtGlance";
 import { HeroCarousel, type HeroSlide } from "./HeroCarousel";
 import { OpeningStatus } from "./OpeningStatus";
 
-const eyebrow = "Dental Clinic in Aliganj, Lucknow";
-
 const slides: HeroSlide[] = [
   {
     image: {
@@ -17,7 +15,7 @@ const slides: HeroSlide[] = [
       tabletPosition: "70% 30%",
       portraitPosition: "62% 50%",
     },
-    eyebrow,
+    eyebrow: "Best Dental Clinic in Aliganj, Lucknow",
     heading: "Dental care that goes deeper than the surface",
     paragraphs: [
       "We take the time to understand what\u2019s really going on and explain it clearly.",
@@ -33,7 +31,7 @@ const slides: HeroSlide[] = [
       tabletPosition: "75% 35%",
       portraitPosition: "68% 50%",
     },
-    eyebrow,
+    eyebrow: "Most Trusted Dental Clinic in Aliganj, Lucknow",
     heading: "There is no bigger success than your Smile",
     paragraphs: [
       "A healthy, confident smile changes how you feel every day.",
