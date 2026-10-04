@@ -382,7 +382,49 @@ button { cursor: pointer; }
   padding: 0;
 }
 .hero-bg { position: absolute; inset: 0 0 72px; z-index: -1; overflow: hidden; background: var(--soft); }
-.hero-bg-img { object-fit: cover; object-position: 78% 30%; }
+/* Carousel: the backgrounds and the text blocks crossfade in place. */
+.hero-carousel { grid-area: copy; display: flex; flex-direction: column; }
+.hero-bg-img { object-fit: cover; object-position: var(--pos, 78% 30%); opacity: 0; transition: opacity 900ms var(--ease-soft); }
+.hero-bg-img.is-active { opacity: 1; }
+.hero-slides { display: grid; }
+.hero-slide {
+  grid-area: 1 / 1;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 700ms var(--ease-soft), visibility 0s linear 700ms;
+}
+.hero-slide.is-active { opacity: 1; visibility: visible; transition: opacity 700ms var(--ease-soft) 150ms, visibility 0s; }
+.hero-controls { display: flex; align-items: center; gap: 8px; margin-top: 18px; }
+.hero-arrow {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--navy);
+  cursor: pointer;
+  transition: border-color var(--dur-fast) var(--ease-soft), background-color var(--dur-fast) var(--ease-soft);
+}
+.hero-arrow:hover { border-color: var(--navy); background: white; }
+.hero-arrow svg { width: 18px; height: 18px; }
+.hero-dots { display: flex; }
+.hero-dots button { position: relative; width: 28px; height: 40px; padding: 0; border: 0; background: none; cursor: pointer; }
+.hero-dots button::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  margin: -4px 0 0 -4px;
+  border-radius: 999px;
+  background: rgba(16, 32, 72, 0.25);
+  transition: transform var(--dur-normal) var(--ease-out), background-color var(--dur-fast) var(--ease-soft);
+}
+.hero-dots button.is-active::before { background: var(--navy); transform: scaleX(2.4); }
 /* Keeps the headline readable where it overlaps the photograph. */
 .hero-bg::after {
   content: "";
@@ -397,8 +439,10 @@ button { cursor: pointer; }
   padding: 84px 0 132px;
 }
 .hero-copy > * { max-width: 560px; }
-.hero-copy > .lede { max-width: 470px; }
-.hero h1 { font-size: clamp(2.4rem, 5vw, 4.6rem); max-width: 12ch; }
+.lede p { text-wrap: balance; }
+.lede p + p { margin-top: 8px; }
+.hero .lede { max-width: 30rem; }
+.hero-title { margin: 0; color: var(--navy); font-size: clamp(2.4rem, 5vw, 4.6rem); max-width: 12ch; }
 .lede { margin-top: 18px; max-width: 42rem; color: var(--ink); font-size: 1.12rem; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 26px 0 6px; }
 .hero-call { display: flex; width: fit-content; min-height: 44px; }
@@ -458,7 +502,6 @@ a.trust-link:hover, a.trust-link:focus-visible { border-color: var(--teal); }
 }
 @keyframes hero-fade { from { opacity: 0; } to { opacity: 1; } }
 @media (prefers-reduced-motion: no-preference) {
-  .hero-bg-img { animation: hero-settle 1400ms var(--ease-out) both; }
 }
 
 .story { background: var(--ivory); }
@@ -935,17 +978,17 @@ section.final-cta p { color: rgba(255, 255, 255, 0.82); }
 
 /* Tablets and phones: the photograph becomes a banner above the copy, never behind text. */
 @media (max-width: 1100px) {
-  .hero { grid-template-areas: "bg" "copy" "strip"; }
-  .hero-bg { position: relative; inset: auto; grid-area: bg; z-index: 0; width: 100%; aspect-ratio: 16 / 9; max-height: 420px; }
+  .hero { grid-template-areas: "copy" "strip"; }
+  .hero-bg { position: relative; inset: auto; z-index: 0; width: 100%; aspect-ratio: 16 / 9; max-height: 420px; }
   .hero-bg::after { display: none; }
-  .hero-bg-img { object-position: 70% 35%; }
+  .hero-bg-img { object-position: var(--pos-mobile, 70% 35%); }
   .hero-copy { padding: 32px 0 0; }
-  .hero-copy > *, .hero-copy > .lede { max-width: 640px; }
+  .hero-copy > * { max-width: 640px; }
   .trust-strip { margin-top: 28px; }
 }
 
 @media (max-width: 980px) {
-  .hero h1 { max-width: 16ch; font-size: clamp(2.1rem, 8vw, 3.2rem); }
+  .hero-title { max-width: 16ch; font-size: clamp(2.1rem, 8vw, 3.2rem); }
   .trust-strip { margin: 22px auto 40px; }
   .trust-value { font-size: 1.25rem; }
   .trust-label { font-size: 0.72rem; letter-spacing: 0.08em; }
@@ -1011,6 +1054,7 @@ section.final-cta p { color: rgba(255, 255, 255, 0.82); }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+  .hero-bg-img, .hero-slide { transition: none !important; }
   .reveal {
     opacity: 1;
     transform: none;
@@ -1033,7 +1077,6 @@ section.final-cta p { color: rgba(255, 255, 255, 0.82); }
 }
 /* Mobile: the image simply fades in, no mask or scale. */
 @media (max-width: 980px) and (prefers-reduced-motion: no-preference) {
-  .hero-bg-img { animation: hero-fade 400ms var(--ease-out) both; }
 }
 @keyframes rise {
   from { opacity: 0; transform: translateY(12px); }
