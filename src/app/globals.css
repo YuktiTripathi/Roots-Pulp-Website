@@ -373,59 +373,35 @@ button { cursor: pointer; }
 .mobile-menu a { transition: color var(--dur-fast) var(--ease-soft), padding-left var(--dur-normal) var(--ease-out); }
 .mobile-menu nav a[aria-current="page"] { padding-left: 10px; box-shadow: inset 2px 0 0 var(--teal); }
 
+/* Hero: full-width background photograph with the copy on its soft left side. */
 .hero {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-areas: "copy" "strip";
+  padding: 0;
+}
+.hero-bg { position: absolute; inset: 0 0 72px; z-index: -1; overflow: hidden; background: var(--soft); }
+.hero-bg-img { object-fit: cover; object-position: 78% 30%; }
+/* Keeps the headline readable where it overlaps the photograph. */
+.hero-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(246, 241, 231, 0.95) 0%, rgba(246, 241, 231, 0.86) 34%, rgba(246, 241, 231, 0) 60%);
+}
+.hero-copy {
+  grid-area: copy;
   width: min(1240px, calc(100% - 40px));
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
-  grid-template-areas:
-    "copy visual"
-    "strip strip";
-  column-gap: 24px;
-  align-items: center;
-  padding: 20px 0 0;
+  padding: 84px 0 132px;
 }
-/* Bottom space clears the trust strip, which overlaps the hero by 40px on desktop. */
-.hero-copy { grid-area: copy; max-width: 640px; padding-bottom: 56px; }
+.hero-copy > * { max-width: 560px; }
+.hero-copy > .lede { max-width: 470px; }
 .hero h1 { font-size: clamp(2.4rem, 5vw, 4.6rem); max-width: 12ch; }
-.lede { margin-top: 18px; max-width: 42rem; color: var(--muted); font-size: 1.12rem; }
+.lede { margin-top: 18px; max-width: 42rem; color: var(--ink); font-size: 1.12rem; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 26px 0 6px; }
 .hero-call { display: flex; width: fit-content; min-height: 44px; }
-
-/* Hero image card: one photograph, one caption chip. */
-.hero-visual { grid-area: visual; display: flex; justify-content: center; }
-.hero-card {
-  position: relative;
-  width: min(100%, 520px);
-  margin: 0;
-  overflow: hidden;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  background: var(--soft);
-}
-.hero-card-img {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
-  object-position: 50% 40%;
-}
-.hero-chip {
-  position: absolute;
-  left: 16px;
-  /* Clear of the trust strip, which overlaps the bottom 40px of the image on desktop. */
-  bottom: 56px;
-  display: flex;
-  flex-direction: column;
-  padding: 8px 14px;
-  border-radius: 12px;
-  background: var(--ivory);
-  color: var(--navy);
-  line-height: 1.3;
-}
-.hero-chip span:first-child { font-weight: 700; font-size: 0.92rem; }
-.hero-chip span:last-child { color: var(--muted); font-size: 0.8rem; }
 
 /* Trust strip: a contained card that overlaps the bottom of the image. */
 .trust-strip {
@@ -433,7 +409,7 @@ button { cursor: pointer; }
   position: relative;
   z-index: 2;
   width: 100%;
-  max-width: 1040px;
+  max-width: min(1040px, calc(100% - 40px));
   margin: -40px auto 56px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -476,14 +452,13 @@ a.trust-link:hover, a.trust-link:focus-visible { border-color: var(--teal); }
 .trust-more { color: var(--teal); font-size: 0.85rem; font-weight: 650; }
 
 /* Hero motion: text entrance (below), image mask reveal, caption chip. */
-@keyframes hero-reveal {
-  from { clip-path: inset(0 0 8% 0 round 24px); transform: scale(1.02); }
-  to { clip-path: inset(0 round 24px); transform: none; }
+@keyframes hero-settle {
+  from { transform: scale(1.03); }
+  to { transform: none; }
 }
 @keyframes hero-fade { from { opacity: 0; } to { opacity: 1; } }
 @media (prefers-reduced-motion: no-preference) {
-  .hero-card-img { animation: hero-reveal 900ms var(--ease-out) both; }
-  .hero-chip { animation: hero-fade 400ms var(--ease-out) 600ms both; }
+  .hero-bg-img { animation: hero-settle 1400ms var(--ease-out) both; }
 }
 
 .story { background: var(--ivory); }
@@ -958,23 +933,23 @@ section.final-cta p { color: rgba(255, 255, 255, 0.82); }
   .header-actions { margin-left: auto; }
 }
 
+/* Tablets and phones: the photograph becomes a banner above the copy, never behind text. */
+@media (max-width: 1100px) {
+  .hero { grid-template-areas: "bg" "copy" "strip"; }
+  .hero-bg { position: relative; inset: auto; grid-area: bg; z-index: 0; width: 100%; aspect-ratio: 16 / 9; max-height: 420px; }
+  .hero-bg::after { display: none; }
+  .hero-bg-img { object-position: 70% 35%; }
+  .hero-copy { padding: 32px 0 0; }
+  .hero-copy > *, .hero-copy > .lede { max-width: 640px; }
+  .trust-strip { margin-top: 28px; }
+}
+
 @media (max-width: 980px) {
-  .hero {
-    grid-template-columns: 1fr;
-    grid-template-areas: "copy" "strip" "visual";
-    align-items: start;
-    padding-top: 16px;
-  }
-  .hero-copy { padding-bottom: 0; }
   .hero h1 { max-width: 16ch; font-size: clamp(2.1rem, 8vw, 3.2rem); }
-  .trust-strip { margin: 22px 0 22px; }
+  .trust-strip { margin: 22px auto 40px; }
   .trust-value { font-size: 1.25rem; }
   .trust-label { font-size: 0.72rem; letter-spacing: 0.08em; }
   .trust-more { display: none; }
-  .hero-visual { margin-bottom: 40px; }
-  .hero-card { width: 100%; }
-  .hero-chip { bottom: 16px; }
-  .hero-card-img { aspect-ratio: 4 / 3; max-height: 320px; }
   .story-grid, .doctor-grid, .faq-layout, .visit-grid, .footer-grid, .concern-grid, .treat-grid, .expect-grid {
     grid-template-columns: 1fr 1fr;
   }
@@ -985,7 +960,7 @@ section.final-cta p { color: rgba(255, 255, 255, 0.82); }
 
 @media (max-width: 720px) {
   .section { padding: 64px 0; }
-  .section-inner, .hero { width: min(100% - 32px, var(--max)); }
+  .section-inner, .hero-copy { width: min(100% - 32px, var(--max)); }
   :root { --header: 100px; --header-compact: 76px; }
   .brand img { width: 68px; height: 68px; }
   .brand-footer img { width: 84px; height: 84px; }
@@ -1058,7 +1033,7 @@ section.final-cta p { color: rgba(255, 255, 255, 0.82); }
 }
 /* Mobile: the image simply fades in, no mask or scale. */
 @media (max-width: 980px) and (prefers-reduced-motion: no-preference) {
-  .hero-card-img { animation: hero-fade 400ms var(--ease-out) both; }
+  .hero-bg-img { animation: hero-fade 400ms var(--ease-out) both; }
 }
 @keyframes rise {
   from { opacity: 0; transform: translateY(12px); }

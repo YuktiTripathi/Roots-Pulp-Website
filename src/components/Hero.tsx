@@ -11,6 +11,18 @@ export async function Hero() {
 
   return (
     <section className="hero" id="hero" aria-labelledby="home-heading">
+      {/* Full-width background photograph; the copy sits on its soft left side. */}
+      {/* TODO [VERIFY BEFORE PUBLISHING]: patient consent for the identifiable patient in this photo. */}
+      <div className="hero-bg">
+        <Image
+          src="/images/hero/dental-checkup-hero.webp"
+          alt="Dr. Shubham Tripathi examining a patient's teeth in the treatment chair at Roots & Pulp Dental Clinic, Aliganj"
+          fill
+          priority
+          sizes="100vw"
+          className="hero-bg-img"
+        />
+      </div>
       <div className="hero-copy">
         <p className="eyebrow">Dental Clinic in Aliganj, Lucknow</p>
         <h1 id="home-heading">Dental care that goes deeper than the surface</h1>
@@ -30,26 +42,6 @@ export async function Hero() {
           Call the clinic
         </a>
         <OpeningStatus suffix={clinic.streetAddress} />
-      </div>
-
-      <div className="hero-visual">
-        {/* TODO [NEW PHOTO REQUIRED]: wide daylight photo of the consultation space, 1600px or wider. */}
-        {/* TODO [VERIFY BEFORE PUBLISHING]: patient consent for the identifiable patient in this photo. */}
-        <figure className="hero-card">
-          <Image
-            src="/images/consultation-banner.jpg"
-            alt="Dr. Shubham Tripathi talking with a patient at the consultation desk at Roots & Pulp Dental Clinic, Aliganj"
-            width={768}
-            height={1024}
-            priority
-            sizes="(max-width: 980px) 100vw, 520px"
-            className="hero-card-img"
-          />
-          <figcaption className="hero-chip">
-            <span>Dr. Shubham Tripathi</span>
-            <span>Founder &amp; Director</span>
-          </figcaption>
-        </figure>
       </div>
 
       {/* TODO [LIVE GOOGLE REVIEWS INTEGRATION REQUIRED]: set GOOGLE_PLACES_API_KEY and GOOGLE_PLACE_ID. Check Google's current terms on caching and attribution. */}
