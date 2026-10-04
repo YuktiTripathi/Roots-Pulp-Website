@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
 
 export type HeroSlide = {
-  image: { src: string; alt: string; position: string; tabletPosition: string; mobilePosition: string; mobileZoom: number };
+  image: { src: string; alt: string; position: string; tabletPosition: string; mobilePosition: string };
   eyebrow: string;
   heading: string;
   paragraphs: readonly string[];
@@ -52,8 +52,9 @@ export function HeroCarousel({ slides, children }: { slides: readonly HeroSlide[
             fill
             priority={slideIndex === 0}
             sizes="100vw"
+            quality={85}
             className={`hero-bg-img${slideIndex === index ? " is-active" : ""}`}
-            style={{ "--pos": slide.image.position, "--pos-tablet": slide.image.tabletPosition, "--pos-mobile": slide.image.mobilePosition, "--zoom-mobile": slide.image.mobileZoom } as CSSProperties}
+            style={{ "--pos": slide.image.position, "--pos-tablet": slide.image.tabletPosition, "--pos-mobile": slide.image.mobilePosition } as CSSProperties}
           />
         ))}
       </div>
