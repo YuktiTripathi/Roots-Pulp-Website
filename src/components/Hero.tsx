@@ -36,6 +36,20 @@ const slides: HeroSlide[] = [
       "We help you reach that with thoughtful care and treatment planned around you.",
     ],
   },
+  {
+    image: {
+      src: "/images/hero/advanced-technology-hero.webp",
+      alt: "Dr. Shubham Tripathi explaining a digital dental X-ray to a patient at Roots & Pulp Dental Clinic in Aliganj, Lucknow",
+      position: "82% 35%",
+      mobilePosition: "78% 40%",
+    },
+    eyebrow: "Advanced Dental Care in Aliganj, Lucknow",
+    heading: "Advanced dentistry without the premium price tag",
+    paragraphs: [
+      "Modern diagnostics and treatment techniques help us plan with greater precision, comfort, and clarity.",
+      "Thoughtful care, advanced tools, and fair pricing \u2014 all under one roof.",
+    ],
+  },
 ];
 
 export async function Hero() {
