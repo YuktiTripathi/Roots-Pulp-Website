@@ -25,14 +25,13 @@
 .cases-grid-1 .cases-card-large { grid-column: 1; grid-row: auto; }
 .cases-grid-2 .cases-card-large { grid-row: 1; }
 
-/* Desktop: case A stretches to the height of B and C, and its comparison fills the spare height. */
+/* Desktop: case A shows a square comparison (wide photos crop no closer than that) and its card
+   matches the height of B and C, with any spare space below the text. */
 @media (min-width: 981px) {
   .cases-grid-3 .cases-card-large,
-  .cases-grid-4 .cases-card-large { align-self: stretch; grid-template-rows: auto minmax(0, 1fr) auto; }
-  .cases-grid-3 .cases-card-large .cases-card-media,
-  .cases-grid-4 .cases-card-large .cases-card-media { display: flex; min-height: 0; }
+  .cases-grid-4 .cases-card-large { align-self: stretch; grid-template-rows: auto auto 1fr; }
   .cases-grid-3 .cases-card-large .cases-compare,
-  .cases-grid-4 .cases-card-large .cases-compare { aspect-ratio: auto !important; height: 100%; min-height: 320px; }
+  .cases-grid-4 .cases-card-large .cases-compare { aspect-ratio: 1 / 1 !important; }
 }
 
 /* Case D: image left, text right. */

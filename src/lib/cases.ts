@@ -46,6 +46,8 @@ export type DentalCase = {
   summary: string;
   /** Must match a slug in treatmentPages. */
   treatmentSlug: string;
+  /** Optional link text, for a second case on the same treatment, so no two cards share a label. */
+  linkLabel?: string;
   /** Required when mode is "comparison". */
   before?: CaseImage;
   /** Required when mode is "comparison". */
@@ -95,14 +97,15 @@ export const dentalCases: DentalCase[] = [
     consent: true,
   },
   {
-    id: "front-teeth-gap",
+    id: "front-teeth-spacing",
     mode: "comparison",
     featured: true,
-    order: 2,
-    concern: "Gap between front teeth",
-    title: "Closing a front tooth gap",
-    summary: "The gap between the two upper front teeth was closed.",
+    order: 6,
+    concern: "Spacing between front teeth",
+    title: "Front teeth gap closure",
+    summary: "The space between the two upper front teeth was closed.",
     treatmentSlug: "cosmetic-dentistry",
+    linkLabel: "Explore cosmetic treatments",
     before: {
       src: "/images/cases/cosmetic-front-teeth-gap-closure-aliganj-lucknow-before.webp",
       alt: "Before view of a visible gap between the upper front teeth, Roots & Pulp Dental Clinic, Aliganj, Lucknow",
@@ -167,7 +170,7 @@ export const dentalCases: DentalCase[] = [
     id: "yellow-stained-teeth",
     mode: "comparison",
     featured: true,
-    order: 5,
+    order: 8,
     concern: "Yellow, stained teeth",
     title: "Teeth whitening",
     summary: "Yellow staining on the front teeth was lightened.",
@@ -183,6 +186,76 @@ export const dentalCases: DentalCase[] = [
       alt: "After view of the same teeth noticeably lighter in shade",
       width: 1024,
       height: 560,
+    },
+    consent: true,
+  },
+  {
+    id: "front-teeth-gap",
+    mode: "comparison",
+    featured: true,
+    order: 2,
+    concern: "Gap between front teeth",
+    title: "Closing a front tooth gap",
+    summary: "The gap between the two upper front teeth was closed, with the shade matched to the neighbouring teeth.",
+    treatmentSlug: "cosmetic-dentistry",
+    before: {
+      src: "/images/cases/composite-bonding-front-teeth-gap-aliganj-lucknow-before.webp",
+      alt: "Before view of a gap between the upper front teeth, Roots & Pulp Dental Clinic, Aliganj, Lucknow",
+      width: 760,
+      height: 312,
+    },
+    after: {
+      src: "/images/cases/composite-bonding-front-teeth-gap-aliganj-lucknow-after.webp",
+      alt: "After view of the same upper front teeth with the gap closed",
+      width: 760,
+      height: 312,
+    },
+    consent: true,
+  },
+  {
+    id: "stains-gum-line",
+    mode: "comparison",
+    featured: true,
+    order: 5,
+    concern: "Brown stains along the gum line",
+    title: "Stain and tartar cleaning",
+    summary: "Brown stains and tartar along the gum line were cleaned from the upper and lower teeth.",
+    treatmentSlug: "gum-and-oral-health",
+    before: {
+      src: "/images/cases/teeth-cleaning-brown-stains-gum-line-aliganj-lucknow-before.webp",
+      alt: "Before view of brown stains and tartar along the gum line of the upper and lower teeth, Roots & Pulp Dental Clinic, Aliganj, Lucknow",
+      width: 770,
+      height: 340,
+    },
+    after: {
+      src: "/images/cases/teeth-cleaning-brown-stains-gum-line-aliganj-lucknow-after.webp",
+      alt: "After view of the same teeth with the stains and tartar cleaned away",
+      width: 770,
+      height: 340,
+    },
+    consent: true,
+  },
+  {
+    id: "lower-teeth-tartar",
+    mode: "comparison",
+    featured: true,
+    order: 7,
+    concern: "Tartar on the lower teeth",
+    title: "Cleaning tartar from the lower teeth",
+    summary: "Dark tartar deposits on the lower front teeth were cleaned away.",
+    treatmentSlug: "teeth-cleaning",
+    linkLabel: "What happens during a teeth cleaning",
+    before: {
+      src: "/images/cases/teeth-cleaning-tartar-lower-teeth-aliganj-lucknow-before.webp",
+      alt: "Before view of dark tartar deposits on the lower front teeth, Roots & Pulp Dental Clinic, Aliganj, Lucknow",
+      width: 649,
+      height: 420,
+    },
+    after: {
+      src: "/images/cases/teeth-cleaning-tartar-lower-teeth-aliganj-lucknow-after.webp",
+      alt: "After view of the same lower front teeth cleaned of tartar",
+      width: 649,
+      height: 420,
     },
     consent: true,
   },
@@ -241,7 +314,7 @@ export function getRenderableCases(cases: DentalCase[] = dentalCases) {
     .sort((a, b) => a.order - b.order)
     .map((item) => ({
       ...item,
-      link: { href: caseTreatmentHref(item.treatmentSlug), label: caseLinkLabel(item.treatmentSlug) },
+      link: { href: caseTreatmentHref(item.treatmentSlug), label: item.linkLabel ?? caseLinkLabel(item.treatmentSlug) },
     }));
 
   return { featured: valid.slice(0, 4), more: valid.slice(4) };
