@@ -1621,9 +1621,9 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
           caption: "Explaining your options",
         },
         {
-          src: "/images/consultation-banner.jpg",
-          alt: "A patient and Dr. Shubham Tripathi seated across the consultation desk",
-          caption: "Time to talk it through",
+          src: "/images/clinic/care/dr-shubham-chairside-examination.webp",
+          alt: "Dr. Shubham Tripathi carrying out a chairside dental examination",
+          caption: "A careful examination",
         },
       ],
       equipmentNote: "Your first visit is a conversation.",

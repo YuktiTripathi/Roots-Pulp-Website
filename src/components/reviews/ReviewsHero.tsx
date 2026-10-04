@@ -19,12 +19,13 @@ export function ReviewsHero({ reviewCount = patientReviews.length }: { reviewCou
       </div>
       <figure className="reviews-hero-banner">
         <Image
-          src="/images/consultation-banner.jpg"
-          alt="Consultation at Roots & Pulp Dental Clinic"
+          src="/images/hero/smiling-patient-hero.webp"
+          alt="A patient smiling at her reflection in a hand mirror in the dental chair"
           fill
           sizes="100vw"
           priority
           className="reviews-hero-photo"
+          style={{ objectPosition: "center 88%" }}
         />
         <figcaption className="reviews-hero-caption">
           <h1 id="reviews-heading" className="enter">

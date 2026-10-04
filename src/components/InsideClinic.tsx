@@ -7,19 +7,21 @@ import { insideClinic } from "@/lib/homeContent";
 import { stagger } from "@/lib/motion";
 import { photos } from "@/lib/photos";
 
-type Photo = { src: string; width: number; height: number; alt: string };
+type Photo = { src: string; width: number; height: number; alt: string; position?: string };
 
 const extra: Record<string, Photo> = {
   listenConsult: insideClinic.photos[0],
   explainConsult: insideClinic.photos[1],
-  consultationBanner: insideClinic.photos[2],
+  happyPatientThumbsUp: insideClinic.photos[2],
+  treatingPatient: insideClinic.photos[3],
+  chairsideExamination: insideClinic.photos[4],
 };
 const pick = (key: string): Photo => extra[key] ?? photos[key as keyof typeof photos];
 
 /** Each frame changes every INTERVAL; frames are offset so only one photograph changes at a time. */
 const INTERVAL = 4500;
 
-/** One large frame and two smaller ones, each crossfading through real clinic photographs. */
+/** A landscape frame and a tall portrait frame, each crossfading through real clinic photographs. */
 export function InsideClinic() {
   const [tick, setTick] = useState(0);
 
@@ -48,6 +50,7 @@ export function InsideClinic() {
           fill
           sizes={sizes}
           className={index === active ? "inside-img is-active" : "inside-img"}
+          style={photo.position ? { objectPosition: photo.position } : undefined}
         />
       );
     });
@@ -67,14 +70,9 @@ export function InsideClinic() {
         </div>
         <div className="inside-grid">
           <figure className="inside-large reveal">{frame(0, "(max-width: 720px) 100vw, 680px")}</figure>
-          <div className="inside-small">
-            <figure className="reveal" style={stagger(1)}>
-              {frame(1, "(max-width: 720px) 50vw, 440px")}
-            </figure>
-            <figure className="reveal" style={stagger(2)}>
-              {frame(2, "(max-width: 720px) 50vw, 440px")}
-            </figure>
-          </div>
+          <figure className="inside-tall reveal" style={stagger(1)}>
+            {frame(1, "(max-width: 720px) 100vw, 460px")}
+          </figure>
         </div>
         <p className="section-more reveal">
           <Link className="text-link" href="/gallery/">

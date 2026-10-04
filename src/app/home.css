@@ -190,9 +190,7 @@
 .inside-img { object-fit: cover; opacity: 0; transition: opacity 1100ms var(--ease-soft), transform 700ms var(--ease-out); }
 .inside-img.is-active { opacity: 1; }
 /* The right column takes its height from the large photo; its images fill their half without adding height. */
-.inside-small { display: grid; grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 14px; }
-.inside-small figure { position: relative; min-height: 0; }
-.inside-small .inside-img { object-position: 50% 40%; }
+.inside-tall { min-height: 0; }
 .inside-large.reveal--mask .mask-img { transition-duration: 700ms; }
 @media (hover: hover) and (pointer: fine) {
   .inside-grid figure:hover .inside-img { transform: scale(1.02); }
@@ -269,8 +267,7 @@
   .timeline-list { display: block; }
   .timeline-container { display: none; }
   .inside-grid { grid-template-columns: 1fr; }
-  .inside-small { grid-template-rows: none; grid-template-columns: 1fr 1fr; }
-  .inside-small figure { aspect-ratio: 1 / 1; }
+  .inside-tall { aspect-ratio: 4 / 5; }
   .tech-row {
     grid-template-columns: none;
     grid-auto-flow: column;

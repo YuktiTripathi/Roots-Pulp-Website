@@ -88,11 +88,10 @@ export const insideClinic = {
   eyebrow: "The clinic",
   heading: "Inside Roots & Pulp",
   intro: "A calm, clear space in Sector Q, Aliganj.",
-  /** Each of the three frames cycles through its own photographs (8 in total). */
+  /** Landscape frame (clinic and consultations) and a tall frame for the portrait photographs. */
   slots: [
-    ["interior", "listenConsult", "treatmentRoom"],
-    ["waitingArea", "explainConsult", "reviewingSmile"],
-    ["consultationDesk", "consultationBanner"],
+    ["interior", "listenConsult", "treatmentRoom", "waitingArea", "explainConsult", "consultationDesk"],
+    ["happyPatientThumbsUp", "treatingPatient", "chairsideExamination"],
   ],
   photos: [
     {
@@ -108,10 +107,25 @@ export const insideClinic = {
       alt: "Dr. Shubham Tripathi going through findings with a patient using a laptop",
     },
     {
-      src: "/images/consultation-banner.jpg",
-      width: 768,
-      height: 1024,
-      alt: "A patient and Dr. Shubham Tripathi seated across the consultation desk",
+      src: "/images/clinic/care/dr-shubham-happy-patient-thumbs-up.webp",
+      width: 1122,
+      height: 1402,
+      alt: "Dr. Shubham Tripathi and a smiling patient giving a thumbs up in the treatment chair at Roots & Pulp",
+      position: "50% 40%",
+    },
+    {
+      src: "/images/clinic/care/dr-shubham-treating-patient-clinic.webp",
+      width: 1122,
+      height: 1402,
+      alt: "Dr. Shubham Tripathi examining a patient's teeth under the dental light at Roots & Pulp",
+      position: "55% 40%",
+    },
+    {
+      src: "/images/clinic/care/dr-shubham-chairside-examination.webp",
+      width: 1122,
+      height: 1402,
+      alt: "Dr. Shubham Tripathi carrying out a chairside dental examination",
+      position: "60% 45%",
     },
   ],
 } as const;
