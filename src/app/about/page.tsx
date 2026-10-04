@@ -29,19 +29,19 @@ const walkOutItems = [
 
 const smallThings = [
   {
-    title: "Open seven days.",
+    title: "Open seven days",
     text: "Monday to Saturday until 8 PM, and Sunday until 5 PM, so a visit can fit around work and school.",
   },
   {
-    title: "Children are welcome.",
+    title: "Children are welcome",
     text: "We see children of all ages, from their first checkup onwards.",
   },
   {
-    title: "Ask before you come.",
+    title: "Ask before you come",
     text: "Send us a WhatsApp message with your question, call the clinic, or book online.",
   },
   {
-    title: "Some things can wait.",
+    title: "Some things can wait",
     text: "Not every problem needs treatment today. If yours can wait, or needs none, we will say so.",
   },
 ] as const;
@@ -130,7 +130,7 @@ export default function AboutPage() {
           <div className="about-copy about-justify">
             <p className="eyebrow reveal">Why Roots &amp; Pulp exists</p>
             <h2 id="why-heading" className="reveal" style={stagger(1)}>
-              People should never feel like just another case in a dental chair.
+              People should never feel like just another case in a dental chair
             </h2>
             <p className="reveal" style={stagger(2)}>
               A dental visit can come with fear, uncertainty, pain, or even embarrassment, and often what people
@@ -184,7 +184,7 @@ export default function AboutPage() {
           <div className="about-vision-copy about-justify">
             <p className="eyebrow reveal">Our vision</p>
             <h2 id="vision-heading" className="reveal" style={stagger(1)}>
-              A clinic you return to through different stages of life.
+              A clinic you return to through different stages of life
             </h2>
             <p className="reveal" style={stagger(2)}>
               We want Roots &amp; Pulp to be a place people come back to, not because they are afraid something might
