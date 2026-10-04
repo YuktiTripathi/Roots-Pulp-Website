@@ -11,40 +11,30 @@ export type HeroSlide = {
 };
 
 /** Slow and calm: long enough to read the heading and supporting copy. */
-const INTERVAL = 8000;
+const INTERVAL = 5000;
 
 /**
- * Two-slide hero that changes on its own every 8 seconds; there are no manual controls.
+ * Two-slide hero that changes on its own every 5 seconds; there are no manual controls.
  * Backgrounds and text crossfade in place, so the layout never moves.
- * Autoplay pauses on hover, on keyboard focus and while the tab is hidden, and is off for reduced motion.
+ * It only pauses while the browser tab is hidden. With reduced motion the slides swap without fading.
  * Only the first slide's heading is the page <h1>; the others use the same styling on an <h2>.
  */
 export function HeroCarousel({ slides, children }: { slides: readonly HeroSlide[]; children: ReactNode }) {
   const [index, setIndex] = useState(0);
-  const [hovered, setHovered] = useState(false);
-  const [focused, setFocused] = useState(false);
   const [hidden, setHidden] = useState(false);
-  const [reduced, setReduced] = useState(false);
   const total = slides.length;
 
   useEffect(() => {
-    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setReduced(query.matches);
-    update();
-    query.addEventListener("change", update);
     const onVisibility = () => setHidden(document.hidden);
     document.addEventListener("visibilitychange", onVisibility);
-    return () => {
-      query.removeEventListener("change", update);
-      document.removeEventListener("visibilitychange", onVisibility);
-    };
+    return () => document.removeEventListener("visibilitychange", onVisibility);
   }, []);
 
   useEffect(() => {
-    if (reduced || hovered || focused || hidden || total < 2) return;
+    if (hidden || total < 2) return;
     const id = window.setTimeout(() => setIndex((value) => (value + 1) % total), INTERVAL);
     return () => window.clearTimeout(id);
-  }, [index, reduced, hovered, focused, hidden, total]);
+  }, [index, hidden, total]);
 
   return (
     <div
@@ -52,12 +42,6 @@ export function HeroCarousel({ slides, children }: { slides: readonly HeroSlide[
       role="region"
       aria-roledescription="carousel"
       aria-label="Welcome to Roots & Pulp"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      onFocus={() => setFocused(true)}
-      onBlur={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setFocused(false);
-      }}
     >
       <div className="hero-bg">
         {slides.map((slide, slideIndex) => (
@@ -75,7 +59,7 @@ export function HeroCarousel({ slides, children }: { slides: readonly HeroSlide[
       </div>
 
       <div className="hero-copy">
-        <div className="hero-slides" aria-live={hovered || focused || reduced ? "polite" : "off"}>
+        <div className="hero-slides" aria-live="off">
           {slides.map((slide, slideIndex) => {
             const active = slideIndex === index;
             const Heading = slideIndex === 0 ? "h1" : "h2";
