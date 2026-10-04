@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@/components/Icons";
 import { ReviewCard } from "@/components/reviews/ReviewCard";
 import { patientReviews } from "@/lib/patientReviews";
@@ -33,7 +33,17 @@ function usePageSize() {
   return pageSize;
 }
 
-export function ReviewsGoogleCarousel() {
+export function ReviewsGoogleCarousel({
+  heading = "Kind words from our patients",
+  intro,
+  footer,
+  className = "",
+}: {
+  heading?: string;
+  intro?: ReactNode;
+  footer?: ReactNode;
+  className?: string;
+} = {}) {
   const pageSize = usePageSize();
   const groups = useMemo(() => {
     const pages: (typeof patientReviews)[] = [];
@@ -104,13 +114,15 @@ export function ReviewsGoogleCarousel() {
   }, [playing, page, groups.length]);
 
   return (
-    <section className="section reviews-google" id="google-reviews" aria-labelledby="google-reviews-heading">
+    <section className={`section reviews-google ${className}`} id="google-reviews" aria-labelledby="google-reviews-heading">
       <div className="section-inner">
         <div className="section-heading reveal">
-          <h2 id="google-reviews-heading">Kind words from our patients</h2>
-          <p className="reviews-italic">
-            A glimpse into the experiences shared by the people we&apos;ve had the privilege to care for.
-          </p>
+          <h2 id="google-reviews-heading">{heading}</h2>
+          {intro ?? (
+            <p className="reviews-italic">
+              A glimpse into the experiences shared by the people we&apos;ve had the privilege to care for.
+            </p>
+          )}
         </div>
         <div
           ref={rootRef}
@@ -186,6 +198,7 @@ export function ReviewsGoogleCarousel() {
             </button>
           </div>
         </div>
+        {footer}
       </div>
     </section>
   );

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./home.css";
+import "./reviews/reviews.css";
 import { ConcernCards } from "@/components/ConcernCards";
-import { DentalGuideCards } from "@/components/DentalGuideCards";
 import { DoctorSection } from "@/components/DoctorSection";
 import { FAQSection } from "@/components/FAQSection";
 import { FeaturedTreatments } from "@/components/FeaturedTreatments";
@@ -23,7 +23,7 @@ export default function HomePage() {
   const webpage = homeWebPageJsonLd();
 
   return (
-    <main id="content">
+    <main id="content" className="home-main">
       <Hero />
       <ConcernCards />
       <FeaturedTreatments />
@@ -33,7 +33,6 @@ export default function HomePage() {
       <InsideClinic />
       <TechnologySection />
       <ReviewsSection />
-      <DentalGuideCards />
       <FAQSection />
       <VisitSection />
       <FinalCTA

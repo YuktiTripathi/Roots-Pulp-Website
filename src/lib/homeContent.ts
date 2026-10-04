@@ -59,7 +59,7 @@ export const doctorIntro = {
     "Dr. Shubham Tripathi founded Roots & Pulp around a simple principle: patients should understand their oral health before being asked to make treatment decisions.",
     "His background in dentistry and public health shapes an approach that combines treatment with prevention and long-term oral health.",
   ],
-  credentialPrefix: "BDS · MPH · Rotary Endodontics · ",
+  credentialPrefix: "BDS · MPH · Specialisation in Rotary Endodontics · ",
 } as const;
 
 export const firstVisit = {
@@ -88,6 +88,12 @@ export const insideClinic = {
   eyebrow: "The clinic",
   heading: "Inside Roots & Pulp",
   intro: "A calm, clear space in Sector Q, Aliganj.",
+  /** Each of the three frames cycles through its own photographs (8 in total). */
+  slots: [
+    ["interior", "listenConsult", "treatmentRoom"],
+    ["waitingArea", "explainConsult", "reviewingSmile"],
+    ["consultationDesk", "consultationBanner"],
+  ],
   photos: [
     {
       src: "/images/doctor/listen-consult.jpg",
@@ -113,7 +119,7 @@ export const insideClinic = {
 /** Only these five pieces of equipment are verified. Sizes come from gallery.ts. */
 export const technology = {
   eyebrow: "Equipment",
-  heading: "Technology that helps you see and understand your care.",
+  heading: "Technology that helps you see and understand your care",
   items: [
     { src: "/images/equipment/digital-xray-rvg.jpg", title: "Digital X-ray (RVG)", benefit: "See diagnostic images quickly and clearly." },
     { src: "/images/equipment/intraoral-camera-root-canal.jpg", title: "Intraoral Camera", benefit: "See what your dentist is seeing." },
@@ -123,5 +129,3 @@ export const technology = {
   ],
 } as const;
 
-/** Genuine Google reviews from patientReviews.ts, shown on the homepage in this order. */
-export const homeReviewIds = ["anurag-gautam", "viveek", "ravindra-pal-singh"] as const;

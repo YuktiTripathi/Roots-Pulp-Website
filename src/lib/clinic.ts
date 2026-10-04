@@ -84,6 +84,9 @@ export function whatsappHref(message: string = clinic.whatsappPrefill) {
 }
 
 /** Online booking page on Kivi Health. */
+/** Shown wherever the live Google rating is unavailable. [VERIFY BEFORE PUBLISHING] against the live profile. */
+export const googleRatingFallback = "4.9";
+
 export const bookingUrl = "https://kivihealth.com/iam/dr.shubham.tripathi.d4cuynx3jxpn/bookslot";
 
 export const directionsUrl =
@@ -241,7 +244,7 @@ export const concerns = [
     title: "My tooth hurts",
     detail: "Root canal treatment, fillings",
     href: treatmentHref("root-canal-treatment"),
-    treatmentSlugs: ["root-canal-treatment", "tooth-coloured-fillings", "tooth-extraction"],
+    treatmentSlugs: ["tooth-coloured-fillings", "root-canal-treatment", "tooth-extraction"],
   },
   {
     title: "I'm missing a tooth",
@@ -259,7 +262,7 @@ export const concerns = [
     title: "I want to improve my smile",
     detail: "Whitening, cosmetic dentistry, braces and aligners",
     href: treatmentHref("cosmetic-dentistry"),
-    treatmentSlugs: ["cosmetic-dentistry", "teeth-whitening", "braces-and-aligners"],
+    treatmentSlugs: ["braces-and-aligners", "teeth-whitening", "cosmetic-dentistry"],
   },
   {
     title: "My child needs dental care",

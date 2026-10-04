@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { bookingUrl, clinic, telHref, whatsappHref } from "@/lib/clinic";
+import { bookingUrl, clinic, googleRatingFallback, telHref, whatsappHref } from "@/lib/clinic";
 import { getGoogleRating } from "@/lib/googleRating";
 import { ClinicAtGlance } from "./ClinicAtGlance";
 import { HeroCarousel, type HeroSlide } from "./HeroCarousel";
@@ -60,7 +60,7 @@ const slides: HeroSlide[] = [
 
 export async function Hero() {
   const liveRating = await getGoogleRating();
-  const manualRating = process.env.NEXT_PUBLIC_GOOGLE_RATING || null;
+  const manualRating = process.env.NEXT_PUBLIC_GOOGLE_RATING || googleRatingFallback;
 
   return (
     <section className="hero" id="hero" aria-labelledby="home-heading">

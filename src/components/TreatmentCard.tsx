@@ -3,7 +3,7 @@ import Link from "next/link";
 import { treatmentHref, type Treatment } from "@/lib/clinic";
 import { treatmentImage } from "@/lib/treatmentImages";
 import { ArrowIcon } from "./Icons";
-import { TreatmentGlyph, TreatmentIllustration } from "./TreatmentIllustration";
+import { TreatmentIllustration } from "./TreatmentIllustration";
 
 /**
  * Homepage treatment card. The heading link is stretched over the whole card, so the card is one
@@ -27,9 +27,6 @@ export function TreatmentCard({ treatment }: { treatment: Treatment }) {
           ) : (
             <TreatmentIllustration slug={treatment.slug} />
           )}
-        </span>
-        <span className="treat-badge" aria-hidden="true">
-          <TreatmentGlyph slug={treatment.slug} />
         </span>
       </div>
       <div className="treat-body">

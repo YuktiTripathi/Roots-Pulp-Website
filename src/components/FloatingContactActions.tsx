@@ -20,8 +20,8 @@ const actions = [
   {
     action: "call",
     href: telHref(),
-    label: "Call Clinic",
-    short: "Call",
+    label: "Call Us",
+    short: "Call Us",
     ariaLabel: `Call Roots & Pulp Dental Clinic on ${clinic.phoneDisplay}`,
     Icon: PhoneIcon,
     external: false,

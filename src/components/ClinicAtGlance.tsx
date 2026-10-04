@@ -94,7 +94,7 @@ export function ClinicAtGlance({
 
   // TODO [VERIFY BEFORE PUBLISHING]: the Google rating figure against the live profile.
   const ratingValue = liveRating ? `${liveRating.rating.toFixed(1)} ★` : manualRating ? `${manualRating} ★` : "★";
-  const ratingLabel = liveRating || manualRating ? "Google Rating" : "Read our Google reviews";
+  const ratingLabel = liveRating || manualRating ? "Rated on Google" : "Read our Google reviews";
 
   const ratingBody = (
     <>

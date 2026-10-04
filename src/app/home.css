@@ -98,7 +98,7 @@
   .concern-choice:not(.is-active):hover .concern-arrow { opacity: 1; transform: translateX(3px); }
 }
 .concern-result { margin-top: 32px; padding-top: 28px; border-top: 1px solid var(--line); }
-.concern-note { max-width: 46rem; margin-bottom: 18px; color: var(--muted); }
+.concern-note { max-width: none; margin-bottom: 18px; color: var(--muted); }
 
 /* FLOW: a snap-scrolling rail of treatment cards */
 .treat-rail {
@@ -117,30 +117,8 @@
 }
 .treat-rail > * { scroll-snap-align: start; }
 
-/* Dental guides */
-.guides { background: white; }
-.guide-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
-.guide-grid > div { display: flex; }
-.guide-card {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 24px 22px 14px;
-  border-radius: var(--radius);
-  border: 1px solid var(--line);
-  background: var(--ivory);
-  color: var(--navy);
-  text-decoration: none;
-}
-.guide-card:hover { border-color: rgba(14, 74, 71, 0.45); }
-.guide-card h3 { font-size: 1.45rem; }
-.guide-card p { color: var(--muted); font-size: 0.95rem; }
-.guide-card .text-link { margin-top: auto; }
-.guide-note { margin-top: 18px; color: var(--muted); }
-
 /* Shared section intro line */
-.section-intro { margin-top: 12px; color: var(--muted); font-size: 1.05rem; max-width: 40rem; }
+.section-intro { margin-top: 12px; color: var(--muted); font-size: 1.05rem; max-width: none; }
 
 /* Featured treatments: 3 x 2 grid, then smaller links */
 .featured-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
@@ -207,15 +185,17 @@
 .inside-clinic { background: var(--ivory); }
 .inside-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 14px; }
 .inside-grid figure { margin: 0; overflow: hidden; border-radius: var(--radius); background: var(--soft); }
-.inside-grid img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 700ms var(--ease-out); }
-.inside-large img { aspect-ratio: 4 / 3; }
+.inside-grid figure { position: relative; }
+.inside-large { aspect-ratio: 4 / 3; }
+.inside-img { object-fit: cover; opacity: 0; transition: opacity 1100ms var(--ease-soft), transform 700ms var(--ease-out); }
+.inside-img.is-active { opacity: 1; }
 /* The right column takes its height from the large photo; its images fill their half without adding height. */
 .inside-small { display: grid; grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 14px; }
 .inside-small figure { position: relative; min-height: 0; }
-.inside-small img { position: absolute; inset: 0; object-position: 50% 40%; }
+.inside-small .inside-img { object-position: 50% 40%; }
 .inside-large.reveal--mask .mask-img { transition-duration: 700ms; }
 @media (hover: hover) and (pointer: fine) {
-  .inside-grid figure:hover img { transform: scale(1.02); }
+  .inside-grid figure:hover .inside-img { transform: scale(1.02); }
 }
 
 /* Technology */
@@ -271,7 +251,6 @@
   .principles-interactive { grid-template-columns: 1fr; gap: 20px; }
   .concern-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .treat-rail { grid-auto-columns: calc((100% - 22px) / 2); }
-  .guide-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .featured-grid, .why-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .tech-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .home-reviews { grid-auto-columns: calc((100% - 16px) / 2); }
@@ -283,7 +262,7 @@
   .concern-title { font-size: 1.15rem; }
   .concern-arrow { display: none; }
   .treat-rail { grid-auto-columns: 82%; gap: 14px; }
-  .guide-grid, .featured-grid, .why-grid { grid-template-columns: 1fr; }
+  .featured-grid, .why-grid { grid-template-columns: 1fr; }
   .doctor-grid { grid-template-columns: 1fr; grid-template-areas: "photo" "body"; }
   .motion-ready .doctor-section .reveal--left:not(.is-visible),
   .motion-ready .doctor-section .reveal--right:not(.is-visible) { transform: translateY(14px); }
@@ -315,4 +294,21 @@
 @media (prefers-reduced-motion: reduce) {
   .concern-choice:hover, .concern-choice:hover .concern-index, .why-card:hover, .why-card:hover .why-icon,
   .inside-grid figure:hover img { transform: none; }
+}
+
+/* Homepage section headings read on a single line on larger screens. */
+.home-main .section-heading { max-width: none; }
+.home-main .section-heading h2 { font-size: clamp(2rem, 2.9vw, 2.75rem); }
+@media (min-width: 1100px) {
+  .home-main .section-heading h2, .home-main .section-intro, .home-main .final-cta h2, .home-main .final-cta h2 + p { white-space: nowrap; }
+}
+
+/* Doctor introduction paragraphs are justified. */
+.doctor-body > p:not(.doctor-lead):not(.doctor-credline) { text-align: justify; hyphens: auto; }
+
+/* Homepage reviews reuse the Reviews page carousel. */
+.home-reviews-section { background: white; }
+.home-reviews-section .reviews-ctas { margin-top: 20px; }
+@media (prefers-reduced-motion: reduce) {
+  .inside-img { transition: none; }
 }
