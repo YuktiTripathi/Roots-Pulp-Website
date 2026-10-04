@@ -7,6 +7,7 @@ import { ReviewsPolicy } from "@/components/reviews/ReviewsPolicy";
 import "./reviews.css";
 import { pageMetadata, jsonLd } from "@/lib/seo";
 import { webPageJsonLd } from "@/lib/schema";
+import { getAllGoogleReviews } from "@/lib/googleReviews";
 
 const seo = {
   title: "Patient Reviews · Roots & Pulp Dental Clinic, Aliganj",
@@ -17,12 +18,16 @@ const seo = {
 
 export const metadata: Metadata = pageMetadata({ ...seo });
 
-export default function ReviewsPage() {
+/** Re-fetch Google reviews at most once a day. */
+export const revalidate = 86400;
+
+export default async function ReviewsPage() {
+  const reviews = await getAllGoogleReviews();
   return (
     <main id="content" className="reviews-page motion-page">
-      <ReviewsHero />
+      <ReviewsHero reviewCount={reviews.length} />
       <PatientVideosSection />
-      <ReviewsGoogleCarousel />
+      <ReviewsGoogleCarousel reviews={reviews} />
       <ReviewsPolicy />
       <FinalCTA
         heading="Thinking about your next dental visit?"

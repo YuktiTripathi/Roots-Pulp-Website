@@ -4,7 +4,7 @@ import { googleBusinessProfileUrl } from "@/lib/clinic";
 import { stagger } from "@/lib/motion";
 import { patientReviews, patientVideos } from "@/lib/patientReviews";
 
-export function ReviewsHero() {
+export function ReviewsHero({ reviewCount = patientReviews.length }: { reviewCount?: number } = {}) {
   return (
     <section className="reviews-hero" aria-labelledby="reviews-heading">
       <div className="reviews-hero-inner">
@@ -38,7 +38,7 @@ export function ReviewsHero() {
         </p>
         <ul className="reviews-hero-facts enter" style={stagger(2)}>
           <li>
-            <strong>{patientReviews.length}</strong> Google reviews below
+            <strong>{reviewCount}</strong> Google reviews below
           </li>
           {patientVideos.length > 0 ? (
             <li>

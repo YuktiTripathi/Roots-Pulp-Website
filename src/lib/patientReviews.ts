@@ -1,7 +1,7 @@
 export type PatientReview = {
   id: string;
   name: string;
-  rating: 5;
+  rating: number;
   date: string;
   source: "Google";
   text: string;

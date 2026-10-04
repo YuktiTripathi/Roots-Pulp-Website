@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@/components/Icons";
 import { ReviewCard } from "@/components/reviews/ReviewCard";
-import { patientReviews } from "@/lib/patientReviews";
+import { patientReviews, type PatientReview } from "@/lib/patientReviews";
 
 /** Long reviews need time to be read, so autoplay is deliberately unhurried. */
 const AUTOPLAY_MS = 9000;
@@ -38,20 +38,23 @@ export function ReviewsGoogleCarousel({
   intro,
   footer,
   className = "",
+  reviews = patientReviews,
 }: {
   heading?: string;
   intro?: ReactNode;
   footer?: ReactNode;
   className?: string;
+  /** Defaults to the saved reviews; the Reviews page passes the live Google list. */
+  reviews?: PatientReview[];
 } = {}) {
   const pageSize = usePageSize();
   const groups = useMemo(() => {
-    const pages: (typeof patientReviews)[] = [];
-    for (let index = 0; index < patientReviews.length; index += pageSize) {
-      pages.push(patientReviews.slice(index, index + pageSize));
+    const pages: PatientReview[][] = [];
+    for (let index = 0; index < reviews.length; index += pageSize) {
+      pages.push(reviews.slice(index, index + pageSize));
     }
     return pages;
-  }, [pageSize]);
+  }, [pageSize, reviews]);
 
   const [page, setPage] = useState(0);
   const [held, setHeld] = useState(false); // pointer or focus is inside
