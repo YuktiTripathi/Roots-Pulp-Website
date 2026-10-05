@@ -14,7 +14,7 @@ export function VisitSection() {
     <section className="section visit" aria-labelledby="visit-heading">
       <div className="section-inner visit-grid">
         <div className="reveal">
-          <h2 id="visit-heading">Visit Roots &amp; Pulp in Aliganj</h2>
+          <h2 id="visit-heading">Visit Roots &amp; Pulp in Aliganj, Lucknow</h2>
           <p className="visit-name">{clinic.name}</p>
           <address>
             {clinic.streetAddress}
