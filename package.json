@@ -5,6 +5,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "prebuild": "node scripts/build-images.mjs",
+    "predev": "node scripts/build-images.mjs",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "node --experimental-strip-types --test src/lib/openingHours.test.ts src/lib/seo.test.ts src/lib/cases.test.ts",
@@ -27,6 +29,7 @@
     "@types/react-dom": "^19.1.6",
     "eslint": "^9.32.0",
     "eslint-config-next": "^15.5.4",
+    "sharp": "0.35.5",
     "typescript": "^5.9.2"
   }
 }

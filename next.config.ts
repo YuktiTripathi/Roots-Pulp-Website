@@ -5,14 +5,22 @@ const nextConfig: NextConfig = {
   trailingSlash: true,
   poweredByHeader: false,
   images: {
-    // WebP only: AVIF is noticeably slower to generate the first time each size is requested,
-    // which visitors see as images arriving late. The photographs never change, so resized
-    // versions are cached for 31 days instead of being rechecked every minute.
-    formats: ["image/webp"],
-    qualities: [75, 85],
-    minimumCacheTTL: 2678400,
+    // Every image is resized once at build time (scripts/build-images.mjs) and served as a
+    // static file from the CDN, so visitors never wait for on-demand resizing.
+    // These widths must match WIDTHS in that script.
+    loader: "custom",
+    loaderFile: "./src/lib/imageLoader.ts",
+    deviceSizes: [640, 828, 1080, 1440, 1920],
+    imageSizes: [128, 256, 384],
   },
-  async redirects() {
+  async headers() {
+    return [
+      {
+        source: "/_img/:path*",
+        headers: [{ key: "Cache-Control", value: "public, max-age=2592000, stale-while-revalidate=86400" }],
+      },
+    ];
+  },  async redirects() {
     return [
       {
         source: "/treatments/emergency-dental-care/",
