@@ -71,7 +71,7 @@ export default function AboutPage() {
         title={<>Know what&apos;s wrong, what your options are, and what happens next</>}
         image={photos.explainingOptions.src}
         imageAlt={photos.explainingOptions.alt}
-        imagePosition="center 42%"
+        imagePosition="center 74%"
         titleSize="long"
       >
         <p className="lede enter" style={stagger(1)}>
