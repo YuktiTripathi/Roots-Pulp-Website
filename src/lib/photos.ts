@@ -56,11 +56,11 @@ export const photos = {
     position: "center 50%",
   },
   explainingOptions: {
-    src: `${care}/dentist-explaining-options-at-desk.webp`,
-    width: 1448,
-    height: 1086,
+    src: `${care}/dentist-explaining-options-to-patient.webp`,
+    width: 1312,
+    height: 1199,
     alt: "A Roots & Pulp dentist talking a patient through the options at the consultation desk",
-    position: "center 55%",
+    position: "center 40%",
   },
   treatingInChair: {
     src: `${care}/dentist-treating-patient-in-chair-wide.webp`,
