@@ -95,10 +95,11 @@ export const insideClinic = {
   ],
   photos: [
     {
-      src: "/images/doctor/listen-consult.jpg",
-      width: 1024,
-      height: 653,
+      src: "/images/clinic/care/consultation-desk-talking-through-concerns.webp",
+      width: 1312,
+      height: 1199,
       alt: "Dr. Shubham Tripathi in conversation with a patient at the consultation desk, Roots & Pulp",
+      position: "center 40%",
     },
     {
       src: "/images/doctor/explain-consult.jpg",
