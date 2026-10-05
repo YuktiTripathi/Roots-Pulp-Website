@@ -1121,7 +1121,7 @@ section.final-cta p { color: rgba(255, 255, 255, 0.82); }
 /* ==========================================================================
    Motion system
    One language, six families. Every timing and distance below comes from these tokens.
-   REVEAL  .reveal (+ --left/--right/--scale/--mask) fades and rises once, on entering the viewport.
+   REVEAL  .reveal (+ --left/--right/--scale/--mask) fades and rises once, on entering the viewport. Animated by Framer Motion in components/RevealOnScroll.tsx.
    STAGGER --i on an item (set by stagger() in lib/motion.ts, or .stagger on the parent) delays it.
    LIFT    .lift on an interactive card: rises a few pixels with a slightly deeper shadow.
    ZOOM    .zoom on a card with an image inside .zoom-media: the photo eases in slowly.
@@ -1149,13 +1149,11 @@ section.final-cta p { color: rgba(255, 255, 255, 0.82); }
 /* REVEAL */
 /* Progressive enhancement: content is visible until RevealOnScroll marks the page .motion-ready. */
 .motion-ready .reveal:not(.is-visible) { opacity: 0; transform: translateY(var(--reveal-shift)); }
+/* Framer Motion (components/RevealOnScroll.tsx) animates between these two states. */
 .reveal.is-visible {
   opacity: 1;
   transform: none;
-  transition:
-    opacity var(--dur-slow) var(--ease-out) calc(var(--i, 0) * var(--stagger)),
-    transform var(--dur-slow) var(--ease-out) calc(var(--i, 0) * var(--stagger)),
-    var(--reveal-extra, background-color 0s);
+  transition: var(--reveal-extra, background-color 0s);
 }
 /* Elements that are both revealed and interactive list their hover transitions in --reveal-extra,
    otherwise the reveal transition above would replace them. */
@@ -1172,9 +1170,6 @@ section.final-cta p { color: rgba(255, 255, 255, 0.82); }
 .reveal--mask.is-visible .mask-img {
   clip-path: inset(0 0 0 0);
   transform: none;
-  transition:
-    clip-path var(--dur-editorial) var(--ease-out) calc(var(--i, 0) * var(--stagger)),
-    transform 1.4s var(--ease-out) calc(var(--i, 0) * var(--stagger));
 }
 .parallax-image { overflow: hidden; }
 .parallax-layer {
@@ -1266,14 +1261,7 @@ section.final-cta p { color: rgba(255, 255, 255, 0.82); }
 }
 .btn:active { transform: translateY(0); box-shadow: none; }
 
-/* Page transition (app/template.tsx). Starts mostly visible so navigation never feels delayed. */
-@keyframes page-in {
-  from { opacity: 0.75; transform: translateY(4px); }
-  to { opacity: 1; transform: none; }
-}
-@media (prefers-reduced-motion: no-preference) {
-  .page-transition { animation: page-in 260ms var(--ease-out) backwards; }
-}
+/* Page transitions: components/PageTransition.tsx (Framer Motion). */
 
 @media (prefers-reduced-motion: reduce) {
   .reveal,

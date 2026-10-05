@@ -34,7 +34,11 @@ export type CaseImage = {
 
 export type DentalCase = {
   id: string;
-  mode: "comparison" | "editorial";
+  /**
+   * comparison: before and after slider. fade: the after photo fades in over the before.
+   * pair: before and after side by side. editorial: one result image.
+   */
+  mode: "comparison" | "fade" | "pair" | "editorial";
   featured: boolean;
   /** 1 = Case A, 2 = B, 3 = C, 4 = D, 5 and above = "More cases". */
   order: number;
@@ -48,9 +52,9 @@ export type DentalCase = {
   treatmentSlug: string;
   /** Optional link text, for a second case on the same treatment, so no two cards share a label. */
   linkLabel?: string;
-  /** Required when mode is "comparison". */
+  /** Required unless mode is "editorial". */
   before?: CaseImage;
-  /** Required when mode is "comparison". */
+  /** Required unless mode is "editorial". */
   after?: CaseImage;
   /** Required when mode is "editorial". */
   image?: CaseImage;
@@ -73,13 +77,13 @@ export const dentalCases: DentalCase[] = [
   // TODO [VERIFY BEFORE PUBLISHING]: concern, title, summary and treatment page for each case were written
   // from the photographs alone. Dr. Shubham to confirm the treatment actually carried out, and that
   // written consent is on file: consent is set to true on the clinic's instruction to publish these.
-  // The braces case shows the patient's full face, at the clinic's request: it needs written consent
-  // that covers publishing a facial photograph.
+  // The braces and dentures smile cases show the patients' full faces, at the clinic's request: they need
+  // written consent that covers publishing a facial photograph.
   {
     id: "teeth-cleaning-stains-tartar",
     mode: "comparison",
     featured: true,
-    order: 6,
+    order: 7,
     concern: "Heavy stains and tartar",
     title: "Professional teeth cleaning",
     summary: "Heavy stain and tartar deposits were cleaned from the teeth and along the gum line.",
@@ -102,7 +106,7 @@ export const dentalCases: DentalCase[] = [
     id: "front-teeth-spacing",
     mode: "comparison",
     featured: true,
-    order: 8,
+    order: 9,
     concern: "Spacing between front teeth",
     title: "Front teeth gap closure",
     summary: "The space between the two upper front teeth was closed.",
@@ -169,17 +173,17 @@ export const dentalCases: DentalCase[] = [
     consent: true,
   },
   {
-    id: "yellow-stained-teeth",
+    id: "gum-line-plaque",
     mode: "comparison",
     featured: true,
-    order: 10,
-    concern: "Yellow, stained teeth",
-    title: "Teeth whitening",
-    summary: "Yellow staining on the front teeth was lightened.",
-    treatmentSlug: "teeth-whitening",
+    order: 11,
+    concern: "Plaque along the gum line",
+    title: "Gum care",
+    summary: "Plaque and staining along the gum line were cleaned away, leaving a clean margin around each tooth.",
+    treatmentSlug: "gum-and-oral-health",
     before: {
-      src: "/images/cases/teeth-whitening-yellow-stains-aliganj-lucknow-before.webp",
-      alt: "Before view of yellow stained front teeth, Roots & Pulp Dental Clinic, Aliganj, Lucknow",
+      src: "/images/cases/gum-care-plaque-gum-line-aliganj-lucknow-before.webp",
+      alt: "Before view of yellow plaque and staining along the gum line, Roots & Pulp Dental Clinic, Aliganj, Lucknow",
       width: 1024,
       height: 560,
     },
@@ -215,17 +219,17 @@ export const dentalCases: DentalCase[] = [
     consent: true,
   },
   {
-    id: "stains-gum-line",
+    id: "brown-stained-teeth",
     mode: "comparison",
     featured: true,
-    order: 7,
-    concern: "Brown stains along the gum line",
-    title: "Stain and tartar cleaning",
-    summary: "Brown stains and tartar along the gum line were cleaned from the upper and lower teeth.",
-    treatmentSlug: "gum-and-oral-health",
+    order: 8,
+    concern: "Brown stained teeth",
+    title: "Dental bleaching",
+    summary: "Brown staining on the upper and lower teeth was lightened with dental bleaching.",
+    treatmentSlug: "teeth-whitening",
     before: {
-      src: "/images/cases/teeth-cleaning-brown-stains-gum-line-aliganj-lucknow-before.webp",
-      alt: "Before view of brown stains and tartar along the gum line of the upper and lower teeth, Roots & Pulp Dental Clinic, Aliganj, Lucknow",
+      src: "/images/cases/dental-bleaching-brown-stained-teeth-aliganj-lucknow-before.webp",
+      alt: "Before view of brown staining on the upper and lower teeth, Roots & Pulp Dental Clinic, Aliganj, Lucknow",
       width: 770,
       height: 340,
     },
@@ -241,7 +245,7 @@ export const dentalCases: DentalCase[] = [
     id: "lower-teeth-tartar",
     mode: "comparison",
     featured: true,
-    order: 9,
+    order: 10,
     concern: "Tartar on the lower teeth",
     title: "Cleaning tartar from the lower teeth",
     summary: "Dark tartar deposits on the lower front teeth were cleaned away.",
@@ -265,7 +269,7 @@ export const dentalCases: DentalCase[] = [
     id: "missing-all-teeth",
     mode: "comparison",
     featured: true,
-    order: 5,
+    order: 6,
     concern: "All teeth missing",
     title: "Complete dentures",
     summary: "Upper and lower jaws with no teeth were given a full set of replacement teeth.",
@@ -286,7 +290,7 @@ export const dentalCases: DentalCase[] = [
   },
   {
     id: "braces-smile",
-    mode: "comparison",
+    mode: "fade",
     featured: true,
     order: 1,
     concern: "Teeth straightening",
@@ -296,14 +300,38 @@ export const dentalCases: DentalCase[] = [
     before: {
       src: "/images/cases/braces-teeth-straightening-aliganj-lucknow-before.webp",
       alt: "Before: the patient smiling with braces on the teeth, Roots & Pulp Dental Clinic, Aliganj, Lucknow",
-      width: 520,
-      height: 660,
+      width: 557,
+      height: 620,
     },
     after: {
       src: "/images/cases/braces-teeth-straightening-aliganj-lucknow-after.webp",
       alt: "After: the same patient smiling once the braces were removed",
       width: 520,
       height: 660,
+    },
+    consent: true,
+  },
+  {
+    id: "dentures-smile",
+    mode: "pair",
+    featured: true,
+    order: 5,
+    concern: "Missing teeth",
+    title: "Smile with replacement teeth",
+    summary: "The same patient before treatment, and smiling with a full set of replacement teeth.",
+    treatmentSlug: "dentures",
+    linkLabel: "Read about dentures",
+    before: {
+      src: "/images/cases/complete-dentures-smile-aliganj-lucknow-before.webp",
+      alt: "Before: the patient with lips closed over missing teeth, Roots & Pulp Dental Clinic, Aliganj, Lucknow",
+      width: 500,
+      height: 720,
+    },
+    after: {
+      src: "/images/cases/complete-dentures-smile-aliganj-lucknow-after.webp",
+      alt: "After: the same patient smiling with a full set of replacement teeth",
+      width: 500,
+      height: 720,
     },
     consent: true,
   },
@@ -340,9 +368,9 @@ function imageExists(image: CaseImage) {
 
 function skipReason(item: DentalCase): string | null {
   if (item.consent !== true) return "consent is not true";
-  const required = item.mode === "comparison" ? [item.before, item.after] : [item.image];
+  const required = item.mode === "editorial" ? [item.image] : [item.before, item.after];
   if (required.some((image) => !image)) {
-    return item.mode === "comparison" ? "comparison case needs before and after images" : "editorial case needs an image";
+    return item.mode === "editorial" ? "editorial case needs an image" : `${item.mode} case needs before and after images`;
   }
   const missing = required.find((image) => image && !imageExists(image));
   if (missing) return `image file not found: ${missing.src}`;
