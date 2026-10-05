@@ -4,10 +4,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { bookingUrl } from "@/lib/clinic";
-import type { RenderableCase } from "@/lib/cases";
+import type { CaseImage, RenderableCase } from "@/lib/cases";
 import { caseImageSizes } from "./CaseCard";
 import { CaseComparison } from "./CaseComparison";
 import { casesNote } from "./copy";
+
+function drawerMediaWidth(image: CaseImage | undefined) {
+  if (!image) return undefined;
+  return `min(${image.width * 2}px, calc(65vh * ${(image.width / image.height).toFixed(3)}))`;
+}
 
 type Props = {
   case: RenderableCase;
@@ -56,8 +61,9 @@ export function CaseDrawer({ case: item, opener, onClose }: Props) {
         <h3 id={titleId} className="cases-drawer-title">
           {item.title}
         </h3>
-        {/* Small source photos are capped at twice their real width so they do not blur when enlarged. */}
-        <div className="cases-drawer-media" style={{ maxWidth: `${((item.after ?? item.image)?.width ?? 440) * 2}px` }}>
+        {/* Capped at twice the photo's real width (so small photos do not blur) and at 65% of the
+            screen height (so portrait photos fit). */}
+        <div className="cases-drawer-media" style={{ maxWidth: drawerMediaWidth(item.after ?? item.image) }}>
           {item.mode === "comparison" && item.before && item.after ? (
             <CaseComparison before={item.before} after={item.after} caseTitle={item.title} sizes={caseImageSizes.drawer} />
           ) : item.image ? (

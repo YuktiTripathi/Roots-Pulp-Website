@@ -30,7 +30,9 @@ export function CaseComparison({ before, after, caseTitle, sizes }: Props) {
   }, []);
 
   return (
-    <div className="cases-compare" style={{ aspectRatio: `${after.width} / ${after.height}` }}>
+    <div
+      className={after.height > after.width ? "cases-compare cases-compare-portrait" : "cases-compare"}
+      style={{ aspectRatio: `${after.width} / ${after.height}` }}>
       <Image className="cases-compare-after" src={after.src} alt={after.alt} fill sizes={sizes} loading="lazy" />
       <Image
         className="cases-compare-before"
