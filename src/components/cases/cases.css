@@ -276,6 +276,7 @@
   font-weight: 400;
   line-height: 1.2;
 }
+.cases-drawer-media { margin: 0 auto; }
 .cases-drawer-media img { display: block; width: 100%; height: auto; border-radius: calc(var(--radius) - 6px); }
 .cases-drawer-summary { margin: 18px 0 0; font-size: 1.05rem; line-height: 1.6; }
 .cases-drawer-detail { margin: 12px 0 0; color: var(--ink); line-height: 1.65; }

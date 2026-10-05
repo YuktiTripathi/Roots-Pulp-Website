@@ -1,8 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { CaseImage } from "@/lib/cases";
+
+const START = 50;
 
 type Props = {
   before: CaseImage;
@@ -16,7 +18,16 @@ type Props = {
  * (Arrow keys, Home, End) all work without a library. Starts at 50, never moves on its own.
  */
 export function CaseComparison({ before, after, caseTitle, sizes }: Props) {
-  const [position, setPosition] = useState(50);
+  const [position, setPosition] = useState(START);
+
+  // Always start in the middle: a page restored from the back and forward cache keeps its old state.
+  useEffect(() => {
+    const reset = (event: PageTransitionEvent) => {
+      if (event.persisted) setPosition(START);
+    };
+    window.addEventListener("pageshow", reset);
+    return () => window.removeEventListener("pageshow", reset);
+  }, []);
 
   return (
     <div className="cases-compare" style={{ aspectRatio: `${after.width} / ${after.height}` }}>
@@ -38,6 +49,7 @@ export function CaseComparison({ before, after, caseTitle, sizes }: Props) {
         max={100}
         step={1}
         value={position}
+        autoComplete="off"
         onChange={(event) => setPosition(Number(event.target.value))}
         aria-label={`Compare before and after: ${caseTitle}`}
         aria-valuetext={`${position} percent before, ${100 - position} percent after`}

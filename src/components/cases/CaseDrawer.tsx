@@ -56,7 +56,8 @@ export function CaseDrawer({ case: item, opener, onClose }: Props) {
         <h3 id={titleId} className="cases-drawer-title">
           {item.title}
         </h3>
-        <div className="cases-drawer-media">
+        {/* Small source photos are capped at twice their real width so they do not blur when enlarged. */}
+        <div className="cases-drawer-media" style={{ maxWidth: `${((item.after ?? item.image)?.width ?? 440) * 2}px` }}>
           {item.mode === "comparison" && item.before && item.after ? (
             <CaseComparison before={item.before} after={item.after} caseTitle={item.title} sizes={caseImageSizes.drawer} />
           ) : item.image ? (
