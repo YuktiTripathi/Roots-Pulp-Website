@@ -1,10 +1,11 @@
-import { bookingUrl, clinic, telHref, whatsappHref } from "@/lib/clinic";
-import { CalendarIcon, PhoneIcon, WhatsAppIcon } from "./Icons";
+import { bookingUrl, clinic, instagramUrl, telHref, whatsappHref } from "@/lib/clinic";
+import { CalendarIcon, InstagramIcon, PhoneIcon, WhatsAppIcon } from "./Icons";
 
 /**
  * Persistent contact actions, rendered once from the root layout.
  * Wide screens: a vertical rail on the right edge whose labels slide out to the left on hover or focus.
- * Narrower screens: a fixed bottom bar with icon and short label.
+ * Tablets: a floating bar with icon and label; Instagram is an icon only tile at the end.
+ * Phones: a bottom bar of four equal columns, icon above a short label.
  * `data-action` gives analytics a stable hook without changing markup.
  */
 const actions = [
@@ -35,7 +36,16 @@ const actions = [
     Icon: CalendarIcon,
     external: true,
   },
-] as const;
+  {
+    action: "instagram",
+    href: instagramUrl,
+    label: "Instagram",
+    short: "Instagram",
+    ariaLabel: "Roots & Pulp on Instagram (opens in a new tab)",
+    Icon: InstagramIcon,
+    external: true,
+  },
+].filter((item) => item.href);
 
 export function FloatingContactActions() {
   return (

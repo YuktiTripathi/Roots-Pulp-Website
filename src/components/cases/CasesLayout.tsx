@@ -1,10 +1,6 @@
-"use client";
-
 import Link from "next/link";
-import { useCallback, useState } from "react";
 import type { RenderableCase } from "@/lib/cases";
 import { CaseCard, type CaseSize } from "./CaseCard";
-import { CaseDrawer } from "./CaseDrawer";
 import { casesNote } from "./copy";
 
 type Props = {
@@ -13,19 +9,15 @@ type Props = {
   moreHref: string | null;
 };
 
-/** Case A large, B and C small, D wide. Owns the drawer state. */
+/** Case A large, B and C small, D wide. */
 const featuredSizes: CaseSize[] = ["large", "small", "small", "wide"];
 
 export function CasesLayout({ featured, more, moreHref }: Props) {
-  const [active, setActive] = useState<{ item: RenderableCase; opener: HTMLElement } | null>(null);
-  const open = useCallback((item: RenderableCase, opener: HTMLElement) => setActive({ item, opener }), []);
-  const close = useCallback(() => setActive(null), []);
-
   return (
     <>
       <div className={`cases-grid cases-grid-${featured.length}`}>
         {featured.map((item, index) => (
-          <CaseCard key={item.id} case={item} size={featuredSizes[index]} onOpen={open} />
+          <CaseCard key={item.id} case={item} size={featuredSizes[index]} />
         ))}
       </div>
 
@@ -34,7 +26,7 @@ export function CasesLayout({ featured, more, moreHref }: Props) {
           <h3 className="cases-more-title">More cases</h3>
           <div className="cases-more-row">
             {more.map((item) => (
-              <CaseCard key={item.id} case={item} size="more" onOpen={open} />
+              <CaseCard key={item.id} case={item} size="more" />
             ))}
           </div>
         </div>
@@ -48,8 +40,6 @@ export function CasesLayout({ featured, more, moreHref }: Props) {
           </Link>
         </p>
       ) : null}
-
-      {active ? <CaseDrawer case={active.item} opener={active.opener} onClose={close} /> : null}
     </>
   );
 }

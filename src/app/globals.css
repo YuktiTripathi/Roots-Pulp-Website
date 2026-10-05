@@ -766,7 +766,7 @@ section.final-cta p { color: rgba(255, 255, 255, 0.82); }
   padding: 0;
   max-width: 560px;
   display: grid;
-  grid-template-columns: 1fr 1fr 1.25fr;
+  grid-template-columns: 1fr 1fr 1.25fr auto;
   gap: 8px;
 }
 .contact-action {
@@ -792,7 +792,23 @@ section.final-cta p { color: rgba(255, 255, 255, 0.82); }
 .contact-action.is-book-appointment { background: var(--navy); border-color: var(--navy); color: white; }
 .contact-action.is-book-appointment .contact-action-icon { color: white; }
 .contact-action-long { display: none; }
+/* Instagram: the brand gradient, icon only on the bottom bar. */
+.contact-actions {
+  --ig-gradient: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aeb 90%);
+}
+.contact-action.is-instagram { width: 54px; padding: 0; background: var(--ig-gradient); border-color: transparent; }
+.contact-action.is-instagram .contact-action-icon { color: white; }
+.contact-action.is-instagram .contact-action-label { display: none; }
 .contact-action:focus-visible { outline-color: var(--focus-ring); outline-offset: 4px; border-radius: 12px; }
+
+/* Phones: four equal columns, icon above a short label, so all four fit down to 320px. */
+@media (max-width: 720px) {
+  .contact-actions ul { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+  .contact-action { flex-direction: column-reverse; gap: 2px; min-height: 56px; padding: 6px 2px; font-size: 0.76rem; }
+  .contact-action svg { width: 22px; height: 22px; }
+  .contact-action.is-instagram { width: auto; color: white; }
+  .contact-action.is-instagram .contact-action-label { display: inline; }
+}
 
 @media (max-width: 1359px) {
   body { padding-bottom: calc(78px + env(safe-area-inset-bottom)); }
@@ -856,6 +872,9 @@ section.final-cta p { color: rgba(255, 255, 255, 0.82); }
   .contact-action.is-whatsapp .contact-action-icon { background: var(--wa-green); border-color: var(--wa-green); color: white; }
   /* A light ring keeps the navy button distinct over the navy footer and CTA bands. */
   .contact-action.is-book-appointment .contact-action-icon { background: var(--navy); border: 2px solid rgba(255, 255, 255, 0.85); }
+  .contact-action.is-instagram { width: 60px; background: none; }
+  .contact-action.is-instagram .contact-action-icon { background: var(--ig-gradient); border: 2px solid rgba(255, 255, 255, 0.85); }
+  .contact-action.is-instagram .contact-action-label { display: flex; color: #b4247f; }
   /* The label is a pill tucked behind the icon; it slides out to the left. */
   .contact-action-label {
     position: absolute;

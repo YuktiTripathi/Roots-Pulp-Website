@@ -445,6 +445,14 @@
 
 .reviews-dot.is-active::after { transform: scaleX(1); }
 
+/* Very narrow phones: the dots alone (24px targets) fit the row; the arrows only repeat them. */
+@media (max-width: 379px) {
+  .reviews-carousel-nav { gap: 0; }
+  .reviews-carousel-nav > button { display: none; }
+  .reviews-carousel-nav .reviews-dot { width: 24px; min-width: 24px; }
+  .reviews-carousel-nav .reviews-dot.is-active { width: 40px; min-width: 40px; }
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .reviews-dot.is-active.is-playing::after { animation: reviews-progress 9s linear both; }
 }
