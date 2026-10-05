@@ -64,10 +64,12 @@ export default function DoctorPage() {
         eyebrow="Meet your dentist"
         title={doctor.name}
         subtitle={`${doctor.credentials} · ${doctor.role}, Roots & Pulp Dental Clinic`}
-        image="/images/doctor/dr-shubham-tripathi-clinic-portrait.webp"
+        image="/images/doctor/dr-shubham-tripathi-hero-wide.webp"
+        mobileImage={{ src: "/images/doctor/dr-shubham-tripathi-clinic-portrait.webp", position: "center 18%" }}
         imageAlt="Dr. Shubham Tripathi standing by the consultation desk at Roots & Pulp Dental Clinic, Aliganj"
-        imagePosition="center 12%"
-        contentAlign="end"
+        imagePosition="right center"
+        overlayStrength="light"
+        contentAlign="start"
       />
       <section className="doctor-profile" aria-labelledby="doctor-profile-heading">
         <div className="doctor-profile-inner">

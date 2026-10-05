@@ -122,11 +122,13 @@
   .iph .iph-caption h1 { max-width: 14ch; font-size: clamp(2.4rem, 10vw, 3.6rem); }
   .iph .iph-caption .iph-title-long { max-width: 18ch; font-size: clamp(2rem, 7.6vw, 2.8rem); }
   .iph-caption { padding: 24px 20px; }
+  /* A separate phone image brings its own crop. */
+  .iph-photo[style*="--iph-phone-position"] { object-position: var(--iph-phone-position) !important; }
   /* On phones side aligned text sits low and left, below the subject's face. */
   .iph-align-start .iph-caption,
   .iph-align-end .iph-caption { justify-content: flex-end; align-items: flex-start; text-align: left; padding: 24px 20px 32px; }
-  .iph-align-start.iph-overlay-medium .iph-caption,
-  .iph-align-end.iph-overlay-medium .iph-caption {
-    background: linear-gradient(180deg, rgba(11, 23, 48, 0) 35%, rgba(11, 23, 48, 0.72) 100%);
+  .iph-align-start .iph-caption,
+  .iph-align-end .iph-caption {
+    background: linear-gradient(180deg, rgba(11, 23, 48, 0) 30%, rgba(11, 23, 48, 0.62) 55%, rgba(11, 23, 48, 0.88) 100%);
   }
 }

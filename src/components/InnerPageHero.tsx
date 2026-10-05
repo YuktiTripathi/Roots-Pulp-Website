@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image, { getImageProps } from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import "./inner-page-hero.css";
@@ -19,6 +19,8 @@ type Props = {
   imageAlt: string;
   /** object-position, so faces and subjects stay in frame. */
   imagePosition?: string;
+  /** Optional different image for phones (for example the original portrait behind a composed wide image). */
+  mobileImage?: { src: string; position?: string };
   /** Default medium matches the original Reviews hero. */
   overlayStrength?: Overlay;
   /**
@@ -46,6 +48,7 @@ export function InnerPageHero({
   image,
   imageAlt,
   imagePosition = "center",
+  mobileImage,
   overlayStrength = "medium",
   contentAlign = "center",
   titleSize = "default",
@@ -64,15 +67,24 @@ export function InnerPageHero({
         </nav>
       </div>
       <div className={`iph-banner iph-overlay-${overlayStrength} iph-align-${contentAlign}`}>
-        <Image
-          src={image}
-          alt={imageAlt}
-          fill
-          priority
-          sizes="100vw"
-          className="iph-photo"
-          style={{ objectPosition: imagePosition }}
-        />
+        {mobileImage ? (
+          <HeroPicture
+            image={image}
+            imageAlt={imageAlt}
+            imagePosition={imagePosition}
+            mobileImage={mobileImage}
+          />
+        ) : (
+          <Image
+            src={image}
+            alt={imageAlt}
+            fill
+            priority
+            sizes="100vw"
+            className="iph-photo"
+            style={{ objectPosition: imagePosition }}
+          />
+        )}
         <div className="iph-caption">
           {eyebrow ? <p className="iph-eyebrow enter">{eyebrow}</p> : null}
           <h1 id={titleId} className={titleSize === "long" ? "enter iph-title-long" : "enter"}>
@@ -83,5 +95,35 @@ export function InnerPageHero({
       </div>
       {children ? <div className="iph-inner iph-after">{children}</div> : null}
     </section>
+  );
+}
+
+const PHONE_MEDIA = "(max-width: 640px)";
+
+/** Art direction: phones get their own image and crop; each device downloads only one of them. */
+function HeroPicture({
+  image,
+  imageAlt,
+  imagePosition,
+  mobileImage,
+}: {
+  image: string;
+  imageAlt: string;
+  imagePosition: string;
+  mobileImage: { src: string; position?: string };
+}) {
+  const common = { alt: imageAlt, fill: true, priority: true, sizes: "100vw" } as const;
+  const { props: wide } = getImageProps({ ...common, src: image });
+  const { props: phone } = getImageProps({ ...common, src: mobileImage.src });
+  return (
+    <picture>
+      <source media={PHONE_MEDIA} srcSet={phone.srcSet} sizes={phone.sizes} />
+      <img
+        {...wide}
+        alt={imageAlt}
+        className="iph-photo"
+        style={{ ...wide.style, objectPosition: imagePosition, ["--iph-phone-position" as string]: mobileImage.position ?? "center" }}
+      />
+    </picture>
   );
 }
