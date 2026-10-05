@@ -190,10 +190,12 @@ export function GalleryTour({ cases = [] }: { cases?: RenderableCase[] }) {
                             </svg>
                           </span>
                         </button>
-                        <figcaption>
-                          <span className="gallery-named-title">{image.caption ?? image.alt}</span>
-                          {image.detail ? <span className="gallery-named-detail">{image.detail}</span> : null}
-                        </figcaption>
+                        {image.caption ? (
+                          <figcaption>
+                            <span className="gallery-named-title">{image.caption}</span>
+                            {image.detail ? <span className="gallery-named-detail">{image.detail}</span> : null}
+                          </figcaption>
+                        ) : null}
                       </figure>
                     </li>
                   );

@@ -16,7 +16,8 @@ export type GalleryImage = {
   category: GalleryCategory;
 };
 
-function fromPhoto(photo: ClinicPhoto, caption: string, category: GalleryCategory): GalleryImage {
+/** Pass no caption for photos that should show without a line of text underneath. */
+function fromPhoto(photo: ClinicPhoto, caption: string | undefined, category: GalleryCategory): GalleryImage {
   return { ...photo, caption, category };
 }
 
@@ -129,8 +130,10 @@ export const gallerySections: GallerySection[] = [
       "Appointments include time to see, understand and talk about your smile, along with the treatment itself.",
     layout: "named",
     images: [
-      fromPhoto(photos.chairsideWithPatient, "A smile in the treatment chair", "people"),
-      fromPhoto(photos.thumbsUpAfterVisit, "A thumbs up after the appointment", "people"),
+      fromPhoto(photos.reviewingSmile, undefined, "people"),
+      fromPhoto(photos.happyPatient, undefined, "people"),
+      fromPhoto(photos.chairsideWithPatient, undefined, "people"),
+      fromPhoto(photos.thumbsUpAfterVisit, undefined, "people"),
     ],
   },
   {
