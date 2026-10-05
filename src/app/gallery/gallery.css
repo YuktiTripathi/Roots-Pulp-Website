@@ -422,3 +422,94 @@
   .gallery-journey a:hover .gallery-journey-img,
   .gallery-filters button:hover { transform: none; }
 }
+
+/* Patient cases: one fixed 4:3 frame per case, crossfading between Before and After (GalleryCases.tsx). */
+.gallery-block-cases { background: white; }
+.gallery-cases {
+  list-style: none;
+  margin: 28px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+.gallery-case {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--ivory);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+/* Both photographs fill the same frame, so the crossfade never shifts the layout. */
+.gallery-case-frame {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: var(--soft);
+}
+.gallery-case-layer { position: absolute; inset: 0; }
+.gallery-case-img { object-fit: cover; }
+.gallery-case-body { display: flex; flex: 1; flex-direction: column; padding: 18px 20px 20px; }
+.gallery-case-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin: 0 0 6px;
+  color: var(--muted);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.gallery-case-state { display: inline-flex; gap: 8px; flex-shrink: 0; font-weight: 600; letter-spacing: 0.06em; }
+.gallery-case-state span { opacity: 0.45; transition: opacity 0.9s var(--ease-soft), color 0.9s var(--ease-soft); }
+.gallery-case-state .is-current { opacity: 1; color: var(--teal); }
+.gallery-case h3 {
+  margin: 0 0 8px;
+  color: var(--navy);
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  font-weight: 400;
+  line-height: 1.2;
+}
+.gallery-case-summary { margin: 0 0 14px; color: var(--ink); line-height: 1.55; }
+.gallery-case-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 16px;
+  margin-top: auto;
+}
+.gallery-case-link {
+  color: var(--teal);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.gallery-case-link:hover { color: var(--navy); }
+.gallery-case-toggle {
+  min-height: 36px;
+  padding: 0 14px;
+  color: var(--navy);
+  font: inherit;
+  font-size: 0.86rem;
+  font-weight: 700;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  cursor: pointer;
+}
+.gallery-case-link:focus-visible,
+.gallery-case-toggle:focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 2px; }
+.gallery-cases-note { margin: 28px 0 0; color: var(--muted); font-size: 0.9rem; line-height: 1.55; }
+
+@media (max-width: 980px) {
+  .gallery-cases { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+}
+@media (max-width: 640px) {
+  .gallery-cases { grid-template-columns: minmax(0, 1fr); }
+}

@@ -219,7 +219,9 @@ export const gallerySections: GallerySection[] = [
   },
 ];
 
+/** Patient cases come from lib/cases.ts (shared with the Home page) and have their own filter. */
 export const galleryFilters = [
   { id: "all", label: "All" },
+  { id: "cases", label: "Patient Cases" },
   ...gallerySections.map((section) => ({ id: section.category, label: section.label })),
 ] as const;

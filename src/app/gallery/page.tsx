@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { GalleryTour } from "@/components/gallery/GalleryTour";
+import { getGalleryCases } from "@/lib/cases";
 import { bookingUrl } from "@/lib/clinic";
 import { stagger } from "@/lib/motion";
 import "./gallery.css";
@@ -63,7 +64,7 @@ export default function GalleryPage() {
           </div>
         </div>
       </section>
-      <GalleryTour />
+      <GalleryTour cases={getGalleryCases()} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={jsonLd(

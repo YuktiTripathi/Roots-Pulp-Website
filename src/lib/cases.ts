@@ -30,6 +30,8 @@ export type CaseImage = {
   /** Intrinsic size, required to reserve space. */
   width: number;
   height: number;
+  /** object-position for fixed 4:3 frames (the Gallery), so the teeth stay centred. Defaults to the centre. */
+  position?: string;
 };
 
 export type DentalCase = {
@@ -188,8 +190,8 @@ export const dentalCases: DentalCase[] = [
       height: 560,
     },
     after: {
-      src: "/images/cases/teeth-whitening-yellow-stains-aliganj-lucknow-after.webp",
-      alt: "After view of the same teeth noticeably lighter in shade",
+      src: "/images/cases/gum-care-plaque-gum-line-aliganj-lucknow-after.webp",
+      alt: "After view of the same teeth and gums with the plaque cleaned away",
       width: 1024,
       height: 560,
     },
@@ -234,8 +236,8 @@ export const dentalCases: DentalCase[] = [
       height: 340,
     },
     after: {
-      src: "/images/cases/teeth-cleaning-brown-stains-gum-line-aliganj-lucknow-after.webp",
-      alt: "After view of the same teeth with the stains and tartar cleaned away",
+      src: "/images/cases/dental-bleaching-brown-stained-teeth-aliganj-lucknow-after.webp",
+      alt: "After view of the same teeth with the brown staining lightened",
       width: 770,
       height: 340,
     },
@@ -302,12 +304,14 @@ export const dentalCases: DentalCase[] = [
       alt: "Before: the patient smiling with braces on the teeth, Roots & Pulp Dental Clinic, Aliganj, Lucknow",
       width: 557,
       height: 620,
+      position: "50% 72%",
     },
     after: {
       src: "/images/cases/braces-teeth-straightening-aliganj-lucknow-after.webp",
       alt: "After: the same patient smiling once the braces were removed",
       width: 520,
       height: 660,
+      position: "50% 72%",
     },
     consent: true,
   },
@@ -326,12 +330,14 @@ export const dentalCases: DentalCase[] = [
       alt: "Before: the patient with lips closed over missing teeth, Roots & Pulp Dental Clinic, Aliganj, Lucknow",
       width: 500,
       height: 720,
+      position: "50% 80%",
     },
     after: {
       src: "/images/cases/complete-dentures-smile-aliganj-lucknow-after.webp",
       alt: "After: the same patient smiling with a full set of replacement teeth",
       width: 500,
       height: 720,
+      position: "50% 80%",
     },
     consent: true,
   },
@@ -395,4 +401,28 @@ export function getRenderableCases(cases: DentalCase[] = dentalCases) {
     }));
 
   return { featured: valid.slice(0, 4), more: valid.slice(4) };
+}
+
+/**
+ * Gallery order: the most readable transformations first, then every other case in its Home order.
+ * Same data as the Home page; only the order differs.
+ */
+const galleryFirst = [
+  "teeth-cleaning-stains-tartar",
+  "broken-front-tooth",
+  "front-teeth-gap",
+  "missing-front-teeth",
+  "gum-line-plaque",
+  "brown-stained-teeth",
+];
+
+/** Cases for the Gallery: every valid case that has a before and an after photograph. */
+export function getGalleryCases(cases: DentalCase[] = dentalCases) {
+  const { featured, more } = getRenderableCases(cases);
+  const all = [...featured, ...more].filter((item) => item.before && item.after);
+  const rank = (item: RenderableCase) => {
+    const index = galleryFirst.indexOf(item.id);
+    return index === -1 ? galleryFirst.length + item.order : index;
+  };
+  return all.sort((a, b) => rank(a) - rank(b));
 }

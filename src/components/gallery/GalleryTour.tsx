@@ -4,7 +4,9 @@ import Image from "next/image";
 import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent, type MouseEvent } from "react";
 import { flushSync } from "react-dom";
 import { ChevronLeftIcon, ChevronRightIcon, CloseIcon } from "@/components/Icons";
+import type { RenderableCase } from "@/lib/cases";
 import { galleryFilters, gallerySections, type GalleryImage } from "@/lib/gallery";
+import { GalleryCases } from "./GalleryCases";
 import { stagger } from "@/lib/motion";
 
 const MORPH_NAME = "gallery-photo";
@@ -33,13 +35,14 @@ function preload(src: string) {
   image.src = src;
 }
 
-export function GalleryTour() {
+export function GalleryTour({ cases = [] }: { cases?: RenderableCase[] }) {
   const [filter, setFilter] = useState<(typeof galleryFilters)[number]["id"]>("all");
   const [open, setOpen] = useState<number | null>(null);
   const [morph, setMorph] = useState(false);
   const opener = useRef<HTMLElement | null>(null);
 
   const sections = gallerySections.filter((section) => filter === "all" || section.category === filter);
+  const showCases = (filter === "all" || filter === "cases") && cases.length > 0;
   const frames = useMemo(() => sections.flatMap((section) => section.images), [sections]);
 
   const show = useCallback((index: number, trigger: HTMLElement) => {
@@ -125,7 +128,7 @@ export function GalleryTour() {
     <>
       <nav className="gallery-filters" aria-label="Explore the clinic">
         <p>Explore the clinic</p>
-        <div role="group" aria-label="Filter photos by area">
+        <div role="group" aria-label="Filter photos by area or show patient cases">
           {galleryFilters.map((item) => (
             <button
               key={item.id}
@@ -139,6 +142,8 @@ export function GalleryTour() {
           ))}
         </div>
       </nav>
+
+      {showCases ? <GalleryCases cases={cases} /> : null}
 
       {sections.map((section) => (
         <section
