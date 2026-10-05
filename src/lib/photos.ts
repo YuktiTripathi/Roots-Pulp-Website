@@ -63,11 +63,11 @@ export const photos = {
     position: "center 55%",
   },
   treatingInChair: {
-    src: `${care}/dentist-treating-patient-in-chair.webp`,
-    width: 1086,
-    height: 1448,
+    src: `${care}/dentist-treating-patient-in-chair-wide.webp`,
+    width: 1448,
+    height: 1086,
     alt: "A Roots & Pulp dentist carrying out treatment for a patient in the dental chair",
-    position: "center 45%",
+    position: "center 40%",
   },
   /** Gallery, "Real moments from a visit". */
   chairsideWithPatient: {
