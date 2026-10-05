@@ -6,11 +6,19 @@ import { firstVisit } from "@/lib/homeContent";
 import { photos } from "@/lib/photos";
 import { CrossfadePhoto } from "./CrossfadePhoto";
 
-const STEP_PHOTOS = [photos.waitingArea, photos.planning, photos.mirror] as const;
+/** One photograph per step, in step order: 01 Tell us what brought you in, 02 A careful examination,
+ * 03 See what we see, 04 Understand your options, 05 Treatment when you're ready, 06 Follow-up. */
+const STEP_PHOTOS = [
+  photos.planning,
+  photos.chairsideExamination,
+  photos.showingInMirror,
+  photos.explainingOptions,
+  photos.treatingInChair,
+  // In this landscape frame the people sit low in the photo, so the crop sits lower than on the treatments page.
+  { ...photos.listeningAtDesk, position: "center 78%" },
+] as const;
 
-/** Which photograph accompanies each step: waiting area, planning, then the mirror. */
-const STEP_PHOTO_INDEX = [0, 1, 1, 1, 2, 2] as const;
-const STEPS = firstVisit.steps.map((step, index) => ({ ...step, photo: STEP_PHOTO_INDEX[index] }));
+const STEPS = firstVisit.steps.map((step, index) => ({ ...step, photo: index }));
 
 export function FirstVisitTimeline() {
   const [activeStep, setActiveStep] = useState(0);

@@ -40,6 +40,35 @@ export const photos = {
     alt: "A Roots & Pulp dentist listening to a patient at the consultation desk",
     position: "center 65%",
   },
+  /** Home, "Not sure what happens at a dental appointment?" steps (portrait photos in a landscape frame). */
+  chairsideExamination: {
+    src: `${care}/dr-shubham-chairside-examination.webp`,
+    width: 1122,
+    height: 1402,
+    alt: "A Roots & Pulp dentist carefully examining a patient's teeth in the dental chair",
+    position: "center 30%",
+  },
+  showingInMirror: {
+    src: `${care}/dentist-showing-patient-teeth-in-mirror.webp`,
+    width: 1122,
+    height: 1402,
+    alt: "A Roots & Pulp dentist examining a patient's teeth while the patient watches in a hand mirror",
+    position: "center 50%",
+  },
+  explainingOptions: {
+    src: `${care}/dentist-explaining-options-at-desk.webp`,
+    width: 1448,
+    height: 1086,
+    alt: "A Roots & Pulp dentist talking a patient through the options at the consultation desk",
+    position: "center 55%",
+  },
+  treatingInChair: {
+    src: `${care}/dentist-treating-patient-in-chair.webp`,
+    width: 1086,
+    height: 1448,
+    alt: "A Roots & Pulp dentist carrying out treatment for a patient in the dental chair",
+    position: "center 45%",
+  },
   /** Gallery, "Real moments from a visit". */
   chairsideWithPatient: {
     src: `${care}/dentist-with-patient-in-treatment-chair.webp`,
