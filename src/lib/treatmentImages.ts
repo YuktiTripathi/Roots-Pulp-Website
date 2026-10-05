@@ -13,8 +13,8 @@ export const treatmentImages: Record<string, { src: string; alt: string }> = {
     alt: "Illustration of a dental bridge replacing missing teeth",
   },
   "braces-and-aligners": {
-    src: "/images/treatments/braces-aligners/braces-and-aligners-hero.png",
-    alt: "Tooth-coloured fixed braces on upper and lower teeth",
+    src: "/images/treatments/braces-aligners/braces-vs-aligners-hero.webp",
+    alt: "A smile shown half with a clear aligner being fitted and half with fixed metal braces",
   },
   "childrens-dentistry": {
     src: "/images/treatments/childrens-dentistry.jpg",

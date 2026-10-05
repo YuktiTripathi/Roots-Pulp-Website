@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowIcon } from "@/components/Icons";
-import { TreatmentGlyph } from "@/components/TreatmentIllustration";
 import { featuredTreatments, treatmentHref, treatments, type Treatment } from "@/lib/clinic";
 import { stagger } from "@/lib/motion";
 import { treatmentImage } from "@/lib/treatmentImages";
@@ -28,9 +27,6 @@ export function FeaturedTreatmentCard({ treatment, index = 0 }: { treatment: Tre
           <div className="tx-photo">
             {image ? <Image src={image.src} alt={image.alt} fill sizes={CARD_SIZES} className="tx-img" /> : null}
           </div>
-          <span className="tx-badge" aria-hidden="true">
-            <TreatmentGlyph slug={treatment.slug} />
-          </span>
         </div>
         <div className="tx-body">
           <h3>

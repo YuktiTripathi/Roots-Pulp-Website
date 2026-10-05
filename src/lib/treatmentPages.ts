@@ -1355,10 +1355,6 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
       heading: "Braces and Clear Aligners in Lucknow",
       lede: "Straighten your teeth with fixed braces or removable clear aligners, planned around you.",
       text: "Crooked or crowded teeth can be harder to clean and can affect how you bite. Braces and aligners are two ways to move teeth gently into a better position. At Roots & Pulp in Aliganj, Dr. Shubham Tripathi will examine your teeth first and explain which options may suit you.",
-      image: {
-        src: "/images/treatments/braces-aligners/braces-vs-aligners-hero.webp",
-        alt: "A smile shown half with a clear aligner being fitted and half with fixed metal braces",
-      },
     },
     glance: [
       { title: "What it addresses", text: "Crowding, gaps and bite differences, for teens and adults." },

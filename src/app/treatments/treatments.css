@@ -113,24 +113,7 @@
   transition: transform 0.9s var(--ease-out);
 }
 .tx-card:hover .tx-img { transform: scale(1.025); }
-.tx-badge {
-  position: absolute;
-  right: 16px;
-  bottom: -22px;
-  z-index: 1;
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  background: white;
-  border: 1px solid var(--line);
-  display: grid;
-  place-items: center;
-  color: var(--navy);
-  box-shadow: 0 8px 16px rgba(16, 32, 72, 0.08);
-  transition: transform 0.4s var(--ease-out), color 0.25s ease;
-}
-.tx-card:hover .tx-badge { transform: translateY(-2px); color: var(--teal); }
-.tx-body { padding: 36px 20px 18px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.tx-body { padding: 22px 20px 18px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
 .tx-body h3 { font-size: 1.35rem; color: var(--navy); }
 .tx-body h3 a { color: inherit; text-decoration: none; }
 .tx-body h3 a::after { content: ""; position: absolute; inset: 0; border-radius: 16px; }
@@ -676,7 +659,6 @@
   .tx-list a:hover,
   .tx-card:hover .tx-img,
   .tx-list a:hover .tx-img,
-  .tx-card:hover .tx-badge,
   .tx-list a:hover .tx-go,
   .tx-card:hover .tx-body .arrow {
     transform: none;
@@ -684,7 +666,6 @@
   .tx-card:hover,
   .tx-list a:hover { box-shadow: none; border-color: var(--line); }
   .tx-card:hover .tx-photo::after { opacity: 0; }
-  .tx-card:hover .tx-badge,
   .tx-card:hover .tx-body h3 a { color: var(--navy); }
 }
 
@@ -714,14 +695,12 @@
   .tx-card,
   .tx-list a,
   .tx-img,
-  .tx-badge,
   .tx-go,
   .tx-body .arrow { transition: none; }
   .tx-card:hover,
   .tx-list a:hover,
   .tx-card:hover .tx-img,
   .tx-list a:hover .tx-img,
-  .tx-card:hover .tx-badge,
   .tx-list a:hover .tx-go { transform: none; }
 }
 

@@ -569,7 +569,6 @@ a.trust-link:hover, a.trust-link:focus-visible { border-color: var(--teal); }
 @media (hover: hover) and (pointer: fine) {
   .treat-card:hover .treat-badge { transform: translateY(-2px) rotate(-3deg); color: var(--teal); }
 }
-.glyph { width: 26px; height: 26px; }
 .treat-body { padding: 36px 20px 18px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
 .treat-body h3 { font-size: 1.7rem; color: var(--navy); }
 .treat-body p { color: var(--muted); }

@@ -62,18 +62,3 @@ export function TreatmentIllustration({ slug }: { slug: string }) {
     </svg>
   );
 }
-
-export function TreatmentGlyph({ slug }: { slug: string }) {
-  return (
-    <svg viewBox="0 0 32 32" aria-hidden="true" className="glyph">
-      <path
-        d="M16 4c3.2 0 5.4 2 6.2 5.2.8 3.6-.2 5.6-.6 7l-1.4 6.2c-.5 1.8-1.8 3-4.2 3s-3.7-1.2-4.2-3L10.4 16.2c-.4-1.4-1.4-3.4-.6-7C10.6 6 12.8 4 16 4Z"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.6"
-      />
-      {slug === "braces-and-aligners" ? <path d="M8 20h16" stroke="currentColor" strokeWidth="1.4" /> : null}
-      {slug === "dental-implants" ? <path d="M16 22v6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /> : null}
-    </svg>
-  );
-}
