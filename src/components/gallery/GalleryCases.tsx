@@ -38,7 +38,12 @@ function Photo({ image, className }: { image: CaseImage; className?: string }) {
 }
 
 function GalleryCaseCard({ item, index }: { item: RenderableCase; index: number }) {
-  const reduce = useReducedMotion();
+  // The server cannot know the visitor's motion preference, so it is applied only after hydration;
+  // reading it during the first render made the markup differ from the server's (React error 418).
+  const prefersReduced = useReducedMotion();
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => setHydrated(true), []);
+  const reduce = hydrated && Boolean(prefersReduced);
   const [showAfter, setShowAfter] = useState(false);
 
   // Before first, then After, then Before again, every HOLD_MS, starting at a per card offset.

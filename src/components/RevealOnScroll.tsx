@@ -39,7 +39,6 @@ export function RevealOnScroll() {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const coarsePointer = window.matchMedia("(pointer: coarse)").matches;
     const root = document.documentElement;
-    root.classList.add("motion-ready");
 
     const stops: Array<() => void> = [];
     const settle = (node: HTMLElement, target: HTMLElement = node) => {
@@ -72,18 +71,28 @@ export function RevealOnScroll() {
       animate(node, keyframes, { duration: DURATION, delay: delayFor(node), ease: EASE }).then(() => settle(node));
     };
 
-    const track = (node: HTMLElement) => {
+    // Content already on screen when the page loads is shown straight away: hiding it and fading it
+    // back in would only delay what the visitor can already see. Only content scrolled to animates.
+    const onScreen = (node: HTMLElement) => {
+      const rect = node.getBoundingClientRect();
+      return rect.top < window.innerHeight && rect.bottom > 0;
+    };
+
+    const track = (node: HTMLElement, initial: boolean) => {
       if (node.dataset.revealTracked) return;
       node.dataset.revealTracked = "true";
       if (node.classList.contains("is-visible")) return;
+      if (initial && onScreen(node)) return settle(node);
       stops.push(inView(node, () => reveal(node), { amount: 0.15, margin: "0px 0px -6% 0px" }));
     };
 
-    const scan = (scope: ParentNode) => {
-      if (scope instanceof HTMLElement && scope.matches(".reveal")) track(scope);
-      scope.querySelectorAll<HTMLElement>(".reveal").forEach(track);
+    const scan = (scope: ParentNode, initial = false) => {
+      if (scope instanceof HTMLElement && scope.matches(".reveal")) track(scope, initial);
+      scope.querySelectorAll<HTMLElement>(".reveal").forEach((node) => track(node, initial));
     };
-    scan(document);
+    // Settle what is on screen before .motion-ready applies the hidden start state, so it never flickers.
+    scan(document, true);
+    root.classList.add("motion-ready");
 
     const mutations = new MutationObserver((records) => {
       records.forEach((record) =>
