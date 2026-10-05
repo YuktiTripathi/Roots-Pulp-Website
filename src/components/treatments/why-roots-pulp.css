@@ -1,0 +1,45 @@
+/* Shared "Why Roots & Pulp?" section on every treatment page (WhyRootsPulp.tsx). */
+.why-rp-grid {
+  list-style: none;
+  margin: 28px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+.why-rp-card {
+  padding: 24px 22px 26px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: white;
+  /* Hover transitions, kept alongside the reveal (see --reveal-extra in globals.css). */
+  --reveal-extra: transform 0.4s var(--ease-out), border-color 0.25s ease, box-shadow 0.4s var(--ease-out);
+}
+.why-rp-icon {
+  display: inline-flex;
+  width: 42px;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: var(--teal-soft);
+  color: var(--teal);
+}
+.why-rp-icon svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.why-rp-card h3 { margin-top: 16px; color: var(--navy); font-size: 1.25rem; }
+.why-rp-card p { margin-top: 8px; color: var(--muted); }
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .why-rp-card.is-visible:hover {
+    transform: translateY(-3px);
+    border-color: rgba(14, 74, 71, 0.4);
+    box-shadow: 0 14px 30px rgba(16, 32, 72, 0.08);
+  }
+}
+
+@media (max-width: 980px) {
+  .why-rp-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 600px) {
+  .why-rp-grid { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+}

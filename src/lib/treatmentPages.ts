@@ -161,9 +161,11 @@ export type TreatmentPageContent = {
     tips?: { heading: string; items: string[] };
     image: { src: string; alt: string; width: number; height: number };
   };
+  /**
+   * Treatment specific extras shown under the shared "Why Roots & Pulp?" section
+   * (components/treatments/WhyRootsPulp.tsx), which is the same on every page.
+   */
   why: {
-    heading: string;
-    items: TreatmentCardItem[];
     equipment?: { src: string; alt: string; caption: string; detail?: string; position?: string }[];
     equipmentNote: string;
     /** Defaults to "See more in the gallery", linking to the gallery's equipment section. */
@@ -408,25 +410,6 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
       },
     },
     why: {
-      heading: "Why patients in Aliganj choose Roots & Pulp for root canal care",
-      items: [
-        {
-          title: "Rotary endodontics training",
-          text: "Dr. Tripathi holds a specialised certification in rotary endodontics, and root canal treatment at the clinic is performed with rotary endodontics.",
-        },
-        {
-          title: "Careful instruments and measurement",
-          text: "Digital X-rays, an apex locator to measure canal length and an intraoral camera for close-up views are part of the clinic's equipment, used where treatment needs them.",
-        },
-        {
-          title: "Explanation first",
-          text: "Diagnosis before treatment, and a plain-language explanation before consent.",
-        },
-        {
-          title: "Open seven days",
-          text: "Monday to Saturday until 8 PM, Sunday until 5 PM, so you can be seen when pain does not wait.",
-        },
-      ],
       // [CLINIC DETAIL REQUIRED] Sterilisation routine sentence, before the UV chamber or cleaner is shown here.
       equipment: [
         {
@@ -824,21 +807,7 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
       },
     },
     why: {
-      heading: "Why patients in Aliganj choose Roots & Pulp",
       // [CLINIC DETAIL REQUIRED] Implant training, implant system, and how placement and restoration are coordinated.
-      items: [
-        { title: "Listen first", text: "Dr. Tripathi starts by understanding your concerns, then examines." },
-        {
-          title: "Diagnosis before treatment",
-          text: "Every recommendation follows an examination, and you are told when something can wait.",
-        },
-        { title: "Plain explanation", text: "Findings, options and reasons are explained before you decide." },
-        {
-          title: "Prevention matters",
-          text: "Dr. Tripathi's public health training shapes a focus on keeping your remaining teeth and gums healthy.",
-        },
-        { title: "Open seven days", text: "Monday to Saturday until 8 PM, Sunday until 5 PM." },
-      ],
       // Shown as examination tools only. Not described as implant-planning equipment.
       equipment: [
         {
@@ -1202,24 +1171,7 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
       },
     },
     why: {
-      heading: "Why patients in Aliganj choose Roots & Pulp",
       // [CLINIC DETAIL REQUIRED] Materials offered, laboratory or digital workflow, and any training to state.
-      items: [
-        { title: "Listen first", text: "Dr. Tripathi starts by understanding your concerns, then examines." },
-        {
-          title: "Diagnosis before treatment",
-          text: "Every recommendation follows an examination, and you are told when something can wait.",
-        },
-        {
-          title: "See what he sees",
-          text: "An intraoral camera lets you view your own teeth on screen with your dentist.",
-        },
-        {
-          title: "Prevention matters",
-          text: "Dr. Tripathi's public health training shapes a focus on keeping your teeth and gums healthy, so you need fewer repairs.",
-        },
-        { title: "Open seven days", text: "Monday to Saturday until 8 PM, Sunday until 5 PM." },
-      ],
       // Shown as examination tools only. Not described as crown-making equipment.
       equipment: [
         {
@@ -1588,27 +1540,7 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
       },
     },
     why: {
-      heading: "Why patients in Aliganj choose Roots & Pulp",
       // [CLINIC DETAIL REQUIRED] Who provides orthodontic care, aligner system or braces type, check-up frequency.
-      items: [
-        { title: "Listen first", text: "Dr. Tripathi starts by understanding what you want, then examines." },
-        {
-          title: "Diagnosis before treatment",
-          text: "Every recommendation follows an examination, and you are told when something can wait.",
-        },
-        {
-          title: "Plain explanation",
-          text: "Options, timelines and the reasons behind them are explained before you decide.",
-        },
-        {
-          title: "Prevention matters",
-          text: "Dr. Tripathi's public health training shapes a focus on keeping teeth and gums healthy during treatment, and after it.",
-        },
-        {
-          title: "Open seven days",
-          text: "Monday to Saturday until 8 PM, Sunday until 5 PM, which helps when treatment fits around school or work.",
-        },
-      ],
       equipment: [
         {
           src: "/images/doctor/listen-consult.jpg",
@@ -1945,24 +1877,7 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
       },
     },
     why: {
-      heading: "Why families in Aliganj choose Roots & Pulp",
       // [CLINIC DETAIL REQUIRED] Child-specific training (never "paediatric specialist" unless he is one), child-friendly features.
-      items: [
-        { title: "Children of all ages", text: "We see children from their first checkup onwards." },
-        { title: "Listen first", text: "Dr. Tripathi starts by understanding your child and your concerns." },
-        {
-          title: "Plain explanation",
-          text: "You are told what he finds, and your options, before anything begins.",
-        },
-        {
-          title: "Prevention first",
-          text: "Dr. Tripathi's public health training shapes a focus on stopping problems before they start.",
-        },
-        {
-          title: "Open seven days",
-          text: "Monday to Saturday until 8 PM, Sunday until 5 PM, so visits fit around school and work.",
-        },
-      ],
       // [NEW PHOTO REQUIRED] Treatment room with no patient, as a third image.
       equipment: [
         {
@@ -2324,24 +2239,7 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
       },
     },
     why: {
-      heading: "Why patients in Aliganj choose Roots & Pulp",
       // [CLINIC DETAIL REQUIRED] Cosmetic training, materials or systems, previews or shade matching.
-      items: [
-        { title: "Goals first", text: "Dr. Tripathi listens to what you want before suggesting anything." },
-        {
-          title: "Realistic expectations",
-          text: "What is possible, and what is not, is explained upfront.",
-        },
-        {
-          title: "Honest advice",
-          text: "You are told when something can wait, or does not need treatment at all.",
-        },
-        {
-          title: "Health before looks",
-          text: "Prevention shapes the approach, so cosmetic work sits on healthy teeth and gums.",
-        },
-        { title: "Open seven days", text: "Monday to Saturday until 8 PM, Sunday until 5 PM." },
-      ],
       equipment: [
         {
           src: "/images/doctor/listen-consult.jpg",
@@ -2636,18 +2534,6 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
       image: consultImage,
     },
     why: {
-      heading: "Why patients in Aliganj choose Roots & Pulp",
-      items: [
-        {
-          title: "Honest about saving teeth",
-          text: "Diagnosis comes before treatment, and you are told when a tooth can be saved or when something can wait.",
-        },
-        { title: "Clear explanation", text: "You hear your options, and the reasons, before anything begins." },
-        {
-          title: "Open seven days",
-          text: "Monday to Saturday until 8 PM, Sunday until 5 PM, which matters when you are in pain.",
-        },
-      ],
       equipmentNote: "",
     },
     compact: true,
@@ -2878,18 +2764,6 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
       caption: "Tartar builds up where brushing cannot reach. A professional clean removes it.",
     },
     why: {
-      heading: "Why patients in Aliganj choose Roots & Pulp",
-      items: [
-        {
-          title: "Prevention first",
-          text: "Dr. Tripathi's public health training shapes a focus on keeping problems from starting.",
-        },
-        {
-          title: "A check before a clean",
-          text: "Every recommendation starts with an examination, so you get what you need, nothing more.",
-        },
-        { title: "Clear explanation", text: "You are shown what he finds, in plain language." },
-      ],
       equipmentNote: "",
     },
     aftercare: {
@@ -3090,21 +2964,6 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
         "A small cavity treated early is simpler than a big one later, which is why we recommend regular check-ups.",
     },
     why: {
-      heading: "Why patients in Aliganj choose Roots & Pulp",
-      items: [
-        {
-          title: "See it for yourself",
-          text: "An intraoral camera lets you view your own teeth on screen with your dentist.",
-        },
-        {
-          title: "Only what is needed",
-          text: "Diagnosis comes before treatment, and you are told when something can wait.",
-        },
-        {
-          title: "Prevention first",
-          text: "Dr. Tripathi's public health training shapes a focus on stopping cavities before they grow.",
-        },
-      ],
       equipment: [
         {
           src: "/images/equipment/intraoral-camera-cavities.jpg",
@@ -3434,22 +3293,6 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
       image: consultImage,
     },
     why: {
-      heading: "Why patients in Aliganj choose Roots & Pulp",
-      items: [
-        {
-          title: "Prevention first",
-          text: "Dr. Tripathi's public health training shapes a focus on stopping problems before they start, which is exactly what gum care is about.",
-        },
-        {
-          title: "See it for yourself",
-          text: "An intraoral camera lets you view your own gums and teeth on screen.",
-        },
-        {
-          title: "Honest and clear",
-          text: "Diagnosis comes before treatment, and you hear your options in plain language.",
-        },
-        { title: "Open seven days", text: "Monday to Saturday until 8 PM, Sunday until 5 PM." },
-      ],
       equipment: [
         {
           src: "/images/equipment/digital-xray-rvg.jpg",
@@ -3743,22 +3586,6 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
       image: consultImage,
     },
     why: {
-      heading: "Why patients in Aliganj choose Roots & Pulp",
-      items: [
-        {
-          title: "Made to fit comfortably",
-          text: "Comfort is the aim of every denture, and adjustments are part of the process.",
-        },
-        {
-          title: "Listen first",
-          text: "Dr. Tripathi starts by understanding what matters to you, including how you eat, speak and smile.",
-        },
-        { title: "Clear explanation", text: "You hear your options, including fixed ones, before you decide." },
-        {
-          title: "Open seven days",
-          text: "Monday to Saturday until 8 PM, Sunday until 5 PM, which helps when adjustments are needed.",
-        },
-      ],
       equipmentNote: "",
     },
     doctorQuote: standardDoctorQuote,
@@ -3981,21 +3808,6 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
       links: [{ label: "Cosmetic dentistry", href: "/treatments/cosmetic-dentistry/" }],
     },
     why: {
-      heading: "Why patients in Aliganj choose Roots & Pulp",
-      items: [
-        {
-          title: "Realistic expectations, set upfront",
-          text: "You will hear what whitening can and cannot do for your teeth before you decide.",
-        },
-        {
-          title: "A check first",
-          text: "Diagnosis comes before treatment, so cavities and gum problems are dealt with before whitening.",
-        },
-        {
-          title: "In-clinic LED whitening",
-          text: "The clinic has an in-clinic LED whitening light, as seen in our gallery.",
-        },
-      ],
       equipmentNote: "",
     },
     aftercare: {

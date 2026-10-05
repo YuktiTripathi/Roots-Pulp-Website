@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { FAQSection } from "@/components/FAQSection";
+import { WhyRootsPulp } from "@/components/treatments/WhyRootsPulp";
 import { TreatmentSectionNav } from "@/components/treatments/TreatmentSectionNav";
 import { FinalCTA } from "@/components/FinalCTA";
 import { PhoneIcon } from "@/components/Icons";
@@ -588,58 +589,61 @@ export function TreatmentDetail({ treatment, content }: { treatment: Treatment; 
         </section>
       ) : null}
 
-      {/* Why Roots & Pulp */}
-      <section className="tp-section tp-soft" aria-labelledby="why-heading">
-        <div className="tx-wrap">
-          <SectionHead id="why-heading" heading={content.why.heading} />
-          <Cards items={content.why.items} />
-          {equipment.length ? (
-          <ul className={`tp-equipment tp-equipment-${equipment.length}`}>
-            {equipment.map((item, index) => (
-              <li key={item.src} className="reveal" style={stagger(index)}>
-                <figure>
-                  <div className="tp-equipment-frame">
-                    <Image
-                      src={item.src}
-                      alt={item.alt}
-                      fill
-                      sizes="(max-width: 680px) 100vw, 370px"
-                      style={item.position ? { objectPosition: item.position } : undefined}
-                    />
-                  </div>
-                  <figcaption>
-                    <strong>{item.caption}</strong>
-                    {item.detail ? <span>{item.detail}</span> : null}
-                  </figcaption>
-                </figure>
-              </li>
-            ))}
-          </ul>
-          ) : null}
-          {equipment.length ? (
-            <p className="tp-footnote reveal">
-              {content.why.equipmentNote}{" "}
-              <Link className="text-link" href={content.why.galleryLink?.href ?? "/gallery/#equipment"}>
-                {content.why.galleryLink?.label ?? "See more in the gallery"} <span className="arrow" aria-hidden="true">→</span>
-              </Link>
-            </p>
-          ) : null}
-          {content.compact ? (
-            <p className="tp-footnote reveal">
-              Your care is provided by {doctor.name}, {doctor.credentials}, {doctor.registration}.{" "}
-              <Link className="text-link" href="/doctor/dr-shubham-tripathi/">
-                Meet Dr. Tripathi <span className="arrow" aria-hidden="true">→</span>
-              </Link>
-              {reviewed ? (
-                <span className="tp-reviewed">
-                  {" "}
-                  Clinically reviewed by {doctor.name}, {doctor.credentials}. Last reviewed: {reviewed}.
-                </span>
-              ) : null}
-            </p>
-          ) : null}
+      {/* Why Roots & Pulp: the same shared section on every treatment page */}
+      <WhyRootsPulp />
+
+      {/* Treatment specific extras that used to sit inside the Why section: equipment and the doctor note */}
+      {equipment.length || content.compact ? (
+        <div className="tp-soft tp-why-extra">
+          <div className="tx-wrap">
+            {equipment.length ? (
+              <ul className={`tp-equipment tp-equipment-${equipment.length}`}>
+                {equipment.map((item, index) => (
+                  <li key={item.src} className="reveal" style={stagger(index)}>
+                    <figure>
+                      <div className="tp-equipment-frame">
+                        <Image
+                          src={item.src}
+                          alt={item.alt}
+                          fill
+                          sizes="(max-width: 680px) 100vw, 370px"
+                          style={item.position ? { objectPosition: item.position } : undefined}
+                        />
+                      </div>
+                      <figcaption>
+                        <strong>{item.caption}</strong>
+                        {item.detail ? <span>{item.detail}</span> : null}
+                      </figcaption>
+                    </figure>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+            {equipment.length ? (
+              <p className="tp-footnote reveal">
+                {content.why.equipmentNote}{" "}
+                <Link className="text-link" href={content.why.galleryLink?.href ?? "/gallery/#equipment"}>
+                  {content.why.galleryLink?.label ?? "See more in the gallery"} <span className="arrow" aria-hidden="true">→</span>
+                </Link>
+              </p>
+            ) : null}
+            {content.compact ? (
+              <p className="tp-footnote reveal">
+                Your care is provided by {doctor.name}, {doctor.credentials}, {doctor.registration}.{" "}
+                <Link className="text-link" href="/doctor/dr-shubham-tripathi/">
+                  Meet Dr. Tripathi <span className="arrow" aria-hidden="true">→</span>
+                </Link>
+                {reviewed ? (
+                  <span className="tp-reviewed">
+                    {" "}
+                    Clinically reviewed by {doctor.name}, {doctor.credentials}. Last reviewed: {reviewed}.
+                  </span>
+                ) : null}
+              </p>
+            ) : null}
+          </div>
         </div>
-      </section>
+      ) : null}
 
       {/* Doctor */}
       {content.compact ? null : (
