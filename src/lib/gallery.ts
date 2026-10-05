@@ -99,7 +99,6 @@ export const gallerySections: GallerySection[] = [
       fromPhoto(photos.listening, "Listening to a patient's concerns", "consultation"),
       fromPhoto(photos.explaining, "Explaining findings clearly", "consultation"),
       fromPhoto(photos.planning, "Planning the next steps", "consultation"),
-      fromPhoto(photos.consultation, "Talking through the options", "consultation"),
     ],
   },
   {
