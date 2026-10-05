@@ -1,39 +1,5 @@
 .reviews-page { overflow-x: clip; }
 
-.reviews-hero {
-  background: var(--ivory);
-  padding: 20px 0 56px;
-}
-
-.reviews-hero-inner {
-  width: min(var(--max), calc(100% - 40px));
-  margin: 0 auto;
-}
-
-.reviews-hero-banner {
-  position: relative;
-  width: 100%;
-  margin: 0;
-  min-height: 460px;
-  height: min(58vw, 620px);
-  border-radius: 0;
-  overflow: hidden;
-}
-
-.reviews-hero-photo {
-  object-fit: cover;
-  object-position: center 42%;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .reviews-hero-photo { animation: reviews-settle 1.8s var(--ease-out) both; }
-}
-
-@keyframes reviews-settle {
-  from { transform: scale(1.03); }
-  to { transform: none; }
-}
-
 .reviews-hero-facts {
   list-style: none;
   margin: 20px 0 0;
@@ -54,75 +20,6 @@
 }
 
 .reviews-hero-facts strong { color: var(--navy); font-family: var(--serif); font-size: 1.15rem; font-weight: 400; }
-
-.reviews-hero-caption {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  padding: 32px 28px;
-  background: linear-gradient(180deg, rgba(11, 23, 48, 0.28) 0%, rgba(11, 23, 48, 0.55) 100%);
-  text-align: center;
-}
-
-.reviews-hero-after {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  margin-top: 28px;
-}
-
-.reviews-hero-after .lede {
-  max-width: 46ch;
-}
-
-.reviews-hero-after .hero-actions {
-  justify-content: center;
-}
-
-.reviews-crumbs ol {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  list-style: none;
-  margin: 0 0 28px;
-  padding: 10px 0;
-  color: var(--muted);
-  font-size: 0.9rem;
-  border-bottom: 1px solid var(--line);
-}
-
-.reviews-crumbs li:not(:last-child)::after {
-  content: "·";
-  margin-left: 8px;
-}
-
-.reviews-crumbs a { color: var(--teal); text-decoration: none; }
-
-.reviews-hero h1 {
-  margin: 0;
-  max-width: 18ch;
-  color: white;
-  font-size: clamp(3rem, 7.4vw, 5.8rem);
-  line-height: 1.08;
-  text-wrap: balance;
-}
-
-.reviews-hero .lede {
-  margin-top: 16px;
-  max-width: 40ch;
-  color: var(--muted);
-}
-
-.reviews-hero-note {
-  margin-top: 18px;
-  max-width: 42ch;
-  color: var(--muted);
-  font-size: 0.95rem;
-}
-
-.reviews-hero-note a { color: var(--teal); }
 
 .reviews-videos .section-heading,
 .reviews-google .section-heading {
@@ -506,15 +403,11 @@
 }
 
 @media (max-width: 980px) {
-  .reviews-hero-banner { min-height: 320px; height: 58vw; }
   .reviews-carousel-page { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .patient-video-grid { grid-template-columns: 1fr 1fr; }
 }
 
 @media (max-width: 720px) {
-  .reviews-hero-inner { width: min(100% - 32px, var(--max)); }
-  .reviews-hero-banner { width: 100%; min-height: 280px; height: 68vw; border-radius: 0; }
-  .reviews-hero h1 { max-width: 14ch; font-size: clamp(2.6rem, 10vw, 4.2rem); }
   .reviews-policy .section-inner { width: min(100% - 32px, 1320px); }
   .reviews-carousel-page { grid-template-columns: 1fr; }
   .patient-video-grid,

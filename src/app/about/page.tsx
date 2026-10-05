@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { InnerPageHero } from "@/components/InnerPageHero";
 import { FinalCTA } from "@/components/FinalCTA";
 import { bookingUrl, clinic, directionsUrl, doctor } from "@/lib/clinic";
 import { stagger } from "@/lib/motion";
@@ -63,51 +64,30 @@ export default function AboutPage() {
         )}
       />
 
-      <section className="section about-hero" aria-labelledby="about-heading">
-        <div className="section-inner">
-          <nav className="crumbs about-crumbs" aria-label="Breadcrumb">
-            <ol>
-              <li>
-                <Link href="/">Home</Link>
-              </li>
-              <li aria-current="page">About</li>
-            </ol>
-          </nav>
-          <div className="about-hero-grid">
-            <div className="about-copy">
-              <p className="eyebrow reveal">About Roots &amp; Pulp</p>
-              <h1 id="about-heading" className="reveal" style={stagger(1)}>
-                Know what&apos;s wrong, what your options are, and what happens next
-              </h1>
-              <p className="lede reveal" style={stagger(2)}>
-                That is the standard every visit at Roots &amp; Pulp is held to.
-                <br />
-                We are a dental clinic in Sector Q, Aliganj, Lucknow.
-              </p>
-              <div className="hero-actions reveal" style={stagger(3)}>
-                <Link className="btn btn-primary" href={bookingUrl} target="_blank" rel="noopener noreferrer">
-                  Book an Appointment
-                </Link>
-                <Link className="btn btn-secondary" href="/doctor/dr-shubham-tripathi/">
-                  Meet Dr. Shubham
-                </Link>
-              </div>
-            </div>
-            <figure className="about-figure about-hero-photo reveal reveal--mask" style={stagger(2)}>
-              <Image
-                src={photos.consultation.src}
-                alt={photos.consultation.alt}
-                width={photos.consultation.width}
-                height={photos.consultation.height}
-                sizes="(max-width: 980px) 100vw, 560px"
-                priority
-                className="mask-img"
-                style={{ objectPosition: photos.consultation.position }}
-              />
-            </figure>
-          </div>
+      <InnerPageHero
+        crumb="About"
+        titleId="about-heading"
+        eyebrow="About Roots & Pulp"
+        title={<>Know what&apos;s wrong, what your options are, and what happens next</>}
+        image={photos.explainingOptions.src}
+        imageAlt={photos.explainingOptions.alt}
+        imagePosition="center 74%"
+        titleSize="long"
+      >
+        <p className="lede enter" style={stagger(1)}>
+          That is the standard every visit at Roots &amp; Pulp is held to.
+          <br />
+          We are a dental clinic in Sector Q, Aliganj, Lucknow.
+        </p>
+        <div className="hero-actions enter" style={stagger(2)}>
+          <Link className="btn btn-primary" href={bookingUrl} target="_blank" rel="noopener noreferrer">
+            Book an Appointment
+          </Link>
+          <Link className="btn btn-secondary" href="/doctor/dr-shubham-tripathi/">
+            Meet Dr. Shubham
+          </Link>
         </div>
-      </section>
+      </InnerPageHero>
 
       <section className="section about-why" aria-labelledby="why-heading">
         <div className="section-inner about-split">

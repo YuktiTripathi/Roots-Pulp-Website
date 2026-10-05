@@ -2,62 +2,11 @@
   overflow-x: clip;
 }
 
-.contact-hero {
-  background: var(--ivory);
-  padding: 20px 0 56px;
-}
-
-.contact-hero-inner {
-  width: min(1180px, calc(100% - 40px));
-  margin: 0 auto;
-}
-
-.contact-crumbs ol {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  list-style: none;
-  margin: 0 0 28px;
-  padding: 10px 0;
-  color: var(--muted);
-  font-size: 0.9rem;
-  border-bottom: 1px solid var(--line);
-}
-
-.contact-crumbs li:not(:last-child)::after {
-  content: "·";
-  margin-left: 8px;
-  color: var(--muted);
-}
-
-.contact-crumbs a { color: var(--teal); text-decoration: none; }
-.contact-crumbs a:hover { text-decoration: underline; }
-
-.contact-hero-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 0.92fr) minmax(320px, 1.15fr);
-  gap: 40px;
-  align-items: center;
-}
-
-.contact-hero-copy h1 {
-  font-size: clamp(2.4rem, 4.6vw, 4.2rem);
-  max-width: 12ch;
-  color: var(--navy);
-  letter-spacing: -0.03em;
-}
-
-.contact-hero-copy .lede {
-  margin-top: 14px;
-  max-width: 36ch;
-  color: var(--muted);
-}
-
 .contact-status {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  margin: 20px 0 0;
+  margin: 18px 0 0;
   min-height: 40px;
   padding: 0 14px;
   border-radius: 999px;
@@ -79,71 +28,14 @@
   border-color: rgba(168, 24, 32, 0.16);
 }
 
-.contact-hero-actions {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
-  margin-top: 26px;
-}
-
-.contact-hero-actions .btn-primary {
-  min-width: min(100%, 280px);
-}
-
-.contact-hero-secondary {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
 .contact-hero-location {
-  margin-top: 28px;
-  padding-top: 22px;
-  border-top: 1px solid var(--line);
+  margin: 22px 0 0;
   color: var(--muted);
   font-family: var(--lato);
   font-size: 1.05rem;
   line-height: 1.6;
 }
 
-.contact-hero-location .text-link { margin-top: 4px; }
-
-.contact-hero-visual {
-  position: relative;
-  isolation: isolate;
-  margin: 0;
-  border-radius: 24px;
-  box-shadow: 0 16px 40px rgba(16, 32, 72, 0.1);
-}
-
-.contact-hero-visual::before {
-  content: "";
-  position: absolute;
-  inset: 20px -16px -16px 20px;
-  border: 1px solid rgba(14, 74, 71, 0.28);
-  border-radius: 26px;
-  z-index: -1;
-  pointer-events: none;
-}
-
-.contact-hero-frame { overflow: hidden; border-radius: 24px; }
-
-.contact-hero-photo {
-  width: 100%;
-  height: auto;
-  min-height: 560px;
-  max-height: 720px;
-  object-fit: cover;
-  object-position: center 40%;
-  display: block;
-}
-
-.contact-hero-visual figcaption {
-  margin-top: 12px;
-  color: var(--muted);
-  font-size: 0.88rem;
-}
 
 .contact-connect { background: white; }
 .contact-connect-grid {
@@ -546,19 +438,9 @@
   100% { opacity: 0; transform: scale(1.8); }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .contact-hero-copy > * { animation: rise 0.65s ease both; }
-  .contact-hero-copy > *:nth-child(2) { animation-delay: 0.04s; }
-  .contact-hero-copy > *:nth-child(3) { animation-delay: 0.08s; }
-  .contact-hero-copy > *:nth-child(4) { animation-delay: 0.12s; }
-  .contact-hero-copy > *:nth-child(5) { animation-delay: 0.16s; }
-  .contact-hero-copy > *:nth-child(6) { animation-delay: 0.2s; }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .contact-connect-card,
   .contact-map-static,
-  .contact-hero-copy > *,
   .contact-map-panel.is-live iframe {
     animation: none;
     transition: none;
@@ -582,23 +464,15 @@
 }
 
 @media (max-width: 980px) {
-  .contact-hero-grid,
   .contact-plan-grid,
   .contact-connect-grid,
   .contact-help-layout,
   .contact-enquiry-grid {
     grid-template-columns: minmax(0, 1fr);
   }
-  .contact-hero { padding-bottom: 40px; }
-  .contact-hero-copy h1 { max-width: 14ch; font-size: clamp(2.2rem, 8vw, 3.2rem); }
-  .contact-hero-photo { min-height: 0; max-height: 420px; }
-  .contact-hero-visual::before { inset: 14px -8px -10px 14px; }
-  .contact-hero-actions .btn-primary { min-width: 0; width: 100%; }
 }
 
 @media (max-width: 720px) {
-  .contact-hero-inner { width: min(100% - 32px, var(--max)); }
-  .contact-hero { padding-top: 12px; }
   .contact-connect-card { min-height: 0; }
   .contact-enquiry-submit { width: 100%; }
   .contact-plan-card,

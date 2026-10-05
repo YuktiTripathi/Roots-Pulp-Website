@@ -1,29 +1,12 @@
 .doctor-page { overflow-x: clip; background: var(--ivory); }
 
-.doctor-profile { padding: 20px 0 72px; }
+.doctor-profile { padding: 8px 0 72px; }
 
 .doctor-profile-inner {
   width: min(var(--max), calc(100% - 40px));
   margin: 0 auto;
 }
 
-.doctor-crumbs ol {
-  display: flex;
-  gap: 8px;
-  list-style: none;
-  margin: 0 0 28px;
-  padding: 10px 0;
-  color: var(--muted);
-  font-size: 0.9rem;
-  border-bottom: 1px solid var(--line);
-}
-
-.doctor-crumbs li:not(:last-child)::after {
-  content: "·";
-  margin-left: 8px;
-}
-
-.doctor-crumbs a { color: var(--teal); text-decoration: none; }
 
 .doctor-profile-grid {
   display: grid;
@@ -139,7 +122,7 @@
   color: var(--muted);
 }
 
-.doctor-profile-copy h1 {
+.doctor-profile-copy h2 {
   font-size: clamp(2.4rem, 4vw, 3.6rem);
   color: var(--navy);
   margin-bottom: 16px;

@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { InnerPageHero } from "@/components/InnerPageHero";
 import { FinalCTA } from "@/components/FinalCTA";
-import { bookingUrl, doctor, doctorExperience, whatsappHref } from "@/lib/clinic";
+import { bookingUrl, doctor, doctorExperience, heroPoster, whatsappHref } from "@/lib/clinic";
 import { stagger } from "@/lib/motion";
 import { photos } from "@/lib/photos";
 import "./doctor.css";
@@ -57,16 +58,19 @@ const credentials = [
 export default function DoctorPage() {
   return (
     <main id="content" className="doctor-page motion-page">
-      <section className="doctor-profile" aria-labelledby="doctor-heading">
+      <InnerPageHero
+        crumb="Doctor"
+        titleId="doctor-heading"
+        eyebrow="Meet your dentist"
+        title={doctor.name}
+        subtitle={`${doctor.credentials} · ${doctor.role}, Roots & Pulp Dental Clinic`}
+        image={heroPoster}
+        imageAlt="Dr. Shubham Tripathi in navy scrubs with his arms folded"
+        imagePosition="70% 30%"
+        contentAlign="start"
+      />
+      <section className="doctor-profile" aria-labelledby="doctor-profile-heading">
         <div className="doctor-profile-inner">
-          <nav className="crumbs doctor-crumbs" aria-label="Breadcrumb">
-            <ol>
-              <li>
-                <Link href="/">Home</Link>
-              </li>
-              <li aria-current="page">Doctor</li>
-            </ol>
-          </nav>
           <div className="doctor-profile-grid">
             <figure className="doctor-profile-figure">
               <div className="doctor-portrait-wrap">
@@ -104,10 +108,9 @@ export default function DoctorPage() {
               </figcaption>
             </figure>
             <div className="doctor-profile-copy">
-              <p className="eyebrow enter">Meet your dentist</p>
-              <h1 id="doctor-heading" className="enter" style={stagger(1)}>
-                {doctor.name}
-              </h1>
+              <h2 id="doctor-profile-heading" className="enter" style={stagger(1)}>
+                About Dr. Shubham Tripathi
+              </h2>
               <ul className="doctor-chips enter" style={stagger(2)} aria-label="Qualifications and role">
                 <li>BDS, MPH</li>
                 <li>Rotary endodontics</li>

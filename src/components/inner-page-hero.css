@@ -1,0 +1,121 @@
+/* Shared inner page hero (InnerPageHero.tsx), modelled on the original Reviews hero. */
+.iph {
+  background: var(--ivory);
+  padding: 20px 0 56px;
+}
+.iph-inner { width: min(var(--max), calc(100% - 40px)); margin: 0 auto; }
+
+.iph-crumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  margin: 0 0 28px;
+  padding: 10px 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  border-bottom: 1px solid var(--line);
+}
+.iph-crumbs li:not(:last-child)::after { content: "·"; margin-left: 8px; }
+.iph-crumbs a { color: var(--teal); text-decoration: none; }
+
+/* Fixed pixel heights (not vh), so mobile browser toolbars never resize the hero. */
+.iph-banner {
+  position: relative;
+  width: 100%;
+  height: 680px;
+  overflow: hidden;
+  background: var(--navy-deep);
+}
+.iph-photo { object-fit: cover; }
+@media (prefers-reduced-motion: no-preference) {
+  .iph-photo { animation: iph-settle 1.8s var(--ease-out) both; }
+}
+@keyframes iph-settle {
+  from { transform: scale(1.03); }
+  to { transform: none; }
+}
+
+.iph-caption {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 32px 28px;
+  text-align: center;
+  color: white;
+}
+.iph-overlay-light .iph-caption { background: linear-gradient(180deg, rgba(11, 23, 48, 0.18) 0%, rgba(11, 23, 48, 0.42) 100%); }
+.iph-overlay-medium .iph-caption { background: linear-gradient(180deg, rgba(11, 23, 48, 0.28) 0%, rgba(11, 23, 48, 0.55) 100%); }
+.iph-overlay-strong .iph-caption { background: linear-gradient(180deg, rgba(11, 23, 48, 0.42) 0%, rgba(11, 23, 48, 0.68) 100%); }
+
+/* Two classes deep, so page level h1 rules (for example .about-page h1) cannot override it. */
+.iph .iph-caption h1 {
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  max-width: 18ch;
+  color: white;
+  font-size: clamp(3rem, 7.4vw, 5.8rem);
+  line-height: 1.08;
+  text-wrap: balance;
+  text-shadow: 0 2px 24px rgba(11, 23, 48, 0.25);
+}
+.iph .iph-caption .iph-title-long { max-width: 22ch; font-size: clamp(2.6rem, 4.6vw, 4.2rem); }
+.iph-eyebrow {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.iph-subtitle {
+  margin: 0;
+  max-width: 44ch;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+  line-height: 1.5;
+}
+
+/* Left aligned text for a subject on the right, lined up with the page content. */
+.iph-align-start .iph-caption {
+  align-items: flex-start;
+  text-align: left;
+  padding-inline: max(28px, calc((100% - var(--max)) / 2));
+}
+.iph-align-start.iph-overlay-medium .iph-caption {
+  background: linear-gradient(90deg, rgba(11, 23, 48, 0.62) 0%, rgba(11, 23, 48, 0.32) 55%, rgba(11, 23, 48, 0.12) 100%);
+}
+
+/* Page specific copy and actions under the image. */
+.iph-after {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: 28px;
+}
+.iph-after .lede { max-width: 52ch; margin: 0; color: var(--muted); }
+.iph-after .hero-actions { justify-content: center; margin-top: 22px; }
+
+@media (max-width: 980px) {
+  .iph-banner { height: 560px; }
+}
+@media (max-width: 640px) {
+  .iph { padding-bottom: 44px; }
+  .iph-inner { width: calc(100% - 32px); }
+  .iph-banner { height: 460px; }
+  .iph .iph-caption h1 { max-width: 14ch; font-size: clamp(2.4rem, 10vw, 3.6rem); }
+  .iph .iph-caption .iph-title-long { max-width: 18ch; font-size: clamp(2rem, 7.6vw, 2.8rem); }
+  .iph-caption { padding: 24px 20px; }
+  /* On phones the left aligned text sits low, below the subject's face. */
+  .iph-align-start .iph-caption { justify-content: flex-end; padding: 24px 20px 32px; }
+  .iph-align-start.iph-overlay-medium .iph-caption {
+    background: linear-gradient(180deg, rgba(11, 23, 48, 0) 35%, rgba(11, 23, 48, 0.72) 100%);
+  }
+}

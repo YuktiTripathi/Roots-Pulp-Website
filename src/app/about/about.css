@@ -9,19 +9,12 @@
   color: var(--muted);
 }
 
-.about-page h1,
 .about-page h2 {
   margin: 0 0 18px;
   color: var(--navy);
   font-family: var(--serif);
   font-weight: 400;
   letter-spacing: -0.02em;
-}
-
-.about-page h1 {
-  max-width: 14ch;
-  font-size: clamp(2.45rem, 5vw, 4.35rem);
-  line-height: 1.04;
 }
 
 .about-page h2 {
@@ -36,7 +29,6 @@
   font-size: 1.08rem;
 }
 
-.about-hero,
 .about-walk-out,
 .about-small-things,
 .about-clinic {
@@ -52,33 +44,6 @@
   background: var(--ivory-deep);
 }
 
-.about-hero {
-  padding-top: 20px;
-}
-
-.about-crumbs ol {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 0 0 38px;
-  padding: 10px 0;
-  list-style: none;
-  border-bottom: 1px solid var(--line);
-  color: var(--muted);
-  font-size: 0.9rem;
-}
-
-.about-crumbs li:not(:last-child)::after {
-  content: "·";
-  margin-left: 8px;
-}
-
-.about-crumbs a {
-  color: var(--teal);
-  text-decoration: none;
-}
-
-.about-hero-grid,
 .about-split {
   display: grid;
   grid-template-columns: minmax(0, 1.02fr) minmax(300px, 0.98fr);
@@ -108,18 +73,6 @@
 
 .about-clinic-media {
   position: relative;
-}
-
-.about-hero-photo {
-  width: min(100%, 560px);
-  justify-self: end;
-  overflow: hidden;
-  border-radius: var(--radius);
-}
-
-.about-hero-photo img {
-  aspect-ratio: 4 / 3;
-  border-radius: 0;
 }
 
 /* Portrait image set slightly off the copy's centre line for an editorial, asymmetric feel. */
@@ -337,7 +290,6 @@
 }
 
 @media (max-width: 980px) {
-  .about-hero-grid,
   .about-split,
   .about-why .about-split,
   .about-walk-out-grid,
@@ -347,17 +299,14 @@
     grid-template-columns: 1fr;
   }
 
-  .about-page h1,
   .about-page h2 {
     max-width: none;
   }
 
-  .about-hero-photo,
   .about-clinic-media {
     justify-self: start;
   }
 
-  .about-hero-photo,
   .about-vision-photo {
     width: min(100%, 620px);
   }
@@ -391,7 +340,6 @@
 }
 
 @media (max-width: 640px) {
-  .about-hero-grid,
   .about-split,
   .about-vision-inner {
     gap: 38px;

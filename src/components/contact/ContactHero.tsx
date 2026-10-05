@@ -1,65 +1,44 @@
-import Image from "next/image";
 import Link from "next/link";
 import { bookingUrl, clinic, directionsUrl, telHref, whatsappHref } from "@/lib/clinic";
 import { ArrowIcon } from "@/components/Icons";
+import { InnerPageHero } from "@/components/InnerPageHero";
 import { OpeningStatus } from "@/components/OpeningStatus";
+import { stagger } from "@/lib/motion";
 
 export function ContactHero() {
   return (
-    <section className="contact-hero" aria-labelledby="contact-heading">
-      <div className="contact-hero-inner">
-        <nav className="crumbs contact-crumbs" aria-label="Breadcrumb">
-          <ol>
-            <li>
-              <Link href="/">Home</Link>
-            </li>
-            <li aria-current="page">Contact</li>
-          </ol>
-        </nav>
-        <div className="contact-hero-grid">
-          <div className="contact-hero-copy">
-            <h1 id="contact-heading">Let&apos;s take care of your smile</h1>
-            <p className="lede">
-              Call, send a WhatsApp message, or drop in to book. We&apos;re open seven days a week.
-            </p>
-            <OpeningStatus className="contact-status" />
-            <div className="contact-hero-actions">
-              <Link className="btn btn-primary" href={bookingUrl} target="_blank" rel="noopener noreferrer">
-                Book an Appointment <ArrowIcon className="arrow" />
-              </Link>
-              <div className="contact-hero-secondary">
-                <a className="btn btn-secondary" href={whatsappHref()} target="_blank" rel="noopener noreferrer">
-                  WhatsApp
-                  <span className="sr-only"> (opens in a new tab)</span>
-                </a>
-                <a className="btn btn-secondary" href={telHref()}>
-                  Call
-                </a>
-              </div>
-            </div>
-            <div className="contact-hero-location">
-              <p>Sector-Q, {clinic.neighbourhood}, {clinic.locality}</p>
-              <a className="text-link" href={directionsUrl} target="_blank" rel="noopener noreferrer">
-                Get directions <ArrowIcon className="arrow" />
-                <span className="sr-only"> (opens in a new tab)</span>
-              </a>
-            </div>
-          </div>
-          <figure className="contact-hero-visual">
-            <div className="contact-hero-frame reveal reveal--mask">
-              <Image
-                src="/images/clinic-entrance.jpg"
-                alt="Entrance of Roots & Pulp Dental Clinic in Aliganj, Lucknow"
-                width={1024}
-                height={963}
-                sizes="(max-width: 980px) 100vw, 560px"
-                priority
-                className="contact-hero-photo mask-img"
-              />
-            </div>
-          </figure>
-        </div>
+    <InnerPageHero
+      crumb="Contact"
+      titleId="contact-heading"
+      title="Let's take care of your smile"
+      image="/images/clinic-entrance.jpg"
+      imageAlt="Entrance of Roots & Pulp Dental Clinic in Aliganj, Lucknow"
+      imagePosition="center 45%"
+      overlayStrength="strong"
+    >
+      <p className="lede enter" style={stagger(1)}>
+        Call, send a WhatsApp message, or drop in to book. We&apos;re open seven days a week.
+      </p>
+      <OpeningStatus className="contact-status enter" />
+      <div className="hero-actions enter" style={stagger(2)}>
+        <Link className="btn btn-primary" href={bookingUrl} target="_blank" rel="noopener noreferrer">
+          Book an Appointment <ArrowIcon className="arrow" />
+        </Link>
+        <a className="btn btn-secondary" href={whatsappHref()} target="_blank" rel="noopener noreferrer">
+          WhatsApp
+          <span className="sr-only"> (opens in a new tab)</span>
+        </a>
+        <a className="btn btn-secondary" href={telHref()}>
+          Call
+        </a>
       </div>
-    </section>
+      <p className="contact-hero-location enter" style={stagger(3)}>
+        Sector-Q, {clinic.neighbourhood}, {clinic.locality} ·{" "}
+        <a className="text-link" href={directionsUrl} target="_blank" rel="noopener noreferrer">
+          Get directions <ArrowIcon className="arrow" />
+          <span className="sr-only"> (opens in a new tab)</span>
+        </a>
+      </p>
+    </InnerPageHero>
   );
 }

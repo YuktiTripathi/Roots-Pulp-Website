@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
+import { InnerPageHero } from "@/components/InnerPageHero";
 import { TreatmentApproach } from "@/components/treatments/TreatmentApproach";
 import { additionalTreatments, FeaturedTreatmentCard, TreatmentListItem } from "@/components/treatments/TreatmentsLanding";
 import { bookingUrl, featuredTreatments, whatsappHref } from "@/lib/clinic";
@@ -22,53 +22,28 @@ export const metadata: Metadata = pageMetadata({ ...seo });
 export default function TreatmentsPage() {
   return (
     <main id="content" className="treatments-page motion-page">
-      <section className="tx-hero" aria-labelledby="treatments-heading">
-        <div className="tx-wrap">
-          <nav className="crumbs tx-crumbs" aria-label="Breadcrumb">
-            <ol>
-              <li>
-                <Link href="/">Home</Link>
-              </li>
-              <li aria-current="page">Treatments</li>
-            </ol>
-          </nav>
-          <div className="tx-hero-grid">
-            <div>
-              <p className="eyebrow enter">Dental treatments</p>
-              <h1 id="treatments-heading" className="enter" style={stagger(1)}>
-                Care for every stage
-                <br />
-                of your smile
-              </h1>
-              <p className="lede enter" style={stagger(2)}>
-                From preventive care and everyday dental concerns to restorative, cosmetic and specialised treatments,
-                Roots &amp; Pulp provides thoughtful dental care tailored to your needs.
-              </p>
-              <div className="hero-actions enter" style={stagger(3)}>
-                <a className="btn btn-primary" href={bookingUrl} target="_blank" rel="noopener noreferrer">
-                  Book an Appointment
-                </a>
-                <a className="btn btn-secondary" href="#guidance">
-                  Not sure what you need?
-                </a>
-              </div>
-            </div>
-            <figure className="tx-hero-visual">
-              <div className="tx-hero-frame reveal reveal--mask">
-                <Image
-                  src={photos.procedure.src}
-                  alt={photos.procedure.alt}
-                  fill
-                  priority
-                  sizes="(max-width: 900px) 100vw, 480px"
-                  className="tx-hero-img mask-img"
-                  style={{ objectPosition: photos.procedure.position }}
-                />
-              </div>
-            </figure>
-          </div>
+      <InnerPageHero
+        crumb="Treatments"
+        titleId="treatments-heading"
+        eyebrow="Dental treatments"
+        title="Care for every stage of your smile"
+        image={photos.treatingInChair.src}
+        imageAlt={photos.treatingInChair.alt}
+        imagePosition="center 64%"
+      >
+        <p className="lede enter" style={stagger(1)}>
+          From preventive care and everyday dental concerns to restorative, cosmetic and specialised treatments,
+          Roots &amp; Pulp provides thoughtful dental care tailored to your needs.
+        </p>
+        <div className="hero-actions enter" style={stagger(2)}>
+          <a className="btn btn-primary" href={bookingUrl} target="_blank" rel="noopener noreferrer">
+            Book an Appointment
+          </a>
+          <a className="btn btn-secondary" href="#guidance">
+            Not sure what you need?
+          </a>
         </div>
-      </section>
+      </InnerPageHero>
 
       <section className="tx-featured" aria-labelledby="featured-heading">
         <div className="tx-wrap">

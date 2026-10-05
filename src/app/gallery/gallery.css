@@ -1,56 +1,9 @@
 .gallery-page { overflow-x: clip; background: var(--ivory); }
 
-.gallery-hero { padding: 20px 0 28px; }
-.gallery-hero-inner,
 .gallery-filters {
   width: min(var(--max), calc(100% - 40px));
   margin: 0 auto;
 }
-
-.gallery-crumbs ol {
-  display: flex;
-  gap: 8px;
-  list-style: none;
-  margin: 0 0 28px;
-  padding: 10px 0;
-  color: var(--muted);
-  font-size: 0.9rem;
-  border-bottom: 1px solid var(--line);
-}
-.gallery-crumbs li:not(:last-child)::after { content: "·"; margin-left: 8px; }
-.gallery-crumbs a { color: var(--teal); text-decoration: none; }
-
-.gallery-hero-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(280px, 1.1fr);
-  gap: 40px;
-  align-items: end;
-}
-.gallery-hero h1 {
-  font-size: clamp(2.4rem, 4.4vw, 4rem);
-  color: var(--navy);
-  max-width: 12ch;
-}
-.gallery-hero .lede { margin-top: 16px; max-width: 38ch; color: var(--muted); }
-.gallery-hero figure { margin: 0; }
-.gallery-hero-visual { position: relative; isolation: isolate; }
-.gallery-hero-visual::before {
-  content: "";
-  position: absolute;
-  inset: 18px -14px -14px 18px;
-  border: 1px solid rgba(14, 74, 71, 0.28);
-  border-radius: 24px;
-  z-index: -1;
-  pointer-events: none;
-}
-.gallery-hero-frame {
-  position: relative;
-  height: min(62vh, 520px);
-  overflow: hidden;
-  border-radius: 22px;
-  background: var(--soft);
-}
-.gallery-hero-img { object-fit: cover; object-position: center 40%; }
 
 .gallery-filters { padding: 8px 0 12px; }
 .gallery-filters p {
@@ -382,21 +335,17 @@
 }
 
 @media (max-width: 980px) {
-  .gallery-hero-grid,
   .gallery-journey ol { grid-template-columns: 1fr; }
   .gallery-layout-3 { grid-template-columns: 1fr; grid-template-rows: none; }
   .gallery-layout-3 .gallery-item:first-child { grid-row: auto; }
   .gallery-layout-1 .gallery-item,
   .gallery-layout-3 .gallery-item { aspect-ratio: 4 / 3; }
-  .gallery-hero-visual::before { inset: 14px -8px -10px 14px; }
   .gallery-named { columns: 2; }
   .gallery-block-inside .gallery-named { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 720px) {
-  .gallery-hero-inner,
   .gallery-filters { width: min(100% - 32px, var(--max)); }
-  .gallery-hero-frame { height: 300px; }
   .gallery-item figcaption { font-size: 1.15rem; left: 16px; }
   .gallery-named { columns: 1; }
   .gallery-named li { margin-bottom: 28px; }

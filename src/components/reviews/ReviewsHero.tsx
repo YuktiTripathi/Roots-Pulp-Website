@@ -1,69 +1,47 @@
-import Image from "next/image";
-import Link from "next/link";
+import { InnerPageHero } from "@/components/InnerPageHero";
 import { googleBusinessProfileUrl } from "@/lib/clinic";
 import { stagger } from "@/lib/motion";
 import { patientReviews, patientVideos } from "@/lib/patientReviews";
 
 export function ReviewsHero({ reviewCount = patientReviews.length }: { reviewCount?: number } = {}) {
   return (
-    <section className="reviews-hero" aria-labelledby="reviews-heading">
-      <div className="reviews-hero-inner">
-        <nav className="crumbs reviews-crumbs" aria-label="Breadcrumb">
-          <ol>
-            <li>
-              <Link href="/">Home</Link>
-            </li>
-            <li aria-current="page">Reviews</li>
-          </ol>
-        </nav>
-      </div>
-      <figure className="reviews-hero-banner">
-        <Image
-          src="/images/hero/smiling-patient-hero.webp"
-          alt="A patient smiling at her reflection in a hand mirror in the dental chair"
-          fill
-          sizes="100vw"
-          priority
-          className="reviews-hero-photo"
-          style={{ objectPosition: "center 88%" }}
-        />
-        <figcaption className="reviews-hero-caption">
-          <h1 id="reviews-heading" className="enter">
-            What our Patients say Matters Most
-          </h1>
-        </figcaption>
-      </figure>
-      <div className="reviews-hero-inner reviews-hero-after">
-        <p className="lede enter" style={stagger(1)}>
-          See what patients have shared about their experience at Roots &amp; Pulp Dental Clinic.
-        </p>
-        <ul className="reviews-hero-facts enter" style={stagger(2)}>
+    <InnerPageHero
+      crumb="Reviews"
+      titleId="reviews-heading"
+      title="What our Patients say Matters Most"
+      image="/images/hero/smiling-patient-hero.webp"
+      imageAlt="A patient smiling at her reflection in a hand mirror in the dental chair"
+      imagePosition="center 88%"
+    >
+      <p className="lede enter" style={stagger(1)}>
+        See what patients have shared about their experience at Roots &amp; Pulp Dental Clinic.
+      </p>
+      <ul className="reviews-hero-facts enter" style={stagger(2)}>
+        <li>
+          <strong>{reviewCount}</strong> Google reviews below
+        </li>
+        {patientVideos.length > 0 ? (
           <li>
-            <strong>{reviewCount}</strong> Google reviews below
+            <strong>{patientVideos.length}</strong> patient videos
           </li>
-          {patientVideos.length > 0 ? (
-            <li>
-              <strong>{patientVideos.length}</strong> patient videos
-            </li>
-          ) : null}
-          <li>Quoted exactly as written</li>
-        </ul>
-        <div className="hero-actions enter" style={stagger(3)}>
-          <a className="btn btn-primary" href="#google-reviews">
-            Read Google Reviews
+        ) : null}
+        <li>Quoted exactly as written</li>
+      </ul>
+      <div className="hero-actions enter" style={stagger(3)}>
+        <a className="btn btn-primary" href="#google-reviews">
+          Read Google Reviews
+        </a>
+        {googleBusinessProfileUrl ? (
+          <a className="btn btn-secondary" href={googleBusinessProfileUrl} target="_blank" rel="noopener noreferrer">
+            Open on Google
+            <span className="sr-only"> (opens in a new tab)</span>
           </a>
-          {googleBusinessProfileUrl ? (
-            <a className="btn btn-secondary" href={googleBusinessProfileUrl} target="_blank" rel="noopener noreferrer">
-              Open on Google
-              <span className="sr-only"> (opens in a new tab)</span>
-            </a>
-          ) : (
-            <a className="btn btn-secondary" href="#patient-videos">
-              Watch Patient Stories
-            </a>
-          )}
-        </div>
+        ) : (
+          <a className="btn btn-secondary" href="#patient-videos">
+            Watch Patient Stories
+          </a>
+        )}
       </div>
-    </section>
+    </InnerPageHero>
   );
 }
