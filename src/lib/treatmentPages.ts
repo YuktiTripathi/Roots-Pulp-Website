@@ -89,8 +89,17 @@ export type TreatmentPageContent = {
     heading: string;
     paragraphs: string[];
     illustration?: StageIllustration;
-    /** A supplied image, when given, replaces the drawn illustration. */
-    image?: { src: string; alt: string; width: number; height: number };
+    /**
+     * A supplied image, when given, replaces the drawn illustration. `mobile` is an optional
+     * rearranged version (for example a wide strip as a 2 by 2 grid) shown on phones.
+     */
+    image?: {
+      src: string;
+      alt: string;
+      width: number;
+      height: number;
+      mobile?: { src: string; width: number; height: number };
+    };
     caption?: string;
   };
   process: {
@@ -99,8 +108,17 @@ export type TreatmentPageContent = {
     steps: (TreatmentCardItem & { links?: TreatmentLink[] })[];
     footnote?: string;
     illustration?: StageIllustration;
-    /** A supplied image, when given, replaces the drawn illustration. */
-    image?: { src: string; alt: string; width: number; height: number };
+    /**
+     * A supplied image, when given, replaces the drawn illustration. `mobile` is an optional
+     * rearranged version (for example a wide strip as a 2 by 2 grid) shown on phones.
+     */
+    image?: {
+      src: string;
+      alt: string;
+      width: number;
+      height: number;
+      mobile?: { src: string; width: number; height: number };
+    };
     caption?: string;
   };
   /** Option cards. [CONFIRM SERVICE AVAILABILITY] before the page is reviewed and indexed. */
@@ -1337,6 +1355,10 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
       heading: "Braces and Clear Aligners in Lucknow",
       lede: "Straighten your teeth with fixed braces or removable clear aligners, planned around you.",
       text: "Crooked or crowded teeth can be harder to clean and can affect how you bite. Braces and aligners are two ways to move teeth gently into a better position. At Roots & Pulp in Aliganj, Dr. Shubham Tripathi will examine your teeth first and explain which options may suit you.",
+      image: {
+        src: "/images/treatments/braces-aligners/braces-vs-aligners-hero.webp",
+        alt: "A smile shown half with a clear aligner being fitted and half with fixed metal braces",
+      },
     },
     glance: [
       { title: "What it addresses", text: "Crowding, gaps and bite differences, for teens and adults." },
@@ -1406,10 +1428,11 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
         "Teeth move gradually. That is why treatment takes months, and why check-ups along the way matter.",
       ],
       image: {
-        src: "/images/treatments/braces-aligners/how-braces-aligners-work.jpg",
-        alt: "Four illustrated stages showing crowded teeth, braces applying steady pressure, aligned teeth and a retainer",
-        width: 1024,
-        height: 682,
+        src: "/images/treatments/braces-aligners/how-braces-and-aligners-work.webp",
+        alt: "Four illustrated stages: crowded teeth, braces applying gentle steady pressure, aligned teeth, and a retainer holding them in place",
+        width: 2000,
+        height: 490,
+        mobile: { src: "/images/treatments/braces-aligners/how-braces-and-aligners-work-mobile.webp", width: 920, height: 860 },
       },
       caption:
         "Teeth move gradually, and a retainer helps keep them in place afterwards. Your dentist will explain your plan.",
@@ -1463,7 +1486,7 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
         // [CONFIRM SERVICE AVAILABILITY] Delete this card if tooth-coloured braces are not offered.
         {
           title: "Fixed tooth-coloured braces",
-          image: "/images/treatments/braces-aligners/fixed-tooth-coloured-braces.jpg",
+          image: "/images/treatments/braces-aligners/tooth-coloured-braces.webp",
           what: "Similar to metal braces, with brackets that blend in with the teeth.",
           suits: "People who want braces that are less noticeable.",
         },

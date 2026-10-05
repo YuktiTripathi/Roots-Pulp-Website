@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image, { getImageProps } from "next/image";
 import Link from "next/link";
 import { FAQSection } from "@/components/FAQSection";
 import { WhyRootsPulp } from "@/components/treatments/WhyRootsPulp";
@@ -59,6 +59,23 @@ function SymptomGlyph({ icon }: { icon: SymptomIcon }) {
     <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
       <path d={symptomPaths[icon]} />
     </svg>
+  );
+}
+
+/** Mobile breakpoint for explainer images that supply a rearranged phone version. */
+const EXPLAINER_PHONE_MEDIA = "(max-width: 680px)";
+
+function ExplainerImage({ image }: { image: NonNullable<NonNullable<TreatmentPageContent["explainer"]>["image"]> }) {
+  const desktop = { src: image.src, alt: image.alt, width: image.width, height: image.height, sizes: "(max-width: 1180px) 100vw, 1140px" };
+  if (!image.mobile) return <Image {...desktop} alt={image.alt} />;
+  // Art direction: phones get the rearranged version, so its labels stay readable.
+  const { props: wide } = getImageProps(desktop);
+  const { props: phone } = getImageProps({ ...desktop, ...image.mobile, sizes: "100vw" });
+  return (
+    <picture>
+      <source media={EXPLAINER_PHONE_MEDIA} srcSet={phone.srcSet} sizes={phone.sizes} width={phone.width} height={phone.height} />
+      <img {...wide} alt={image.alt} />
+    </picture>
   );
 }
 
@@ -312,13 +329,7 @@ export function TreatmentDetail({ treatment, content }: { treatment: Treatment; 
             </div>
             {explainer.image ? (
               <figure className="tp-stages tp-stages-photo reveal">
-                <Image
-                  src={explainer.image.src}
-                  alt={explainer.image.alt}
-                  width={explainer.image.width}
-                  height={explainer.image.height}
-                  sizes="(max-width: 1180px) 100vw, 1140px"
-                />
+                <ExplainerImage image={explainer.image} />
                 {explainer.caption ? <figcaption>{explainer.caption}</figcaption> : null}
               </figure>
             ) : explainer.illustration ? (
