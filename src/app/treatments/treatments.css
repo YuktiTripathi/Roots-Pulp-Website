@@ -252,8 +252,8 @@
 .tp-page .tp-white { background: white; }
 .tp-page .tp-ivory { background: var(--ivory); }
 .tp-soft { background: var(--soft); }
-/* Treatment specific equipment and doctor note, directly under the shared Why Roots & Pulp section. */
-.why-rp:has(+ .tp-why-extra) { padding-bottom: 0; }
+/* Treatment specific equipment and doctor note, directly under the shared Why Roots & Pulp section,
+   which keeps the same padding on every page. */
 .tp-why-extra { padding: 0 0 64px; }
 .tp-section h2 { color: var(--navy); font-size: clamp(1.8rem, 3vw, 2.6rem); }
 .tp-intro { margin-top: 12px; max-width: 62ch; color: var(--muted); }

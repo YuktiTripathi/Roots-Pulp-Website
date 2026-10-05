@@ -22,20 +22,21 @@ const whyRootsPulp = {
       text: "You should understand what we found, what your options are, and why a treatment may be recommended.",
     },
     {
-      icon: "thoughtful",
+      icon: "tooth",
       title: "We treat thoughtfully",
       text: "Recommendations are based on your individual dental needs rather than a one-size-fits-all approach.",
     },
     {
-      icon: "future",
+      icon: "calendar",
       title: "We think beyond today",
-      text: "Prevention, maintenance and long-term oral health are part of the same conversation.",
+      text: "Prevention, maintenance and long term oral health are part of the same conversation.",
     },
   ],
 } as const;
 
 type IconName = (typeof whyRootsPulp.items)[number]["icon"];
 
+/** One line icon set, 24px grid, 1.6 stroke: speech bubble, clipboard, tooth, calendar. */
 const icons: Record<IconName, ReactNode> = {
   listen: (
     <>
@@ -45,21 +46,21 @@ const icons: Record<IconName, ReactNode> = {
   ),
   explain: (
     <>
-      <path d="M2.8 12s3.4-6 9.2-6 9.2 6 9.2 6-3.4 6-9.2 6-9.2-6-9.2-6Z" />
-      <circle cx="12" cy="12" r="2.8" />
+      <rect x="5.5" y="4.5" width="13" height="16" rx="2" />
+      <path d="M9.5 3.5h5v2.5h-5Z" />
+      <path d="M8.8 11h6.4M8.8 14.5h6.4M8.8 18h3.6" />
     </>
   ),
-  thoughtful: (
+  tooth: (
     <>
-      <path d="M12 3.6 5.4 6.2v5.3c0 4.1 2.8 7.4 6.6 8.9 3.8-1.5 6.6-4.8 6.6-8.9V6.2Z" />
-      <path d="m9.2 12 2 2 3.8-3.8" />
+      <path d="M8.2 4.2c-2.4 0-3.9 1.9-3.9 4.4 0 2.2.9 3.6 1.5 5.4.6 1.9.8 6 2.6 6 1.6 0 1.6-3.6 3.6-3.6s2 3.6 3.6 3.6c1.8 0 2-4.1 2.6-6 .6-1.8 1.5-3.2 1.5-5.4 0-2.5-1.5-4.4-3.9-4.4-1.6 0-2.4.9-3.8.9s-2.2-.9-3.8-.9Z" />
     </>
   ),
-  future: (
+  calendar: (
     <>
-      <path d="M12 20.5V11" />
-      <path d="M12 11c0-3.6 2.6-6.2 6.5-6.5-.2 3.8-2.8 6.5-6.5 6.5Z" />
-      <path d="M12 14c0-2.8-2.1-4.9-5.3-5.1.2 3 2.3 5.1 5.3 5.1Z" />
+      <rect x="3.8" y="5.2" width="16.4" height="15" rx="2.6" />
+      <path d="M3.8 9.8h16.4M8.2 3.2v3.6M15.8 3.2v3.6" />
+      <path d="m9.2 15 2 2 3.8-3.8" />
     </>
   ),
 };
