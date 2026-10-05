@@ -23,9 +23,10 @@ type Props = {
   overlayStrength?: Overlay;
   /**
    * "center" (default) centres the text over the image. "start" sets it to the left, for a
-   * photograph whose subject is on the right (for example a portrait), so the text never covers a face.
+   * photograph whose subject is on the right, and "end" to the right for a subject on the left,
+   * so the text never covers a face.
    */
-  contentAlign?: "center" | "start";
+  contentAlign?: "center" | "start" | "end";
   /** "long" sets a smaller title size for headings over about 40 characters, so they stay at 2 or 3 lines. */
   titleSize?: "default" | "long";
   /** Page specific copy and actions, shown centred under the image. */

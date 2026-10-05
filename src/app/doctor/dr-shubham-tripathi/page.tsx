@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { InnerPageHero } from "@/components/InnerPageHero";
 import { FinalCTA } from "@/components/FinalCTA";
-import { bookingUrl, doctor, doctorExperience, heroPoster, whatsappHref } from "@/lib/clinic";
+import { bookingUrl, doctor, doctorExperience, whatsappHref } from "@/lib/clinic";
 import { stagger } from "@/lib/motion";
 import { photos } from "@/lib/photos";
 import "./doctor.css";
@@ -64,10 +64,10 @@ export default function DoctorPage() {
         eyebrow="Meet your dentist"
         title={doctor.name}
         subtitle={`${doctor.credentials} · ${doctor.role}, Roots & Pulp Dental Clinic`}
-        image={heroPoster}
-        imageAlt="Dr. Shubham Tripathi in navy scrubs with his arms folded"
-        imagePosition="70% 30%"
-        contentAlign="start"
+        image="/images/doctor/dr-shubham-tripathi-clinic-portrait.webp"
+        imageAlt="Dr. Shubham Tripathi standing by the consultation desk at Roots & Pulp Dental Clinic, Aliganj"
+        imagePosition="center 12%"
+        contentAlign="end"
       />
       <section className="doctor-profile" aria-labelledby="doctor-profile-heading">
         <div className="doctor-profile-inner">

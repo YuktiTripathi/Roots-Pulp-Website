@@ -92,6 +92,15 @@
   background: linear-gradient(90deg, rgba(11, 23, 48, 0.62) 0%, rgba(11, 23, 48, 0.32) 55%, rgba(11, 23, 48, 0.12) 100%);
 }
 
+.iph-align-end .iph-caption {
+  align-items: flex-end;
+  text-align: right;
+  padding-inline: max(28px, calc((100% - var(--max)) / 2));
+}
+.iph-align-end.iph-overlay-medium .iph-caption {
+  background: linear-gradient(270deg, rgba(11, 23, 48, 0.72) 0%, rgba(11, 23, 48, 0.4) 50%, rgba(11, 23, 48, 0.08) 100%);
+}
+
 /* Page specific copy and actions under the image. */
 .iph-after {
   display: flex;
@@ -113,9 +122,11 @@
   .iph .iph-caption h1 { max-width: 14ch; font-size: clamp(2.4rem, 10vw, 3.6rem); }
   .iph .iph-caption .iph-title-long { max-width: 18ch; font-size: clamp(2rem, 7.6vw, 2.8rem); }
   .iph-caption { padding: 24px 20px; }
-  /* On phones the left aligned text sits low, below the subject's face. */
-  .iph-align-start .iph-caption { justify-content: flex-end; padding: 24px 20px 32px; }
-  .iph-align-start.iph-overlay-medium .iph-caption {
+  /* On phones side aligned text sits low and left, below the subject's face. */
+  .iph-align-start .iph-caption,
+  .iph-align-end .iph-caption { justify-content: flex-end; align-items: flex-start; text-align: left; padding: 24px 20px 32px; }
+  .iph-align-start.iph-overlay-medium .iph-caption,
+  .iph-align-end.iph-overlay-medium .iph-caption {
     background: linear-gradient(180deg, rgba(11, 23, 48, 0) 35%, rgba(11, 23, 48, 0.72) 100%);
   }
 }
