@@ -129,8 +129,8 @@ export const gallerySections: GallerySection[] = [
       "Appointments include time to see, understand and talk about your smile, along with the treatment itself.",
     layout: "named",
     images: [
-      fromPhoto(photos.reviewingSmile, "Reviewing her smile", "people"),
-      fromPhoto(photos.happyPatient, "Dr. Shubham with a patient", "people"),
+      fromPhoto(photos.chairsideWithPatient, "A smile in the treatment chair", "people"),
+      fromPhoto(photos.thumbsUpAfterVisit, "A thumbs up after the appointment", "people"),
     ],
   },
   {

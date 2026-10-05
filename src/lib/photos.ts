@@ -32,6 +32,29 @@ export const photos = {
     alt: "Dr. Shubham Tripathi discussing a treatment plan with a patient at Roots & Pulp Dental Clinic in Aliganj",
     position: "center 40%",
   },
+  /** Treatments page, "Listen" step: 4:5, and cropped to 4:3 on phones (people kept in frame). */
+  listeningAtDesk: {
+    src: `${care}/consultation-desk-listening-to-patient.webp`,
+    width: 1122,
+    height: 1402,
+    alt: "A Roots & Pulp dentist listening to a patient at the consultation desk",
+    position: "center 65%",
+  },
+  /** Gallery, "Real moments from a visit". */
+  chairsideWithPatient: {
+    src: `${care}/dentist-with-patient-in-treatment-chair.webp`,
+    width: 1122,
+    height: 1402,
+    alt: "A Roots & Pulp dentist beside a smiling patient in the treatment chair",
+    position: "center 40%",
+  },
+  thumbsUpAfterVisit: {
+    src: `${care}/patient-thumbs-up-after-appointment.webp`,
+    width: 1149,
+    height: 1369,
+    alt: "A Roots & Pulp dentist giving a thumbs up beside a patient in the treatment chair",
+    position: "center 40%",
+  },
   explaining: {
     src: `${care}/dentist-explaining-xray.webp`,
     width: 819,

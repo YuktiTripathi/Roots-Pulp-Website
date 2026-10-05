@@ -9,7 +9,7 @@ const steps = [
   {
     title: "Listen",
     text: "We begin by understanding your concerns, symptoms and expectations.",
-    photo: photos.consultation,
+    photo: photos.listeningAtDesk,
   },
   {
     title: "Diagnose",
