@@ -116,7 +116,7 @@ export function GalleryCases({ cases }: { cases: RenderableCase[] }) {
         <h2 id="patient-cases-heading" className="reveal" style={stagger(1)}>
           {galleryCasesCopy.heading}
         </h2>
-        <p className="gallery-copy reveal" style={stagger(2)}>
+        <p className="gallery-copy line-full reveal" style={stagger(2)}>
           {galleryCasesCopy.intro}
         </p>
         <ul className="gallery-cases" role="list">

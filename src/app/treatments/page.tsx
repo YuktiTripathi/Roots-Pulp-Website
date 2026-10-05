@@ -31,7 +31,7 @@ export default function TreatmentsPage() {
         imageAlt={photos.treatingInChair.alt}
         imagePosition="center 64%"
       >
-        <p className="lede enter" style={stagger(1)}>
+        <p className="lede line-full enter" style={stagger(1)}>
           From preventive care and everyday dental concerns to restorative, cosmetic and specialised treatments,
           Roots &amp; Pulp provides thoughtful dental care tailored to your needs.
         </p>
@@ -48,7 +48,7 @@ export default function TreatmentsPage() {
       <section className="tx-featured" aria-labelledby="featured-heading">
         <div className="tx-wrap">
           <p className="eyebrow reveal">Explore our treatments</p>
-          <h2 id="featured-heading" className="reveal" style={stagger(1)}>
+          <h2 id="featured-heading" className="line-full reveal" style={stagger(1)}>
             Thoughtful care, tailored to you
           </h2>
           <p className="lede reveal" style={stagger(2)}>
@@ -65,10 +65,10 @@ export default function TreatmentsPage() {
       <section className="tx-everyday" aria-labelledby="everyday-heading">
         <div className="tx-wrap">
           <p className="eyebrow reveal">Everyday dental care</p>
-          <h2 id="everyday-heading" className="reveal" style={stagger(1)}>
+          <h2 id="everyday-heading" className="line-full reveal" style={stagger(1)}>
             Essential care for your oral health
           </h2>
-          <p className="lede reveal" style={stagger(2)}>
+          <p className="lede line-full reveal" style={stagger(2)}>
             From preventive care to common dental concerns, thoughtful treatment starts with understanding what&apos;s
             happening and why.
           </p>
@@ -83,8 +83,8 @@ export default function TreatmentsPage() {
       <section className="tx-guidance" id="guidance" aria-labelledby="guidance-heading">
         <div className="tx-wrap tx-guidance-inner reveal">
           <p className="eyebrow">Not sure what you need?</p>
-          <h2 id="guidance-heading">You don&apos;t need to know the treatment before you visit</h2>
-          <p>
+          <h2 id="guidance-heading" className="line-full">You don&apos;t need to know the treatment before you visit</h2>
+          <p className="line-full">
             Tell us what&apos;s bothering you. We&apos;ll help you understand what needs attention and talk you through
             your options.
           </p>
@@ -102,8 +102,8 @@ export default function TreatmentsPage() {
       <section className="tx-approach" aria-labelledby="approach-heading">
         <div className="tx-wrap">
           <p className="eyebrow">Our approach</p>
-          <h2 id="approach-heading">Treatment starts with understanding</h2>
-          <p className="lede">
+          <h2 id="approach-heading" className="line-full">Treatment starts with understanding</h2>
+          <p className="lede line-full">
             At Roots &amp; Pulp, we begin by understanding your concern, examining what&apos;s happening and explaining
             the available options before treatment begins.{" "}
             <Link href="/doctor/dr-shubham-tripathi/">Meet Dr. Shubham Tripathi</Link>.
@@ -114,7 +114,7 @@ export default function TreatmentsPage() {
 
       <section className="tx-close" aria-labelledby="close-heading">
         <div className="tx-wrap reveal">
-          <h2 id="close-heading">Your dental care starts with a conversation</h2>
+          <h2 id="close-heading" className="line-full">Your dental care starts with a conversation</h2>
           <p>Have a concern, or simply want to understand your options?</p>
           <div className="hero-actions">
             <a className="btn btn-light" href={bookingUrl} target="_blank" rel="noopener noreferrer">

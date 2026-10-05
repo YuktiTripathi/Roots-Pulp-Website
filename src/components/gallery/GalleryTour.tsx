@@ -157,7 +157,7 @@ export function GalleryTour({ cases = [] }: { cases?: RenderableCase[] }) {
             <h2 id={`${section.id}-heading`} className="reveal" style={stagger(1)}>
               {section.heading}
             </h2>
-            <p className="gallery-copy reveal" style={stagger(2)}>
+            <p className="gallery-copy line-full reveal" style={stagger(2)}>
               {section.description}
             </p>
             {section.layout === "named" ? (
@@ -244,7 +244,7 @@ export function GalleryTour({ cases = [] }: { cases?: RenderableCase[] }) {
           <h2 id="journey-heading" className="reveal" style={stagger(1)}>
             See where you&apos;ll be cared for
           </h2>
-          <p className="gallery-copy reveal" style={stagger(2)}>
+          <p className="gallery-copy line-full reveal" style={stagger(2)}>
             From the entrance to consultation, treatment and the equipment behind it, the visit stays in the same clinic.
           </p>
           <ol>

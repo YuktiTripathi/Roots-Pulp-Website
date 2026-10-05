@@ -109,7 +109,7 @@ export default function DoctorPage() {
                 </p>
               </figcaption>
             </figure>
-            <div className="doctor-profile-copy">
+            <div className="doctor-profile-copy doctor-bio-justified">
               <h2 id="doctor-profile-heading" className="enter" style={stagger(1)}>
                 About Dr. Shubham Tripathi
               </h2>
@@ -122,11 +122,8 @@ export default function DoctorPage() {
                 Dr. Shubham Tripathi founded Roots &amp; Pulp Dental Clinic in Aliganj with a simple aim: to offer
                 careful, unhurried dental care where patients feel heard, informed and comfortable. With{" "}
                 {doctorExperience.inline}, he treats patients across different stages of life, from a child&apos;s
-                first <Link href="/treatments/childrens-dentistry/">dental check-up</Link> to restorative and aesthetic
-                treatments such as <Link href="/treatments/root-canal-treatment/">root canal treatment</Link>,{" "}
-                <Link href="/treatments/crowns-and-bridges/">crowns</Link>,{" "}
-                <Link href="/treatments/dental-implants/">implants</Link> and{" "}
-                <Link href="/treatments/cosmetic-dentistry/">smile makeovers</Link>.
+                first dental check-up to restorative and aesthetic treatments such as root canal treatment, crowns,
+                implants and smile makeovers.
               </p>
               <p className="enter" style={stagger(4)}>
                 He holds a Bachelor of Dental Surgery and a Master of Public Health, along with a specialised
@@ -159,7 +156,7 @@ export default function DoctorPage() {
       <section className="section doctor-approach" aria-labelledby="approach-heading">
         <div className="section-inner">
           <p className="eyebrow reveal">Experience &amp; approach</p>
-          <h2 id="approach-heading" className="reveal">
+          <h2 id="approach-heading" className="line-full reveal">
             Care that begins with Understanding
           </h2>
           <p className="doctor-approach-lede reveal" style={stagger(1)}>
@@ -195,7 +192,7 @@ export default function DoctorPage() {
       <section className="section doctor-training" aria-labelledby="training-heading">
         <div className="section-inner">
           <p className="eyebrow reveal">Training &amp; credentials</p>
-          <h2 id="training-heading" className="reveal" style={stagger(1)}>
+          <h2 id="training-heading" className="line-full reveal" style={stagger(1)}>
             Experience backed by Training
           </h2>
           <ul className="doctor-credential-grid">

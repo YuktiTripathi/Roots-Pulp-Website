@@ -1359,3 +1359,6 @@ main > .faq:has(+ .page) { padding-bottom: 24px; }
 @media (pointer: coarse), (prefers-reduced-motion: reduce) {
   .site-cursor-canvas { display: none; }
 }
+
+/* Copy the clinic asked to run across the full width of its container (it still wraps on small screens). */
+.line-full { max-width: none !important; }

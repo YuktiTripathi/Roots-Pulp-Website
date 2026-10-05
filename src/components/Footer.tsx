@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { bookingUrl, clinic, directionsUrl, instagramUrl, telHref, treatmentHref, treatments, whatsappHref } from "@/lib/clinic";
 import { Logo } from "./Logo";
-import { openingHoursShort } from "@/lib/openingHours";
+import { time12, weeklyHours } from "@/lib/openingHours";
 
 export function Footer() {
   return (
@@ -22,8 +22,12 @@ export function Footer() {
         <div>
           <p className="footer-title">Visit</p>
           <ul>
-            {openingHoursShort.map((line) => (
-              <li key={line}>{line}</li>
+            {weeklyHours.map((row) => (
+              <li key={row.days}>
+                {row.days},
+                <br />
+                {time12(row.open)} to {time12(row.close)}
+              </li>
             ))}
             <li>
               <a href={telHref()}>Call {clinic.phoneDisplay}</a>

@@ -331,3 +331,6 @@
   .doctor-approach-list li:hover .doctor-approach-photo { transform: none; }
   .doctor-approach-list li:hover { translate: none; box-shadow: none; }
 }
+
+/* Biography paragraphs are justified, with hyphenation so the spacing stays even. */
+.doctor-bio-justified > p { text-align: justify; hyphens: auto; }
