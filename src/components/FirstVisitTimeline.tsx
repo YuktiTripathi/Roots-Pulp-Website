@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useInView, useReducedMotion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import { stagger } from "@/lib/motion";
 import { firstVisit } from "@/lib/homeContent";
 import { photos } from "@/lib/photos";
@@ -20,9 +21,34 @@ const STEP_PHOTOS = [
 
 const STEPS = firstVisit.steps.map((step, index) => ({ ...step, photo: index }));
 
+/** How long each step stays before the next one appears. */
+const STEP_MS = 3000;
+
 export function FirstVisitTimeline() {
   const [activeStep, setActiveStep] = useState(0);
   const step = STEPS[activeStep];
+  const container = useRef<HTMLDivElement>(null);
+  const inView = useInView(container, { amount: 0.4 });
+  const reduce = useReducedMotion();
+  const [tabVisible, setTabVisible] = useState(true);
+  // Announce step changes only when the visitor picks a step, never on the automatic advance.
+  const [picked, setPicked] = useState(false);
+  // Hold still while a step has keyboard focus.
+  const [focused, setFocused] = useState(false);
+
+  useEffect(() => {
+    const update = () => setTabVisible(document.visibilityState === "visible");
+    document.addEventListener("visibilitychange", update);
+    return () => document.removeEventListener("visibilitychange", update);
+  }, []);
+
+  // Steps advance one by one while the section is on screen, then start again from 01.
+  // Depending on activeStep means a click restarts the full interval from the chosen step.
+  useEffect(() => {
+    if (!inView || reduce || !tabVisible || focused) return;
+    const timer = window.setTimeout(() => setActiveStep((index) => (index + 1) % STEPS.length), STEP_MS);
+    return () => window.clearTimeout(timer);
+  }, [activeStep, inView, reduce, tabVisible, focused]);
 
   return (
     <section className="section first-visit" aria-labelledby="first-visit-heading">
@@ -52,14 +78,21 @@ export function FirstVisitTimeline() {
           ))}
         </ol>
 
-        <div className="timeline-container reveal" style={stagger(2)}>
-          <ol className="timeline-track">
+        <div ref={container} className="timeline-container reveal" style={stagger(2)}>
+          <ol
+            className="timeline-track"
+            onFocus={(event) => setFocused(event.target.matches(":focus-visible"))}
+            onBlur={() => setFocused(false)}
+          >
             {STEPS.map((item, index) => (
               <li key={item.num}>
                 <button
                   type="button"
                   className={`timeline-dot${index === activeStep ? " is-active" : ""}`}
-                  onClick={() => setActiveStep(index)}
+                  onClick={() => {
+                    setPicked(true);
+                    setActiveStep(index);
+                  }}
                   aria-current={index === activeStep ? "step" : undefined}
                   aria-controls="first-visit-panel"
                 >
@@ -71,7 +104,7 @@ export function FirstVisitTimeline() {
           </ol>
 
           <div className="timeline-stage">
-            <div key={step.num} className="timeline-panel swap" id="first-visit-panel" aria-live="polite">
+            <div key={step.num} className="timeline-panel swap" id="first-visit-panel" aria-live={picked ? "polite" : "off"}>
               <p className="timeline-kicker">{step.num}</p>
               <h3 className="timeline-title">{step.title}</h3>
               <p className="timeline-desc">{step.desc}</p>
