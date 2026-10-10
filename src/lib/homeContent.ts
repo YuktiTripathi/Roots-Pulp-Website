@@ -137,7 +137,7 @@ export const technology = {
   heading: "Technology that helps you see and understand your care",
   items: [
     { src: "/images/equipment/digital-xray-rvg.jpg", title: "Digital X-ray (RVG)", benefit: "See diagnostic images quickly and clearly." },
-    { src: "/images/equipment/intraoral-camera-root-canal.jpg", title: "Intraoral Camera", benefit: "See what your dentist is seeing." },
+    { src: "/images/equipment/intraoral-camera-root-canal.jpg", extraSrc: "/images/equipment/intraoral-camera-cavities.jpg", title: "Intraoral Camera", benefit: "See what your dentist is seeing." },
     { src: "/images/equipment/apex-locator.jpg", title: "Apex Locator", benefit: "Supports accurate root canal measurement." },
     { src: "/images/equipment/uv-sterilisation-chamber.jpg", title: "UV Sterilisation Chamber", benefit: "Storage for sterilised instruments." },
     { src: "/images/equipment/teeth-whitening-light.jpg", title: "Teeth Whitening Light", benefit: "In-clinic LED whitening." },

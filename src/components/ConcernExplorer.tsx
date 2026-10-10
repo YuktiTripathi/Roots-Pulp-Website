@@ -53,8 +53,8 @@ export function ConcernExplorer() {
           </ul>
           <div className="concern-result" aria-live="polite">
             <p className="concern-note">
-              Treatments commonly discussed for this concern include the options below. Only a dental examination
-              can determine what is appropriate for you.
+              Common treatment options are listed below. A dental examination will help determine which is right for
+              you.
             </p>
             <div key={active} className="treat-rail swap">
               {related.map((treatment) => (

@@ -9,8 +9,11 @@ const galleryImages = gallerySections.flatMap((section) => section.images);
 /** The five verified pieces of equipment. Photos are shown whole, never cropped hard. */
 export function TechnologySection() {
   const items = technology.items.flatMap((item) => {
-    const photo = galleryImages.find((image) => image.src === item.src);
-    return photo && photo.width && photo.height ? [{ ...item, photo: { ...photo, width: photo.width, height: photo.height } }] : [];
+    const photos = [item.src, "extraSrc" in item ? item.extraSrc : undefined].flatMap((src) => {
+      const photo = galleryImages.find((image) => image.src === src);
+      return photo && photo.width && photo.height ? [{ ...photo, width: photo.width, height: photo.height }] : [];
+    });
+    return photos.length ? [{ ...item, photos }] : [];
   });
 
   return (
@@ -25,14 +28,17 @@ export function TechnologySection() {
         <ul className="tech-row" role="list">
           {items.map((item, index) => (
             <li key={item.src} className="tech-card reveal" style={stagger(index)}>
-              <span className="tech-media">
-                <Image
-                  src={item.photo.src}
-                  alt={item.photo.alt}
-                  width={item.photo.width}
-                  height={item.photo.height}
-                  sizes="(max-width: 720px) 70vw, 220px"
-                />
+              <span className={item.photos.length > 1 ? "tech-media is-stacked" : "tech-media"}>
+                {item.photos.map((photo) => (
+                  <Image
+                    key={photo.src}
+                    src={photo.src}
+                    alt={photo.alt}
+                    width={photo.width}
+                    height={photo.height}
+                    sizes="(max-width: 720px) 70vw, 220px"
+                  />
+                ))}
               </span>
               <h3>{item.title}</h3>
               <p>{item.benefit}</p>
