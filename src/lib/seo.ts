@@ -80,4 +80,7 @@ export const indexableRoutes: { path: string; priority: number; changeFrequency:
   { path: "/reviews/", priority: 0.6, changeFrequency: "monthly" },
   { path: "/gallery/", priority: 0.5, changeFrequency: "monthly" },
   { path: "/faq/", priority: 0.5, changeFrequency: "monthly" },
+  { path: "/privacy-policy/", priority: 0.2, changeFrequency: "yearly" },
+  { path: "/terms/", priority: 0.2, changeFrequency: "yearly" },
+  { path: "/medical-disclaimer/", priority: 0.2, changeFrequency: "yearly" },
 ];

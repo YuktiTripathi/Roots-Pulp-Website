@@ -35,6 +35,14 @@ export function Footer() {
             <li>
               <a href={whatsappHref()}>WhatsApp {clinic.whatsappDisplay}</a>
             </li>
+            {instagramUrl ? (
+              <li>
+                <a href={instagramUrl} target="_blank" rel="noopener noreferrer">
+                  Instagram
+                  <span className="sr-only"> (opens in a new tab)</span>
+                </a>
+              </li>
+            ) : null}
             <li>
               <a href={directionsUrl} target="_blank" rel="noopener noreferrer">
                 Get directions
@@ -83,12 +91,6 @@ export function Footer() {
           <Link href="/privacy-policy/">Privacy Policy</Link>
           <Link href="/terms/">Terms & Conditions</Link>
           <Link href="/medical-disclaimer/">Medical Disclaimer</Link>
-          {instagramUrl ? (
-            <a href={instagramUrl} target="_blank" rel="noopener noreferrer">
-              Instagram
-              <span className="sr-only"> (opens in a new tab)</span>
-            </a>
-          ) : null}
         </nav>
       </div>
       <p className="footer-disclaimer">{clinic.disclaimer}</p>

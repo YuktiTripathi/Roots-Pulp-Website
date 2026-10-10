@@ -14,9 +14,10 @@ const treatmentSlugs = [
 ];
 const indexable = [
   "/", "/treatments/", "/doctor/dr-shubham-tripathi/", "/about/", "/gallery/", "/reviews/", "/contact/", "/faq/",
+  "/privacy-policy/", "/terms/", "/medical-disclaimer/",
   ...treatmentSlugs.map((slug) => `/treatments/${slug}/`),
 ];
-const noindex = ["/book-appointment/", "/privacy-policy/", "/terms/", "/medical-disclaimer/"];
+const noindex = ["/book-appointment/"];
 
 const failures = [];
 const fail = (route, message) => failures.push(`${route}: ${message}`);
