@@ -21,12 +21,6 @@
 .legal-intro { margin: 18px 0 0; color: var(--ink); font-size: 1.12rem; line-height: 1.65; }
 .legal-updated { margin: 14px 0 0; color: var(--muted); font-size: 0.9rem; }
 
-  margin: 36px 0 8px;
-  padding: 20px 0;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-}
-
 .legal-body section { scroll-margin-top: calc(var(--header-compact) + 16px); }
 .legal-body h2 { margin: 44px 0 0; color: var(--navy); font-size: clamp(1.45rem, 2.4vw, 1.8rem); line-height: 1.2; }
 .legal-body p,
