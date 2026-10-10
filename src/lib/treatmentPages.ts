@@ -74,6 +74,8 @@ export type TreatmentPageContent = {
     items: (TreatmentCardItem & { icon: SymptomIcon; image?: string; group?: string; link?: TreatmentLink })[];
     note: string;
     illustration?: StageIllustration;
+    /** A supplied picture, shown instead of the drawn illustration. */
+    image?: { src: string; alt: string; width: number; height: number };
     caption?: string;
   };
   /** Myth and fact cards, shown after the symptom cards. */
@@ -3759,8 +3761,8 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
       lede: "Brighten stained or dull teeth, with realistic expectations set from the start.",
       text: "Everyday habits like tea, coffee and tobacco, and the passing of time, can leave teeth looking dull or stained. Professional whitening can lighten them, and a short check beforehand helps make sure it is right for you. At Roots & Pulp in Aliganj, Dr. Shubham Tripathi will explain what is realistic before you begin.",
       image: {
-        src: "/images/equipment/teeth-whitening-light.jpg",
-        alt: "LED teeth whitening lamp used for in-clinic whitening at Roots & Pulp",
+        src: "/images/treatments/teeth-whitening.webp",
+        alt: "A smile shown before and after whitening",
       },
     },
     glance: [
@@ -3796,6 +3798,12 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
       ],
       note: "Stains have different causes, and not all of them respond to whitening in the same way. A quick examination shows what kind you have, and whether whitening is likely to help.",
       illustration: "whitening",
+      image: {
+        src: "/images/treatments/whitening/whitening-stages.webp",
+        alt: "Three teeth: a stained tooth, the same tooth lighter after whitening, and a tooth whose filling keeps its original shade",
+        width: 1776,
+        height: 450,
+      },
       caption: "Whitening lightens natural tooth colour. Fillings and crowns keep their original shade.",
     },
     process: {

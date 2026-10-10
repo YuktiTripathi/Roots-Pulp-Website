@@ -272,7 +272,18 @@ export function TreatmentDetail({ treatment, content }: { treatment: Treatment; 
             </div>
           ))}
           <p className="tp-strip reveal">{content.symptoms.note}</p>
-          {content.symptoms.illustration ? (
+          {content.symptoms.image ? (
+            <figure className="tp-stages tp-stages-photo reveal">
+              <Image
+                src={content.symptoms.image.src}
+                alt={content.symptoms.image.alt}
+                width={content.symptoms.image.width}
+                height={content.symptoms.image.height}
+                sizes="(max-width: 1180px) 100vw, 1140px"
+              />
+              {content.symptoms.caption ? <figcaption>{content.symptoms.caption}</figcaption> : null}
+            </figure>
+          ) : content.symptoms.illustration ? (
             <StageFigure kind={content.symptoms.illustration} caption={content.symptoms.caption ?? ""} />
           ) : null}
         </div>
