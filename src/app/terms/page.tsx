@@ -191,7 +191,6 @@ export default function TermsPage() {
     <LegalPageLayout
       crumb="Terms & Conditions"
       title="Terms & Conditions"
-      intro="These terms explain how this website, appointment requests and treatment information work at Roots & Pulp Dental Clinic. We have kept them short and in plain language."
       sections={sections}
     />
   );

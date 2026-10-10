@@ -97,7 +97,6 @@ export default function DisclaimerPage() {
     <LegalPageLayout
       crumb="Medical Disclaimer"
       title="Medical Disclaimer"
-      intro="We want this website to help you feel informed before your visit. Here is how to use its dental information, and when to seek care in person."
       sections={sections}
     />
   );

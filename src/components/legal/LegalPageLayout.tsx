@@ -7,7 +7,7 @@ export type LegalSection = { id: string; heading: string; body: ReactNode };
 type Props = {
   crumb: string;
   title: string;
-  intro: string;
+  intro?: string;
   sections: LegalSection[];
 };
 
@@ -26,7 +26,7 @@ export function LegalPageLayout({ crumb, title, intro, sections }: Props) {
         </nav>
         <header className="legal-head">
           <h1>{title}</h1>
-          <p className="legal-intro">{intro}</p>
+          {intro ? <p className="legal-intro">{intro}</p> : null}
         </header>
         <div className="legal-body">
           {sections.map((section) => (
