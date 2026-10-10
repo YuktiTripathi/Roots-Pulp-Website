@@ -3773,20 +3773,23 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
       heading: "Why teeth lose their brightness",
       intro: "Teeth are rarely pure white, and most of us notice them darkening with time. Common reasons include:",
       items: [
-        { icon: "temperature", title: "Tea and coffee", text: "Regular cups can stain the surface of the teeth over time." },
+        { icon: "temperature", image: "/images/treatments/whitening/tea-and-coffee.webp", title: "Tea and coffee", text: "Regular cups can stain the surface of the teeth over time." },
         {
           icon: "spots",
+          image: "/images/treatments/whitening/tobacco-and-paan.webp",
           title: "Tobacco and paan",
           text: "Smoking, chewing tobacco, gutka and paan are strong stainers.",
         },
-        { icon: "shade", title: "Ageing", text: "The surface wears, and the layer underneath shows through as yellower." },
+        { icon: "shade", image: "/images/treatments/whitening/ageing.webp", title: "Ageing", text: "The surface wears, and the layer underneath shows through as yellower." },
         {
           icon: "chew",
+          image: "/images/treatments/whitening/foods-and-drinks.webp",
           title: "Certain foods and drinks",
           text: "Such as dark sauces, red wine and some fruits.",
         },
         {
           icon: "crack",
+          image: "/images/treatments/whitening/other-causes.webp",
           title: "Other causes",
           text: "Some medicines, an injury to a tooth or developmental changes can darken teeth from the inside.",
         },
