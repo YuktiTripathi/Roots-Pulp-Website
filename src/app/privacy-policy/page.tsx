@@ -235,8 +235,8 @@ const sections: LegalSection[] = [
     heading: "Changes to this policy",
     body: (
       <p>
-        We may update this policy when our services or the law change. The date at the top of this page shows when it
-        was last updated. You can also read our <Link href="/terms/">Terms &amp; Conditions</Link> and{" "}
+        We may update this policy when our services or the law change, and the current version will always be on
+        this page. You can also read our <Link href="/terms/">Terms &amp; Conditions</Link> and{" "}
         <Link href="/medical-disclaimer/">Medical Disclaimer</Link>.
       </p>
     ),
@@ -259,7 +259,6 @@ export default function PrivacyPage() {
       crumb="Privacy Policy"
       title="Privacy Policy"
       intro="Your privacy matters to us."
-      updated="10 October 2026"
       sections={sections}
     />
   );

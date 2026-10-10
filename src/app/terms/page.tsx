@@ -170,8 +170,7 @@ const sections: LegalSection[] = [
     heading: "Changes to these terms",
     body: (
       <p>
-        We may update these terms from time to time. The date at the top of this page shows when they were last
-        updated. How we handle personal information is explained in our <Link href="/privacy-policy/">Privacy Policy</Link>.
+        We may update these terms from time to time, and the current version will always be on this page. How we handle personal information is explained in our <Link href="/privacy-policy/">Privacy Policy</Link>.
       </p>
     ),
   },
@@ -193,7 +192,6 @@ export default function TermsPage() {
       crumb="Terms & Conditions"
       title="Terms & Conditions"
       intro="These terms explain how this website, appointment requests and treatment information work at Roots & Pulp Dental Clinic. We have kept them short and in plain language."
-      updated="10 October 2026"
       sections={sections}
     />
   );

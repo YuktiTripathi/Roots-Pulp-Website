@@ -98,7 +98,6 @@ export default function DisclaimerPage() {
       crumb="Medical Disclaimer"
       title="Medical Disclaimer"
       intro="We want this website to help you feel informed before your visit. Here is how to use its dental information, and when to seek care in person."
-      updated="10 October 2026"
       sections={sections}
     />
   );

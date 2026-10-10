@@ -8,13 +8,11 @@ type Props = {
   crumb: string;
   title: string;
   intro: string;
-  /** Shown as "Last updated". Change it whenever the content changes. */
-  updated: string;
   sections: LegalSection[];
 };
 
 /** Shared layout for the Privacy Policy, Terms & Conditions and Medical Disclaimer. */
-export function LegalPageLayout({ crumb, title, intro, updated, sections }: Props) {
+export function LegalPageLayout({ crumb, title, intro, sections }: Props) {
   return (
     <main id="content" className="legal-page">
       <div className="legal-inner">
@@ -29,7 +27,6 @@ export function LegalPageLayout({ crumb, title, intro, updated, sections }: Prop
         <header className="legal-head">
           <h1>{title}</h1>
           <p className="legal-intro">{intro}</p>
-          <p className="legal-updated">Last updated: {updated}</p>
         </header>
         <div className="legal-body">
           {sections.map((section) => (

@@ -8,6 +8,7 @@ import "./reviews.css";
 import { pageMetadata, jsonLd } from "@/lib/seo";
 import { webPageJsonLd } from "@/lib/schema";
 import { getAllGoogleReviews } from "@/lib/googleReviews";
+import { newestFirst } from "@/lib/patientReviews";
 
 const seo = {
   title: "Patient Reviews · Roots & Pulp Dental Clinic, Aliganj",
@@ -22,7 +23,7 @@ export const metadata: Metadata = pageMetadata({ ...seo });
 export const revalidate = 604800;
 
 export default async function ReviewsPage() {
-  const reviews = await getAllGoogleReviews();
+  const reviews = newestFirst(await getAllGoogleReviews());
   return (
     <main id="content" className="reviews-page motion-page">
       <ReviewsHero reviewCount={reviews.length} />
