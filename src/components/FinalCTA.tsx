@@ -8,6 +8,8 @@ type FinalCTAProps = {
   supporting?: string;
   /** Adds a call button between booking and WhatsApp. */
   showCall?: boolean;
+  /** Set false to leave out the WhatsApp button. */
+  showWhatsApp?: boolean;
   /** Small line under the buttons, e.g. the address. */
   note?: string;
 };
@@ -16,6 +18,7 @@ export function FinalCTA({
   heading = "Let's take care of your smile",
   supporting = "Book a consultation with Dr. Tripathi, or send us a WhatsApp message with your question.",
   showCall = false,
+  showWhatsApp = true,
   note,
 }: FinalCTAProps) {
   return (
@@ -36,9 +39,11 @@ export function FinalCTA({
               <PhoneIcon className="call-icon" /> Call
             </a>
           ) : null}
-          <a className="btn btn-line" href={whatsappHref()}>
-            WhatsApp Us
-          </a>
+          {showWhatsApp ? (
+            <a className="btn btn-line" href={whatsappHref()}>
+              WhatsApp Us
+            </a>
+          ) : null}
         </div>
         {note ? (
           <p className="final-cta-note reveal" style={stagger(3)}>

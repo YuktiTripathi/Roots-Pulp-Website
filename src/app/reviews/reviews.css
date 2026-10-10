@@ -376,7 +376,7 @@
 }
 
 .reviews-policy { background: var(--ivory); }
-.reviews-policy .section-inner { max-width: none; width: min(100% - 40px, 1320px); }
+.reviews-policy .section-inner { max-width: none; width: min(100% - 40px, var(--max)); }
 .reviews-policy h2 {
   font-size: 1.5rem;
   color: var(--navy);

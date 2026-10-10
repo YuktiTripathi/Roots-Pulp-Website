@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { bookingUrl, clinic, directionsUrl, telHref, whatsappHref } from "@/lib/clinic";
+import { bookingUrl, clinic, directionsUrl } from "@/lib/clinic";
 import { ArrowIcon } from "@/components/Icons";
 import { InnerPageHero } from "@/components/InnerPageHero";
 import { OpeningStatus } from "@/components/OpeningStatus";
@@ -16,7 +16,7 @@ export function ContactHero() {
       imagePosition="center 45%"
       overlayStrength="strong"
     >
-      <p className="lede enter" style={stagger(1)}>
+      <p className="lede line-full enter" style={stagger(1)}>
         Call, send a WhatsApp message, or drop in to book. We&apos;re open seven days a week.
       </p>
       <OpeningStatus className="contact-status enter" />
@@ -24,13 +24,6 @@ export function ContactHero() {
         <Link className="btn btn-primary" href={bookingUrl} target="_blank" rel="noopener noreferrer">
           Book an Appointment <ArrowIcon className="arrow" />
         </Link>
-        <a className="btn btn-secondary" href={whatsappHref()} target="_blank" rel="noopener noreferrer">
-          WhatsApp
-          <span className="sr-only"> (opens in a new tab)</span>
-        </a>
-        <a className="btn btn-secondary" href={telHref()}>
-          Call
-        </a>
       </div>
       <p className="contact-hero-location enter" style={stagger(3)}>
         Sector-Q, {clinic.neighbourhood}, {clinic.locality} ·{" "}

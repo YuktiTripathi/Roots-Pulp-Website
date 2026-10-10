@@ -38,6 +38,7 @@
 
 
 .contact-connect { background: white; }
+.contact-connect .section-heading { max-width: none; }
 .contact-connect-grid {
   list-style: none;
   margin: 0;

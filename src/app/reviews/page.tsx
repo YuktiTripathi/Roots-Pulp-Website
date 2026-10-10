@@ -26,11 +26,12 @@ export default async function ReviewsPage() {
   const reviews = newestFirst(await getAllGoogleReviews());
   return (
     <main id="content" className="reviews-page motion-page">
-      <ReviewsHero reviewCount={reviews.length} />
+      <ReviewsHero />
       <PatientVideosSection />
       <ReviewsGoogleCarousel reviews={reviews} />
       <ReviewsPolicy />
       <FinalCTA
+        showWhatsApp={false}
         heading="Thinking about your next dental visit?"
         supporting="Not sure what treatment you need? That's okay. Start with a consultation and we'll help you understand your options."
       />

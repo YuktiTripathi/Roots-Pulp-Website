@@ -34,7 +34,7 @@ export function ContactConnect() {
     <section className="section contact-connect" aria-labelledby="connect-heading">
       <div className="section-inner">
         <div className="section-heading reveal">
-          <h2 id="connect-heading">How would you like to connect?</h2>
+          <h2 id="connect-heading" className="line-full">How would you like to connect?</h2>
         </div>
         <ul className="contact-connect-grid">
           {cards.map((card, index) => {
