@@ -325,12 +325,13 @@ export function TreatmentDetail({ treatment, content }: { treatment: Treatment; 
                     {paragraph}
                   </p>
                 ))}
+                {explainer.imageBeside && explainer.caption ? <p className="reveal">{explainer.caption}</p> : null}
               </div>
             </div>
             {explainer.image ? (
               <figure className="tp-stages tp-stages-photo reveal">
                 <ExplainerImage image={explainer.image} />
-                {explainer.caption ? <figcaption>{explainer.caption}</figcaption> : null}
+                {explainer.caption && !explainer.imageBeside ? <figcaption>{explainer.caption}</figcaption> : null}
               </figure>
             ) : explainer.illustration ? (
               <StageFigure kind={explainer.illustration} caption={explainer.caption ?? ""} />
