@@ -49,7 +49,7 @@ export function VisitSection() {
               <span className="map-pin" aria-hidden="true" />
               <span className="map-copy">
                 <strong>Roots & Pulp Dental Clinic</strong>
-                {clinic.streetAddress}, {clinic.locality}
+                Sector-Q, Aliganj, Lucknow, U.P.
               </span>
               <span className="map-action">Show map</span>
             </button>
