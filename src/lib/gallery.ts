@@ -133,6 +133,7 @@ export const gallerySections: GallerySection[] = [
       fromPhoto(photos.happyPatient, undefined, "people"),
       fromPhoto(photos.chairsideWithPatient, undefined, "people"),
       fromPhoto(photos.thumbsUpAfterVisit, undefined, "people"),
+      fromPhoto(photos.thumbsUpInChair, undefined, "people"),
     ],
   },
   {

@@ -70,6 +70,13 @@ export const photos = {
     position: "center 40%",
   },
   /** Gallery, "Real moments from a visit". */
+  thumbsUpInChair: {
+    src: `${care}/patient-thumbs-up-after-extraction.webp`,
+    width: 1086,
+    height: 1448,
+    alt: "A smiling patient giving a thumbs up in the dental chair at Roots & Pulp",
+    position: "center 30%",
+  },
   chairsideWithPatient: {
     src: `${care}/dentist-with-patient-in-treatment-chair.webp`,
     width: 1122,
