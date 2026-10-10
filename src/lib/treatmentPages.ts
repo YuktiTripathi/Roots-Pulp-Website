@@ -3464,17 +3464,19 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
       heading: "Could dentures be relevant to you?",
       intro: "These are common reasons people ask a dentist about dentures.",
       items: [
-        { icon: "gaps", title: "Several missing teeth", text: "Gaps that make chewing difficult." },
-        { icon: "denture", title: "All teeth missing in one or both jaws", text: "A full set may be considered." },
+        { icon: "gaps", image: "/images/treatments/dentures/several-missing-teeth.webp", title: "Several missing teeth", text: "Gaps that make chewing difficult." },
+        { icon: "denture", image: "/images/treatments/dentures/all-teeth-missing.webp", title: "All teeth missing in one or both jaws", text: "A full set may be considered." },
         {
           icon: "lost",
+          image: "/images/treatments/dentures/teeth-cannot-be-saved.webp",
           title: "Teeth that cannot be saved",
           text: "Your dentist may discuss what could replace them.",
           link: { label: "About tooth extraction", href: "/treatments/tooth-extraction/" },
         },
-        { icon: "chew", title: "Chewing mostly on one side", text: "Because gaps make the other side work harder." },
+        { icon: "chew", image: "/images/treatments/dentures/chewing-one-side.webp", title: "Chewing mostly on one side", text: "Because gaps make the other side work harder." },
         {
           icon: "adult",
+          image: "/images/treatments/dentures/speech-and-face.webp",
           title: "Changes in speech or in how your face looks",
           text: "Missing teeth can affect both.",
         },
