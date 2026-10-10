@@ -467,8 +467,8 @@
 .gallery-block-people .gallery-named {
   columns: auto;
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
 }
 .gallery-block-people .gallery-named li { margin: 0; }
 .gallery-block-people .gallery-named-img { aspect-ratio: 4 / 5; object-fit: cover; }

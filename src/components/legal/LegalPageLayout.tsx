@@ -31,16 +31,6 @@ export function LegalPageLayout({ crumb, title, intro, updated, sections }: Prop
           <p className="legal-intro">{intro}</p>
           <p className="legal-updated">Last updated: {updated}</p>
         </header>
-        <nav className="legal-toc" aria-label="On this page">
-          <p>On this page</p>
-          <ol>
-            {sections.map((section) => (
-              <li key={section.id}>
-                <a href={`#${section.id}`}>{section.heading}</a>
-              </li>
-            ))}
-          </ol>
-        </nav>
         <div className="legal-body">
           {sections.map((section) => (
             <section key={section.id} id={section.id} aria-labelledby={`${section.id}-heading`}>

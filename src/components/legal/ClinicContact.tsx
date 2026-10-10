@@ -1,4 +1,4 @@
-import { clinic, telHref, whatsappHref } from "@/lib/clinic";
+import { clinic, doctor, telHref, whatsappHref } from "@/lib/clinic";
 
 /** Clinic contact block for the legal pages, from the central clinic details. */
 export function ClinicContact() {
@@ -6,7 +6,7 @@ export function ClinicContact() {
     <address>
       <strong>{clinic.name}</strong>
       <br />
-      Dr. Shubham Tripathi
+      Dr. Shubham Tripathi, {doctor.registration}
       <br />
       {clinic.addressLine1}, {clinic.neighbourhood}, {clinic.locality}, Uttar Pradesh {clinic.postalCode}
       <br />

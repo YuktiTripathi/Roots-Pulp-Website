@@ -70,6 +70,13 @@ export const photos = {
     position: "center 40%",
   },
   /** Gallery, "Real moments from a visit". */
+  showingExtractedTooth: {
+    src: `${care}/dentist-showing-extracted-tooth.webp`,
+    width: 1086,
+    height: 1448,
+    alt: "A dentist showing a patient the tooth that was removed, at Roots & Pulp",
+    position: "center 55%",
+  },
   thumbsUpInChair: {
     src: `${care}/patient-thumbs-up-after-extraction.webp`,
     width: 1086,

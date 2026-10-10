@@ -70,13 +70,6 @@ const sections: LegalSection[] = [
           If you have dental pain, a broken tooth or swelling, please do not wait or rely on information online. Call or
           WhatsApp the clinic so that you can be seen as soon as possible.
         </p>
-        <p>
-          <strong>
-            Go to the nearest hospital emergency department straight away if you have swelling of the face or neck with
-            difficulty breathing or swallowing, bleeding that will not stop, a high fever with facial swelling, or an
-            injury to the face or jaw.
-          </strong>
-        </p>
       </>
     ),
   },

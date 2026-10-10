@@ -30,10 +30,10 @@ export function Footer() {
               </li>
             ))}
             <li>
-              <a href={telHref()}>Call {clinic.phoneDisplay}</a>
+              <a href={telHref()} aria-label={`Call ${clinic.phoneDisplay}`}>Call</a>
             </li>
             <li>
-              <a href={whatsappHref()}>WhatsApp {clinic.whatsappDisplay}</a>
+              <a href={whatsappHref()} aria-label={`WhatsApp ${clinic.whatsappDisplay}`}>WhatsApp</a>
             </li>
             {instagramUrl ? (
               <li>
