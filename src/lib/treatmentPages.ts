@@ -166,6 +166,8 @@ export type TreatmentPageContent = {
     list?: string[];
     closing?: string;
     image?: { src: string; alt: string; width: number; height: number };
+    /** Show the image beside the paragraphs instead of below the section. */
+    imageBeside?: boolean;
   };
   decides?: {
     heading: string;
@@ -3261,6 +3263,7 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
         "It is useful for anyone, and particularly for people who smoke or use tobacco in any form, including chewing tobacco, gutka and paan, or who drink alcohol regularly.",
         "Most changes in the mouth turn out to be harmless. Finding any that are not, early, gives the best chance of treating them.",
       ],
+      imageBeside: true,
       listHeading: "Please see a dentist or doctor if you notice",
       list: [
         "a mouth ulcer that has not healed within three weeks",

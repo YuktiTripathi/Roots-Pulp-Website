@@ -478,12 +478,25 @@ export function TreatmentDetail({ treatment, content }: { treatment: Treatment; 
           <div className="tx-wrap">
             <div className="tp-extra">
               <SectionHead id={`${extra.id}-heading`} heading={extra.heading} />
-              <div className="tp-prose">
-                {extra.paragraphs.map((paragraph, index) => (
-                  <p key={paragraph} className="reveal" style={stagger(index)}>
-                    {paragraph}
-                  </p>
-                ))}
+              <div className={extra.image && extra.imageBeside ? "tp-extra-split" : undefined}>
+                <div className="tp-prose">
+                  {extra.paragraphs.map((paragraph, index) => (
+                    <p key={paragraph} className="reveal" style={stagger(index)}>
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
+                {extra.image && extra.imageBeside ? (
+                  <figure className="tp-extra-photo reveal">
+                    <Image
+                      src={extra.image.src}
+                      alt={extra.image.alt}
+                      width={extra.image.width}
+                      height={extra.image.height}
+                      sizes="(max-width: 860px) 100vw, 480px"
+                    />
+                  </figure>
+                ) : null}
               </div>
               {extra.list ? (
                 <div className="tp-tips reveal">
@@ -496,7 +509,7 @@ export function TreatmentDetail({ treatment, content }: { treatment: Treatment; 
                 </div>
               ) : null}
               {extra.closing ? <p className="tp-closing reveal">{extra.closing}</p> : null}
-              {extra.image ? (
+              {extra.image && !extra.imageBeside ? (
                 <figure className="tp-stages tp-stages-photo reveal">
                   <Image
                     src={extra.image.src}

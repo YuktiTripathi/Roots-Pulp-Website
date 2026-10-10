@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { bookingUrl, googleBusinessProfileUrl, telHref, whatsappHref } from "@/lib/clinic";
+import { bookingUrl, googleBusinessProfileUrl } from "@/lib/clinic";
 import { getGooglePlaceRating } from "@/lib/googlePlaces";
 import { ClinicAtGlance } from "./ClinicAtGlance";
 import { HeroCarousel, type HeroSlide } from "./HeroCarousel";
@@ -68,13 +68,7 @@ export async function Hero() {
           <Link className="btn btn-primary" href={bookingUrl} target="_blank" rel="noopener noreferrer">
             Book an Appointment
           </Link>
-          <a className="btn btn-secondary" href={whatsappHref()}>
-            WhatsApp Us
-          </a>
         </div>
-        <a className="text-link hero-call" href={telHref()} aria-label="Call Roots & Pulp Dental Clinic">
-          Call the clinic
-        </a>
         <OpeningStatus />
         <p className="hero-address">Aliganj, Lucknow</p>
       </HeroCarousel>

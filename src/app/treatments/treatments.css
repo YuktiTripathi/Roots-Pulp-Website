@@ -754,3 +754,16 @@
   /* Anchored sections land below the header and the navigator. */
   .tp-page section[id], .tp-page .faq[id] { scroll-margin-top: calc(var(--header-compact) + 84px); }
 }
+
+/* Section with its photo beside the paragraphs (e.g. oral cancer screening). */
+.tp-extra:has(.tp-extra-split) { max-width: none; }
+.tp-extra-split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 480px); gap: 40px; align-items: start; }
+.tp-extra-split .tp-prose p { max-width: none; }
+.tp-extra-photo { margin: 0; padding: 12px; border: 1px solid var(--line); border-radius: var(--radius); background: white; }
+.tp-extra-photo img { display: block; width: 100%; height: auto; border-radius: 10px; }
+@media (max-width: 860px) {
+  .tp-extra-split { grid-template-columns: 1fr; gap: 24px; }
+}
+
+/* Treatment pages: paragraphs are justified, as the clinic asked. */
+.tp-page p:not(.eyebrow) { text-align: justify; hyphens: auto; }
