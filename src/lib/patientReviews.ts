@@ -120,3 +120,17 @@ export const patientVideos: PatientVideo[] = [
 
 /** Add real clinic-supplied stories here. Do not invent outcomes. */
 export const patientStories: PatientStory[] = [];
+
+/** Rough age in days of a Google relative date such as "a month ago" or "3 weeks ago". Unknown dates sort last. */
+export function reviewAgeDays(date: string) {
+  const match = date.toLowerCase().match(/^(a|an|\d+)\s+(day|week|month|year)s?\s+ago$/);
+  if (!match) return Number.MAX_SAFE_INTEGER;
+  const count = match[1] === "a" || match[1] === "an" ? 1 : Number(match[1]);
+  const unit = { day: 1, week: 7, month: 30, year: 365 }[match[2] as "day" | "week" | "month" | "year"];
+  return count * unit;
+}
+
+/** Newest first; reviews with the same date keep their saved order. */
+export function newestFirst<T extends { date: string }>(reviews: T[]) {
+  return [...reviews].sort((a, b) => reviewAgeDays(a.date) - reviewAgeDays(b.date));
+}

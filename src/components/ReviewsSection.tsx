@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { googleBusinessProfileUrl } from "@/lib/clinic";
 import { getGooglePlaceRating } from "@/lib/googlePlaces";
+import { newestFirst, patientReviews } from "@/lib/patientReviews";
 import { ReviewsGoogleCarousel } from "./reviews/ReviewCarousel";
 
 /**
@@ -14,6 +15,7 @@ export async function ReviewsSection() {
   return (
     <ReviewsGoogleCarousel
       className="home-reviews-section"
+      reviews={newestFirst(patientReviews)}
       heading="What patients say about Roots & Pulp"
       intro={
         place.rating !== null ? (

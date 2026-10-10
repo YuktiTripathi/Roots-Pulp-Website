@@ -26,6 +26,9 @@
 .legal-body p,
 .legal-body li { color: var(--ink); line-height: 1.75; }
 .legal-body p { margin: 14px 0 0; }
+.legal-intro,
+.legal-body p,
+.legal-body li { text-align: justify; hyphens: auto; }
 .legal-body ul { margin: 14px 0 0; padding-left: 1.25em; }
 .legal-body li { margin: 6px 0 0; }
 .legal-body a { color: var(--teal); text-decoration: underline; text-underline-offset: 3px; }

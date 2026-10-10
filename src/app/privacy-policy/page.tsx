@@ -258,7 +258,7 @@ export default function PrivacyPage() {
     <LegalPageLayout
       crumb="Privacy Policy"
       title="Privacy Policy"
-      intro="Your privacy matters to us. This page explains, in plain words, what information reaches Roots & Pulp Dental Clinic and how we look after it."
+      intro="Your privacy matters to us."
       updated="10 October 2026"
       sections={sections}
     />

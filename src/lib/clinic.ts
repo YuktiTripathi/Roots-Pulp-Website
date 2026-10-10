@@ -42,7 +42,7 @@ export const clinic = {
   whatsappPrefill: "Hello Roots & Pulp Dental Clinic, I would like to book a dental appointment.",
   tagline: "Your smile is our reward.",
   disclaimer:
-    "Information on this website is for general awareness and does not replace a professional dental examination.",
+    "Website information is for general awareness and does not replace a professional dental examination.",
   /** One-line description used in structured data. */
   description:
     "Dental clinic in Sector Q, Aliganj, Lucknow, led by Dr. Shubham Tripathi (BDS, MPH). Checkups, root canal treatment, implants, crowns, braces and aligners, and children's dentistry. Open 7 days.",
