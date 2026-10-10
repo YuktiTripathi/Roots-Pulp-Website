@@ -765,5 +765,7 @@
   .tp-extra-split { grid-template-columns: 1fr; gap: 24px; }
 }
 
-/* Treatment pages: paragraphs are justified, as the clinic asked. */
-.tp-page p:not(.eyebrow) { text-align: justify; hyphens: auto; }
+/* Treatment pages: long paragraphs are justified, as the clinic asked; short card text stays left-aligned. */
+.tp-page .tp-prose p,
+.tp-page .tx-detail-copy p,
+.tp-page .tp-closing { text-align: justify; hyphens: auto; }
