@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { bookingUrl, clinic, googleBusinessProfileUrl, telHref, whatsappHref } from "@/lib/clinic";
+import { bookingUrl, googleBusinessProfileUrl, telHref, whatsappHref } from "@/lib/clinic";
 import { getGooglePlaceRating } from "@/lib/googlePlaces";
 import { ClinicAtGlance } from "./ClinicAtGlance";
 import { HeroCarousel, type HeroSlide } from "./HeroCarousel";
@@ -51,7 +51,7 @@ const slides: HeroSlide[] = [
     heading: "Advanced dentistry without the premium price tag",
     paragraphs: [
       "Modern diagnostics and treatment techniques help us plan with greater precision, comfort, and clarity.",
-      "Thoughtful care, advanced tools, and fair pricing \u2014 all under one roof.",
+      "Thoughtful care, advanced tools, and fair pricing - all under one roof.",
     ],
   },
 ];
@@ -75,7 +75,8 @@ export async function Hero() {
         <a className="text-link hero-call" href={telHref()} aria-label="Call Roots & Pulp Dental Clinic">
           Call the clinic
         </a>
-        <OpeningStatus suffix={clinic.streetAddress} />
+        <OpeningStatus />
+        <p className="hero-address">Aliganj, Lucknow</p>
       </HeroCarousel>
       <ClinicAtGlance place={place} fallbackUrl={googleBusinessProfileUrl} />
     </section>

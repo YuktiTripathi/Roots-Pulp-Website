@@ -10,7 +10,7 @@ const PATIENTS = 2500;
  * Counts from 0 to target once `run` is true. Until `armed`, it shows the final value, which is what
  * the server renders and what reduced-motion users keep.
  */
-function useCountUp(target: number, armed: boolean, run: boolean, duration = 1200) {
+function useCountUp(target: number, armed: boolean, run: boolean, decimals = 0, duration = 1200) {
   const [count, setCount] = useState(target);
   const frame = useRef(0);
 
@@ -24,12 +24,13 @@ function useCountUp(target: number, armed: boolean, run: boolean, duration = 120
     function tick(now: number) {
       const progress = Math.min((now - start) / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
-      setCount(Math.round(eased * target));
+      const step = 10 ** decimals;
+      setCount(Math.round(eased * target * step) / step);
       if (progress < 1) frame.current = requestAnimationFrame(tick);
     }
     frame.current = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame.current);
-  }, [target, run, duration]);
+  }, [target, run, decimals, duration]);
 
   return count;
 }
@@ -91,18 +92,20 @@ export function ClinicAtGlance({
     return () => observer.disconnect();
   }, [armed]);
 
-  const patients = useCountUp(PATIENTS, armed, animate);
-
+  
   // Live values only; with no rating the card falls back to the static "Read our Google reviews".
   const rating = place?.rating ?? null;
   const count = place?.userRatingCount ?? null;
   const href = place?.googleMapsUri ?? fallbackUrl;
   const live = rating !== null;
+  const patients = useCountUp(PATIENTS, armed, animate);
+  const ratingShown = useCountUp(rating ?? 0, armed && live, animate && live, 1);
+  const days = useCountUp(7, armed, animate);
 
   const ratingBody = live ? (
     <>
       <span className="trust-icon">{icons.star}</span>
-      <span className="trust-value">{rating.toFixed(1)} ★</span>
+      <span className="trust-value">{ratingShown.toFixed(1)} ★</span>
       <span className="trust-label">Google Reviews</span>
       {count !== null ? <span className="trust-meta">{count.toLocaleString("en-IN")} patient reviews</span> : null}
     </>
@@ -136,7 +139,7 @@ export function ClinicAtGlance({
         </li>
         <li>
           <span className="trust-icon">{icons.calendar}</span>
-          <span className="trust-value">Open 7 Days</span>
+          <span className="trust-value">Open {days} Days</span>
           <span className="trust-label">Monday to Sunday</span>
         </li>
       </ul>
