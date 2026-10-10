@@ -673,7 +673,7 @@ export function TreatmentDetail({ treatment, content }: { treatment: Treatment; 
                 </Link>
               </p>
             ) : null}
-            {content.compact ? (
+            {content.compact && !content.hideCareNote ? (
               <p className="tp-footnote reveal">
                 Your care is provided by {doctor.name}, {doctor.credentials}, {doctor.registration}.{" "}
                 <Link className="text-link" href="/doctor/dr-shubham-tripathi/">

@@ -202,6 +202,8 @@ export type TreatmentPageContent = {
    * doctor's profile (and the review line, once reviewed) in the "Why" section.
    */
   compact?: boolean;
+  /** Hide the "Your care is provided by" line that compact pages show under "Why Roots & Pulp?". */
+  hideCareNote?: boolean;
   /** Credential lines shown on the doctor card in addition to the standard ones. */
   doctorExtra?: string[];
   /** A quote shown on the doctor card. */
@@ -3755,6 +3757,7 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
     // [VERIFY BEFORE PUBLISHING] Provenance and consent of teeth-whitening.webp (used on listing cards only).
     clinicallyReviewedOn: "",
     compact: true,
+    hideCareNote: true,
     hero: {
       eyebrow: "Cosmetic dentistry",
       heading: "Teeth Whitening in Lucknow",
