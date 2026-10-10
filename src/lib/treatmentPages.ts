@@ -227,13 +227,6 @@ export type TreatmentPageContent = {
 };
 
 /* Shared blocks for the shorter treatment pages. Every claim here is already verified elsewhere on the site. */
-const consultImage = {
-  src: "/images/doctor/explain-consult.jpg",
-  alt: "Dr. Shubham Tripathi speaking with a patient beside the consultation desk",
-  width: 981,
-  height: 637,
-};
-
 const standardDoctorQuote =
   "Dental treatment can feel confusing. Findings, options and the reasoning behind a treatment plan are explained in simple, understandable terms.";
 
@@ -421,10 +414,10 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
         "Asking questions is part of the process. Findings are explained to you in plain language before consent.",
       ],
       image: {
-        src: "/images/doctor/explain-consult.jpg",
-        alt: "Dr. Shubham Tripathi speaking with a patient beside the consultation desk",
-        width: 981,
-        height: 637,
+        src: "/images/clinic/care/dentist-explaining-xray.webp",
+        alt: "Dr. Shubham Tripathi explaining an X-ray to a patient on a laptop at the consultation desk",
+        width: 819,
+        height: 1024,
       },
     },
     why: {
@@ -818,10 +811,10 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
         "The area is numbed for placement, and you can tell Dr. Tripathi if you feel anything during it. Afterwards, some tenderness or swelling is common, and your dentist will explain what to expect.",
       ],
       image: {
-        src: "/images/doctor/explain-consult.jpg",
-        alt: "Dr. Shubham Tripathi speaking with a patient beside the consultation desk",
-        width: 981,
-        height: 637,
+        src: "/images/clinic/care/consultation-desk-listening-to-patient.webp",
+        alt: "Dr. Shubham Tripathi listening to a patient at the consultation desk",
+        width: 1122,
+        height: 1402,
       },
     },
     why: {
@@ -1182,10 +1175,10 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
         "Your teeth may be sensitive for a while afterwards. This is common, and your dentist will explain what to expect.",
       ],
       image: {
-        src: "/images/doctor/explain-consult.jpg",
-        alt: "Dr. Shubham Tripathi speaking with a patient beside the consultation desk",
-        width: 981,
-        height: 637,
+        src: "/images/clinic/care/dentist-explaining-options-at-desk.webp",
+        alt: "Dr. Shubham Tripathi explaining treatment options to a patient at the consultation desk",
+        width: 1448,
+        height: 1086,
       },
     },
     why: {
@@ -1552,10 +1545,10 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
         "Braces and aligners can also feel odd against your lips and tongue at first. Your dentist will explain what is normal and how to cope. Questions are always welcome.",
       ],
       image: {
-        src: "/images/doctor/explain-consult.jpg",
-        alt: "Dr. Shubham Tripathi speaking with a patient beside the consultation desk",
-        width: 981,
-        height: 637,
+        src: "/images/clinic/care/dentist-writing-treatment-plan.webp",
+        alt: "Dr. Shubham Tripathi writing out a treatment plan while talking with a patient",
+        width: 819,
+        height: 1024,
       },
     },
     why: {
@@ -2251,10 +2244,10 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
         "Questions are always welcome, including awkward ones about how you will look.",
       ],
       image: {
-        src: "/images/doctor/explain-consult.jpg",
-        alt: "Dr. Shubham Tripathi speaking with a patient beside the consultation desk",
-        width: 981,
-        height: 637,
+        src: "/images/clinic/care/dentist-showing-patient-teeth-in-mirror.webp",
+        alt: "Dr. Shubham Tripathi showing a patient her teeth in a hand mirror",
+        width: 1122,
+        height: 1402,
       },
     },
     why: {
@@ -2550,7 +2543,7 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
         "The area is numbed first. During treatment, you can tell Dr. Tripathi if you feel anything, and he can pause. Pressure and a pulling sensation are normal, but pain should not be.",
         "Please tell him about any medical conditions and the medicines you take, including blood-thinning medicines, before treatment. Do not stop any medicine unless your own doctor advises it.",
       ],
-      image: consultImage,
+      image: { src: "/images/clinic/care/dr-shubham-listening-to-patient.webp", alt: "Dr. Shubham Tripathi listening to a patient's concerns at the consultation desk", width: 545, height: 693 },
     },
     why: {
       equipmentNote: "",
@@ -3309,7 +3302,7 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
         "Inflamed gums can be tender, so a clean may feel more sensitive than you expect. Tell Dr. Tripathi if anything is uncomfortable, and he can adjust or pause.",
         "Where numbing is needed, it is used. Questions are always welcome, including worries about what the findings mean.",
       ],
-      image: consultImage,
+      image: { src: "/images/clinic/care/consultation-desk-talking-through-concerns.webp", alt: "Dr. Shubham Tripathi talking through a patient's concerns at the consultation desk", width: 1312, height: 1199 },
     },
     why: {
       equipment: [
@@ -3602,7 +3595,7 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
         "You may notice extra saliva, a feeling of fullness, and some difficulty with speaking and chewing. Sore spots can appear, and they can be eased with adjustments, so please do not put up with them.",
         "Many people find it helps to start with soft food cut into small pieces, chew on both sides together, and practise speaking aloud. Your dentist will give you advice, and every mouth adjusts at its own pace.",
       ],
-      image: consultImage,
+      image: { src: "/images/clinic/care/dr-shubham-consultation-desk.webp", alt: "Dr. Shubham Tripathi in conversation with a patient at the consultation desk", width: 1000, height: 1000 },
     },
     why: {
       equipmentNote: "",
