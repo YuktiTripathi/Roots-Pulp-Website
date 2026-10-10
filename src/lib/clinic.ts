@@ -117,6 +117,17 @@ export const navigation: NavItem[] = [
 
 export const launchedNavigation = navigation.filter((item) => item.launched);
 
+/** Treatments grouped for menus, in the order each group first appears. */
+export function groupedTreatments() {
+  const groups: { name: string; items: Treatment[] }[] = [];
+  for (const treatment of treatments) {
+    const group = groups.find((entry) => entry.name === treatment.group);
+    if (group) group.items.push(treatment);
+    else groups.push({ name: treatment.group, items: [treatment] });
+  }
+  return groups;
+}
+
 export type Treatment = {
   slug: string;
   name: string;
@@ -145,7 +156,7 @@ export const treatments: Treatment[] = [
     slug: "tooth-extraction",
     name: "Tooth Extraction",
     overview: "Gentle removal of a tooth that can't be saved, with clear aftercare.",
-    group: "Everyday & preventive care",
+    group: "Saving and restoring teeth",
   },
   {
     slug: "gum-and-oral-health",

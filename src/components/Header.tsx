@@ -8,6 +8,7 @@ import { CloseIcon, MenuIcon } from "./Icons";
 import { Logo } from "./Logo";
 import { MobileMenu } from "./MobileMenu";
 import { OpeningStatus } from "./OpeningStatus";
+import { TreatmentsNavItem } from "./TreatmentsMenu";
 
 function isCurrent(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
@@ -61,11 +62,15 @@ export function Header() {
       <div className="header-bar">
         <Logo variant="header" />
         <nav className="desktop-nav" aria-label="Primary">
-          {launchedNavigation.map((item) => (
-            <Link key={item.href} href={item.href} aria-current={isCurrent(pathname, item.href) ? "page" : undefined}>
-              {item.label}
-            </Link>
-          ))}
+          {launchedNavigation.map((item) =>
+            item.href === "/treatments/" ? (
+              <TreatmentsNavItem key={item.href} pathname={pathname} current={isCurrent(pathname, item.href)} />
+            ) : (
+              <Link key={item.href} href={item.href} aria-current={isCurrent(pathname, item.href) ? "page" : undefined}>
+                {item.label}
+              </Link>
+            ),
+          )}
         </nav>
         <div className="header-actions">
           <div className="header-booking">

@@ -1363,3 +1363,46 @@ main > .faq:has(+ .page) { padding-bottom: 24px; }
 
 /* Copy the clinic asked to run across the full width of its container (it still wraps on small screens). */
 .line-full { max-width: none !important; }
+
+/* Treatments menu: hover (or the arrow button) in the desktop header. */
+.tmenu { position: relative; display: inline-flex; align-items: center; }
+.desktop-nav .tmenu > a { padding-right: 2px; }
+.tmenu-toggle {
+  width: 28px; height: 44px; display: inline-grid; place-items: center;
+  border: 0; background: none; color: var(--navy); padding: 0; margin-right: 4px;
+}
+.tmenu-toggle svg, .mobile-tmenu-toggle svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform var(--dur-fast) var(--ease-soft); }
+.tmenu.is-open .tmenu-toggle svg, .mobile-tmenu-toggle[aria-expanded="true"] svg { transform: rotate(180deg); }
+.tmenu-panel {
+  position: absolute; top: calc(100% + 10px); left: 50%; transform: translateX(-50%);
+  width: min(880px, calc(100vw - 48px)); padding: 24px 26px 20px;
+  background: var(--ivory); border: 1px solid var(--line); border-radius: 18px;
+  box-shadow: 0 24px 60px rgba(16, 32, 72, 0.16); z-index: 70;
+}
+.tmenu-panel::before { content: ""; position: absolute; left: 0; right: 0; top: -12px; height: 12px; }
+.tmenu-panel[hidden] { display: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .tmenu.is-open .tmenu-panel { animation: tmenu-in 160ms var(--ease-out) both; }
+}
+@keyframes tmenu-in { from { opacity: 0; } to { opacity: 1; } }
+.tmenu-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px 28px; }
+.tmenu-group-name { margin: 0 0 6px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); }
+.tmenu-group ul, .mobile-tmenu-list ul { list-style: none; margin: 0; padding: 0; }
+.desktop-nav .tmenu-panel a, .mobile-tmenu-list a {
+  display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 4px 6px; margin: 0 -6px;
+  border-radius: 10px; color: var(--navy); text-decoration: none; font-size: 0.94rem; font-weight: 520;
+}
+.desktop-nav .tmenu-panel a::after { display: none; }
+.desktop-nav .tmenu-panel a:hover, .desktop-nav .tmenu-panel a:focus-visible { background: white; color: var(--teal); }
+.desktop-nav .tmenu-panel a[aria-current="page"] { color: var(--teal); }
+.tmenu-thumb { width: 36px; height: 36px; flex: none; border-radius: 9px; object-fit: cover; background: white; border: 1px solid var(--line); }
+.desktop-nav .tmenu-panel .tmenu-all { display: inline-flex; min-height: 40px; margin-top: 12px; padding: 0; font-weight: 600; }
+
+/* Treatments list inside the mobile menu. */
+.mobile-tmenu-row { display: flex; align-items: center; border-bottom: 1px solid var(--line); }
+.mobile-tmenu-row a { flex: 1; border-bottom: 0 !important; }
+.mobile-tmenu-toggle { width: 52px; height: 52px; display: grid; place-items: center; border: 0; background: none; color: var(--navy); }
+.mobile-tmenu-list { padding: 8px 0 12px 4px; border-bottom: 1px solid var(--line); }
+.mobile-tmenu-list[hidden] { display: none; }
+.mobile-tmenu-list .tmenu-group { margin-top: 10px; }
+.mobile-menu .mobile-tmenu-list a { min-height: 48px; border-bottom: 0; font-size: 1rem; }
