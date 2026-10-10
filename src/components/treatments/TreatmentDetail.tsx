@@ -316,7 +316,7 @@ export function TreatmentDetail({ treatment, content }: { treatment: Treatment; 
       {/* What it is */}
       {explainer ? (
         <section id="overview" className={`tp-section ${tone("what")}`} aria-labelledby="what-heading">
-          <div className="tx-wrap">
+          <div className={explainer.image && explainer.imageBeside ? "tx-wrap tp-explain-split" : "tx-wrap"}>
             <div className="tp-explain">
               <SectionHead id="what-heading" heading={explainer.heading} />
               <div className="tp-prose">
@@ -420,6 +420,16 @@ export function TreatmentDetail({ treatment, content }: { treatment: Treatment; 
                     className={`tp-compare-col reveal${comparison.highlightFirst && columnIndex === 0 ? " is-keep" : ""}`}
                     style={stagger(columnIndex)}
                   >
+                    {comparison.columnImages?.[columnIndex] ? (
+                      <Image
+                        className="tp-compare-img"
+                        src={comparison.columnImages[columnIndex].src}
+                        alt={comparison.columnImages[columnIndex].alt}
+                        width={comparison.columnImages[columnIndex].width}
+                        height={comparison.columnImages[columnIndex].height}
+                        sizes="(max-width: 720px) 80vw, 320px"
+                      />
+                    ) : null}
                     <h3>{column}</h3>
                     <dl>
                       {comparison.rows.map((row) => (

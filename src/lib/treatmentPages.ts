@@ -101,6 +101,8 @@ export type TreatmentPageContent = {
       mobile?: { src: string; width: number; height: number };
     };
     caption?: string;
+    /** Show the image to the right of the paragraphs instead of below them. */
+    imageBeside?: boolean;
   };
   process: {
     heading: string;
@@ -138,6 +140,8 @@ export type TreatmentPageContent = {
     /** Header for the row-label column of the table. */
     rowHeader?: string;
     columns: string[];
+    /** Optional picture at the top of each column card, in column order. */
+    columnImages?: { src: string; alt: string; width: number; height: number }[];
     rows: { label: string; values: string[] }[];
     closing: string;
     links?: TreatmentLink[];
@@ -3480,7 +3484,7 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
           title: "Changes in speech or in how your face looks",
           text: "Missing teeth can affect both.",
         },
-        { icon: "uneven", title: "An old denture that no longer fits", text: "Gums change shape over time." },
+        { icon: "uneven", image: "/images/treatments/dentures/old-denture-loose.webp", title: "An old denture that no longer fits", text: "Gums change shape over time." },
       ],
       note: "Everyone's situation is different. An examination is needed to find out whether dentures, or another option, would suit you.",
     },
@@ -3492,6 +3496,13 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
         "They can be taken out for cleaning, and some people also take them out at night. Your dentist will advise what is best for you.",
       ],
       illustration: "dentures",
+      image: {
+        src: "/images/treatments/dentures/partial-and-complete.webp",
+        alt: "Illustration of a partial denture with metal clasps beside a complete lower denture",
+        width: 1200,
+        height: 900,
+      },
+      imageBeside: true,
       caption:
         "A partial denture fills gaps between your own teeth. A complete denture replaces a full arch. Your dentist will explain what suits you.",
     },
@@ -3548,8 +3559,22 @@ export const treatmentPages: Record<string, TreatmentPageContent> = {
       ],
     },
     comparison: {
-      heading: "Partial or complete dentures",
+      heading: "Partial or Complete dentures",
       columns: ["Partial denture", "Complete denture"],
+      columnImages: [
+        {
+          src: "/images/treatments/dentures/partial-denture.webp",
+          alt: "Illustration of a partial denture with clasps fitting into gaps between remaining lower teeth",
+          width: 782,
+          height: 800,
+        },
+        {
+          src: "/images/treatments/dentures/complete-denture.webp",
+          alt: "Illustration of complete upper and lower dentures",
+          width: 800,
+          height: 800,
+        },
+      ],
       rows: [
         { label: "Replaces", values: ["Some missing teeth", "All teeth in the upper jaw, lower jaw or both"] },
         {

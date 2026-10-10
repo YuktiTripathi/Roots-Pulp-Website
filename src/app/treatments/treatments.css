@@ -769,3 +769,14 @@
 .tp-page .tp-prose p,
 .tp-page .tx-detail-copy p,
 .tp-page .tp-closing { text-align: justify; hyphens: auto; }
+
+/* Explainer with its picture on the right (e.g. dentures). */
+.tp-explain-split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 460px); gap: 40px; align-items: center; }
+.tp-explain-split .tp-explain .tp-prose { columns: auto; }
+.tp-explain-split .tp-prose p { max-width: none; }
+.tp-explain-split .tp-stages { margin: 0; }
+@media (max-width: 860px) {
+  .tp-explain-split { grid-template-columns: 1fr; gap: 24px; }
+}
+/* Picture at the top of a comparison card. */
+.tp-compare-img { display: block; width: 100%; max-width: 260px; height: auto; margin: 0 auto 12px; }
