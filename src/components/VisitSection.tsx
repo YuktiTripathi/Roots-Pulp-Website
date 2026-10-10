@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type CSSProperties } from "react";
-import { clinic, directionsUrl, fullAddress, telHref, whatsappHref } from "@/lib/clinic";
+import { clinic, directionsUrl, fullAddress } from "@/lib/clinic";
 import { openingHoursDisplay } from "@/lib/openingHours";
 
 export function VisitSection() {
@@ -38,12 +38,6 @@ export function VisitSection() {
             <a className="btn btn-primary" href={directionsUrl} target="_blank" rel="noopener noreferrer">
               Get Directions
               <span className="sr-only"> (opens in a new tab)</span>
-            </a>
-            <a className="btn btn-secondary" href={telHref()}>
-              Call Clinic
-            </a>
-            <a className="btn btn-secondary" href={whatsappHref()}>
-              WhatsApp
             </a>
           </div>
         </div>
