@@ -41,8 +41,8 @@ export const treatmentImages: Record<string, { src: string; alt: string }> = {
     alt: "A clinician examining the lower gums",
   },
   dentures: {
-    src: "/images/treatments/dentures.jpg",
-    alt: "A partial denture held in a gloved hand",
+    src: "/images/treatments/dentures-card.webp",
+    alt: "Illustration of a partial denture with clasps beside a complete lower denture",
   },
   "teeth-whitening": {
     src: "/images/treatments/teeth-whitening.webp",
